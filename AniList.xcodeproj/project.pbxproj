@@ -7,6 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		632F4360171CD65D00A5B43A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 632F435F171CD65D00A5B43A /* SystemConfiguration.framework */; };
+		632F4362171CD66200A5B43A /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 632F4361171CD66200A5B43A /* MobileCoreServices.framework */; };
+		632F436C171CD6FA00A5B43A /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 632F436A171CD6FA00A5B43A /* MenuViewController.m */; };
+		632F436D171CD6FA00A5B43A /* MenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 632F436B171CD6FA00A5B43A /* MenuViewController.xib */; };
+		632F4370171CD72F00A5B43A /* ProfileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 632F436F171CD72F00A5B43A /* ProfileCell.m */; };
+		632F4372171CD74400A5B43A /* ProfileCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 632F4371171CD74400A5B43A /* ProfileCell.xib */; };
+		632F4381171CD9C900A5B43A /* MenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 632F4380171CD9C900A5B43A /* MenuCell.m */; };
+		632F4384171CD9E100A5B43A /* AniListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 632F4383171CD9E100A5B43A /* AniListCell.m */; };
+		632F438A171CDA0000A5B43A /* AnimeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 632F4389171CDA0000A5B43A /* AnimeCell.m */; };
+		632F438D171CDA0E00A5B43A /* MangaCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 632F438C171CDA0E00A5B43A /* MangaCell.m */; };
+		632F4396171CDC7600A5B43A /* hamburger.png in Resources */ = {isa = PBXBuildFile; fileRef = 632F4394171CDC7600A5B43A /* hamburger.png */; };
+		632F4397171CDC7600A5B43A /* hamburger@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 632F4395171CDC7600A5B43A /* hamburger@2x.png */; };
+		632F439B171CDDED00A5B43A /* AniListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 632F4399171CDDEA00A5B43A /* AniListViewController.m */; };
+		632F439C171CDDED00A5B43A /* AniListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 632F439A171CDDEB00A5B43A /* AniListViewController.xib */; };
+		632F43A1171CDE2100A5B43A /* AniListTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 632F43A0171CDE2100A5B43A /* AniListTableView.m */; };
+		632F43A4171CDE2F00A5B43A /* AnimeTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 632F43A3171CDE2F00A5B43A /* AnimeTableView.m */; };
+		632F43A7171CDE3900A5B43A /* MangaTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 632F43A6171CDE3900A5B43A /* MangaTableView.m */; };
 		6353C03C171C43680060F062 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6353C03B171C43680060F062 /* Crashlytics.framework */; };
 		6353C127171C457D0060F062 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 6353C042171C457C0060F062 /* AFHTTPClient.m */; };
 		6353C128171C457D0060F062 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 6353C042171C457C0060F062 /* AFHTTPClient.m */; };
@@ -66,6 +83,33 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		632F435F171CD65D00A5B43A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		632F4361171CD66200A5B43A /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		632F4369171CD6FA00A5B43A /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
+		632F436A171CD6FA00A5B43A /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
+		632F436B171CD6FA00A5B43A /* MenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuViewController.xib; sourceTree = "<group>"; };
+		632F436E171CD72F00A5B43A /* ProfileCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProfileCell.h; path = AniList/Views/ProfileCell.h; sourceTree = SOURCE_ROOT; };
+		632F436F171CD72F00A5B43A /* ProfileCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProfileCell.m; path = AniList/Views/ProfileCell.m; sourceTree = SOURCE_ROOT; };
+		632F4371171CD74400A5B43A /* ProfileCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProfileCell.xib; path = AniList/Views/ProfileCell.xib; sourceTree = SOURCE_ROOT; };
+		632F437F171CD9C900A5B43A /* MenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MenuCell.h; path = Views/MenuCell.h; sourceTree = "<group>"; };
+		632F4380171CD9C900A5B43A /* MenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MenuCell.m; path = Views/MenuCell.m; sourceTree = "<group>"; };
+		632F4382171CD9E100A5B43A /* AniListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AniListCell.h; path = Views/AniListCell.h; sourceTree = "<group>"; };
+		632F4383171CD9E100A5B43A /* AniListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AniListCell.m; path = Views/AniListCell.m; sourceTree = "<group>"; };
+		632F4388171CDA0000A5B43A /* AnimeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimeCell.h; path = Views/AnimeCell.h; sourceTree = "<group>"; };
+		632F4389171CDA0000A5B43A /* AnimeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AnimeCell.m; path = Views/AnimeCell.m; sourceTree = "<group>"; };
+		632F438B171CDA0E00A5B43A /* MangaCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MangaCell.h; path = Views/MangaCell.h; sourceTree = "<group>"; };
+		632F438C171CDA0E00A5B43A /* MangaCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MangaCell.m; path = Views/MangaCell.m; sourceTree = "<group>"; };
+		632F4394171CDC7600A5B43A /* hamburger.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = hamburger.png; path = Images/Icons/hamburger.png; sourceTree = "<group>"; };
+		632F4395171CDC7600A5B43A /* hamburger@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "hamburger@2x.png"; path = "Images/Icons/hamburger@2x.png"; sourceTree = "<group>"; };
+		632F4398171CDDEA00A5B43A /* AniListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AniListViewController.h; sourceTree = "<group>"; };
+		632F4399171CDDEA00A5B43A /* AniListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AniListViewController.m; sourceTree = "<group>"; };
+		632F439A171CDDEB00A5B43A /* AniListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AniListViewController.xib; sourceTree = "<group>"; };
+		632F439F171CDE2100A5B43A /* AniListTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AniListTableView.h; path = "Views/Table Views/AniListTableView.h"; sourceTree = "<group>"; };
+		632F43A0171CDE2100A5B43A /* AniListTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AniListTableView.m; path = "Views/Table Views/AniListTableView.m"; sourceTree = "<group>"; };
+		632F43A2171CDE2F00A5B43A /* AnimeTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimeTableView.h; path = "Views/Table Views/AnimeTableView.h"; sourceTree = "<group>"; };
+		632F43A3171CDE2F00A5B43A /* AnimeTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AnimeTableView.m; path = "Views/Table Views/AnimeTableView.m"; sourceTree = "<group>"; };
+		632F43A5171CDE3900A5B43A /* MangaTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MangaTableView.h; path = Views/MangaTableView.h; sourceTree = "<group>"; };
+		632F43A6171CDE3900A5B43A /* MangaTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MangaTableView.m; path = Views/MangaTableView.m; sourceTree = "<group>"; };
 		6353C03B171C43680060F062 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		6353C041171C457C0060F062 /* AFHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPClient.h; sourceTree = "<group>"; };
 		6353C042171C457C0060F062 /* AFHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPClient.m; sourceTree = "<group>"; };
@@ -123,6 +167,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				632F4362171CD66200A5B43A /* MobileCoreServices.framework in Frameworks */,
+				632F4360171CD65D00A5B43A /* SystemConfiguration.framework in Frameworks */,
 				6353C24A171C46930060F062 /* Social.framework in Frameworks */,
 				6353C248171C468C0060F062 /* Twitter.framework in Frameworks */,
 				6353C246171C46780060F062 /* QuartzCore.framework in Frameworks */,
@@ -149,6 +195,107 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		632F4368171CD6FA00A5B43A /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				632F4369171CD6FA00A5B43A /* MenuViewController.h */,
+				632F436A171CD6FA00A5B43A /* MenuViewController.m */,
+				632F436B171CD6FA00A5B43A /* MenuViewController.xib */,
+				632F4398171CDDEA00A5B43A /* AniListViewController.h */,
+				632F4399171CDDEA00A5B43A /* AniListViewController.m */,
+				632F439A171CDDEB00A5B43A /* AniListViewController.xib */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		632F437E171CD9B100A5B43A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				632F439E171CDE0300A5B43A /* Table Views */,
+				632F439D171CDDFB00A5B43A /* Table Cells */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		632F438E171CDA2700A5B43A /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				632F4390171CDA3000A5B43A /* Other */,
+				632F438F171CDA2C00A5B43A /* Core Data */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		632F438F171CDA2C00A5B43A /* Core Data */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Core Data";
+			sourceTree = "<group>";
+		};
+		632F4390171CDA3000A5B43A /* Other */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Other;
+			sourceTree = "<group>";
+		};
+		632F4391171CDC5D00A5B43A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				632F4393171CDC6500A5B43A /* Fonts */,
+				632F4392171CDC6100A5B43A /* Assets */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		632F4392171CDC6100A5B43A /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				632F4394171CDC7600A5B43A /* hamburger.png */,
+				632F4395171CDC7600A5B43A /* hamburger@2x.png */,
+			);
+			name = Assets;
+			sourceTree = "<group>";
+		};
+		632F4393171CDC6500A5B43A /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Fonts;
+			sourceTree = "<group>";
+		};
+		632F439D171CDDFB00A5B43A /* Table Cells */ = {
+			isa = PBXGroup;
+			children = (
+				632F436E171CD72F00A5B43A /* ProfileCell.h */,
+				632F436F171CD72F00A5B43A /* ProfileCell.m */,
+				632F4371171CD74400A5B43A /* ProfileCell.xib */,
+				632F437F171CD9C900A5B43A /* MenuCell.h */,
+				632F4380171CD9C900A5B43A /* MenuCell.m */,
+				632F4382171CD9E100A5B43A /* AniListCell.h */,
+				632F4383171CD9E100A5B43A /* AniListCell.m */,
+				632F4388171CDA0000A5B43A /* AnimeCell.h */,
+				632F4389171CDA0000A5B43A /* AnimeCell.m */,
+				632F438B171CDA0E00A5B43A /* MangaCell.h */,
+				632F438C171CDA0E00A5B43A /* MangaCell.m */,
+			);
+			name = "Table Cells";
+			sourceTree = "<group>";
+		};
+		632F439E171CDE0300A5B43A /* Table Views */ = {
+			isa = PBXGroup;
+			children = (
+				632F439F171CDE2100A5B43A /* AniListTableView.h */,
+				632F43A0171CDE2100A5B43A /* AniListTableView.m */,
+				632F43A2171CDE2F00A5B43A /* AnimeTableView.h */,
+				632F43A3171CDE2F00A5B43A /* AnimeTableView.m */,
+				632F43A5171CDE3900A5B43A /* MangaTableView.h */,
+				632F43A6171CDE3900A5B43A /* MangaTableView.m */,
+			);
+			name = "Table Views";
+			sourceTree = "<group>";
+		};
 		6353C03D171C457C0060F062 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
@@ -216,8 +363,6 @@
 		63548492171C2FA7003457CB = {
 			isa = PBXGroup;
 			children = (
-				6353C249171C46930060F062 /* Social.framework */,
-				6353C247171C468C0060F062 /* Twitter.framework */,
 				635484A6171C2FA7003457CB /* AniList */,
 				635484C8171C2FA7003457CB /* AniListTests */,
 				6353C03D171C457C0060F062 /* Libraries */,
@@ -238,6 +383,10 @@
 		6354849D171C2FA7003457CB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				632F4361171CD66200A5B43A /* MobileCoreServices.framework */,
+				632F435F171CD65D00A5B43A /* SystemConfiguration.framework */,
+				6353C249171C46930060F062 /* Social.framework */,
+				6353C247171C468C0060F062 /* Twitter.framework */,
 				6353C245171C46780060F062 /* QuartzCore.framework */,
 				6353C243171C46740060F062 /* CoreText.framework */,
 				6353C03B171C43680060F062 /* Crashlytics.framework */,
@@ -253,6 +402,10 @@
 		635484A6171C2FA7003457CB /* AniList */ = {
 			isa = PBXGroup;
 			children = (
+				632F4391171CDC5D00A5B43A /* Resources */,
+				632F438E171CDA2700A5B43A /* Classes */,
+				632F437E171CD9B100A5B43A /* Views */,
+				632F4368171CD6FA00A5B43A /* View Controllers */,
 				635484AF171C2FA7003457CB /* AniListAppDelegate.h */,
 				635484B0171C2FA7003457CB /* AniListAppDelegate.m */,
 				635484B8171C2FA7003457CB /* AniList_1.0.xcdatamodeld */,
@@ -372,6 +525,11 @@
 				635484B5171C2FA7003457CB /* Default@2x.png in Resources */,
 				635484B7171C2FA7003457CB /* Default-568h@2x.png in Resources */,
 				6353C139171C457D0060F062 /* AFNetworking.podspec in Resources */,
+				632F436D171CD6FA00A5B43A /* MenuViewController.xib in Resources */,
+				632F4372171CD74400A5B43A /* ProfileCell.xib in Resources */,
+				632F4396171CDC7600A5B43A /* hamburger.png in Resources */,
+				632F4397171CDC7600A5B43A /* hamburger@2x.png in Resources */,
+				632F439C171CDDED00A5B43A /* AniListViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -434,6 +592,16 @@
 				6353C137171C457D0060F062 /* UIImageView+AFNetworking.m in Sources */,
 				6353C221171C457D0060F062 /* SWRevealViewController.m in Sources */,
 				6353C22F171C457D0060F062 /* TTTAttributedLabel.m in Sources */,
+				632F436C171CD6FA00A5B43A /* MenuViewController.m in Sources */,
+				632F4370171CD72F00A5B43A /* ProfileCell.m in Sources */,
+				632F4381171CD9C900A5B43A /* MenuCell.m in Sources */,
+				632F4384171CD9E100A5B43A /* AniListCell.m in Sources */,
+				632F438A171CDA0000A5B43A /* AnimeCell.m in Sources */,
+				632F438D171CDA0E00A5B43A /* MangaCell.m in Sources */,
+				632F439B171CDDED00A5B43A /* AniListViewController.m in Sources */,
+				632F43A1171CDE2100A5B43A /* AniListTableView.m in Sources */,
+				632F43A4171CDE2F00A5B43A /* AnimeTableView.m in Sources */,
+				632F43A7171CDE3900A5B43A /* MangaTableView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

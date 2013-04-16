@@ -8,6 +8,9 @@
 
 #import "AniListAppDelegate.h"
 
+#import "MenuViewController.h"
+#import "AniListViewController.h"
+
 @implementation AniListAppDelegate
 
 @synthesize managedObjectContext = _managedObjectContext;
@@ -19,6 +22,15 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    
+
+    MenuViewController *menuVC = [[MenuViewController alloc] init];
+    AniListViewController *animeVC = [[AniListViewController alloc] init];
+    
+    SWRevealViewController *vc = [[SWRevealViewController alloc] initWithRearViewController:menuVC
+                                                                        frontViewController:animeVC];
+    
+    self.window.rootViewController = vc;
     
     [Crashlytics startWithAPIKey:@"c01aa6f0d36b5000da6aa8c83dda558c23be54f8"];
     
