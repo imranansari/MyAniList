@@ -10,6 +10,12 @@
 
 @interface ProfileCell : UITableViewCell
 
+@property (nonatomic, weak) IBOutlet UILabel *username;
+@property (nonatomic, weak) IBOutlet UILabel *animeStats;
+@property (nonatomic, weak) IBOutlet UILabel *mangaStats;
+@property (nonatomic, weak) IBOutlet UIImageView *avatar;
+
 + (CGFloat)cellHeight;
++ (NSString *)cellID;
 
 @end

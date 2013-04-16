@@ -24,6 +24,8 @@
 		632F43A1171CDE2100A5B43A /* AniListTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 632F43A0171CDE2100A5B43A /* AniListTableView.m */; };
 		632F43A4171CDE2F00A5B43A /* AnimeTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 632F43A3171CDE2F00A5B43A /* AnimeTableView.m */; };
 		632F43A7171CDE3900A5B43A /* MangaTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 632F43A6171CDE3900A5B43A /* MangaTableView.m */; };
+		632F43AB171D7DF100A5B43A /* AnimeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 632F43AA171D7DF100A5B43A /* AnimeViewController.m */; };
+		632F43AE171D7DFB00A5B43A /* MangaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 632F43AD171D7DFB00A5B43A /* MangaViewController.m */; };
 		6353C03C171C43680060F062 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6353C03B171C43680060F062 /* Crashlytics.framework */; };
 		6353C127171C457D0060F062 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 6353C042171C457C0060F062 /* AFHTTPClient.m */; };
 		6353C128171C457D0060F062 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 6353C042171C457C0060F062 /* AFHTTPClient.m */; };
@@ -70,6 +72,7 @@
 		635484C5171C2FA7003457CB /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 635484A4171C2FA7003457CB /* CoreData.framework */; };
 		635484CD171C2FA7003457CB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 635484CB171C2FA7003457CB /* InfoPlist.strings */; };
 		635484D0171C2FA7003457CB /* AniListTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 635484CF171C2FA7003457CB /* AniListTests.m */; };
+		63922CED171D82C800D41BCE /* spacepyro.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 63922CEC171D82C800D41BCE /* spacepyro.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -110,6 +113,10 @@
 		632F43A3171CDE2F00A5B43A /* AnimeTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AnimeTableView.m; path = "Views/Table Views/AnimeTableView.m"; sourceTree = "<group>"; };
 		632F43A5171CDE3900A5B43A /* MangaTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MangaTableView.h; path = Views/MangaTableView.h; sourceTree = "<group>"; };
 		632F43A6171CDE3900A5B43A /* MangaTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MangaTableView.m; path = Views/MangaTableView.m; sourceTree = "<group>"; };
+		632F43A9171D7DF100A5B43A /* AnimeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimeViewController.h; sourceTree = "<group>"; };
+		632F43AA171D7DF100A5B43A /* AnimeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimeViewController.m; sourceTree = "<group>"; };
+		632F43AC171D7DFB00A5B43A /* MangaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MangaViewController.h; sourceTree = "<group>"; };
+		632F43AD171D7DFB00A5B43A /* MangaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MangaViewController.m; sourceTree = "<group>"; };
 		6353C03B171C43680060F062 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		6353C041171C457C0060F062 /* AFHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPClient.h; sourceTree = "<group>"; };
 		6353C042171C457C0060F062 /* AFHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPClient.m; sourceTree = "<group>"; };
@@ -160,6 +167,7 @@
 		635484CC171C2FA7003457CB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		635484CE171C2FA7003457CB /* AniListTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AniListTests.h; sourceTree = "<group>"; };
 		635484CF171C2FA7003457CB /* AniListTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AniListTests.m; sourceTree = "<group>"; };
+		63922CEC171D82C800D41BCE /* spacepyro.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = spacepyro.jpg; path = Images/Placeholders/spacepyro.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -204,6 +212,10 @@
 				632F4398171CDDEA00A5B43A /* AniListViewController.h */,
 				632F4399171CDDEA00A5B43A /* AniListViewController.m */,
 				632F439A171CDDEB00A5B43A /* AniListViewController.xib */,
+				632F43A9171D7DF100A5B43A /* AnimeViewController.h */,
+				632F43AA171D7DF100A5B43A /* AnimeViewController.m */,
+				632F43AC171D7DFB00A5B43A /* MangaViewController.h */,
+				632F43AD171D7DFB00A5B43A /* MangaViewController.m */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -252,8 +264,8 @@
 		632F4392171CDC6100A5B43A /* Assets */ = {
 			isa = PBXGroup;
 			children = (
-				632F4394171CDC7600A5B43A /* hamburger.png */,
-				632F4395171CDC7600A5B43A /* hamburger@2x.png */,
+				63922CEC171D82C800D41BCE /* spacepyro.jpg */,
+				63922CEB171D82BB00D41BCE /* Icons */,
 			);
 			name = Assets;
 			sourceTree = "<group>";
@@ -447,6 +459,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		63922CEB171D82BB00D41BCE /* Icons */ = {
+			isa = PBXGroup;
+			children = (
+				632F4394171CDC7600A5B43A /* hamburger.png */,
+				632F4395171CDC7600A5B43A /* hamburger@2x.png */,
+			);
+			name = Icons;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -530,6 +551,7 @@
 				632F4396171CDC7600A5B43A /* hamburger.png in Resources */,
 				632F4397171CDC7600A5B43A /* hamburger@2x.png in Resources */,
 				632F439C171CDDED00A5B43A /* AniListViewController.xib in Resources */,
+				63922CED171D82C800D41BCE /* spacepyro.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -602,6 +624,8 @@
 				632F43A1171CDE2100A5B43A /* AniListTableView.m in Sources */,
 				632F43A4171CDE2F00A5B43A /* AnimeTableView.m in Sources */,
 				632F43A7171CDE3900A5B43A /* MangaTableView.m in Sources */,
+				632F43AB171D7DF100A5B43A /* AnimeViewController.m in Sources */,
+				632F43AE171D7DFB00A5B43A /* MangaViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

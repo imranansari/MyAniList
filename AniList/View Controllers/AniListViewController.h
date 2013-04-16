@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AniListTableView.h"
 
 @interface AniListViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
 
+@property (nonatomic, weak) IBOutlet AniListTableView *tableView;
 @property (nonatomic, weak) IBOutlet UIButton *menuButton;
 
 @end

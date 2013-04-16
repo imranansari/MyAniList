@@ -1,43 +1,29 @@
 //
-//  AniListViewController.m
+//  AnimeViewController.m
 //  AniList
 //
-//  Created by Corey Roberts on 4/15/13.
+//  Created by Corey Roberts on 4/16/13.
 //  Copyright (c) 2013 SpacePyro Inc. All rights reserved.
 //
 
-#import "AniListViewController.h"
+#import "AnimeViewController.h"
 
-@interface AniListViewController ()
+@interface AnimeViewController ()
 
 @end
 
-@implementation AniListViewController
+@implementation AnimeViewController
 
 - (id)init {
-    return [self initWithNibName:@"AniListViewController" bundle:[NSBundle mainBundle]];
+    return [super init];
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-
-    }
-    return self;
-}
-
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
-    SWRevealViewController *revealController = self.revealViewController;
-    
-    [self.view addGestureRecognizer:revealController.panGestureRecognizer];
-    [self.menuButton addTarget:revealController action:@selector(revealToggle:) forControlEvents:UIControlEventTouchUpInside];
+	// Do any additional setup after loading the view.
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
@@ -67,22 +53,20 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     static NSString *CellIdentifier = @"Cell";
-    
+
     UITableViewCell *cell;
     cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if(!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-    
+
     return cell;
 }
 
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+
 }
-
-
 
 @end

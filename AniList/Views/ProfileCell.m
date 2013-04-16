@@ -30,4 +30,8 @@
     return 90;
 }
 
++ (NSString *)cellID {
+    return @"ProfileCell";
+}
+
 @end
