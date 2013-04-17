@@ -10,4 +10,6 @@
 
 @interface AnimeCell : AniListCell
 
++ (CGFloat)cellHeight;
+
 @end

@@ -9,9 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "AniListTableView.h"
 
-@interface AniListViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
+@interface AniListViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate>
 
+@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, weak) IBOutlet AniListTableView *tableView;
 @property (nonatomic, weak) IBOutlet UIButton *menuButton;
+
+- (NSString *)entityName;
+- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 
 @end

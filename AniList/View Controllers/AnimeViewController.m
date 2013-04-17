@@ -9,7 +9,8 @@
 #import "AnimeViewController.h"
 
 @interface AnimeViewController ()
-
+@property (nonatomic, weak) IBOutlet UIButton *backButton;
+@property (nonatomic, weak) IBOutlet UIButton *actionButton;
 @end
 
 @implementation AnimeViewController
@@ -33,6 +34,10 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)backButtonPressed:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end

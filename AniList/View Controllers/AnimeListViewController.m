@@ -8,9 +8,12 @@
 
 #import "AnimeListViewController.h"
 #import "AnimeViewController.h"
+#import "AnimeService.h"
+#import "AnimeCell.h"
+#import "Anime.h"
 
 @interface AnimeListViewController ()
-
+@property (nonatomic, strong) UIRefreshControl *refreshControl;
 @end
 
 @implementation AnimeListViewController
@@ -22,11 +25,22 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    // Inside a Table View Controller's viewDidLoad method
+//    UIRefreshControl *refresh = [[UIRefreshControl alloc] init];
+//    [refresh addTarget:self
+//                action:nil
+//      forControlEvents:UIControlEventValueChanged];
+//    self.tableView. = refresh;
+    
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://mal-api.com/animelist/spacepyro"]];
     
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request
                                                                                         success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
                                                                                             NSLog(@"Success!");
+                                                                                            NSArray *animeList = [JSON objectForKey:@"anime"];
+                                                                                            for(NSDictionary *animeItem in animeList) {
+                                                                                                [AnimeService addAnime:animeItem];
+                                                                                            }
                                                                                         }
                                                                                         failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
                                                                                             NSLog(@"Failure");
@@ -42,6 +56,10 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (NSString *)entityName {
+    return @"Anime";
+}
+
 #pragma mark - Table view data source
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
@@ -53,26 +71,29 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 44;
+    return [AnimeCell cellHeight];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return [[self.fetchedResultsController sections] count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
+    id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
+    return [sectionInfo numberOfObjects];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     static NSString *CellIdentifier = @"Cell";
 
-    UITableViewCell *cell;
-    cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    AnimeCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if(!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"AnimeCell" owner:self options:nil];
+        cell = (AnimeCell *)nib[0];
     }
+    
+    [self configureCell:cell atIndexPath:indexPath];
 
     return cell;
 }
@@ -82,6 +103,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     AnimeViewController *animeVC = [[AnimeViewController alloc] init];
     [self.navigationController pushViewController:animeVC animated:YES];
+}
+
+- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    Anime *anime = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    cell = (AnimeCell *)cell;
+    cell.textLabel.text = anime.title;
 }
 
 @end
