@@ -9,7 +9,7 @@
 #import "AniListAppDelegate.h"
 
 #import "MenuViewController.h"
-#import "AnimeViewController.h"
+#import "AnimeListViewController.h"
 #import "AniListViewController.h"
 
 @implementation AniListAppDelegate
@@ -26,10 +26,12 @@
     
 
     MenuViewController *menuVC = [[MenuViewController alloc] init];
-    AnimeViewController *animeVC = [[AnimeViewController alloc] init];
+    AnimeListViewController *animeVC = [[AnimeListViewController alloc] init];
+    
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:animeVC];
     
     SWRevealViewController *vc = [[SWRevealViewController alloc] initWithRearViewController:menuVC
-                                                                        frontViewController:animeVC];
+                                                                        frontViewController:navigationController];
     
     self.window.rootViewController = vc;
     

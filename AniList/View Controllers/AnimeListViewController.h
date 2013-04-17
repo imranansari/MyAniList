@@ -1,5 +1,5 @@
 //
-//  MangaViewController.h
+//  AnimeListViewController.h
 //  AniList
 //
 //  Created by Corey Roberts on 4/16/13.
@@ -8,6 +8,8 @@
 
 #import "AniListViewController.h"
 
-@interface MangaViewController : AniListViewController
+@interface AnimeListViewController : AniListViewController
+
+
 
 @end

@@ -1,18 +1,19 @@
 //
-//  MangaViewController.m
+//  AnimeListViewController.m
 //  AniList
 //
 //  Created by Corey Roberts on 4/16/13.
 //  Copyright (c) 2013 SpacePyro Inc. All rights reserved.
 //
 
-#import "MangaViewController.h"
+#import "AnimeListViewController.h"
+#import "AnimeViewController.h"
 
-@interface MangaViewController ()
+@interface AnimeListViewController ()
 
 @end
 
-@implementation MangaViewController
+@implementation AnimeListViewController
 
 - (id)init {
     return [super init];
@@ -20,6 +21,19 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://mal-api.com/animelist/spacepyro"]];
+    
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request
+                                                                                        success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+                                                                                            NSLog(@"Success!");
+                                                                                        }
+                                                                                        failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+                                                                                            NSLog(@"Failure");
+                                                                                        }];
+    
+    [operation start];
+                                         
 	// Do any additional setup after loading the view.
 }
 
@@ -47,26 +61,27 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;
+    return 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     static NSString *CellIdentifier = @"Cell";
-    
+
     UITableViewCell *cell;
     cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if(!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-    
+
     return cell;
 }
 
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    AnimeViewController *animeVC = [[AnimeViewController alloc] init];
+    [self.navigationController pushViewController:animeVC animated:YES];
 }
 
 @end

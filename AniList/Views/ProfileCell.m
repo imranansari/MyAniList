@@ -14,7 +14,8 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        // Initialization code
+        self.backgroundColor = [UIColor whiteColor];
+        self.backgroundView = [[UIView alloc] initWithFrame:self.frame];
     }
     return self;
 }

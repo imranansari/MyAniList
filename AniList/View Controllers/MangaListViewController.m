@@ -1,50 +1,29 @@
 //
-//  AniListViewController.m
+//  MangaListViewController.m
 //  AniList
 //
-//  Created by Corey Roberts on 4/15/13.
+//  Created by Corey Roberts on 4/16/13.
 //  Copyright (c) 2013 SpacePyro Inc. All rights reserved.
 //
 
-#import "AniListViewController.h"
+#import "MangaListViewController.h"
 
-@interface AniListViewController ()
+@interface MangaListViewController ()
 
 @end
 
-@implementation AniListViewController
+@implementation MangaListViewController
 
 - (id)init {
-    return [self initWithNibName:@"AniListViewController" bundle:[NSBundle mainBundle]];
+    return [super init];
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-
-    }
-    return self;
-}
-
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
-    SWRevealViewController *revealController = self.revealViewController;
-    
-    [self.view addGestureRecognizer:revealController.panGestureRecognizer];
-    [self.menuButton addTarget:revealController action:@selector(revealToggle:) forControlEvents:UIControlEventTouchUpInside];
-    
-    self.view.backgroundColor = [UIColor darkGrayColor];
-    self.tableView.backgroundColor = [UIColor clearColor];
-    
-    self.navigationController.navigationBar.hidden = YES;
+	// Do any additional setup after loading the view.
 }
 
-
-
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
@@ -68,7 +47,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
+    return 10;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -89,7 +68,5 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
 }
-
-
 
 @end

@@ -1,5 +1,5 @@
 //
-//  AnimeViewController.h
+//  UIFont+AniList.h
 //  AniList
 //
 //  Created by Corey Roberts on 4/16/13.
@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AnimeViewController : UIViewController
+@interface UIFont (AniList)
+
++ (UIFont *)defaultFont;
++ (UIFont *)defaultFontWithSize:(int)size;
 
 @end

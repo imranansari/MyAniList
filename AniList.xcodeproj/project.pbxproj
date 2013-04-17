@@ -24,8 +24,18 @@
 		632F43A1171CDE2100A5B43A /* AniListTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 632F43A0171CDE2100A5B43A /* AniListTableView.m */; };
 		632F43A4171CDE2F00A5B43A /* AnimeTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 632F43A3171CDE2F00A5B43A /* AnimeTableView.m */; };
 		632F43A7171CDE3900A5B43A /* MangaTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 632F43A6171CDE3900A5B43A /* MangaTableView.m */; };
-		632F43AB171D7DF100A5B43A /* AnimeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 632F43AA171D7DF100A5B43A /* AnimeViewController.m */; };
-		632F43AE171D7DFB00A5B43A /* MangaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 632F43AD171D7DFB00A5B43A /* MangaViewController.m */; };
+		632F43AB171D7DF100A5B43A /* AnimeListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 632F43AA171D7DF100A5B43A /* AnimeListViewController.m */; };
+		632F43AE171D7DFB00A5B43A /* MangaListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 632F43AD171D7DFB00A5B43A /* MangaListViewController.m */; };
+		63502795171E4D430004C106 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 63502793171E4D430004C106 /* bg.png */; };
+		63502798171E4D760004C106 /* bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63502797171E4D760004C106 /* bg@2x.png */; };
+		6350279C171E4EA20004C106 /* UIFont+AniList.m in Sources */ = {isa = PBXBuildFile; fileRef = 6350279B171E4EA20004C106 /* UIFont+AniList.m */; };
+		635027A0171E51450004C106 /* AnimeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6350279E171E51450004C106 /* AnimeViewController.m */; };
+		635027A1171E51450004C106 /* AnimeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6350279F171E51450004C106 /* AnimeViewController.xib */; };
+		635027A3171E53550004C106 /* 24646.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 635027A2171E53550004C106 /* 24646.jpg */; };
+		635027A8171E58CC0004C106 /* action.png in Resources */ = {isa = PBXBuildFile; fileRef = 635027A4171E58CC0004C106 /* action.png */; };
+		635027A9171E58CC0004C106 /* action@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 635027A5171E58CC0004C106 /* action@2x.png */; };
+		635027AA171E58CC0004C106 /* back_arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 635027A6171E58CC0004C106 /* back_arrow.png */; };
+		635027AB171E58CC0004C106 /* back_arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 635027A7171E58CC0004C106 /* back_arrow@2x.png */; };
 		6353C03C171C43680060F062 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6353C03B171C43680060F062 /* Crashlytics.framework */; };
 		6353C127171C457D0060F062 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 6353C042171C457C0060F062 /* AFHTTPClient.m */; };
 		6353C128171C457D0060F062 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 6353C042171C457C0060F062 /* AFHTTPClient.m */; };
@@ -113,10 +123,22 @@
 		632F43A3171CDE2F00A5B43A /* AnimeTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AnimeTableView.m; path = "Views/Table Views/AnimeTableView.m"; sourceTree = "<group>"; };
 		632F43A5171CDE3900A5B43A /* MangaTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MangaTableView.h; path = Views/MangaTableView.h; sourceTree = "<group>"; };
 		632F43A6171CDE3900A5B43A /* MangaTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MangaTableView.m; path = Views/MangaTableView.m; sourceTree = "<group>"; };
-		632F43A9171D7DF100A5B43A /* AnimeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimeViewController.h; sourceTree = "<group>"; };
-		632F43AA171D7DF100A5B43A /* AnimeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimeViewController.m; sourceTree = "<group>"; };
-		632F43AC171D7DFB00A5B43A /* MangaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MangaViewController.h; sourceTree = "<group>"; };
-		632F43AD171D7DFB00A5B43A /* MangaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MangaViewController.m; sourceTree = "<group>"; };
+		632F43A9171D7DF100A5B43A /* AnimeListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimeListViewController.h; sourceTree = "<group>"; };
+		632F43AA171D7DF100A5B43A /* AnimeListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimeListViewController.m; sourceTree = "<group>"; };
+		632F43AC171D7DFB00A5B43A /* MangaListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MangaListViewController.h; sourceTree = "<group>"; };
+		632F43AD171D7DFB00A5B43A /* MangaListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MangaListViewController.m; sourceTree = "<group>"; };
+		63502793171E4D430004C106 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
+		63502797171E4D760004C106 /* bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg@2x.png"; sourceTree = "<group>"; };
+		6350279A171E4EA20004C106 /* UIFont+AniList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIFont+AniList.h"; path = "Categories/UIFont+AniList.h"; sourceTree = "<group>"; };
+		6350279B171E4EA20004C106 /* UIFont+AniList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIFont+AniList.m"; path = "Categories/UIFont+AniList.m"; sourceTree = "<group>"; };
+		6350279D171E51450004C106 /* AnimeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimeViewController.h; sourceTree = "<group>"; };
+		6350279E171E51450004C106 /* AnimeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimeViewController.m; sourceTree = "<group>"; };
+		6350279F171E51450004C106 /* AnimeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AnimeViewController.xib; sourceTree = "<group>"; };
+		635027A2171E53550004C106 /* 24646.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 24646.jpg; path = Images/Placeholders/24646.jpg; sourceTree = "<group>"; };
+		635027A4171E58CC0004C106 /* action.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = action.png; path = Images/Icons/action.png; sourceTree = "<group>"; };
+		635027A5171E58CC0004C106 /* action@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "action@2x.png"; path = "Images/Icons/action@2x.png"; sourceTree = "<group>"; };
+		635027A6171E58CC0004C106 /* back_arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = back_arrow.png; path = Images/Icons/back_arrow.png; sourceTree = "<group>"; };
+		635027A7171E58CC0004C106 /* back_arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "back_arrow@2x.png"; path = "Images/Icons/back_arrow@2x.png"; sourceTree = "<group>"; };
 		6353C03B171C43680060F062 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		6353C041171C457C0060F062 /* AFHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPClient.h; sourceTree = "<group>"; };
 		6353C042171C457C0060F062 /* AFHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPClient.m; sourceTree = "<group>"; };
@@ -212,10 +234,13 @@
 				632F4398171CDDEA00A5B43A /* AniListViewController.h */,
 				632F4399171CDDEA00A5B43A /* AniListViewController.m */,
 				632F439A171CDDEB00A5B43A /* AniListViewController.xib */,
-				632F43A9171D7DF100A5B43A /* AnimeViewController.h */,
-				632F43AA171D7DF100A5B43A /* AnimeViewController.m */,
-				632F43AC171D7DFB00A5B43A /* MangaViewController.h */,
-				632F43AD171D7DFB00A5B43A /* MangaViewController.m */,
+				632F43A9171D7DF100A5B43A /* AnimeListViewController.h */,
+				632F43AA171D7DF100A5B43A /* AnimeListViewController.m */,
+				632F43AC171D7DFB00A5B43A /* MangaListViewController.h */,
+				632F43AD171D7DFB00A5B43A /* MangaListViewController.m */,
+				6350279D171E51450004C106 /* AnimeViewController.h */,
+				6350279E171E51450004C106 /* AnimeViewController.m */,
+				6350279F171E51450004C106 /* AnimeViewController.xib */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -232,6 +257,7 @@
 		632F438E171CDA2700A5B43A /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				63502799171E4E7C0004C106 /* Categories */,
 				632F4390171CDA3000A5B43A /* Other */,
 				632F438F171CDA2C00A5B43A /* Core Data */,
 			);
@@ -264,6 +290,8 @@
 		632F4392171CDC6100A5B43A /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				635027A2171E53550004C106 /* 24646.jpg */,
+				63502792171E4D430004C106 /* Background */,
 				63922CEC171D82C800D41BCE /* spacepyro.jpg */,
 				63922CEB171D82BB00D41BCE /* Icons */,
 			);
@@ -306,6 +334,25 @@
 				632F43A6171CDE3900A5B43A /* MangaTableView.m */,
 			);
 			name = "Table Views";
+			sourceTree = "<group>";
+		};
+		63502792171E4D430004C106 /* Background */ = {
+			isa = PBXGroup;
+			children = (
+				63502797171E4D760004C106 /* bg@2x.png */,
+				63502793171E4D430004C106 /* bg.png */,
+			);
+			name = Background;
+			path = Images/Background;
+			sourceTree = "<group>";
+		};
+		63502799171E4E7C0004C106 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				6350279A171E4EA20004C106 /* UIFont+AniList.h */,
+				6350279B171E4EA20004C106 /* UIFont+AniList.m */,
+			);
+			name = Categories;
 			sourceTree = "<group>";
 		};
 		6353C03D171C457C0060F062 /* Libraries */ = {
@@ -462,6 +509,10 @@
 		63922CEB171D82BB00D41BCE /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				635027A4171E58CC0004C106 /* action.png */,
+				635027A5171E58CC0004C106 /* action@2x.png */,
+				635027A6171E58CC0004C106 /* back_arrow.png */,
+				635027A7171E58CC0004C106 /* back_arrow@2x.png */,
 				632F4394171CDC7600A5B43A /* hamburger.png */,
 				632F4395171CDC7600A5B43A /* hamburger@2x.png */,
 			);
@@ -552,6 +603,14 @@
 				632F4397171CDC7600A5B43A /* hamburger@2x.png in Resources */,
 				632F439C171CDDED00A5B43A /* AniListViewController.xib in Resources */,
 				63922CED171D82C800D41BCE /* spacepyro.jpg in Resources */,
+				63502795171E4D430004C106 /* bg.png in Resources */,
+				63502798171E4D760004C106 /* bg@2x.png in Resources */,
+				635027A1171E51450004C106 /* AnimeViewController.xib in Resources */,
+				635027A3171E53550004C106 /* 24646.jpg in Resources */,
+				635027A8171E58CC0004C106 /* action.png in Resources */,
+				635027A9171E58CC0004C106 /* action@2x.png in Resources */,
+				635027AA171E58CC0004C106 /* back_arrow.png in Resources */,
+				635027AB171E58CC0004C106 /* back_arrow@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -624,8 +683,10 @@
 				632F43A1171CDE2100A5B43A /* AniListTableView.m in Sources */,
 				632F43A4171CDE2F00A5B43A /* AnimeTableView.m in Sources */,
 				632F43A7171CDE3900A5B43A /* MangaTableView.m in Sources */,
-				632F43AB171D7DF100A5B43A /* AnimeViewController.m in Sources */,
-				632F43AE171D7DFB00A5B43A /* MangaViewController.m in Sources */,
+				632F43AB171D7DF100A5B43A /* AnimeListViewController.m in Sources */,
+				632F43AE171D7DFB00A5B43A /* MangaListViewController.m in Sources */,
+				6350279C171E4EA20004C106 /* UIFont+AniList.m in Sources */,
+				635027A0171E51450004C106 /* AnimeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

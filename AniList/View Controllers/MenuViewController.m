@@ -14,13 +14,8 @@
 #define kCellViewControllerKey @"kCellViewControllerKey"
 #define kCellActionKey @"kCellActionKey"
 
-typedef enum {
-    kCellTypeProfile = 0,
-    kCellTypeMenu
-} CellType;
-
 @interface MenuViewController ()
-
+@property (nonatomic, weak) IBOutlet UITableView *tableView;
 @end
 
 @implementation MenuViewController
@@ -28,30 +23,32 @@ typedef enum {
 static NSArray *items = nil;
 
 static NSString *CellIdentifier = @"Cell";
-static NSString *ProfileCellIdentifier = @"ProfileCell";
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
+- (id)init {
+    self = [super init];
+    if(self) {
+        
     }
+    
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
+    self.tableView.scrollEnabled = NO;
+    
     if(!items) {
         items = @[
                   @{
                       kCellTitleKey : @"Anime",
-                      kCellViewControllerKey : @"AnimeViewController",
+                      kCellViewControllerKey : @"AnimeListViewController",
                       kCellActionKey : @"loadViewController:"
                       },
                   @{
                       kCellTitleKey : @"Manga",
-                      kCellViewControllerKey : @"MangaViewController",
+                      kCellViewControllerKey : @"MangaListViewController",
                       kCellActionKey : @"loadViewController:"
                       },
                   @{
@@ -92,88 +89,37 @@ static NSString *ProfileCellIdentifier = @"ProfileCell";
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    switch (indexPath.section) {
-        case kCellTypeProfile :
-            return [ProfileCell cellHeight];
-        case kCellTypeMenu :
-            return [MenuCell cellHeight];
-        default:
-            NSAssert(NO, @"Cell must either be a ProfileCell or MenuCell.");
-    }
-    
-    return 0;
+    return [MenuCell cellHeight];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    switch (section) {
-        case kCellTypeProfile :
-            return 1;
-        case kCellTypeMenu :
-            return items.count;
-        default :
-            return 0;
-    }
+    return items.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    switch (indexPath.section) {
-        case kCellTypeProfile : {
-            ProfileCell *cell = [tableView dequeueReusableCellWithIdentifier:ProfileCellIdentifier];
-            if(!cell) {
-                NSArray *nib = [[NSBundle mainBundle] loadNibNamed:[ProfileCell cellID] owner:self options:nil];
-                cell = (ProfileCell *)[nib objectAtIndex:0];
-//                cell = [[ProfileCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ProfileCellIdentifier];
-            }
-            
-            cell.username.text = @"SpacePyro";
-            cell.avatar.image = [UIImage imageNamed:@"spacepyro.jpg"];
-            
-            return cell;
-        }
-            
-        case kCellTypeMenu : {
-            MenuCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-            if(!cell) {
-                cell = [[MenuCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-            }
-            
-            cell.textLabel.text = items[indexPath.row][kCellTitleKey];
-            
-            return cell;
-        }
-            
-        default : {
-            NSAssert(NO, @"Cell must either be a ProfileCell or MenuCell.");
-            return nil;
-        }
+        
+    MenuCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if(!cell) {
+        cell = [[MenuCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
+    
+    cell.textLabel.text = items[indexPath.row][kCellTitleKey];
+    
+    return cell;
 }
 
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    switch (indexPath.section) {
-        case kCellTypeProfile : {
-            return;
-        }
-            
-        case kCellTypeMenu : {
-            Class class = NSClassFromString(items[indexPath.row][kCellViewControllerKey]);
-            if([class isSubclassOfClass:[UIViewController class]]) {
-                UIViewController *viewController = [[class alloc] init];
-                [self loadViewController:viewController];
-            }
-            break;
-        }
-            
-        default:
-            NSAssert(NO, @"Cell must either be a ProfileCell or MenuCell.");
+    Class class = NSClassFromString(items[indexPath.row][kCellViewControllerKey]);
+    if([class isSubclassOfClass:[UIViewController class]]) {
+        UIViewController *viewController = [[class alloc] init];
+        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
+        [self loadViewController:navigationController];
     }
 }
 
