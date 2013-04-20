@@ -8,6 +8,7 @@
 
 #import "AniListViewController.h"
 #import "AniListAppDelegate.h"
+#import "AniNavigationBar.h"
 
 @interface AniListViewController ()
 
@@ -39,7 +40,27 @@
     self.view.backgroundColor = [UIColor darkGrayColor];
     self.tableView.backgroundColor = [UIColor clearColor];
     
-    self.navigationController.navigationBar.hidden = YES;
+            self.navigation = [[AniNavigationBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+    
+//    UIImageView *myImageView = ["the image view"];
+    CAGradientLayer *l = [CAGradientLayer layer];
+    l.frame = self.maskView.frame;
+    l.colors = [NSArray arrayWithObjects:(id)[[UIColor colorWithRed:0 green:0 blue:0 alpha:0] CGColor], (id)[[UIColor colorWithRed:0 green:0 blue:0 alpha:1] CGColor], nil];
+    
+    l.startPoint = CGPointMake(0.0, 0.03f);
+    l.endPoint = CGPointMake(0.0f, 0.15f);
+    
+    //you can change the direction, obviously, this would be top to bottom fade
+    self.maskView.layer.mask = l;
+    
+    self.tableView.backgroundColor = [UIColor clearColor];
+        [self.view addSubview:self.navigation];
+    
+//    UIBarButtonItem *hamburger = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"hamburger.png"] style:UIBarButtonItemStyleBordered target:revealController action:@selector(revealToggle:)];
+    
+//    self.navigationItem.leftBarButtonItem = hamburger;
+//    self.navigationItem.title = @"Anime";
+//    self.navigationController.navigationBar.hidden = YES;
 }
 
 - (void)didReceiveMemoryWarning

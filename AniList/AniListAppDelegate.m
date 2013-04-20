@@ -37,7 +37,41 @@
     
     [Crashlytics startWithAPIKey:@"c01aa6f0d36b5000da6aa8c83dda558c23be54f8"];
     
+    [self setStyleAttributes];
+    
     return YES;
+}
+
+- (void)setStyleAttributes {
+    SWRevealViewController *vc = (SWRevealViewController *)self.window.rootViewController;
+    UINavigationController *nvc = ((UINavigationController *)vc.frontViewController);
+    nvc.navigationBar.translucent = YES; // Setting this slides the view up, underneath the nav bar (otherwise it'll appear black)
+    const float colorMask[6] = {222, 255, 222, 255, 222, 255};
+    UIImage *img = [[UIImage alloc] init];
+    UIImage *maskedImage = [UIImage imageWithCGImage: CGImageCreateWithMaskingColors(img.CGImage, colorMask)];
+
+    [nvc.navigationBar setShadowImage:[[UIImage alloc] init]];
+    [nvc.navigationBar setBackgroundImage:maskedImage forBarMetrics:UIBarMetricsDefault];
+    
+    
+//    UIImage *buttonBg = [[UIImage imageNamed:@"nav_btn_bg"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 3, 0, 3)];
+    [[UIBarButtonItem appearance] setBackgroundImage:[[UIImage alloc] init] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    [[UIBarButtonItem appearance] setBackgroundImage:[[UIImage alloc] init] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
+    
+    UIImage *backButtonBg = [[UIImage imageNamed:@"back_arrow.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 10, 0, 2)];
+    [[UIBarButtonItem appearance] setBackButtonBackgroundImage:backButtonBg forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    [[UIBarButtonItem appearance] setBackButtonBackgroundImage:backButtonBg forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
+//    
+//    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back_arrow.png"] style:UIBarButtonItemStyleBordered target:nvc action:@selector(popViewControllerAnimated:)];
+//    
+//    nvc.navigationItem.backBarButtonItem = backButton;
+//    
+//    [[UIBarButtonItem appearance] setBackBarButtonItem:backButton];
+    
+    [[UIBarButtonItem appearance] setTitleTextAttributes:@{UITextAttributeFont: [UIFont fontWithName:@"HelveticaNeue-Light" size:0.0], UITextAttributeTextShadowOffset: [NSValue valueWithUIOffset:UIOffsetMake(0, -1)]} forState:UIControlStateNormal];
+    
+    [[UINavigationBar appearance] setTitleTextAttributes:@{UITextAttributeFont: [UIFont fontWithName:@"HelveticaNeue-Light" size:0.0], UITextAttributeTextShadowOffset: [NSValue valueWithUIOffset:UIOffsetMake(0, -1)]}];
+
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

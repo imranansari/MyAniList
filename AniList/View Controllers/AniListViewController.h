@@ -7,12 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <QuartzCore/QuartzCore.h>
 #import "AniListTableView.h"
+#import "AniNavigationBar.h"
 
 @interface AniListViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate>
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic, strong) AniNavigationBar *navigation;
+@property (nonatomic, weak) IBOutlet UIView *maskView;
 @property (nonatomic, weak) IBOutlet AniListTableView *tableView;
 @property (nonatomic, weak) IBOutlet UIButton *menuButton;
 

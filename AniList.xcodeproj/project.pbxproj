@@ -86,6 +86,7 @@
 		635484CD171C2FA7003457CB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 635484CB171C2FA7003457CB /* InfoPlist.strings */; };
 		635484D0171C2FA7003457CB /* AniListTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 635484CF171C2FA7003457CB /* AniListTests.m */; };
 		63922CED171D82C800D41BCE /* spacepyro.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 63922CEC171D82C800D41BCE /* spacepyro.jpg */; };
+		63DF46B01722064300B6DF1A /* AniNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 63DF46AF1722064300B6DF1A /* AniNavigationBar.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -199,6 +200,8 @@
 		635484CE171C2FA7003457CB /* AniListTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AniListTests.h; sourceTree = "<group>"; };
 		635484CF171C2FA7003457CB /* AniListTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AniListTests.m; sourceTree = "<group>"; };
 		63922CEC171D82C800D41BCE /* spacepyro.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = spacepyro.jpg; path = Images/Placeholders/spacepyro.jpg; sourceTree = "<group>"; };
+		63DF46AE1722064300B6DF1A /* AniNavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AniNavigationBar.h; path = Views/AniNavigationBar.h; sourceTree = "<group>"; };
+		63DF46AF1722064300B6DF1A /* AniNavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AniNavigationBar.m; path = Views/AniNavigationBar.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -259,6 +262,8 @@
 			children = (
 				632F439E171CDE0300A5B43A /* Table Views */,
 				632F439D171CDDFB00A5B43A /* Table Cells */,
+				63DF46AE1722064300B6DF1A /* AniNavigationBar.h */,
+				63DF46AF1722064300B6DF1A /* AniNavigationBar.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -705,6 +710,7 @@
 				635027A0171E51450004C106 /* AnimeViewController.m in Sources */,
 				635027BA171ED41A0004C106 /* AnimeService.m in Sources */,
 				635027BD171ED60A0004C106 /* Anime.m in Sources */,
+				63DF46B01722064300B6DF1A /* AniNavigationBar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
