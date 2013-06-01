@@ -13,5 +13,7 @@
 
 + (Anime *)animeForID:(NSNumber *)ID;
 + (Anime *)addAnime:(NSDictionary *)data;
++ (Anime *)editAnime:(NSDictionary *)data;
++ (void)deleteAnime:(Anime *)anime;
 
 @end

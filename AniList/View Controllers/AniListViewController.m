@@ -37,30 +37,22 @@
     [self.view addGestureRecognizer:revealController.panGestureRecognizer];
     [self.menuButton addTarget:revealController action:@selector(revealToggle:) forControlEvents:UIControlEventTouchUpInside];
     
-    self.view.backgroundColor = [UIColor darkGrayColor];
     self.tableView.backgroundColor = [UIColor clearColor];
     
-            self.navigation = [[AniNavigationBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+    self.navigation = [[AniNavigationBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
     
-//    UIImageView *myImageView = ["the image view"];
-    CAGradientLayer *l = [CAGradientLayer layer];
-    l.frame = self.maskView.frame;
-    l.colors = [NSArray arrayWithObjects:(id)[[UIColor colorWithRed:0 green:0 blue:0 alpha:0] CGColor], (id)[[UIColor colorWithRed:0 green:0 blue:0 alpha:1] CGColor], nil];
+    CAGradientLayer *gradient = [CAGradientLayer layer];
+    gradient.frame = self.maskView.frame;
+    gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor colorWithRed:0 green:0 blue:0 alpha:0] CGColor], (id)[[UIColor colorWithRed:0 green:0 blue:0 alpha:1] CGColor], nil];
     
-    l.startPoint = CGPointMake(0.0, 0.03f);
-    l.endPoint = CGPointMake(0.0f, 0.15f);
+    gradient.startPoint = CGPointMake(0.0, 0.03f);
+    gradient.endPoint = CGPointMake(0.0f, 0.15f);
     
-    //you can change the direction, obviously, this would be top to bottom fade
-    self.maskView.layer.mask = l;
+    self.maskView.layer.mask = gradient;
     
-    self.tableView.backgroundColor = [UIColor clearColor];
-        [self.view addSubview:self.navigation];
+    self.navigationController.navigationBarHidden = YES;
     
-//    UIBarButtonItem *hamburger = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"hamburger.png"] style:UIBarButtonItemStyleBordered target:revealController action:@selector(revealToggle:)];
-    
-//    self.navigationItem.leftBarButtonItem = hamburger;
-//    self.navigationItem.title = @"Anime";
-//    self.navigationController.navigationBar.hidden = YES;
+    [self.view addSubview:self.navigation];
 }
 
 - (void)didReceiveMemoryWarning
@@ -98,6 +90,16 @@
     return [sectionInfo numberOfObjects];
 }
 
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    NSNumber *headerSection = [self.fetchedResultsController sectionIndexTitles][section];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 20)];
+    view.backgroundColor = [UIColor blueColor];
+    UILabel *label = [[UILabel alloc] initWithFrame:view.bounds];
+    label.text = self.sectionHeaders[[headerSection intValue]];
+    [view addSubview:label];
+    return view;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     static NSString *CellIdentifier = @"Cell";
@@ -133,14 +135,17 @@
     [fetchRequest setFetchBatchSize:20];
     
     // Edit the sort key as appropriate.
+    NSSortDescriptor *statusDescriptor = [[NSSortDescriptor alloc] initWithKey:@"watched_status" ascending:YES];
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:YES];
-    NSArray *sortDescriptors = @[sortDescriptor];
+    NSArray *sortDescriptors = @[statusDescriptor, sortDescriptor];
+    
+    fetchRequest.sortDescriptors = sortDescriptors;
     
     [fetchRequest setSortDescriptors:sortDescriptors];
     
     // Edit the section name key path and cache name if appropriate.
     // nil for section name key path means "no sections".
-    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:[self entityName]];
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"column" cacheName:[self entityName]];
     aFetchedResultsController.delegate = self;
     self.fetchedResultsController = aFetchedResultsController;
     

@@ -20,7 +20,6 @@
         
         self.barTitle.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:17];
         self.barTitle.textColor = [UIColor whiteColor];
-        self.barTitle.text = @"Hello";
         self.barTitle.textAlignment = UITextAlignmentCenter;
         self.barTitle.numberOfLines = 2;
         self.barTitle.backgroundColor = [UIColor clearColor];

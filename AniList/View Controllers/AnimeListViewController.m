@@ -19,18 +19,18 @@
 @implementation AnimeListViewController
 
 - (id)init {
-    return [super init];
+    self = [super init];
+    if(self) {
+        self.sectionHeaders = @[@"Watching", @"Completed", @"On Hold", @"Dropped", @"Plan To Watch"];
+    }
+    
+    return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    // Inside a Table View Controller's viewDidLoad method
-//    UIRefreshControl *refresh = [[UIRefreshControl alloc] init];
-//    [refresh addTarget:self
-//                action:nil
-//      forControlEvents:UIControlEventValueChanged];
-//    self.tableView. = refresh;
+
+    self.navigation.barTitle.text = @"Anime";
     
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://mal-api.com/animelist/spacepyro"]];
     
@@ -101,14 +101,33 @@
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    Anime *anime = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    
     AnimeViewController *animeVC = [[AnimeViewController alloc] init];
+    animeVC.anime = anime;
+    
     [self.navigationController pushViewController:animeVC animated:YES];
 }
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     Anime *anime = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell = (AnimeCell *)cell;
-    cell.textLabel.text = anime.title;
+    AnimeCell *animeCell = (AnimeCell *)cell;
+    animeCell.title.text = anime.title;
+    animeCell.progress.text = [NSString stringWithFormat:@"On episode %d of %d", [anime.current_episode intValue], [anime.total_episodes intValue]];
+    animeCell.rank.text = [NSString stringWithFormat:@"%d", [anime.rank intValue]];
+    animeCell.type.text = [Anime stringForAnimeType:[anime.type intValue]];
+    
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:anime.image]];
+    AFImageRequestOperation *operation = [AFImageRequestOperation imageRequestOperationWithRequest:request success:^(UIImage *image) {
+        
+        animeCell.image.image = image;
+//        [UIView animateWithDuration:0.3f animations:^{
+//            animeCell.image.alpha = 1.0f;
+//            animeCell.image.image = image;
+//        }];
+    }];
+    
+    [operation start];
 }
 
 @end

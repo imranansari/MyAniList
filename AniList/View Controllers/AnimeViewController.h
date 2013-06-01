@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Anime.h"
 
 @interface AnimeViewController : UIViewController
+
+@property (nonatomic, strong) Anime *anime;
 
 @end

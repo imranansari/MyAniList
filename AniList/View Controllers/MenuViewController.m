@@ -21,7 +21,6 @@
 @implementation MenuViewController
 
 static NSArray *items = nil;
-
 static NSString *CellIdentifier = @"Cell";
 
 - (id)init {

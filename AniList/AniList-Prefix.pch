@@ -15,5 +15,5 @@
 
     #import "SWRevealViewController.h"
     #import "AFNetworking.h"
-    #import "UIFont+AniList.h"
+    #import "Categories.h"
 #endif

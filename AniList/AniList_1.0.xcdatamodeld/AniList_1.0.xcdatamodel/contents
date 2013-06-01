@@ -4,6 +4,8 @@
         <attribute name="anime_id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="average_count" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="average_score" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="classification" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="column" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="comments" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="current_episode" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="date_finish" optional="YES" attributeType="Date" syncable="YES"/>
@@ -45,6 +47,7 @@
     </entity>
     <entity name="Manga" syncable="YES">
         <attribute name="chapter" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="column" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="comments" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="date_finish" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="date_start" optional="YES" attributeType="Date" syncable="YES"/>
@@ -75,10 +78,10 @@
         <relationship name="manga" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Manga" inverseName="tags" inverseEntity="Manga" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Anime" positionX="160" positionY="192" width="128" height="585"/>
-        <element name="Manga" positionX="160" positionY="192" width="128" height="330"/>
-        <element name="Tag" positionX="160" positionY="192" width="128" height="90"/>
+        <element name="Anime" positionX="160" positionY="192" width="128" height="615"/>
         <element name="Genre" positionX="160" positionY="192" width="128" height="90"/>
+        <element name="Manga" positionX="160" positionY="192" width="128" height="345"/>
         <element name="Synonym" positionX="160" positionY="192" width="128" height="90"/>
+        <element name="Tag" positionX="160" positionY="192" width="128" height="90"/>
     </elements>
 </model>

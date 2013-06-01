@@ -9,38 +9,66 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+typedef enum {
+    AnimeWatchedStatusUnknown = -1,
+    AnimeWatchedStatusWatching,
+    AnimeWatchedStatusCompleted,
+    AnimeWatchedStatusOnHold,
+    AnimeWatchedStatusDropped,
+    AnimeWatchedStatusPlanToWatch,
+} AnimeWatchedStatus;
+
+typedef enum {
+    AnimeTypeUnknown = -1,
+    AnimeTypeTV,
+    AnimeTypeMovie,
+    AnimeTypeOVA,
+    AnimeTypeONA,
+    AnimeTypeSpecial,
+    AnimeTypeMusic
+} AnimeType;
+
+typedef enum {
+    AnimeAirStatusUnknown = -1,
+    AnimeAirStatusFinishedAiring,
+    AnimeAirStatusCurrentlyAiring,
+    AnimeAirStatusNotYetAired
+} AnimeAirStatus;
+
 @class Anime;
 
 @interface Anime : NSManagedObject
 
-@property (nonatomic, retain) NSNumber * average_count;
-@property (nonatomic, retain) NSNumber * average_score;
-@property (nonatomic, retain) NSString * comments;
-@property (nonatomic, retain) NSNumber * current_episode;
-@property (nonatomic, retain) NSDate * date_finish;
-@property (nonatomic, retain) NSDate * date_start;
-@property (nonatomic, retain) NSNumber * downloaded_episodes;
-@property (nonatomic, retain) NSNumber * enable_discussion;
-@property (nonatomic, retain) NSNumber * enable_rewatching;
-@property (nonatomic, retain) NSString * english_title;
-@property (nonatomic, retain) NSString * fansub_group;
-@property (nonatomic, retain) NSNumber * favorited_count;
-@property (nonatomic, retain) NSNumber * anime_id;
-@property (nonatomic, retain) NSString * image;
-@property (nonatomic, retain) NSNumber * popularity_rank;
-@property (nonatomic, retain) NSNumber * priority;
-@property (nonatomic, retain) NSNumber * rank;
-@property (nonatomic, retain) NSNumber * rewatch_value;
-@property (nonatomic, retain) NSNumber * status;
-@property (nonatomic, retain) NSNumber * storage_type;
-@property (nonatomic, retain) NSNumber * storage_value;
-@property (nonatomic, retain) NSString * synopsis;
-@property (nonatomic, retain) NSNumber * times_rewatched;
-@property (nonatomic, retain) NSString * title;
-@property (nonatomic, retain) NSNumber * total_episodes;
-@property (nonatomic, retain) NSNumber * type;
-@property (nonatomic, retain) NSNumber * user_score;
-@property (nonatomic, retain) NSNumber * watched_status;
+@property (nonatomic, retain) NSNumber *average_count;
+@property (nonatomic, retain) NSNumber *average_score;
+@property (nonatomic, retain) NSString *classification;
+@property (nonatomic, retain) NSNumber *column;
+@property (nonatomic, retain) NSString *comments;
+@property (nonatomic, retain) NSNumber *current_episode;
+@property (nonatomic, retain) NSDate *date_finish;
+@property (nonatomic, retain) NSDate *date_start;
+@property (nonatomic, retain) NSNumber *downloaded_episodes;
+@property (nonatomic, retain) NSNumber *enable_discussion;
+@property (nonatomic, retain) NSNumber *enable_rewatching;
+@property (nonatomic, retain) NSString *english_title;
+@property (nonatomic, retain) NSString *fansub_group;
+@property (nonatomic, retain) NSNumber *favorited_count;
+@property (nonatomic, retain) NSNumber *anime_id;
+@property (nonatomic, retain) NSString *image;
+@property (nonatomic, retain) NSNumber *popularity_rank;
+@property (nonatomic, retain) NSNumber *priority;
+@property (nonatomic, retain) NSNumber *rank;
+@property (nonatomic, retain) NSNumber *rewatch_value;
+@property (nonatomic, retain) NSNumber *status;
+@property (nonatomic, retain) NSNumber *storage_type;
+@property (nonatomic, retain) NSNumber *storage_value;
+@property (nonatomic, retain) NSString *synopsis;
+@property (nonatomic, retain) NSNumber *times_rewatched;
+@property (nonatomic, retain) NSString *title;
+@property (nonatomic, retain) NSNumber *total_episodes;
+@property (nonatomic, retain) NSNumber *type;
+@property (nonatomic, retain) NSNumber *user_score;
+@property (nonatomic, retain) NSNumber *watched_status;
 @property (nonatomic, retain) NSManagedObject *tags;
 @property (nonatomic, retain) NSManagedObject *genres;
 @property (nonatomic, retain) NSSet *synonyms;
@@ -57,5 +85,10 @@
 - (void)removeSynonymsObject:(NSManagedObject *)value;
 - (void)addSynonyms:(NSSet *)values;
 - (void)removeSynonyms:(NSSet *)values;
+
++ (AnimeType)animeTypeForValue:(NSString *)value;
++ (NSString *)stringForAnimeType:(AnimeType)animeType;
++ (AnimeAirStatus)animeAirStatusForValue:(NSString *)value;
++ (AnimeWatchedStatus)animeWatchedStatusForValue:(NSString *)value;
 
 @end
