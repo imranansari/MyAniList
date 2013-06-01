@@ -21,6 +21,7 @@
 - (id)init {
     self = [super init];
     if(self) {
+        self.title = @"Anime";
         self.sectionHeaders = @[@"Watching", @"Completed", @"On Hold", @"Dropped", @"Plan To Watch"];
     }
     
@@ -106,7 +107,6 @@
     
     AnimeViewController *animeVC = [[AnimeViewController alloc] init];
     animeVC.anime = anime;
-
     
     [self.navigationController pushViewController:animeVC animated:YES];
 }
@@ -115,21 +115,14 @@
     Anime *anime = [self.fetchedResultsController objectAtIndexPath:indexPath];
     AnimeCell *animeCell = (AnimeCell *)cell;
     animeCell.title.text = anime.title;
-    animeCell.progress.text = [NSString stringWithFormat:@"On episode %d of %d", [anime.current_episode intValue], [anime.total_episodes intValue]];
-    animeCell.rank.text = [NSString stringWithFormat:@"%d", [anime.user_score intValue]];
+    [animeCell.title sizeToFit];
+    animeCell.progress.text = [AnimeCell progressTextForAnime:anime];
+    animeCell.rank.text = [anime.user_score intValue] != -1 ? [NSString stringWithFormat:@"%d", [anime.user_score intValue]] : @"";
     animeCell.type.text = [Anime stringForAnimeType:[anime.type intValue]];
-//    animeCell.backgroundView = nil;
-    animeCell.backgroundColor = [UIColor clearColor];
-    animeCell.backgroundView = [[UIView alloc] initWithFrame:CGRectZero];
     
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:anime.image]];
     AFImageRequestOperation *operation = [AFImageRequestOperation imageRequestOperationWithRequest:request success:^(UIImage *image) {
-        
         animeCell.image.image = image;
-//        [UIView animateWithDuration:0.3f animations:^{
-//            animeCell.image.alpha = 1.0f;
-//            animeCell.image.image = image;
-//        }];
     }];
     
     [operation start];

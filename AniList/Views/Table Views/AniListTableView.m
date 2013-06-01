@@ -8,6 +8,8 @@
 
 #import "AniListTableView.h"
 
+#define DEFAULT_OFFSET  44
+
 @implementation AniListTableView
 
 - (id)initWithFrame:(CGRect)frame
@@ -16,6 +18,21 @@
     if (self) {
         // Initialization code
     }
+    return self;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if(self) {
+        self.backgroundColor = [UIColor clearColor];
+        self.frame = CGRectMake(self.frame.origin.x,
+                                self.frame.origin.y + DEFAULT_OFFSET,
+                                self.frame.size.width,
+                                self.frame.size.height - DEFAULT_OFFSET);
+        self.backgroundView = nil;
+        self.separatorColor = [UIColor grayColor];
+    }
+    
     return self;
 }
 

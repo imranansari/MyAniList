@@ -20,7 +20,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigation.barTitle.text = @"Manga";
+    self.title = @"Manga";
 }
 
 - (void)didReceiveMemoryWarning {

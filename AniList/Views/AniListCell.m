@@ -14,7 +14,15 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        // Initialization code
+        [self setup];
+    }
+    return self;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if(self) {
+        [self setup];
     }
     return self;
 }
@@ -24,6 +32,14 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+- (void)setup {
+    self.backgroundColor = [UIColor clearColor];
+    self.backgroundView = [[UIView alloc] initWithFrame:CGRectZero];
+    UIView *select = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 340, 90)];
+    select.backgroundColor = [UIColor colorWithWhite:1.0f alpha:0.1f];
+    self.selectedBackgroundView = select;
 }
 
 - (CGFloat)cellHeight {

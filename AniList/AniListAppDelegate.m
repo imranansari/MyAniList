@@ -43,17 +43,6 @@
 }
 
 - (void)setStyleAttributes {
-    SWRevealViewController *vc = (SWRevealViewController *)self.window.rootViewController;
-    UINavigationController *nvc = ((UINavigationController *)vc.frontViewController);
-    nvc.navigationBar.translucent = YES; // Setting this slides the view up, underneath the nav bar (otherwise it'll appear black)
-    const float colorMask[6] = {222, 255, 222, 255, 222, 255};
-    UIImage *img = [[UIImage alloc] init];
-    UIImage *maskedImage = [UIImage imageWithCGImage: CGImageCreateWithMaskingColors(img.CGImage, colorMask)];
-
-    [nvc.navigationBar setShadowImage:[[UIImage alloc] init]];
-    [nvc.navigationBar setBackgroundImage:maskedImage forBarMetrics:UIBarMetricsDefault];
-    
-    
 //    UIImage *buttonBg = [[UIImage imageNamed:@"nav_btn_bg"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 3, 0, 3)];
     [[UIBarButtonItem appearance] setBackgroundImage:[[UIImage alloc] init] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     [[UIBarButtonItem appearance] setBackgroundImage:[[UIImage alloc] init] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];

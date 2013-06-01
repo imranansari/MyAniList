@@ -8,8 +8,12 @@
 
 #import "AniListCell.h"
 
+@class Anime;
+
 @interface AnimeCell : AniListCell
 
 + (CGFloat)cellHeight;
+
++ (NSString *)progressTextForAnime:(Anime *)anime;
 
 @end

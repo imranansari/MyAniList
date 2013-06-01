@@ -68,7 +68,7 @@
     
     anime.watched_status = @([Anime animeWatchedStatusForValue:data[@"watched_status"]]);
     anime.current_episode = data[@"watched_episodes"];
-    anime.user_score = [data[@"score"] isNull] ? @(0) :data[@"score"];
+    anime.user_score = [data[@"score"] intValue] == 0 ? @(-1) : data[@"score"];
     
     [[AnimeService managedObjectContext] save:&error];
     

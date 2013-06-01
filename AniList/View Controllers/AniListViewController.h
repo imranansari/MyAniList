@@ -15,7 +15,6 @@
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
-@property (nonatomic, strong) AniNavigationBar *navigation;
 @property (nonatomic, copy) NSArray *sectionHeaders;
 @property (nonatomic, weak) IBOutlet UIView *maskView;
 @property (nonatomic, weak) IBOutlet AniListTableView *tableView;

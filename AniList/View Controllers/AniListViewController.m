@@ -8,7 +8,6 @@
 
 #import "AniListViewController.h"
 #import "AniListAppDelegate.h"
-#import "AniNavigationBar.h"
 
 @interface AniListViewController ()
 
@@ -32,14 +31,21 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     SWRevealViewController *revealController = self.revealViewController;
+    
+    UINavigationController *nvc = ((UINavigationController *)self.revealViewController.frontViewController);
+    nvc.navigationBar.translucent = YES; // Setting this slides the view up, underneath the nav bar (otherwise it'll appear black)
+    const float colorMask[6] = {222, 255, 222, 255, 222, 255};
+    UIImage *img = [[UIImage alloc] init];
+    UIImage *maskedImage = [UIImage imageWithCGImage: CGImageCreateWithMaskingColors(img.CGImage, colorMask)];
+    
+    [nvc.navigationBar setShadowImage:[[UIImage alloc] init]];
+    [nvc.navigationBar setBackgroundImage:maskedImage forBarMetrics:UIBarMetricsDefault];
     
     [self.view addGestureRecognizer:revealController.panGestureRecognizer];
     [self.menuButton addTarget:revealController action:@selector(revealToggle:) forControlEvents:UIControlEventTouchUpInside];
-    
-    self.tableView.backgroundColor = [UIColor clearColor];
-    self.tableView.frame = CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y + 44, self.tableView.frame.size.width, self.tableView.frame.size.height - 44);
-    self.tableView.backgroundView = nil;
+
     self.view.backgroundColor = [UIColor clearColor];
     
     CAGradientLayer *gradient = [CAGradientLayer layer];
@@ -50,9 +56,16 @@
     gradient.endPoint = CGPointMake(0.0f, 0.10f);
     
     self.maskView.layer.mask = gradient;
-    
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"hamburger.png"] style:UIBarButtonItemStylePlain target:revealController action:@selector(revealToggle:)];
+}
 
-    self.title = @"Anime";
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+    if(indexPath) {
+        [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    }
 }
 
 - (void)didReceiveMemoryWarning
