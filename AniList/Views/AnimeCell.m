@@ -14,7 +14,8 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code
+        self.backgroundColor = [UIColor clearColor];
+        self.backgroundView = [[UIView alloc] initWithFrame:CGRectZero];
     }
     return self;
 }

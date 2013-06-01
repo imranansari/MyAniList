@@ -93,6 +93,8 @@
 		6372893C17542D110032F425 /* MALHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 6372893A17542D110032F425 /* MALHTTPClient.m */; };
 		637CF6EC175986840009ADF3 /* NSObject+AniList.m in Sources */ = {isa = PBXBuildFile; fileRef = 637CF6EB175986840009ADF3 /* NSObject+AniList.m */; };
 		637CF6ED175986840009ADF3 /* NSObject+AniList.m in Sources */ = {isa = PBXBuildFile; fileRef = 637CF6EB175986840009ADF3 /* NSObject+AniList.m */; };
+		637CF6F31759940E0009ADF3 /* test_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 637CF6F21759940E0009ADF3 /* test_background@2x.png */; };
+		637CF6F41759940E0009ADF3 /* test_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 637CF6F21759940E0009ADF3 /* test_background@2x.png */; };
 		63922CED171D82C800D41BCE /* spacepyro.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 63922CEC171D82C800D41BCE /* spacepyro.jpg */; };
 		63DF46B01722064300B6DF1A /* AniNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 63DF46AF1722064300B6DF1A /* AniNavigationBar.m */; };
 /* End PBXBuildFile section */
@@ -216,6 +218,7 @@
 		637CF6EA175986840009ADF3 /* NSObject+AniList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+AniList.h"; path = "Categories/NSObject+AniList.h"; sourceTree = "<group>"; };
 		637CF6EB175986840009ADF3 /* NSObject+AniList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+AniList.m"; path = "Categories/NSObject+AniList.m"; sourceTree = "<group>"; };
 		637CF6EE175986B20009ADF3 /* Categories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Categories.h; path = Categories/Categories.h; sourceTree = "<group>"; };
+		637CF6F21759940E0009ADF3 /* test_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "test_background@2x.png"; sourceTree = "<group>"; };
 		63922CEC171D82C800D41BCE /* spacepyro.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = spacepyro.jpg; path = Images/Placeholders/spacepyro.jpg; sourceTree = "<group>"; };
 		63DF46AE1722064300B6DF1A /* AniNavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AniNavigationBar.h; path = Views/AniNavigationBar.h; sourceTree = "<group>"; };
 		63DF46AF1722064300B6DF1A /* AniNavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AniNavigationBar.m; path = Views/AniNavigationBar.m; sourceTree = "<group>"; };
@@ -385,6 +388,7 @@
 		63502792171E4D430004C106 /* Background */ = {
 			isa = PBXGroup;
 			children = (
+				637CF6F21759940E0009ADF3 /* test_background@2x.png */,
 				63502797171E4D760004C106 /* bg@2x.png */,
 				63502793171E4D430004C106 /* bg.png */,
 			);
@@ -678,6 +682,7 @@
 				631898D017222AE300758BE9 /* image_placeholder@2x.png in Resources */,
 				630965181737E82100B43489 /* Icon@2x.png in Resources */,
 				6309651A1737E82500B43489 /* Icon.png in Resources */,
+				637CF6F31759940E0009ADF3 /* test_background@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -687,6 +692,7 @@
 			files = (
 				635484CD171C2FA7003457CB /* InfoPlist.strings in Resources */,
 				6353C13A171C457D0060F062 /* AFNetworking.podspec in Resources */,
+				637CF6F41759940E0009ADF3 /* test_background@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

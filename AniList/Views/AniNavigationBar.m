@@ -22,7 +22,7 @@
         self.barTitle.textColor = [UIColor whiteColor];
         self.barTitle.textAlignment = UITextAlignmentCenter;
         self.barTitle.numberOfLines = 2;
-        self.barTitle.backgroundColor = [UIColor clearColor];
+        self.barTitle.backgroundColor = [UIColor whiteColor];
         
         [self addSubview:self.leftButton];
         [self addSubview:self.rightbutton];

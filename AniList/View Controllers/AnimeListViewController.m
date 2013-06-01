@@ -30,7 +30,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.navigation.barTitle.text = @"Anime";
+//    self.navigation.barTitle.text = @"Anime";
     
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://mal-api.com/animelist/spacepyro"]];
     
@@ -89,6 +89,7 @@
 
     AnimeCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if(!cell) {
+//        AnimeCell *cell = [AnimeCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"AnimeCell" owner:self options:nil];
         cell = (AnimeCell *)nib[0];
     }
@@ -105,6 +106,7 @@
     
     AnimeViewController *animeVC = [[AnimeViewController alloc] init];
     animeVC.anime = anime;
+
     
     [self.navigationController pushViewController:animeVC animated:YES];
 }
@@ -114,8 +116,11 @@
     AnimeCell *animeCell = (AnimeCell *)cell;
     animeCell.title.text = anime.title;
     animeCell.progress.text = [NSString stringWithFormat:@"On episode %d of %d", [anime.current_episode intValue], [anime.total_episodes intValue]];
-    animeCell.rank.text = [NSString stringWithFormat:@"%d", [anime.rank intValue]];
+    animeCell.rank.text = [NSString stringWithFormat:@"%d", [anime.user_score intValue]];
     animeCell.type.text = [Anime stringForAnimeType:[anime.type intValue]];
+//    animeCell.backgroundView = nil;
+    animeCell.backgroundColor = [UIColor clearColor];
+    animeCell.backgroundView = [[UIView alloc] initWithFrame:CGRectZero];
     
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:anime.image]];
     AFImageRequestOperation *operation = [AFImageRequestOperation imageRequestOperationWithRequest:request success:^(UIImage *image) {
