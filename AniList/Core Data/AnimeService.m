@@ -76,34 +76,33 @@
     for(NSDictionary *animeItem in animeDictionary) {
         NSMutableDictionary *anime = [[NSMutableDictionary alloc] init];
         
-        [anime addEntriesFromDictionary:@{ kUserEndDate : data[@"my_finish_date"][@"text"] }];
-        [anime addEntriesFromDictionary:@{ kUserLastUpdated : data[@"my_last_updated"][@"text"] }];
-        [anime addEntriesFromDictionary:@{ kUserStartDate : data[@"my_start_date"][@"text"] }];
-        [anime addEntriesFromDictionary:@{ kUserRewatchingStatus : data[@"my_rewatching"][@"text"] }];
-        [anime addEntriesFromDictionary:@{ kUserRewatchingEpisode : data[@"my_rewatching_ep"][@"text"] }];
-        [anime addEntriesFromDictionary:@{ kUserScore : data[@"my_score"][@"text"] }];
-        [anime addEntriesFromDictionary:@{ kUserWatchedStatus : data[@"my_status"][@"text"] }];
+        [anime addEntriesFromDictionary:@{ kID : @([animeItem[@"series_animedb_id"][@"text"] intValue]) } ];
+        [anime addEntriesFromDictionary:@{ kUserEndDate : animeItem[@"my_finish_date"][@"text"] }];
+        [anime addEntriesFromDictionary:@{ kUserLastUpdated : @([animeItem[@"my_last_updated"][@"text"] intValue]) }];
+        [anime addEntriesFromDictionary:@{ kUserStartDate : animeItem[@"my_start_date"][@"text"] }];
+        [anime addEntriesFromDictionary:@{ kUserRewatchingStatus : @([animeItem[@"my_rewatching"][@"text"] intValue]) }];
+        [anime addEntriesFromDictionary:@{ kUserRewatchingEpisode : @([animeItem[@"my_rewatching_ep"][@"text"] intValue]) }];
+        [anime addEntriesFromDictionary:@{ kUserScore : @([animeItem[@"my_score"][@"text"] intValue]) }];
+        [anime addEntriesFromDictionary:@{ kUserWatchedStatus : animeItem[@"my_status"][@"text"] }];
         
         // no tag support...yet.
-//        [anime addEntriesFromDictionary:@{ @"user_tags" : data[@"my_tags"][@"text"] }];
+//        [anime addEntriesFromDictionary:@{ @"user_tags" : animeItem[@"my_tags"][@"text"] }];
         
-        [anime addEntriesFromDictionary:@{ kUserWatchedEpisodes : data[@"my_watched_episodes"][@"text"] }];
-        [anime addEntriesFromDictionary:@{ kAirEndDate : data[@"series_end"][@"text"] }];
-        [anime addEntriesFromDictionary:@{ kEpisodes : data[@"series_episodes"][@"text"] }];
-        [anime addEntriesFromDictionary:@{ kImageURL : data[@"series_image"][@"text"] }];
-        [anime addEntriesFromDictionary:@{ kAirStartDate : data[@"series_start"][@"text"] }];
-        [anime addEntriesFromDictionary:@{ kAirStatus : data[@"series_status"][@"text"] }];
+        [anime addEntriesFromDictionary:@{ kUserWatchedEpisodes : @([animeItem[@"my_watched_episodes"][@"text"] intValue]) }];
+        [anime addEntriesFromDictionary:@{ kAirEndDate : animeItem[@"series_end"][@"text"] }];
+        [anime addEntriesFromDictionary:@{ kEpisodes : @([animeItem[@"series_episodes"][@"text"] intValue]) }];
+        [anime addEntriesFromDictionary:@{ kImageURL : animeItem[@"series_image"][@"text"] }];
+        [anime addEntriesFromDictionary:@{ kAirStartDate : animeItem[@"series_start"][@"text"] }];
+        [anime addEntriesFromDictionary:@{ kAirStatus : animeItem[@"series_status"][@"text"] }];
         
         // no synonym support...yet.
-//        [anime addEntriesFromDictionary:@{ @"series_synonyms" : data[@"series_synonyms"][@"text"] }];
+//        [anime addEntriesFromDictionary:@{ @"series_synonyms" : animeItem[@"series_synonyms"][@"text"] }];
         
-        [anime addEntriesFromDictionary:@{ kTitle : data[@"series_title"][@"text"] }];
-        [anime addEntriesFromDictionary:@{ kType : data[@"series_type"][@"text"] }];
+        [anime addEntriesFromDictionary:@{ kTitle : animeItem[@"series_title"][@"text"] }];
+        [anime addEntriesFromDictionary:@{ kType : animeItem[@"series_type"][@"text"] }];
         
-        [AnimeService addAnimeList:anime];
+        [AnimeService addAnime:anime];
     }
-    
-//    for()
     
     return NO;
 }
@@ -133,12 +132,19 @@
     anime.total_episodes = [data[kEpisodes] isNull] ? @(-1) : data[kEpisodes];
     anime.status = @([Anime animeAirStatusForValue:data[kAirStatus]]);
     
-    // note: not the user start/end date.
-    anime.date_start = nil;
-    anime.date_finish = nil;
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     
-    anime.user_date_start = nil;
-    anime.user_date_finish = nil;
+    // There exist two date formats. Should probably consolidate this somehow.
+    // Typically, we'd add a Z for timezone instead of hardcoding +0000, but we want to preserve the raw date
+    // since it seems like timezones are not used in the database.
+    dateFormatter.dateFormat = @"yyyy-MM-dd";
+    
+    // note: not the user start/end date.
+    anime.date_start = [dateFormatter dateFromString:data[kAirStartDate]];
+    anime.date_finish = [dateFormatter dateFromString:data[kAirEndDate]];
+    
+    anime.user_date_start = [dateFormatter dateFromString:data[kUserStartDate]];
+    anime.user_date_finish = [dateFormatter dateFromString:data[kUserEndDate]];
     
 //    anime.classification = data[@"classification"];
 //    anime.average_score = data[@"members_score"];
@@ -185,7 +191,6 @@
 
 
 + (Anime *)editAnime:(NSDictionary *)data {
-    
     NSLog(@"data: %@", data);
     if(![AnimeService animeForID:data[@"id"]]) {
         NSLog(@"Anime does not exist; unable to edit!");
@@ -195,6 +200,9 @@
     NSError *error = nil;
     
     Anime *anime = [AnimeService animeForID:data[@"id"]];
+    
+#warning - fix due to official and unofficial discrepancies.
+    return anime;
     
     // Edit.
     anime.anime_id = data[@"id"];
@@ -253,7 +261,7 @@
     //    anime.tags = data[@"tags"];
     //    anime.manga_adaptations = data[@"manga_adaptations"];
     
-    anime.watched_status = @([Anime animeWatchedStatusForValue:data[@"watched_status"]]);
+    anime.watched_status = @([Anime unofficialAnimeWatchedStatusForValue:data[@"watched_status"]]);
     anime.current_episode = data[@"watched_episodes"];
     anime.user_score = ([data[@"score"] isNull] || [data[@"score"] intValue] == 0) ? @(-1) : data[@"score"];
     

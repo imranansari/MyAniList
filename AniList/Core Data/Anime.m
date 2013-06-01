@@ -54,18 +54,14 @@
 @dynamic manga_adaptations;
 
 + (AnimeType)animeTypeForValue:(NSString *)value {
-    if([value isEqualToString:@"TV"])
-        return AnimeTypeTV;
-    if([value isEqualToString:@"Movie"])
-        return AnimeTypeMovie;
-    if([value isEqualToString:@"OVA"])
-        return AnimeTypeOVA;
-    if([value isEqualToString:@"ONA"])
-        return AnimeTypeONA;
-    if([value isEqualToString:@"Special"])
-        return AnimeTypeSpecial;
-    if([value isEqualToString:@"Music"])
-        return AnimeTypeMusic;
+    int type = [value intValue];
+    
+    if(type == 1) return AnimeTypeTV;
+    if(type == 2) return AnimeTypeOVA;
+    if(type == 3) return AnimeTypeMovie;
+    if(type == 4) return AnimeTypeSpecial;
+    if(type == 5) return AnimeTypeONA;
+    if(type == 6) return AnimeTypeMusic;
     
     return AnimeTypeUnknown;
 }
@@ -90,6 +86,81 @@
 }
 
 + (AnimeAirStatus)animeAirStatusForValue:(NSString *)value {
+    int airStatus = [value intValue];
+    
+    if(airStatus == 1) return AnimeAirStatusCurrentlyAiring;
+    if(airStatus == 2) return AnimeAirStatusFinishedAiring;
+    if(airStatus == 3) return AnimeAirStatusNotYetAired;
+    
+    return AnimeAirStatusUnknown;
+}
+
++ (NSString *)stringForAnimeAirStatus:(AnimeAirStatus)airStatus {
+    switch (airStatus) {
+        case AnimeAirStatusCurrentlyAiring:
+            return @"Currently airing";
+        case AnimeAirStatusFinishedAiring:
+            return @"Finished airing";
+        case AnimeAirStatusNotYetAired:
+            return @"Not yet aired";
+        case AnimeAirStatusUnknown:
+        default:
+            return @"Unknown";
+    }
+}
+
++ (AnimeWatchedStatus)animeWatchedStatusForValue:(NSString *)value {
+    
+    // 1/watching, 2/completed, 3/onhold, 4/dropped, 6/plantowatch
+    int status = [value intValue];
+    
+    if(status == 1) return AnimeWatchedStatusWatching;
+    if(status == 2) return AnimeWatchedStatusCompleted;
+    if(status == 3) return AnimeWatchedStatusOnHold;
+    if(status == 4) return AnimeWatchedStatusDropped;
+    if(status == 6) return AnimeWatchedStatusPlanToWatch;
+    
+    return AnimeWatchedStatusUnknown;
+}
+
++ (NSString *)stringForAnimeWatchedStatus:(AnimeWatchedStatus)watchedStatus {
+    switch (watchedStatus) {
+        case AnimeWatchedStatusWatching:
+            return @"Currently watching";
+        case AnimeWatchedStatusCompleted:
+            return @"Completed";
+        case AnimeWatchedStatusOnHold:
+            return @"On hold";
+        case AnimeWatchedStatusDropped:
+            return @"Dropped";
+        case AnimeWatchedStatusPlanToWatch:
+            return @"Plan to watch";
+        case AnimeWatchedStatusUnknown:
+        default:
+            return @"Unknown";
+    }
+}
+
+#pragma mark - Unofficial API Methods
+
++ (AnimeType)unofficialAnimeTypeForValue:(NSString *)value {
+    if([value isEqualToString:@"TV"])
+        return AnimeTypeTV;
+    if([value isEqualToString:@"Movie"])
+        return AnimeTypeMovie;
+    if([value isEqualToString:@"OVA"])
+        return AnimeTypeOVA;
+    if([value isEqualToString:@"ONA"])
+        return AnimeTypeONA;
+    if([value isEqualToString:@"Special"])
+        return AnimeTypeSpecial;
+    if([value isEqualToString:@"Music"])
+        return AnimeTypeMusic;
+    
+    return AnimeTypeUnknown;
+}
+
++ (AnimeAirStatus)unofficialAnimeAirStatusForValue:(NSString *)value {
     if([value isEqualToString:@"finished airing"])
         return AnimeAirStatusFinishedAiring;
     if([value isEqualToString:@"currently airing"])
@@ -100,7 +171,7 @@
     return AnimeAirStatusUnknown;
 }
 
-+ (AnimeWatchedStatus)animeWatchedStatusForValue:(NSString *)value {
++ (AnimeWatchedStatus)unofficialAnimeWatchedStatusForValue:(NSString *)value {
     if([value isEqualToString:@"watching"])
         return AnimeWatchedStatusWatching;
     if([value isEqualToString:@"completed"])
