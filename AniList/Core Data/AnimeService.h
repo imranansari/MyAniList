@@ -12,6 +12,7 @@
 @interface AnimeService : NSObject
 
 + (Anime *)animeForID:(NSNumber *)ID;
++ (BOOL)addAnimeList:(NSDictionary *)data;
 + (Anime *)addAnime:(NSDictionary *)data;
 + (Anime *)editAnime:(NSDictionary *)data;
 + (void)deleteAnime:(Anime *)anime;

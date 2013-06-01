@@ -67,6 +67,8 @@ typedef enum {
 @property (nonatomic, retain) NSString *title;
 @property (nonatomic, retain) NSNumber *total_episodes;
 @property (nonatomic, retain) NSNumber *type;
+@property (nonatomic, retain) NSDate *user_date_finish;
+@property (nonatomic, retain) NSDate *user_date_start;
 @property (nonatomic, retain) NSNumber *user_score;
 @property (nonatomic, retain) NSNumber *watched_status;
 @property (nonatomic, retain) NSManagedObject *tags;

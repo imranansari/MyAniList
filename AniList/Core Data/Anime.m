@@ -40,6 +40,8 @@
 @dynamic title;
 @dynamic total_episodes;
 @dynamic type;
+@dynamic user_date_finish;
+@dynamic user_date_start;
 @dynamic user_score;
 @dynamic watched_status;
 @dynamic tags;

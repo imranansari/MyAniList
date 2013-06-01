@@ -44,13 +44,13 @@
 
 - (void)setStyleAttributes {
 //    UIImage *buttonBg = [[UIImage imageNamed:@"nav_btn_bg"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 3, 0, 3)];
-    [[UIBarButtonItem appearance] setBackgroundImage:[[UIImage alloc] init] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-    [[UIBarButtonItem appearance] setBackgroundImage:[[UIImage alloc] init] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
-    
-    UIImage *backButtonBg = [[UIImage imageNamed:@"back_arrow.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 10, 0, 2)];
-    [[UIBarButtonItem appearance] setBackButtonBackgroundImage:backButtonBg forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-    [[UIBarButtonItem appearance] setBackButtonBackgroundImage:backButtonBg forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
+//    [[UIBarButtonItem appearance] setBackgroundImage:[[UIImage alloc] init] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+//    [[UIBarButtonItem appearance] setBackgroundImage:[[UIImage alloc] init] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
 //    
+//    UIImage *backButtonBg = [[UIImage imageNamed:@"back_arrow.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 10, 0, 2)];
+//    [[UIBarButtonItem appearance] setBackButtonBackgroundImage:backButtonBg forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+//    [[UIBarButtonItem appearance] setBackButtonBackgroundImage:backButtonBg forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
+//
 //    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back_arrow.png"] style:UIBarButtonItemStyleBordered target:nvc action:@selector(popViewControllerAnimated:)];
 //    
 //    nvc.navigationItem.backBarButtonItem = backButton;

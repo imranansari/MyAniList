@@ -7,6 +7,7 @@
 //
 
 #import "AnimeViewController.h"
+#import "AnimeService.h"
 
 @interface AnimeViewController ()
 @end
@@ -17,7 +18,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        
     }
     return self;
 }
@@ -25,7 +26,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    
+    self.title = self.anime.title;
+    
+    [MALHTTPClient getAnimeDetailsForID:self.anime.anime_id success:^(NSURLRequest *operation, id response) {
+        [AnimeService addAnime:response];
+    } failure:^(NSURLRequest *operation, NSError *error) {
+        // Whoops.
+    }];
 }
 
 - (void)didReceiveMemoryWarning

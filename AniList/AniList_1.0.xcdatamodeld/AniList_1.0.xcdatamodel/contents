@@ -29,6 +29,8 @@
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="total_episodes" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="user_date_finish" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="user_date_start" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="user_score" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="watched_status" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <relationship name="genres" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Genre" inverseName="anime" inverseEntity="Genre" syncable="YES"/>
@@ -78,7 +80,7 @@
         <relationship name="manga" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Manga" inverseName="tags" inverseEntity="Manga" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Anime" positionX="160" positionY="192" width="128" height="615"/>
+        <element name="Anime" positionX="160" positionY="192" width="128" height="645"/>
         <element name="Genre" positionX="160" positionY="192" width="128" height="90"/>
         <element name="Manga" positionX="160" positionY="192" width="128" height="345"/>
         <element name="Synonym" positionX="160" positionY="192" width="128" height="90"/>
