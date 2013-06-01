@@ -201,10 +201,6 @@
     
     Anime *anime = [AnimeService animeForID:data[@"id"]];
     
-#warning - fix due to official and unofficial discrepancies.
-    return anime;
-    
-    // Edit.
     anime.anime_id = data[@"id"];
     anime.title = data[@"title"];
     //    anime.synonyms = data[@"other_titles"];
@@ -261,7 +257,7 @@
     //    anime.tags = data[@"tags"];
     //    anime.manga_adaptations = data[@"manga_adaptations"];
     
-    anime.watched_status = @([Anime unofficialAnimeWatchedStatusForValue:data[@"watched_status"]]);
+    anime.watched_status = @([Anime animeWatchedStatusForValue:data[@"watched_status"]]);
     anime.current_episode = data[@"watched_episodes"];
     anime.user_score = ([data[@"score"] isNull] || [data[@"score"] intValue] == 0) ? @(-1) : data[@"score"];
     

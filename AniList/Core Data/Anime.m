@@ -54,14 +54,16 @@
 @dynamic manga_adaptations;
 
 + (AnimeType)animeTypeForValue:(NSString *)value {
+    
+    // If value is passed in as an int, conver it.
     int type = [value intValue];
     
-    if(type == 1) return AnimeTypeTV;
-    if(type == 2) return AnimeTypeOVA;
-    if(type == 3) return AnimeTypeMovie;
-    if(type == 4) return AnimeTypeSpecial;
-    if(type == 5) return AnimeTypeONA;
-    if(type == 6) return AnimeTypeMusic;
+    if(type == 1 || [value isEqualToString:@"TV"]) return AnimeTypeTV;
+    if(type == 2 || [value isEqualToString:@"OVA"]) return AnimeTypeOVA;
+    if(type == 3 || [value isEqualToString:@"Movie"]) return AnimeTypeMovie;
+    if(type == 4 || [value isEqualToString:@"Special"]) return AnimeTypeSpecial;
+    if(type == 5 || [value isEqualToString:@"ONA"]) return AnimeTypeONA;
+    if(type == 6 || [value isEqualToString:@"Music"]) return AnimeTypeMusic;
     
     return AnimeTypeUnknown;
 }
@@ -88,9 +90,9 @@
 + (AnimeAirStatus)animeAirStatusForValue:(NSString *)value {
     int airStatus = [value intValue];
     
-    if(airStatus == 1) return AnimeAirStatusCurrentlyAiring;
-    if(airStatus == 2) return AnimeAirStatusFinishedAiring;
-    if(airStatus == 3) return AnimeAirStatusNotYetAired;
+    if(airStatus == 1 || [value isEqualToString:@"currently airing"]) return AnimeAirStatusCurrentlyAiring;
+    if(airStatus == 2 || [value isEqualToString:@"finished airing"]) return AnimeAirStatusFinishedAiring;
+    if(airStatus == 3 || [value isEqualToString:@"not yet aired"]) return AnimeAirStatusNotYetAired;
     
     return AnimeAirStatusUnknown;
 }
@@ -114,11 +116,11 @@
     // 1/watching, 2/completed, 3/onhold, 4/dropped, 6/plantowatch
     int status = [value intValue];
     
-    if(status == 1) return AnimeWatchedStatusWatching;
-    if(status == 2) return AnimeWatchedStatusCompleted;
-    if(status == 3) return AnimeWatchedStatusOnHold;
-    if(status == 4) return AnimeWatchedStatusDropped;
-    if(status == 6) return AnimeWatchedStatusPlanToWatch;
+    if(status == 1 || [value isEqualToString:@"watching"]) return AnimeWatchedStatusWatching;
+    if(status == 2 || [value isEqualToString:@"completed"]) return AnimeWatchedStatusCompleted;
+    if(status == 3 || [value isEqualToString:@"on-hold"]) return AnimeWatchedStatusOnHold;
+    if(status == 4 || [value isEqualToString:@"dropped"]) return AnimeWatchedStatusDropped;
+    if(status == 6 || [value isEqualToString:@"plan to watch"]) return AnimeWatchedStatusPlanToWatch;
     
     return AnimeWatchedStatusUnknown;
 }

@@ -9,31 +9,61 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+#pragma mark - Official typedefs
+
 typedef enum {
     AnimeWatchedStatusUnknown = -1,
-    AnimeWatchedStatusWatching,
+    AnimeWatchedStatusWatching = 1,
     AnimeWatchedStatusCompleted,
     AnimeWatchedStatusOnHold,
     AnimeWatchedStatusDropped,
-    AnimeWatchedStatusPlanToWatch,
+    AnimeWatchedStatusPlanToWatch = 6
 } AnimeWatchedStatus;
 
 typedef enum {
     AnimeTypeUnknown = -1,
-    AnimeTypeTV,
-    AnimeTypeMovie,
+    AnimeTypeTV = 1,
     AnimeTypeOVA,
-    AnimeTypeONA,
+    AnimeTypeMovie,
     AnimeTypeSpecial,
+    AnimeTypeONA,
     AnimeTypeMusic
 } AnimeType;
 
 typedef enum {
     AnimeAirStatusUnknown = -1,
+    AnimeAirStatusCurrentlyAiring = 1,
     AnimeAirStatusFinishedAiring,
-    AnimeAirStatusCurrentlyAiring,
     AnimeAirStatusNotYetAired
 } AnimeAirStatus;
+
+#pragma mark - Unofficial typedefs
+
+typedef enum {
+    UnofficialAnimeWatchedStatusUnknown = -1,
+    UnofficialAnimeWatchedStatusWatching,
+    UnofficialAnimeWatchedStatusCompleted,
+    UnofficialAnimeWatchedStatusOnHold,
+    UnofficialAnimeWatchedStatusDropped,
+    UnofficialAnimeWatchedStatusPlanToWatch,
+} UnofficialAnimeWatchedStatus;
+
+typedef enum {
+    UnofficialAnimeTypeUnknown = -1,
+    UnofficialAnimeTypeTV,
+    UnofficialAnimeTypeMovie,
+    UnofficialAnimeTypeOVA,
+    UnofficialAnimeTypeONA,
+    UnofficialAnimeTypeSpecial,
+    UnofficialAnimeTypeMusic
+} UnofficialAnimeType;
+
+typedef enum {
+    UnofficialAnimeAirStatusUnknown = -1,
+    UnofficialAnimeAirStatusFinishedAiring,
+    UnofficialAnimeAirStatusCurrentlyAiring,
+    UnofficialAnimeAirStatusNotYetAired
+} UnofficialAnimeAirStatus;
 
 @class Anime;
 
