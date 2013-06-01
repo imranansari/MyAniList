@@ -9,8 +9,6 @@
 #import "AnimeViewController.h"
 
 @interface AnimeViewController ()
-@property (nonatomic, weak) IBOutlet UIButton *backButton;
-@property (nonatomic, weak) IBOutlet UIButton *actionButton;
 @end
 
 @implementation AnimeViewController

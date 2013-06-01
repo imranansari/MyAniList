@@ -8,14 +8,14 @@
 
 #import "AFHTTPClient.h"
 
-typedef void (^HTTPSuccessBlock)(AFHTTPRequestOperation *operation, id response);
-typedef void (^HTTPFailureBlock)(AFHTTPRequestOperation *operation, NSError *error);
+typedef void (^HTTPSuccessBlock)(NSURLRequest *operation, id response);
+typedef void (^HTTPFailureBlock)(NSURLRequest *operation, NSError *error);
 
 @interface MALHTTPClient : AFHTTPClient
 
 
-- (void)getAnimeListForUserID:(NSNumber *)userID success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure;
-- (void)getMangaListForUserID:(NSNumber *)userID success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure;
++ (void)getAnimeListForUser:(NSString *)user success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure;
++ (void)getMangaListForUser:(NSString *)user success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure;
 - (void)getProfileForUserID:(NSNumber *)userID success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure;
 - (void)getAnimeDetailsForID:(NSNumber *)animeID success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure;
 - (void)getMangaDetailsForID:(NSNumber *)mangaID success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure;

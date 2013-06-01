@@ -16,4 +16,5 @@
     #import "SWRevealViewController.h"
     #import "AFNetworking.h"
     #import "Categories.h"
+    #import "MALHTTPClient.h"
 #endif

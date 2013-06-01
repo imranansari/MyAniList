@@ -30,26 +30,18 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-//    self.navigation.barTitle.text = @"Anime";
     
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://mal-api.com/animelist/spacepyro"]];
-    
-    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request
-                                                                                        success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-                                                                                            NSLog(@"Success!");
-                                                                                            NSArray *animeList = [JSON objectForKey:@"anime"];
-                                                                                            for(NSDictionary *animeItem in animeList) {
-                                                                                                [AnimeService addAnime:animeItem];
-                                                                                            }
-                                                                                        }
-                                                                                        failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-                                                                                            NSLog(@"Failure");
-                                                                                        }];
-    
-    [operation start];
-                                         
-	// Do any additional setup after loading the view.
+    [MALHTTPClient getAnimeListForUser:@"spacepyro"
+                               success:^(NSURLRequest *operation, id response) {
+                                   NSArray *animeList = response[@"anime"];
+                                   NSDictionary *stats = response[@"statistics"];
+                                   for(NSDictionary *animeItem in animeList) {
+                                       [AnimeService addAnime:animeItem];
+                                   }
+                               }
+                               failure:^(NSURLRequest *operation, NSError *error) {
+                                   // Derp.
+                               }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -90,7 +82,6 @@
 
     AnimeCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if(!cell) {
-//        AnimeCell *cell = [AnimeCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"AnimeCell" owner:self options:nil];
         cell = (AnimeCell *)nib[0];
     }
