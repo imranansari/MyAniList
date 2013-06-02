@@ -109,17 +109,8 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     NSNumber *headerSection = [self.fetchedResultsController sectionIndexTitles][section];
-    
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(10, 0, 320, 44)];
-    view.backgroundColor = [UIColor clearColor];
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, 300, 44)];
-    label.backgroundColor = [UIColor clearColor];
-    label.textColor = [UIColor whiteColor];
-    label.text = self.sectionHeaders[[headerSection intValue]];
-    label.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
-    label.shadowOffset = CGSizeMake(0, 1);
-    [view addSubview:label];
-    return view;
+    NSString *count = [NSString stringWithFormat:@"%d", [self.tableView numberOfRowsInSection:section]];
+    return [UIView tableHeaderWithPrimaryText:self.sectionHeaders[[headerSection intValue]] andSecondaryText:count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

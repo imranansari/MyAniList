@@ -31,15 +31,8 @@
         self.userInfoView = [[AnimeUserInfoViewController alloc] init];
         self.synopsisView = [[SynopsisView alloc] init];
         
-        self.detailsLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 60)];
+        self.detailsLabel = [UILabel whiteHeaderWithFrame:CGRectMake(0, 0, 320, 60) andFontSize:18];
         self.detailsLabel.text = @"Synopsis";
-        self.detailsLabel.textColor = [UIColor whiteColor];
-        self.detailsLabel.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:18];
-        self.detailsLabel.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"header_bg.png"]];
-        self.detailsLabel.textAlignment = NSTextAlignmentCenter;
-        self.detailsLabel.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
-        self.detailsLabel.shadowOffset = CGSizeMake(0, 1);
-
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateViews) name:kAnimeDidUpdate object:nil];
     }
@@ -94,7 +87,7 @@
     self.detailsLabel.frame = CGRectMake(self.detailsLabel.frame.origin.x, self.userInfoView.view.frame.origin.y + self.userInfoView.view.frame.size.height, self.detailsLabel.frame.size.width, self.detailsLabel.frame.size.height);
     
     self.synopsisView.frame = CGRectMake(0, self.detailsLabel.frame.origin.y + self.detailsLabel.frame.size.height, self.synopsisView.frame.size.width, self.synopsisView.frame.size.height);
-    self.scrollView.contentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width, self.animeDetailsViewController.view.frame.size.height + self.userInfoView.view.frame.size.height + self.detailsLabel.frame.size.height + self.synopsisView.frame.size.height + 20);
+    self.scrollView.contentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width, self.animeDetailsViewController.view.frame.size.height + self.userInfoView.view.frame.size.height + self.detailsLabel.frame.size.height + [UIScreen mainScreen].bounds.size.height - 44);
 }
 
 - (void)updateViews {
@@ -103,7 +96,7 @@
     }
     
     self.synopsisView.frame = CGRectMake(0, self.detailsLabel.frame.origin.y + self.detailsLabel.frame.size.height, self.synopsisView.frame.size.width, self.synopsisView.frame.size.height);
-    self.scrollView.contentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width, self.animeDetailsViewController.view.frame.size.height + self.userInfoView.view.frame.size.height + self.detailsLabel.frame.size.height + self.synopsisView.frame.size.height + 20);
+//    self.scrollView.contentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width, self.animeDetailsViewController.view.frame.size.height + self.userInfoView.view.frame.size.height + self.detailsLabel.frame.size.height + self.synopsisView.frame.size.height + 20);
 }
 
 @end

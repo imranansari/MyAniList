@@ -12,5 +12,7 @@
 
 + (UIFont *)defaultFont;
 + (UIFont *)defaultFontWithSize:(int)size;
++ (UIFont *)mediumFont;
++ (UIFont *)mediumFontWithSize:(int)size;
 
 @end
