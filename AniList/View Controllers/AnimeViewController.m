@@ -15,7 +15,9 @@
 @interface AnimeViewController ()
 @property (nonatomic, strong) AnimeDetailsViewController *animeDetailsViewController;
 @property (nonatomic, strong) AnimeUserInfoViewController *userInfoView;
+@property (nonatomic, strong) UILabel *synopsisLabel;
 @property (nonatomic, strong) SynopsisView *synopsisView;
+@property (nonatomic, strong) UILabel *detailsLabel;
 @property (nonatomic, weak) IBOutlet UIScrollView *scrollView;
 @end
 
@@ -28,6 +30,16 @@
         self.animeDetailsViewController = [[AnimeDetailsViewController alloc] init];
         self.userInfoView = [[AnimeUserInfoViewController alloc] init];
         self.synopsisView = [[SynopsisView alloc] init];
+        
+        self.detailsLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 60)];
+        self.detailsLabel.text = @"Synopsis";
+        self.detailsLabel.textColor = [UIColor whiteColor];
+        self.detailsLabel.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:18];
+        self.detailsLabel.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"header_bg.png"]];
+        self.detailsLabel.textAlignment = NSTextAlignmentCenter;
+        self.detailsLabel.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
+        self.detailsLabel.shadowOffset = CGSizeMake(0, 1);
+
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateViews) name:kAnimeDidUpdate object:nil];
     }
@@ -71,6 +83,7 @@
     
     [self.scrollView addSubview:self.animeDetailsViewController.view];
     [self.scrollView addSubview:self.userInfoView.view];
+    [self.scrollView addSubview:self.detailsLabel];
     [self.scrollView addSubview:self.synopsisView];
     
     if(self.anime.synopsis)
@@ -78,10 +91,10 @@
     
     self.animeDetailsViewController.view.frame = CGRectMake(0,44, self.animeDetailsViewController.view.frame.size.width, self.animeDetailsViewController.view.frame.size.height);
     self.userInfoView.view.frame = CGRectMake(0, self.animeDetailsViewController.view.frame.origin.y + self.animeDetailsViewController.view.frame.size.height, self.userInfoView.view.frame.size.width, self.userInfoView.view.frame.size.height);
+    self.detailsLabel.frame = CGRectMake(self.detailsLabel.frame.origin.x, self.userInfoView.view.frame.origin.y + self.userInfoView.view.frame.size.height, self.detailsLabel.frame.size.width, self.detailsLabel.frame.size.height);
     
-    self.synopsisView.frame = CGRectMake(0, self.userInfoView.view.frame.origin.y + self.userInfoView.view.frame.size.height, self.synopsisView.frame.size.width, self.synopsisView.frame.size.height);
-    
-    self.scrollView.contentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width, self.animeDetailsViewController.view.frame.size.height + self.userInfoView.view.frame.size.height + self.synopsisView.frame.size.height);
+    self.synopsisView.frame = CGRectMake(0, self.detailsLabel.frame.origin.y + self.detailsLabel.frame.size.height, self.synopsisView.frame.size.width, self.synopsisView.frame.size.height);
+    self.scrollView.contentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width, self.animeDetailsViewController.view.frame.size.height + self.userInfoView.view.frame.size.height + self.detailsLabel.frame.size.height + self.synopsisView.frame.size.height + 20);
 }
 
 - (void)updateViews {
@@ -89,9 +102,8 @@
         [self.synopsisView addSynopsis:self.anime.synopsis];
     }
     
-    self.synopsisView.frame = CGRectMake(0, self.userInfoView.view.frame.origin.y + self.userInfoView.view.frame.size.height, self.synopsisView.frame.size.width, self.synopsisView.frame.size.height);
-    
-    self.scrollView.contentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width, self.animeDetailsViewController.view.frame.size.height + self.userInfoView.view.frame.size.height + self.synopsisView.frame.size.height);
+    self.synopsisView.frame = CGRectMake(0, self.detailsLabel.frame.origin.y + self.detailsLabel.frame.size.height, self.synopsisView.frame.size.width, self.synopsisView.frame.size.height);
+    self.scrollView.contentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width, self.animeDetailsViewController.view.frame.size.height + self.userInfoView.view.frame.size.height + self.detailsLabel.frame.size.height + self.synopsisView.frame.size.height + 20);
 }
 
 @end

@@ -109,6 +109,10 @@
 		636F86A3175B1232007E1FB6 /* SynopsisView.m in Sources */ = {isa = PBXBuildFile; fileRef = 636F86A1175B1232007E1FB6 /* SynopsisView.m */; };
 		636F86A5175B8A5C007E1FB6 /* AnimeUserInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 636F86A4175B8A5C007E1FB6 /* AnimeUserInfoViewController.xib */; };
 		636F86A6175B8A5C007E1FB6 /* AnimeUserInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 636F86A4175B8A5C007E1FB6 /* AnimeUserInfoViewController.xib */; };
+		636F86AA175BA037007E1FB6 /* header_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 636F86A8175BA037007E1FB6 /* header_bg.png */; };
+		636F86AB175BA037007E1FB6 /* header_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 636F86A8175BA037007E1FB6 /* header_bg.png */; };
+		636F86AC175BA037007E1FB6 /* header_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 636F86A9175BA037007E1FB6 /* header_bg@2x.png */; };
+		636F86AD175BA037007E1FB6 /* header_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 636F86A9175BA037007E1FB6 /* header_bg@2x.png */; };
 		6372893B17542D110032F425 /* MALHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 6372893A17542D110032F425 /* MALHTTPClient.m */; };
 		6372893C17542D110032F425 /* MALHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 6372893A17542D110032F425 /* MALHTTPClient.m */; };
 		637CF6EC175986840009ADF3 /* NSObject+AniList.m in Sources */ = {isa = PBXBuildFile; fileRef = 637CF6EB175986840009ADF3 /* NSObject+AniList.m */; };
@@ -250,6 +254,8 @@
 		636F86A1175B1232007E1FB6 /* SynopsisView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SynopsisView.m; path = AniList/Views/SynopsisView.m; sourceTree = SOURCE_ROOT; };
 		636F86A4175B8A5C007E1FB6 /* AnimeUserInfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AnimeUserInfoViewController.xib; sourceTree = "<group>"; };
 		636F86A7175B9960007E1FB6 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Constants.h; path = Headers/Constants.h; sourceTree = "<group>"; };
+		636F86A8175BA037007E1FB6 /* header_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = header_bg.png; sourceTree = "<group>"; };
+		636F86A9175BA037007E1FB6 /* header_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "header_bg@2x.png"; sourceTree = "<group>"; };
 		6372893917542D110032F425 /* MALHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MALHTTPClient.h; path = "Web Services/MALHTTPClient.h"; sourceTree = "<group>"; };
 		6372893A17542D110032F425 /* MALHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MALHTTPClient.m; path = "Web Services/MALHTTPClient.m"; sourceTree = "<group>"; };
 		637CF6EA175986840009ADF3 /* NSObject+AniList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+AniList.h"; path = "Categories/NSObject+AniList.h"; sourceTree = "<group>"; };
@@ -436,6 +442,8 @@
 		63502792171E4D430004C106 /* Background */ = {
 			isa = PBXGroup;
 			children = (
+				636F86A8175BA037007E1FB6 /* header_bg.png */,
+				636F86A9175BA037007E1FB6 /* header_bg@2x.png */,
 				637CF6F21759940E0009ADF3 /* test_background@2x.png */,
 				63502797171E4D760004C106 /* bg@2x.png */,
 				63502793171E4D430004C106 /* bg.png */,
@@ -737,6 +745,8 @@
 				636F8697175B116F007E1FB6 /* AniListDetailsViewController.xib in Resources */,
 				636F869E175B117D007E1FB6 /* AnimeDetailsViewController.xib in Resources */,
 				636F86A5175B8A5C007E1FB6 /* AnimeUserInfoViewController.xib in Resources */,
+				636F86AA175BA037007E1FB6 /* header_bg.png in Resources */,
+				636F86AC175BA037007E1FB6 /* header_bg@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -750,6 +760,8 @@
 				636F8698175B116F007E1FB6 /* AniListDetailsViewController.xib in Resources */,
 				636F869F175B117D007E1FB6 /* AnimeDetailsViewController.xib in Resources */,
 				636F86A6175B8A5C007E1FB6 /* AnimeUserInfoViewController.xib in Resources */,
+				636F86AB175BA037007E1FB6 /* header_bg.png in Resources */,
+				636F86AD175BA037007E1FB6 /* header_bg@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

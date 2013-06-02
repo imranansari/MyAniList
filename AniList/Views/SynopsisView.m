@@ -31,9 +31,10 @@
 - (void)addSynopsis:(NSString *)synopsis {
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 300, 100)];
     label.text = synopsis;
+    label.alpha = 0.0f;
     
 #warning - temporary, just seeing where the frame is getting set.
-    label.backgroundColor = [UIColor darkGrayColor];
+    label.backgroundColor = [UIColor clearColor];
     
     label.textColor = [UIColor whiteColor];
     label.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12];
@@ -50,6 +51,14 @@
     [self addSubview:label];
     
     [self setNeedsDisplay];
+    
+    [UIView animateWithDuration:0.5f
+                          delay:0.0f
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         label.alpha = 1.0f;
+                     }
+                     completion:nil];
 }
 
 /*

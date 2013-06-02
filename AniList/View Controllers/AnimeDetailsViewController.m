@@ -39,6 +39,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.view.backgroundColor = [UIColor clearColor];
+    
     self.indicator.alpha = 1.0f;
     self.detailView.alpha = 0.0f;
     
