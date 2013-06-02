@@ -228,20 +228,20 @@
     anime.total_episodes = [data[@"episodes"] isNull] ? @(-1) : data[@"episodes"];
     anime.status = @([Anime animeAirStatusForValue:data[@"status"]]);
     
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     
     // Typically, we'd add a Z for timezone instead of hardcoding +0000, but we want to preserve the raw date
     // since it seems like timezones are not used in the database.
-    dateFormatter.dateFormat = @"yyyy-MM-dd HH:mm:ss +0000";
+//    dateFormatter.dateFormat = @"yyyy-MM-dd HH:mm:ss +0000";
     
     // note: not the user start/end date.
     if(![data[@"start_date"] isNull]) {
-        NSDate *date = [dateFormatter dateFromString:data[@"start_date"]];
-        anime.date_start = date;
+//        NSDate *date = [dateFormatter dateFromString:data[@"start_date"]];
+        anime.date_start = [AnimeService parseDate:data[kAirStartDate]];
     }
     if(![data[@"end_date"] isNull]) {
-        NSDate *date = [dateFormatter dateFromString:data[@"end_date"]];
-        anime.date_finish = date;
+//        NSDate *date = [dateFormatter dateFromString:data[@"end_date"]];
+        anime.date_finish = [AnimeService parseDate:data[kAirEndDate]];
     }
     
     //    anime.classification = data[@"classification"];
@@ -284,6 +284,38 @@
 + (NSManagedObjectContext *)managedObjectContext {
     AniListAppDelegate *delegate = (AniListAppDelegate *)[UIApplication sharedApplication].delegate;
     return delegate.managedObjectContext;
+}
+
+#pragma mark - Helper Methods
+
++ (NSDate *)parseDate:(NSString *)stringDate {
+    // First format: from malappinfo.php.
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    NSDate *date;
+    
+    // There exist two date formats. Should probably consolidate this somehow.
+    // Typically, we'd add a Z for timezone instead of hardcoding +0000, but we want to preserve the raw date
+    // since it seems like timezones are not used in the database.
+    dateFormatter.dateFormat = @"yyyy-MM-dd";
+    
+    date = [dateFormatter dateFromString:stringDate];
+    
+    if(date) {
+        return date;
+    }
+    
+    // Typically, we'd add a Z for timezone instead of hardcoding +0000, but we want to preserve the raw date
+    // since it seems like timezones are not used in the database.
+    dateFormatter.dateFormat = @"yyyy-MM-dd HH:mm:ss +0000";
+    
+    date = [dateFormatter dateFromString:stringDate];
+    
+    if(date) {
+        return date;
+    }
+
+    return nil;
 }
 
 

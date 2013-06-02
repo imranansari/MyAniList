@@ -8,6 +8,10 @@
 
 #import "AniListDetailsViewController.h"
 
+@class Anime;
+
 @interface AnimeDetailsViewController : AniListDetailsViewController
+
+@property (nonatomic, strong) Anime *anime;
 
 @end

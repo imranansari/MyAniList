@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Anime.h"
 
-@interface AnimeViewController : UIViewController
+@interface AnimeViewController : UIViewController<UIScrollViewDelegate>
 
 @property (nonatomic, strong) Anime *anime;
 

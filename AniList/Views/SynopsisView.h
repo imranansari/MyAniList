@@ -10,4 +10,7 @@
 
 @interface SynopsisView : UIView
 
+- (id)initWithSynopsis:(NSString *)synopsis;
+- (void)addSynopsis:(NSString *)synopsis;
+
 @end
