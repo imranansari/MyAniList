@@ -12,5 +12,6 @@
 
 + (UILabel *)whiteLabelWithFrame:(CGRect)frame andFontSize:(int)size;
 + (UILabel *)whiteHeaderWithFrame:(CGRect)frame andFontSize:(int)size;
+- (void)addShadow;
 
 @end

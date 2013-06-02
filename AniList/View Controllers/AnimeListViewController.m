@@ -107,10 +107,17 @@
     Anime *anime = [self.fetchedResultsController objectAtIndexPath:indexPath];
     AnimeCell *animeCell = (AnimeCell *)cell;
     animeCell.title.text = anime.title;
+    [animeCell.title addShadow];
     [animeCell.title sizeToFit];
+    
     animeCell.progress.text = [AnimeCell progressTextForAnime:anime];
+    [animeCell.progress addShadow];
+    
     animeCell.rank.text = [anime.user_score intValue] != -1 ? [NSString stringWithFormat:@"%d", [anime.user_score intValue]] : @"";
+    [animeCell.rank addShadow];
+    
     animeCell.type.text = [Anime stringForAnimeType:[anime.type intValue]];
+    [animeCell.type addShadow];
     
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:anime.image]];
     AFImageRequestOperation *operation = [AFImageRequestOperation imageRequestOperationWithRequest:request success:^(UIImage *image) {

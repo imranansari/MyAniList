@@ -61,4 +61,12 @@
 
 }
 
+- (void)addShadow {
+    for(UIView *view in self.subviews) {
+        if([view isMemberOfClass:[UILabel class]]) {
+            [((UILabel *)view) addShadow];
+        }
+    }
+}
+
 @end

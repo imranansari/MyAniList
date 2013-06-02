@@ -192,74 +192,63 @@
 
 + (Anime *)editAnime:(NSDictionary *)data {
     NSLog(@"data: %@", data);
-    if(![AnimeService animeForID:data[@"id"]]) {
+    if(![AnimeService animeForID:data[kID]]) {
         NSLog(@"Anime does not exist; unable to edit!");
         return nil;
     }
     
     NSError *error = nil;
     
-    Anime *anime = [AnimeService animeForID:data[@"id"]];
+    Anime *anime = [AnimeService animeForID:data[kID]];
     
-    anime.anime_id = data[@"id"];
-    anime.title = data[@"title"];
+    anime.anime_id = data[kID];
+    anime.title = data[kTitle];
     //    anime.synonyms = data[@"other_titles"];
     // english
     // japanese
     
     // rank (global)
-    if(![data[@"rank"] isNull])
-        anime.rank = data[@"rank"];
+    if(data[kRank] && ![data[kRank] isNull])
+        anime.rank = data[kRank];
     
-    if(![data[@"popularity_rank"] isNull])
-        anime.popularity_rank = data[@"popularity_rank"];
+    if(data[kPopularityRank] && ![data[kPopularityRank] isNull])
+        anime.popularity_rank = data[kPopularityRank];
     
     // Prequels/sequels
-    if(![data[@"prequels"] isNull]) {
-        NSArray *prequels = data[@"prequels"];
+    if(data[kPrequels] && ![data[kPrequels] isNull]) {
+        NSArray *prequels = data[kPrequels];
         for(NSDictionary *prequel in prequels) {
 #warning - fix this later.
 //            [AnimeService addAnime:prequel];
         }
     }
     
-    anime.image = data[@"image_url"];
-    anime.type = @([Anime animeTypeForValue:data[@"type"]]);
-    anime.total_episodes = [data[@"episodes"] isNull] ? @(-1) : data[@"episodes"];
-    anime.status = @([Anime animeAirStatusForValue:data[@"status"]]);
+    anime.image = data[kImageURL];
+    anime.type = @([Anime animeTypeForValue:data[kType]]);
+    anime.total_episodes = [data[kEpisodes] isNull] ? @(-1) : data[kEpisodes];
+    anime.status = @([Anime animeAirStatusForValue:data[kAirStatus]]);
     
-//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    
-    // Typically, we'd add a Z for timezone instead of hardcoding +0000, but we want to preserve the raw date
-    // since it seems like timezones are not used in the database.
-//    dateFormatter.dateFormat = @"yyyy-MM-dd HH:mm:ss +0000";
-    
-    // note: not the user start/end date.
-    if(![data[@"start_date"] isNull]) {
-//        NSDate *date = [dateFormatter dateFromString:data[@"start_date"]];
+    if(data[kAirStartDate] &&![data[kAirStartDate] isNull])
         anime.date_start = [AnimeService parseDate:data[kAirStartDate]];
-    }
-    if(![data[@"end_date"] isNull]) {
-//        NSDate *date = [dateFormatter dateFromString:data[@"end_date"]];
+    if(data[kAirEndDate] &&![data[kAirEndDate] isNull])
         anime.date_finish = [AnimeService parseDate:data[kAirEndDate]];
-    }
     
     //    anime.classification = data[@"classification"];
-    if(![data[@"members_score"] isNull])
-        anime.average_score = data[@"members_score"];
-    if(![data[@"members_count"] isNull])
-        anime.average_count = data[@"members_count"];
-    if(![data[@"favorited_count"] isNull])
-        anime.favorited_count = data[@"favorited_count"];
-    if(![data[@"synopsis"] isNull])
-        anime.synopsis = data[@"synopsis"];
+    if(data[kMembersScore] && ![data[kMembersScore] isNull])
+        anime.average_score = data[kMembersScore];
+    if(data[kMembersCount] &&![data[kMembersCount] isNull])
+        anime.average_count = data[kMembersCount];
+    if(data[kFavoritedCount] &&![data[kFavoritedCount] isNull])
+        anime.favorited_count = data[kFavoritedCount];
+    if(data[kSynopsis] &&![data[kSynopsis] isNull])
+        anime.synopsis = data[kSynopsis];
     //    anime.genres = data[@"genres"];
     //    anime.tags = data[@"tags"];
     //    anime.manga_adaptations = data[@"manga_adaptations"];
     
-    anime.watched_status = @([Anime animeWatchedStatusForValue:data[@"watched_status"]]);
-    anime.current_episode = data[@"watched_episodes"];
-    anime.user_score = ([data[@"score"] isNull] || [data[@"score"] intValue] == 0) ? @(-1) : data[@"score"];
+    anime.watched_status = @([Anime animeWatchedStatusForValue:data[kUserWatchedStatus]]);
+    anime.current_episode = data[kUserWatchedEpisodes];
+    anime.user_score = ([data[kUserScore] isNull] || [data[kUserScore] intValue] == 0) ? @(-1) : data[kUserScore];
     
     
     [[AnimeService managedObjectContext] save:&error];

@@ -51,7 +51,7 @@
         
         // This block of text requires data.
         
-        if(self.anime.average_score) {
+        if(self.anime.average_score > 0) {
             [self displayDetailsViewAnimated:NO];
         }
         
@@ -63,6 +63,8 @@
         
         [operation start];
     }
+    
+    [self adjustLabels];
 }
 
 - (void)didReceiveMemoryWarning
@@ -120,6 +122,16 @@
     }
     
     return text;
+}
+
+- (void)adjustLabels {
+    [self.animeTitle addShadow];
+    [self.animeType addShadow];
+    [self.airing addShadow];
+    [self.score addShadow];
+    [self.totalPeopleScored addShadow];
+    [self.rank addShadow];
+    [self.popularity addShadow];
 }
 
 #pragma mark - NSNotification Methods

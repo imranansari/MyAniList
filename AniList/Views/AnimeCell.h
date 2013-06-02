@@ -15,5 +15,6 @@
 + (CGFloat)cellHeight;
 
 + (NSString *)progressTextForAnime:(Anime *)anime;
+- (void)addShadow;
 
 @end

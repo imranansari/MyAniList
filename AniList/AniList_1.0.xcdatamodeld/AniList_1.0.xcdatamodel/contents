@@ -3,7 +3,7 @@
     <entity name="Anime" representedClassName="Anime" syncable="YES">
         <attribute name="anime_id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="average_count" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="average_score" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="average_score" optional="YES" attributeType="Double" defaultValueString="0" syncable="YES"/>
         <attribute name="classification" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="column" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="comments" optional="YES" attributeType="String" syncable="YES"/>

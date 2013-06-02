@@ -34,4 +34,9 @@
     return label;
 }
 
+- (void)addShadow {
+    self.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
+    self.shadowOffset = CGSizeMake(0, 1);
+}
+
 @end
