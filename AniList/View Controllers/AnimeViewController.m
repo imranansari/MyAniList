@@ -8,8 +8,10 @@
 
 #import "AnimeViewController.h"
 #import "AnimeService.h"
+#import "AnimeUserInfoViewController.h"
 
 @interface AnimeViewController ()
+@property (nonatomic, weak) IBOutlet AnimeUserInfoViewController *userInfoView;
 @end
 
 @implementation AnimeViewController
