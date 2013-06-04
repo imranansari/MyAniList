@@ -96,6 +96,15 @@
     }
     
     self.synopsisView.frame = CGRectMake(0, self.detailsLabel.frame.origin.y + self.detailsLabel.frame.size.height, self.synopsisView.frame.size.width, self.synopsisView.frame.size.height);
+    
+    int defaultContentSize = self.animeDetailsViewController.view.frame.size.height + self.userInfoView.view.frame.size.height + self.detailsLabel.frame.size.height + [UIScreen mainScreen].bounds.size.height - 90;
+    
+    int contentSizeWithSynopsis = self.animeDetailsViewController.view.frame.size.height + self.userInfoView.view.frame.size.height + self.detailsLabel.frame.size.height + self.synopsisView.frame.size.height;
+    
+    if(contentSizeWithSynopsis > defaultContentSize) {
+        self.scrollView.contentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width, contentSizeWithSynopsis);
+    }
+    
 //    self.scrollView.contentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width, self.animeDetailsViewController.view.frame.size.height + self.userInfoView.view.frame.size.height + self.detailsLabel.frame.size.height + self.synopsisView.frame.size.height + 20);
 }
 

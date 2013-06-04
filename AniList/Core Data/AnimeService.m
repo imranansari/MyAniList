@@ -240,8 +240,9 @@
         anime.average_count = data[kMembersCount];
     if(data[kFavoritedCount] &&![data[kFavoritedCount] isNull])
         anime.favorited_count = data[kFavoritedCount];
-    if(data[kSynopsis] &&![data[kSynopsis] isNull])
-        anime.synopsis = data[kSynopsis];
+    if(data[kSynopsis] &&![data[kSynopsis] isNull]) {
+        anime.synopsis = [((NSString *)data[kSynopsis]) cleanHTMLTags];
+    }
     //    anime.genres = data[@"genres"];
     //    anime.tags = data[@"tags"];
     //    anime.manga_adaptations = data[@"manga_adaptations"];

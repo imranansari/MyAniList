@@ -41,6 +41,8 @@
 		6301D950175D6F1A00163160 /* AniListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 632F439A171CDDEB00A5B43A /* AniListViewController.xib */; };
 		6301D951175D6F1D00163160 /* ProfileCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 632F4371171CD74400A5B43A /* ProfileCell.xib */; };
 		6301D952175D6F1D00163160 /* AnimeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 635027AC171E601E0004C106 /* AnimeCell.xib */; };
+		6301D955175D729600163160 /* NSString+AniList.m in Sources */ = {isa = PBXBuildFile; fileRef = 6301D954175D729600163160 /* NSString+AniList.m */; };
+		6301D956175D729600163160 /* NSString+AniList.m in Sources */ = {isa = PBXBuildFile; fileRef = 6301D954175D729600163160 /* NSString+AniList.m */; };
 		630965181737E82100B43489 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 630965171737E82100B43489 /* Icon@2x.png */; };
 		6309651A1737E82500B43489 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 630965191737E82500B43489 /* Icon.png */; };
 		631898CF17222AE300758BE9 /* image_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 631898CD17222AE300758BE9 /* image_placeholder.png */; };
@@ -173,6 +175,8 @@
 		6301D948175D66AD00163160 /* AniListSummaryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AniListSummaryViewController.h; sourceTree = "<group>"; };
 		6301D949175D66AE00163160 /* AniListSummaryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AniListSummaryViewController.m; sourceTree = "<group>"; };
 		6301D94A175D66AE00163160 /* AniListSummaryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AniListSummaryViewController.xib; sourceTree = "<group>"; };
+		6301D953175D729600163160 /* NSString+AniList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+AniList.h"; path = "Categories/NSString+AniList.h"; sourceTree = "<group>"; };
+		6301D954175D729600163160 /* NSString+AniList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+AniList.m"; path = "Categories/NSString+AniList.m"; sourceTree = "<group>"; };
 		630965171737E82100B43489 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		630965191737E82500B43489 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		631898CD17222AE300758BE9 /* image_placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = image_placeholder.png; path = Images/Placeholders/image_placeholder.png; sourceTree = "<group>"; };
@@ -517,6 +521,8 @@
 				637CF6EB175986840009ADF3 /* NSObject+AniList.m */,
 				636F86AE175BA1E3007E1FB6 /* UILabel+AniList.h */,
 				636F86AF175BA1E3007E1FB6 /* UILabel+AniList.m */,
+				6301D953175D729600163160 /* NSString+AniList.h */,
+				6301D954175D729600163160 /* NSString+AniList.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -905,6 +911,7 @@
 				636F86B0175BA1E3007E1FB6 /* UILabel+AniList.m in Sources */,
 				636F86B4175BA3B8007E1FB6 /* UIView+AniList.m in Sources */,
 				6301D94B175D66AF00163160 /* AniListSummaryViewController.m in Sources */,
+				6301D955175D729600163160 /* NSString+AniList.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -954,6 +961,7 @@
 				6301D93F175D632500163160 /* UIFont+AniList.m in Sources */,
 				6301D940175D632C00163160 /* main.m in Sources */,
 				6301D94C175D66AF00163160 /* AniListSummaryViewController.m in Sources */,
+				6301D956175D729600163160 /* NSString+AniList.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
