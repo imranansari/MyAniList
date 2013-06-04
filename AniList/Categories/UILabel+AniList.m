@@ -24,7 +24,7 @@
 + (UILabel *)whiteHeaderWithFrame:(CGRect)frame andFontSize:(int)size {
     UILabel *label = [[UILabel alloc] initWithFrame:frame];
     label.textColor = [UIColor whiteColor];
-    label.font = [UIFont mediumFontWithSize:size];
+    label.font = [UIFont defaultFontWithSize:size];
     label.backgroundColor = [UIColor clearColor];
     label.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
     label.shadowOffset = CGSizeMake(0, 1);

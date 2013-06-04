@@ -8,13 +8,20 @@
 
 #import "SynopsisView.h"
 
+@interface SynopsisView()
+@property (nonatomic, strong) UIActivityIndicatorView *indicator;
+@end
+
 @implementation SynopsisView
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code
+        self.bounds = self.frame = CGRectMake(0, 0, 320, 44);
+        self.indicator = [[UIActivityIndicatorView alloc] initWithFrame:self.bounds];
+        [self.indicator startAnimating];
+        [self addSubview:self.indicator];
     }
     return self;
 }
@@ -32,8 +39,6 @@
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 300, 100)];
     label.text = synopsis;
     label.alpha = 0.0f;
-    
-#warning - temporary, just seeing where the frame is getting set.
     label.backgroundColor = [UIColor clearColor];
     
     label.textColor = [UIColor whiteColor];
@@ -57,8 +62,11 @@
                         options:UIViewAnimationOptionCurveEaseInOut
                      animations:^{
                          label.alpha = 1.0f;
+                         self.indicator.alpha = 0.0f;
                      }
-                     completion:nil];
+                     completion:^(BOOL finished) {
+                         [self.indicator removeFromSuperview];
+                     }];
 }
 
 /*
