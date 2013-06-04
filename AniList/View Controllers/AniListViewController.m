@@ -43,8 +43,11 @@
     [nvc.navigationBar setShadowImage:[[UIImage alloc] init]];
     [nvc.navigationBar setBackgroundImage:maskedImage forBarMetrics:UIBarMetricsDefault];
     
-    [self.view addGestureRecognizer:revealController.panGestureRecognizer];
-    [self.menuButton addTarget:revealController action:@selector(revealToggle:) forControlEvents:UIControlEventTouchUpInside];
+#warning - Why does this break for unit testing?
+    if(revealController) {
+        [self.view addGestureRecognizer:revealController.panGestureRecognizer];
+        [self.menuButton addTarget:revealController action:@selector(revealToggle:) forControlEvents:UIControlEventTouchUpInside];
+    }
 
     self.view.backgroundColor = [UIColor clearColor];
     

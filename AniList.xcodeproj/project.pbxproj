@@ -37,6 +37,10 @@
 		6301D94C175D66AF00163160 /* AniListSummaryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6301D949175D66AE00163160 /* AniListSummaryViewController.m */; };
 		6301D94D175D66AF00163160 /* AniListSummaryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6301D94A175D66AE00163160 /* AniListSummaryViewController.xib */; };
 		6301D94E175D66AF00163160 /* AniListSummaryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6301D94A175D66AE00163160 /* AniListSummaryViewController.xib */; };
+		6301D94F175D6F1A00163160 /* MenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 632F436B171CD6FA00A5B43A /* MenuViewController.xib */; };
+		6301D950175D6F1A00163160 /* AniListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 632F439A171CDDEB00A5B43A /* AniListViewController.xib */; };
+		6301D951175D6F1D00163160 /* ProfileCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 632F4371171CD74400A5B43A /* ProfileCell.xib */; };
+		6301D952175D6F1D00163160 /* AnimeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 635027AC171E601E0004C106 /* AnimeCell.xib */; };
 		630965181737E82100B43489 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 630965171737E82100B43489 /* Icon@2x.png */; };
 		6309651A1737E82500B43489 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 630965191737E82500B43489 /* Icon.png */; };
 		631898CF17222AE300758BE9 /* image_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 631898CD17222AE300758BE9 /* image_placeholder.png */; };
@@ -816,6 +820,10 @@
 				636F86AB175BA037007E1FB6 /* header_bg.png in Resources */,
 				636F86AD175BA037007E1FB6 /* header_bg@2x.png in Resources */,
 				6301D94E175D66AF00163160 /* AniListSummaryViewController.xib in Resources */,
+				6301D94F175D6F1A00163160 /* MenuViewController.xib in Resources */,
+				6301D950175D6F1A00163160 /* AniListViewController.xib in Resources */,
+				6301D951175D6F1D00163160 /* ProfileCell.xib in Resources */,
+				6301D952175D6F1D00163160 /* AnimeCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

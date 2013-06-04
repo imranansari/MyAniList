@@ -18,29 +18,17 @@
     return [self initWithNibName:@"AniListSummaryViewController" bundle:[NSBundle mainBundle]];
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
     }
     return self;
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     
     self.titleLabel.alpha = 0.0f;
-    
-//    UINavigationController *nvc = ((UINavigationController *)self.revealViewController.frontViewController);
-//    nvc.navigationBar.translucent = YES; // Setting this slides the view up, underneath the nav bar (otherwise it'll appear black)
-//    const float colorMask[6] = {222, 255, 222, 255, 222, 255};
-//    UIImage *img = [[UIImage alloc] init];
-//    UIImage *maskedImage = [UIImage imageWithCGImage: CGImageCreateWithMaskingColors(img.CGImage, colorMask)];
-//    
-//    [nvc.navigationBar setShadowImage:[[UIImage alloc] init]];
-//    [nvc.navigationBar setBackgroundImage:maskedImage forBarMetrics:UIBarMetricsDefault];
-    
     self.view.backgroundColor = [UIColor clearColor];
     
     CAGradientLayer *gradient = [CAGradientLayer layer];
@@ -55,8 +43,7 @@
     [self.titleLabel addShadow];
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
