@@ -13,7 +13,7 @@
 #import "Anime.h"
 
 @interface AnimeListViewController ()
-@property (nonatomic, strong) UIRefreshControl *refreshControl;
+
 @end
 
 @implementation AnimeListViewController

@@ -51,7 +51,7 @@
         
         // This block of text requires data.
         
-        if(self.anime.average_score > 0) {
+        if([self.anime.average_score doubleValue] > 0) {
             [self displayDetailsViewAnimated:NO];
         }
         

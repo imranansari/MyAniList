@@ -57,7 +57,7 @@
 					<object class="IBUILabel" id="554211292">
 						<reference key="NSNextResponder" ref="1061365936"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{150, 83}, {160, 21}}</string>
+						<string key="NSFrame">{{152, 83}, {160, 21}}</string>
 						<reference key="NSSuperview" ref="1061365936"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="951809600"/>
@@ -90,7 +90,7 @@
 					<object class="IBUILabel" id="637783839">
 						<reference key="NSNextResponder" ref="1061365936"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{20, 14}, {279, 64}}</string>
+						<string key="NSFrame">{{20, 8}, {280, 64}}</string>
 						<reference key="NSSuperview" ref="1061365936"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="1031805508"/>
@@ -118,12 +118,12 @@
 							<int key="NSfFlags">16</int>
 						</object>
 						<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
-						<double key="preferredMaxLayoutWidth">279</double>
+						<double key="preferredMaxLayoutWidth">280</double>
 					</object>
 					<object class="IBUILabel" id="951809600">
 						<reference key="NSNextResponder" ref="1061365936"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{150, 107}, {160, 62}}</string>
+						<string key="NSFrame">{{152, 107}, {160, 62}}</string>
 						<reference key="NSSuperview" ref="1061365936"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="858378361"/>
@@ -162,7 +162,7 @@
 							<object class="IBUILabel" id="245499517">
 								<reference key="NSNextResponder" ref="858378361"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{5, 62}, {151, 21}}</string>
+								<string key="NSFrame">{{0, 62}, {151, 21}}</string>
 								<reference key="NSSuperview" ref="858378361"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="572342195"/>
@@ -183,7 +183,7 @@
 							<object class="IBUILabel" id="572342195">
 								<reference key="NSNextResponder" ref="858378361"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{5, 78}, {151, 21}}</string>
+								<string key="NSFrame">{{0, 78}, {151, 21}}</string>
 								<reference key="NSSuperview" ref="858378361"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="579076954"/>
@@ -204,7 +204,7 @@
 							<object class="IBUILabel" id="949744230">
 								<reference key="NSNextResponder" ref="858378361"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{5, 15}, {143, 21}}</string>
+								<string key="NSFrame">{{0, 15}, {143, 21}}</string>
 								<reference key="NSSuperview" ref="858378361"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="245499517"/>
@@ -228,7 +228,7 @@
 							<object class="IBUILabel" id="46214355">
 								<reference key="NSNextResponder" ref="858378361"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{5, 0}, {81, 21}}</string>
+								<string key="NSFrameSize">{81, 21}</string>
 								<reference key="NSSuperview" ref="858378361"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="949744230"/>
@@ -247,7 +247,7 @@
 								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 							</object>
 						</array>
-						<string key="NSFrame">{{150, 195}, {160, 99}}</string>
+						<string key="NSFrame">{{152, 195}, {160, 99}}</string>
 						<reference key="NSSuperview" ref="1061365936"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="46214355"/>
@@ -261,7 +261,7 @@
 					<object class="IBUIActivityIndicatorView" id="579076954">
 						<reference key="NSNextResponder" ref="1061365936"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{220, 236}, {20, 20}}</string>
+						<string key="NSFrame">{{222, 236}, {20, 20}}</string>
 						<reference key="NSSuperview" ref="1061365936"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView"/>

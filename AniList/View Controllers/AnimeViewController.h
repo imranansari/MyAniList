@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AniListSummaryViewController.h"
 #import "Anime.h"
 
-@interface AnimeViewController : UIViewController<UIScrollViewDelegate>
+@interface AnimeViewController : AniListSummaryViewController
 
 @property (nonatomic, strong) Anime *anime;
 
