@@ -34,11 +34,6 @@
     [[MALHTTPClient sharedClient] getAnimeListForUser:@"spacepyro"
                                success:^(NSURLRequest *operation, id response) {
                                    [AnimeService addAnimeList:(NSDictionary *)response];
-//                                   NSArray *animeList = response[@"anime"];
-//                                   NSDictionary *stats = response[@"statistics"];
-//                                   for(NSDictionary *animeItem in animeList) {
-//                                       [AnimeService addAnime:animeItem];
-//                                   }
                                }
                                failure:^(NSURLRequest *operation, NSError *error) {
                                    // Derp.

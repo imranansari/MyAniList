@@ -20,4 +20,6 @@ typedef enum {
 
 @interface AnimeUserInfoViewController : AniListUserInfoViewController
 
+@property (nonatomic, strong) Anime *anime;
+
 @end

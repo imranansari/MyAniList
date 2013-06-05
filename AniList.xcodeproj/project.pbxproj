@@ -158,6 +158,8 @@
 		637CF6ED175986840009ADF3 /* NSObject+AniList.m in Sources */ = {isa = PBXBuildFile; fileRef = 637CF6EB175986840009ADF3 /* NSObject+AniList.m */; };
 		637CF6F31759940E0009ADF3 /* test_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 637CF6F21759940E0009ADF3 /* test_background@2x.png */; };
 		637CF6F41759940E0009ADF3 /* test_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 637CF6F21759940E0009ADF3 /* test_background@2x.png */; };
+		63892576175F7ACC00C8489A /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63892575175F7ACC00C8489A /* BaseViewController.m */; };
+		63892577175F7ACC00C8489A /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63892575175F7ACC00C8489A /* BaseViewController.m */; };
 		63922CED171D82C800D41BCE /* spacepyro.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 63922CEC171D82C800D41BCE /* spacepyro.jpg */; };
 /* End PBXBuildFile section */
 
@@ -309,6 +311,8 @@
 		637CF6EB175986840009ADF3 /* NSObject+AniList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+AniList.m"; path = "Categories/NSObject+AniList.m"; sourceTree = "<group>"; };
 		637CF6EE175986B20009ADF3 /* Categories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Categories.h; path = Categories/Categories.h; sourceTree = "<group>"; };
 		637CF6F21759940E0009ADF3 /* test_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "test_background@2x.png"; sourceTree = "<group>"; };
+		63892574175F7ACC00C8489A /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
+		63892575175F7ACC00C8489A /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
 		63922CEC171D82C800D41BCE /* spacepyro.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = spacepyro.jpg; path = Images/Placeholders/spacepyro.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -392,6 +396,8 @@
 				636F8699175B117D007E1FB6 /* AnimeDetailsViewController.h */,
 				636F869A175B117D007E1FB6 /* AnimeDetailsViewController.m */,
 				636F869B175B117D007E1FB6 /* AnimeDetailsViewController.xib */,
+				63892574175F7ACC00C8489A /* BaseViewController.h */,
+				63892575175F7ACC00C8489A /* BaseViewController.m */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -912,6 +918,7 @@
 				636F86B4175BA3B8007E1FB6 /* UIView+AniList.m in Sources */,
 				6301D94B175D66AF00163160 /* AniListSummaryViewController.m in Sources */,
 				6301D955175D729600163160 /* NSString+AniList.m in Sources */,
+				63892576175F7ACC00C8489A /* BaseViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -962,6 +969,7 @@
 				6301D940175D632C00163160 /* main.m in Sources */,
 				6301D94C175D66AF00163160 /* AniListSummaryViewController.m in Sources */,
 				6301D956175D729600163160 /* NSString+AniList.m in Sources */,
+				63892577175F7ACC00C8489A /* BaseViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

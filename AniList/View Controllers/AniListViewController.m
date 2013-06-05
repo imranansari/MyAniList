@@ -229,9 +229,7 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-//    self.tableView indexPathsForVisibleRows
-//    CGPoint point = CGPointMake(scrollView.contentOffset.x, scrollView.contentOffset.y + 44);
-//    NSLog(@"Visible section: %@", [self.tableView indexPathForRowAtPoint:point]);
+
 }
 
 

@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
+#import "BaseViewController.h"
 
-@interface AniListSummaryViewController : UIViewController<UIScrollViewDelegate>
+@interface AniListSummaryViewController : BaseViewController<UIScrollViewDelegate>
 
 @property (nonatomic, weak) IBOutlet UIView *maskView;
 @property (nonatomic, weak) IBOutlet UIScrollView *scrollView;

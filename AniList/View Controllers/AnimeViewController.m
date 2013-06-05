@@ -73,6 +73,7 @@
 
 - (void)setupViews {
     self.animeDetailsViewController.anime = self.anime;
+    self.userInfoView.anime = self.anime;
     
     [self.scrollView addSubview:self.animeDetailsViewController.view];
     [self.scrollView addSubview:self.userInfoView.view];

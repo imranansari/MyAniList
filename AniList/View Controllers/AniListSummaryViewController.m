@@ -53,7 +53,7 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     // y = 36; scrolled off completely.
     // y = 48; matched completely.
-    NSLog(@"y: %f", scrollView.contentOffset.y);
+//    NSLog(@"y: %f", scrollView.contentOffset.y);
     if(scrollView.contentOffset.y < 36) {
         self.titleLabel.alpha = 0.0f;
     }

@@ -31,7 +31,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    
+    if(self.anime.watched_status && [self.anime.watched_status intValue] != AnimeWatchedStatusUnknown) {
+        UILabel *watchingStatusLabel = [self labelForView:self.watchingStatusView];
+        watchingStatusLabel.text = [Anime stringForAnimeWatchedStatus:[self.anime.watched_status intValue]];
+    }
+    
+    if(self.anime.user_date_start) {
+        UILabel *startDate = [self labelForView:self.startDateView];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -55,6 +63,16 @@
         default:
             break;
     }
+}
+
+- (UILabel *)labelForView:(UIView *)view {
+    for(UIView *subview in view.subviews) {
+        if([subview isMemberOfClass:[UILabel class]]) {
+            return (UILabel *)subview;
+        }
+    }
+    
+    return nil;
 }
 
 @end
