@@ -45,6 +45,8 @@
 		6301D956175D729600163160 /* NSString+AniList.m in Sources */ = {isa = PBXBuildFile; fileRef = 6301D954175D729600163160 /* NSString+AniList.m */; };
 		630965181737E82100B43489 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 630965171737E82100B43489 /* Icon@2x.png */; };
 		6309651A1737E82500B43489 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 630965191737E82500B43489 /* Icon.png */; };
+		631693461760C56300D526C0 /* NSDate+AniList.m in Sources */ = {isa = PBXBuildFile; fileRef = 631693451760C56300D526C0 /* NSDate+AniList.m */; };
+		631693471760C56300D526C0 /* NSDate+AniList.m in Sources */ = {isa = PBXBuildFile; fileRef = 631693451760C56300D526C0 /* NSDate+AniList.m */; };
 		631898CF17222AE300758BE9 /* image_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 631898CD17222AE300758BE9 /* image_placeholder.png */; };
 		631898D017222AE300758BE9 /* image_placeholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 631898CE17222AE300758BE9 /* image_placeholder@2x.png */; };
 		632F4360171CD65D00A5B43A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 632F435F171CD65D00A5B43A /* SystemConfiguration.framework */; };
@@ -181,6 +183,8 @@
 		6301D954175D729600163160 /* NSString+AniList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+AniList.m"; path = "Categories/NSString+AniList.m"; sourceTree = "<group>"; };
 		630965171737E82100B43489 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		630965191737E82500B43489 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		631693441760C56300D526C0 /* NSDate+AniList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDate+AniList.h"; path = "Categories/NSDate+AniList.h"; sourceTree = "<group>"; };
+		631693451760C56300D526C0 /* NSDate+AniList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDate+AniList.m"; path = "Categories/NSDate+AniList.m"; sourceTree = "<group>"; };
 		631898CD17222AE300758BE9 /* image_placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = image_placeholder.png; path = Images/Placeholders/image_placeholder.png; sourceTree = "<group>"; };
 		631898CE17222AE300758BE9 /* image_placeholder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "image_placeholder@2x.png"; path = "Images/Placeholders/image_placeholder@2x.png"; sourceTree = "<group>"; };
 		632F435F171CD65D00A5B43A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -519,6 +523,8 @@
 			isa = PBXGroup;
 			children = (
 				637CF6EE175986B20009ADF3 /* Categories.h */,
+				631693441760C56300D526C0 /* NSDate+AniList.h */,
+				631693451760C56300D526C0 /* NSDate+AniList.m */,
 				636F86B2175BA3B8007E1FB6 /* UIView+AniList.h */,
 				636F86B3175BA3B8007E1FB6 /* UIView+AniList.m */,
 				6350279A171E4EA20004C106 /* UIFont+AniList.h */,
@@ -919,6 +925,7 @@
 				6301D94B175D66AF00163160 /* AniListSummaryViewController.m in Sources */,
 				6301D955175D729600163160 /* NSString+AniList.m in Sources */,
 				63892576175F7ACC00C8489A /* BaseViewController.m in Sources */,
+				631693461760C56300D526C0 /* NSDate+AniList.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -970,6 +977,7 @@
 				6301D94C175D66AF00163160 /* AniListSummaryViewController.m in Sources */,
 				6301D956175D729600163160 /* NSString+AniList.m in Sources */,
 				63892577175F7ACC00C8489A /* BaseViewController.m in Sources */,
+				631693471760C56300D526C0 /* NSDate+AniList.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

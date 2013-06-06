@@ -125,7 +125,7 @@
     return AnimeWatchedStatusUnknown;
 }
 
-+ (NSString *)stringForAnimeWatchedStatus:(AnimeWatchedStatus)watchedStatus {
++ (NSString *)stringForAnimeWatchedStatus:(AnimeWatchedStatus)watchedStatus forAnimeType:(AnimeType)animeType {
     switch (watchedStatus) {
         case AnimeWatchedStatusWatching:
             return @"Currently watching";

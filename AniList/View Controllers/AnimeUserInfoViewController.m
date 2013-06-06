@@ -32,14 +32,43 @@
 {
     [super viewDidLoad];
     
+    UILabel *watchingStatusLabel = [self labelForView:self.watchingStatusView];
+    UILabel *startDate = [self labelForView:self.startDateView];
+    UILabel *endDate = [self labelForView:self.endDateView];
+    UILabel *progressLabel = [self labelForView:self.progressView];
+    UILabel *scoreLabel = [self labelForView:self.scoreView];
+    
     if(self.anime.watched_status && [self.anime.watched_status intValue] != AnimeWatchedStatusUnknown) {
-        UILabel *watchingStatusLabel = [self labelForView:self.watchingStatusView];
-        watchingStatusLabel.text = [Anime stringForAnimeWatchedStatus:[self.anime.watched_status intValue]];
+        watchingStatusLabel.text = [Anime stringForAnimeWatchedStatus:[self.anime.watched_status intValue] forAnimeType:[self.anime.type intValue]];
+    }
+    else {
+        // No watch status, shouldn't ever hit here.
     }
     
     if(self.anime.user_date_start) {
-        UILabel *startDate = [self labelForView:self.startDateView];
+        startDate.text = [NSString stringWithFormat:@"Started on %@", [self.anime.user_date_start stringValue]];
     }
+    else {
+        startDate.text = @"When did you start watching?";
+    }
+    
+    if(self.anime.user_date_finish) {
+        endDate.text = [NSString stringWithFormat:@"Finished on %@", [self.anime.user_date_finish stringValue]];
+    }
+    else {
+        endDate.text = @"When did you finish?";
+    }
+    
+    if([self.anime.user_score intValue] > 0) {
+        scoreLabel.text = [NSString stringWithFormat:@"You gave this a %d.", [self.anime.user_score intValue]];
+    }
+    else {
+        scoreLabel.text = @"Not scored yet";
+    }
+
+
+    progressLabel.text = [NSString stringWithFormat:@"Progress: %d / %d", [self.anime.current_episode intValue], [self.anime.total_episodes intValue]];
+
 }
 
 - (void)didReceiveMemoryWarning
