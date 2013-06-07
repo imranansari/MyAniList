@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AniListUserInfoViewController : UIViewController
+@interface AniListUserInfoViewController : UIViewController<UIPickerViewDataSource, UIPickerViewDelegate>
 
 @end

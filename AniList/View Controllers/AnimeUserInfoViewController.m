@@ -15,6 +15,9 @@
 @property (nonatomic, weak) IBOutlet UIView *endDateView;
 @property (nonatomic, weak) IBOutlet UIView *progressView;
 @property (nonatomic, weak) IBOutlet UIView *scoreView;
+
+- (IBAction)progressViewPressed:(id)sender;
+
 @end
 
 @implementation AnimeUserInfoViewController
@@ -45,6 +48,8 @@
         // No watch status, shouldn't ever hit here.
     }
     
+    // Multiple scenarios for these strings.
+    
     if(self.anime.user_date_start) {
         startDate.text = [NSString stringWithFormat:@"Started on %@", [self.anime.user_date_start stringValue]];
     }
@@ -71,27 +76,9 @@
 
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-- (void)displayPickerOfType:(AnimePickerTypes)pickerType {
-    switch(pickerType) {
-        case AnimePickerWatchingStatus:
-            break;
-        case AnimePickerStartDate:
-            break;
-        case AnimePickerEndDate:
-            break;
-        case AnimePickerProgress:
-            break;
-        case AnimePickerScore:
-            break;
-        default:
-            break;
-    }
 }
 
 - (UILabel *)labelForView:(UIView *)view {
@@ -102,6 +89,15 @@
     }
     
     return nil;
+}
+
+#pragma mark - IBAction Methods
+
+- (IBAction)userInfoViewPressed:(id)sender {
+    if(self.delegate && [self.delegate respondsToSelector:@selector(userInfoPressed)]) {
+        [self.delegate userInfoPressed];
+    }
+
 }
 
 @end

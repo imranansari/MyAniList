@@ -163,6 +163,18 @@
 		63892576175F7ACC00C8489A /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63892575175F7ACC00C8489A /* BaseViewController.m */; };
 		63892577175F7ACC00C8489A /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63892575175F7ACC00C8489A /* BaseViewController.m */; };
 		63922CED171D82C800D41BCE /* spacepyro.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 63922CEC171D82C800D41BCE /* spacepyro.jpg */; };
+		63BEA7371761859300432BED /* AniListPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63BEA7361761859300432BED /* AniListPickerView.m */; };
+		63BEA7381761859300432BED /* AniListPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63BEA7361761859300432BED /* AniListPickerView.m */; };
+		63BEA73E17619E0800432BED /* AniListUserInfoEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63BEA73C17619E0800432BED /* AniListUserInfoEditViewController.m */; };
+		63BEA73F17619E0800432BED /* AniListUserInfoEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63BEA73C17619E0800432BED /* AniListUserInfoEditViewController.m */; };
+		63BEA74017619E0800432BED /* AniListUserInfoEditViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63BEA73D17619E0800432BED /* AniListUserInfoEditViewController.xib */; };
+		63BEA74117619E0800432BED /* AniListUserInfoEditViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63BEA73D17619E0800432BED /* AniListUserInfoEditViewController.xib */; };
+		63BEA7441761A13400432BED /* AniListStepperView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63BEA7431761A13400432BED /* AniListStepperView.m */; };
+		63BEA7451761A13400432BED /* AniListStepperView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63BEA7431761A13400432BED /* AniListStepperView.m */; };
+		63BEA7481761A14400432BED /* AniListScoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63BEA7471761A14400432BED /* AniListScoreView.m */; };
+		63BEA7491761A14400432BED /* AniListScoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63BEA7471761A14400432BED /* AniListScoreView.m */; };
+		63BEA74D176213B600432BED /* RRSGlowLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 63BEA74C176213B600432BED /* RRSGlowLabel.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		63BEA74E176213B600432BED /* RRSGlowLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 63BEA74C176213B600432BED /* RRSGlowLabel.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -318,6 +330,17 @@
 		63892574175F7ACC00C8489A /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
 		63892575175F7ACC00C8489A /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
 		63922CEC171D82C800D41BCE /* spacepyro.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = spacepyro.jpg; path = Images/Placeholders/spacepyro.jpg; sourceTree = "<group>"; };
+		63BEA7351761859300432BED /* AniListPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AniListPickerView.h; path = Views/AniListPickerView.h; sourceTree = "<group>"; };
+		63BEA7361761859300432BED /* AniListPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AniListPickerView.m; path = Views/AniListPickerView.m; sourceTree = "<group>"; };
+		63BEA73B17619E0800432BED /* AniListUserInfoEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AniListUserInfoEditViewController.h; sourceTree = "<group>"; };
+		63BEA73C17619E0800432BED /* AniListUserInfoEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AniListUserInfoEditViewController.m; sourceTree = "<group>"; };
+		63BEA73D17619E0800432BED /* AniListUserInfoEditViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AniListUserInfoEditViewController.xib; sourceTree = "<group>"; };
+		63BEA7421761A13400432BED /* AniListStepperView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AniListStepperView.h; path = Views/AniListStepperView.h; sourceTree = "<group>"; };
+		63BEA7431761A13400432BED /* AniListStepperView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AniListStepperView.m; path = Views/AniListStepperView.m; sourceTree = "<group>"; };
+		63BEA7461761A14400432BED /* AniListScoreView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AniListScoreView.h; path = Views/AniListScoreView.h; sourceTree = "<group>"; };
+		63BEA7471761A14400432BED /* AniListScoreView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AniListScoreView.m; path = Views/AniListScoreView.m; sourceTree = "<group>"; };
+		63BEA74B176213B600432BED /* RRSGlowLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RRSGlowLabel.h; sourceTree = "<group>"; };
+		63BEA74C176213B600432BED /* RRSGlowLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RRSGlowLabel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -402,6 +425,9 @@
 				636F869B175B117D007E1FB6 /* AnimeDetailsViewController.xib */,
 				63892574175F7ACC00C8489A /* BaseViewController.h */,
 				63892575175F7ACC00C8489A /* BaseViewController.m */,
+				63BEA73B17619E0800432BED /* AniListUserInfoEditViewController.h */,
+				63BEA73C17619E0800432BED /* AniListUserInfoEditViewController.m */,
+				63BEA73D17619E0800432BED /* AniListUserInfoEditViewController.xib */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -413,6 +439,12 @@
 				636F86A1175B1232007E1FB6 /* SynopsisView.m */,
 				632F439E171CDE0300A5B43A /* Table Views */,
 				632F439D171CDDFB00A5B43A /* Table Cells */,
+				63BEA7351761859300432BED /* AniListPickerView.h */,
+				63BEA7361761859300432BED /* AniListPickerView.m */,
+				63BEA7421761A13400432BED /* AniListStepperView.h */,
+				63BEA7431761A13400432BED /* AniListStepperView.m */,
+				63BEA7461761A14400432BED /* AniListScoreView.h */,
+				63BEA7471761A14400432BED /* AniListScoreView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -542,6 +574,7 @@
 		6353C03D171C457C0060F062 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				63BEA74A176213B600432BED /* RSSGlowLabel */,
 				636F8673175A7AB8007E1FB6 /* XMLReader */,
 				6353C03E171C457C0060F062 /* AFNetworking */,
 				6353C080171C457C0060F062 /* SWRevealViewController */,
@@ -719,6 +752,15 @@
 			name = Icons;
 			sourceTree = "<group>";
 		};
+		63BEA74A176213B600432BED /* RSSGlowLabel */ = {
+			isa = PBXGroup;
+			children = (
+				63BEA74B176213B600432BED /* RRSGlowLabel.h */,
+				63BEA74C176213B600432BED /* RRSGlowLabel.m */,
+			);
+			path = RSSGlowLabel;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -822,6 +864,7 @@
 				636F86AA175BA037007E1FB6 /* header_bg.png in Resources */,
 				636F86AC175BA037007E1FB6 /* header_bg@2x.png in Resources */,
 				6301D94D175D66AF00163160 /* AniListSummaryViewController.xib in Resources */,
+				63BEA74017619E0800432BED /* AniListUserInfoEditViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -842,6 +885,7 @@
 				6301D950175D6F1A00163160 /* AniListViewController.xib in Resources */,
 				6301D951175D6F1D00163160 /* ProfileCell.xib in Resources */,
 				6301D952175D6F1D00163160 /* AnimeCell.xib in Resources */,
+				63BEA74117619E0800432BED /* AniListUserInfoEditViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -926,6 +970,11 @@
 				6301D955175D729600163160 /* NSString+AniList.m in Sources */,
 				63892576175F7ACC00C8489A /* BaseViewController.m in Sources */,
 				631693461760C56300D526C0 /* NSDate+AniList.m in Sources */,
+				63BEA7371761859300432BED /* AniListPickerView.m in Sources */,
+				63BEA73E17619E0800432BED /* AniListUserInfoEditViewController.m in Sources */,
+				63BEA7441761A13400432BED /* AniListStepperView.m in Sources */,
+				63BEA7481761A14400432BED /* AniListScoreView.m in Sources */,
+				63BEA74D176213B600432BED /* RRSGlowLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -978,6 +1027,11 @@
 				6301D956175D729600163160 /* NSString+AniList.m in Sources */,
 				63892577175F7ACC00C8489A /* BaseViewController.m in Sources */,
 				631693471760C56300D526C0 /* NSDate+AniList.m in Sources */,
+				63BEA7381761859300432BED /* AniListPickerView.m in Sources */,
+				63BEA73F17619E0800432BED /* AniListUserInfoEditViewController.m in Sources */,
+				63BEA7451761A13400432BED /* AniListStepperView.m in Sources */,
+				63BEA7491761A14400432BED /* AniListScoreView.m in Sources */,
+				63BEA74E176213B600432BED /* RRSGlowLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

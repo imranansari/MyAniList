@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "AniListSummaryViewController.h"
 #import "Anime.h"
+#import "AnimeUserInfoViewController.h"
 
-@interface AnimeViewController : AniListSummaryViewController
+@interface AnimeViewController : AniListSummaryViewController<AniListUserInfoViewControllerDelegate>
 
 @property (nonatomic, strong) Anime *anime;
 

@@ -11,6 +11,8 @@
 #import "AnimeDetailsViewController.h"
 #import "AnimeUserInfoViewController.h"
 #import "SynopsisView.h"
+#import "AniListPickerView.h"
+#import "AniListUserInfoEditViewController.h"
 
 @interface AnimeViewController ()
 @property (nonatomic, strong) AnimeDetailsViewController *animeDetailsViewController;
@@ -18,6 +20,7 @@
 @property (nonatomic, strong) UILabel *synopsisLabel;
 @property (nonatomic, strong) SynopsisView *synopsisView;
 @property (nonatomic, strong) UILabel *detailsLabel;
+@property (nonatomic, strong) AniListPickerView *pickerView;
 @end
 
 @implementation AnimeViewController
@@ -27,10 +30,13 @@
     if (self) {
         self.animeDetailsViewController = [[AnimeDetailsViewController alloc] init];
         self.userInfoView = [[AnimeUserInfoViewController alloc] init];
+        self.userInfoView.delegate = self;
         self.synopsisView = [[SynopsisView alloc] init];
         
         self.detailsLabel = [UILabel whiteHeaderWithFrame:CGRectMake(0, 0, 320, 60) andFontSize:18];
         self.detailsLabel.text = @"Synopsis";
+        
+        self.pickerView = [[AniListPickerView alloc] initWithFrame:CGRectMake(self.userInfoView.view.frame.origin.x, self.userInfoView.view.frame.origin.y + self.userInfoView.view.frame.size.height, [UIScreen mainScreen].bounds.size.width, 146)];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateViews) name:kAnimeDidUpdate object:nil];
     }
@@ -107,6 +113,28 @@
     }
     
 //    self.scrollView.contentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width, self.animeDetailsViewController.view.frame.size.height + self.userInfoView.view.frame.size.height + self.detailsLabel.frame.size.height + self.synopsisView.frame.size.height + 20);
+}
+
+#pragma mark - AniListUserInfoViewControllerDelegate Methods
+
+- (void)userInfoPressed {
+    
+    AniListUserInfoEditViewController *vc = [[AniListUserInfoEditViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
+    
+//    self.pickerView.pickerType = AniListPickerStatusPicker;
+//    self.pickerView.anime = self.anime;
+
+//    [self.scrollView scrollRectToVisible:CGRectMake(self.userInfoView.view.frame.origin.x, 133, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height - 20) animated:YES];
+    
+//    [self.scrollView scrollRectToVisible:CGRectMake(self.userInfoView.view.frame.origin.x, self.userInfoView.view.frame.origin.y - ([UIScreen mainScreen].bounds.size.height - 16 - self.userInfoView.view.frame.size.height - picker.frame.size.height), [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height) animated:YES];
+}
+
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+    self.pickerView.frame = CGRectMake(self.userInfoView.view.frame.origin.x, self.userInfoView.view.frame.origin.y + self.userInfoView.view.frame.size.height, [UIScreen mainScreen].bounds.size.width, 146);
+    [self.pickerView refresh];
+
+    [self.scrollView addSubview:self.pickerView];
 }
 
 @end
