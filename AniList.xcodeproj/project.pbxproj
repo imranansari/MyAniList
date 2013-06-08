@@ -160,6 +160,8 @@
 		637CF6ED175986840009ADF3 /* NSObject+AniList.m in Sources */ = {isa = PBXBuildFile; fileRef = 637CF6EB175986840009ADF3 /* NSObject+AniList.m */; };
 		637CF6F31759940E0009ADF3 /* test_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 637CF6F21759940E0009ADF3 /* test_background@2x.png */; };
 		637CF6F41759940E0009ADF3 /* test_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 637CF6F21759940E0009ADF3 /* test_background@2x.png */; };
+		63859E871763E8FD0029397C /* SparkInspector.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = THBDITSPYVFDWQYYBDCIDIXG /* SparkInspector.framework */; };
+		63859E881763E9DA0029397C /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = HYXIFWTDXJPPRRMDCEPMDTJH /* libz.dylib */; };
 		63892576175F7ACC00C8489A /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63892575175F7ACC00C8489A /* BaseViewController.m */; };
 		63892577175F7ACC00C8489A /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63892575175F7ACC00C8489A /* BaseViewController.m */; };
 		63922CED171D82C800D41BCE /* spacepyro.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 63922CEC171D82C800D41BCE /* spacepyro.jpg */; };
@@ -175,6 +177,7 @@
 		63BEA7491761A14400432BED /* AniListScoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63BEA7471761A14400432BED /* AniListScoreView.m */; };
 		63BEA74D176213B600432BED /* RRSGlowLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 63BEA74C176213B600432BED /* RRSGlowLabel.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		63BEA74E176213B600432BED /* RRSGlowLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 63BEA74C176213B600432BED /* RRSGlowLabel.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		KIYDQKWBMRKIEYEVRWSLKUDQ /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = HYXIFWTDXJPPRRMDCEPMDTJH /* libz.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -341,6 +344,8 @@
 		63BEA7471761A14400432BED /* AniListScoreView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AniListScoreView.m; path = Views/AniListScoreView.m; sourceTree = "<group>"; };
 		63BEA74B176213B600432BED /* RRSGlowLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RRSGlowLabel.h; sourceTree = "<group>"; };
 		63BEA74C176213B600432BED /* RRSGlowLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RRSGlowLabel.m; sourceTree = "<group>"; };
+		HYXIFWTDXJPPRRMDCEPMDTJH /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		THBDITSPYVFDWQYYBDCIDIXG /* SparkInspector.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SparkInspector.framework; path = "/Applications/Spark Inspector.app/Contents/Resources/Frameworks/SparkInspector.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -359,6 +364,7 @@
 				635484A3171C2FA7003457CB /* CoreGraphics.framework in Frameworks */,
 				635484A5171C2FA7003457CB /* CoreData.framework in Frameworks */,
 				6353C03C171C43680060F062 /* Crashlytics.framework in Frameworks */,
+				KIYDQKWBMRKIEYEVRWSLKUDQ /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -366,6 +372,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63859E881763E9DA0029397C /* libz.dylib in Frameworks */,
 				635484C2171C2FA7003457CB /* SenTestingKit.framework in Frameworks */,
 				635484C3171C2FA7003457CB /* UIKit.framework in Frameworks */,
 				635484C4171C2FA7003457CB /* Foundation.framework in Frameworks */,
@@ -378,6 +385,7 @@
 				6301D92C175D62BA00163160 /* CoreText.framework in Frameworks */,
 				6301D92D175D62BA00163160 /* Crashlytics.framework in Frameworks */,
 				6301D92E175D62BA00163160 /* CoreGraphics.framework in Frameworks */,
+				63859E871763E8FD0029397C /* SparkInspector.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -665,6 +673,8 @@
 				635484A2171C2FA7003457CB /* CoreGraphics.framework */,
 				635484A4171C2FA7003457CB /* CoreData.framework */,
 				635484C1171C2FA7003457CB /* SenTestingKit.framework */,
+				HYXIFWTDXJPPRRMDCEPMDTJH /* libz.dylib */,
+				THBDITSPYVFDWQYYBDCIDIXG /* SparkInspector.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1079,6 +1089,9 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"/Applications/Spark Inspector.app/Contents/Resources/Frameworks\"",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1092,6 +1105,11 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-framework",
+					SparkInspector,
+				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1129,11 +1147,17 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
+					"\"/Applications/Spark Inspector.app/Contents/Resources/Frameworks\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AniList/AniList-Prefix.pch";
 				INFOPLIST_FILE = "AniList/AniList-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-framework",
+					SparkInspector,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1147,6 +1171,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
+					"\"$(SYSTEM_APPS_DIR)/Spark Inspector.app/Contents/Resources/Frameworks\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AniList/AniList-Prefix.pch";
@@ -1167,6 +1192,7 @@
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
 					"\"$(SRCROOT)\"",
+					"\"$(SYSTEM_APPS_DIR)/Spark Inspector.app/Contents/Resources/Frameworks\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AniList/AniList-Prefix.pch";
@@ -1185,6 +1211,7 @@
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
 					"\"$(SRCROOT)\"",
+					"\"$(SYSTEM_APPS_DIR)/Spark Inspector.app/Contents/Resources/Frameworks\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AniList/AniList-Prefix.pch";

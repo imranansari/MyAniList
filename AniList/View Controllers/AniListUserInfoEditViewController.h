@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <QuartzCore/QuartzCore.h>
+
+@class Anime;
 
 @interface AniListUserInfoEditViewController : UIViewController
+
+@property (nonatomic, strong) Anime *anime;
 
 @end

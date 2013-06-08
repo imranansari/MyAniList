@@ -11,5 +11,6 @@
 
 #define kAnimeDidUpdate @"kAnimeDidUpdate"
 
+static BOOL UI_DEBUG = NO;
 
 #endif

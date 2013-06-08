@@ -128,18 +128,18 @@
 + (NSString *)stringForAnimeWatchedStatus:(AnimeWatchedStatus)watchedStatus forAnimeType:(AnimeType)animeType {
     switch (watchedStatus) {
         case AnimeWatchedStatusWatching:
-            return @"Currently watching";
+            return @"currently watching this series.";
         case AnimeWatchedStatusCompleted:
-            return @"Completed";
+            return @"finished with this series.";
         case AnimeWatchedStatusOnHold:
-            return @"On hold";
+            return @"putting this series on hold.";
         case AnimeWatchedStatusDropped:
-            return @"Dropped";
+            return @"dropping this series.";
         case AnimeWatchedStatusPlanToWatch:
-            return @"Plan to watch";
+            return @"planning to watch this series.";
         case AnimeWatchedStatusUnknown:
         default:
-            return @"Unknown";
+            return @"Unknown?";
     }
 }
 

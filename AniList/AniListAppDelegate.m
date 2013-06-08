@@ -12,6 +12,10 @@
 #import "AnimeListViewController.h"
 #import "AniListViewController.h"
 
+#if TARGET_IPHONE_SIMULATOR
+#import <SparkInspector/SparkInspector.h>
+#endif
+
 @implementation AniListAppDelegate
 
 @synthesize managedObjectContext = _managedObjectContext;
@@ -19,6 +23,12 @@
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    
+#if TARGET_IPHONE_SIMULATOR
+    [SparkInspector enableObservation];
+#endif
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
