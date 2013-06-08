@@ -10,9 +10,12 @@
 #import <QuartzCore/QuartzCore.h>
 
 @class Anime;
+@class AniListScoreView;
 
 @interface AniListUserInfoEditViewController : UIViewController
-
+@property (nonatomic, strong) IBOutlet UIScrollView *statusScrollView;
+@property (nonatomic, weak) IBOutlet UIButton *startDateButton;
+@property (nonatomic, weak) IBOutlet UIButton *endDateButton;
+@property (nonatomic, strong) IBOutlet AniListScoreView *scoreView;
 @property (nonatomic, strong) Anime *anime;
-
 @end

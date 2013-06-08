@@ -12,7 +12,7 @@
 #import "AnimeUserInfoViewController.h"
 #import "SynopsisView.h"
 #import "AniListPickerView.h"
-#import "AniListUserInfoEditViewController.h"
+#import "AnimeUserInfoEditViewController.h"
 
 @interface AnimeViewController ()
 @property (nonatomic, strong) AnimeDetailsViewController *animeDetailsViewController;
@@ -119,7 +119,7 @@
 
 - (void)userInfoPressed {
     
-    AniListUserInfoEditViewController *vc = [[AniListUserInfoEditViewController alloc] init];
+    AnimeUserInfoEditViewController *vc = [[AnimeUserInfoEditViewController alloc] init];
     [self.navigationController pushViewController:vc animated:YES];
     
 //    self.pickerView.pickerType = AniListPickerStatusPicker;

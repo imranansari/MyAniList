@@ -11,15 +11,15 @@
 #import "Anime.h"
 
 @interface AniListUserInfoEditViewController ()
-@property (nonatomic, strong) IBOutlet UIScrollView *statusScrollView;
-@property (nonatomic, weak) IBOutlet UIButton *startDateButton;
-@property (nonatomic, weak) IBOutlet UIButton *endDateButton;
-@property (nonatomic, strong) IBOutlet AniListScoreView *scoreView;
 @property (nonatomic, weak) IBOutlet UIView *maskView;
 
 @end
 
 @implementation AniListUserInfoEditViewController
+
+- (id)init {
+    return [self initWithNibName:@"AniListUserInfoEditViewController" bundle:[NSBundle mainBundle]];
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -32,25 +32,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.statusScrollView.contentSize = CGSizeMake(self.statusScrollView.frame.size.width * 6, 1);
     self.statusScrollView.pagingEnabled = YES;
     self.statusScrollView.clipsToBounds = NO;
     self.statusScrollView.backgroundColor = [UIColor clearColor];
-
-    for(int i = 0; i < 6; i++) {
-        UILabel *label = [UILabel whiteLabelWithFrame:CGRectMake(i * self.statusScrollView.frame.size.width, 0, self.statusScrollView.frame.size.width, self.statusScrollView.frame.size.height) andFontSize:18];
-        
-        label.backgroundColor = [UIColor clearColor];
-        label.textAlignment = NSTextAlignmentCenter;
-        label.text = [Anime stringForAnimeWatchedStatus:i forAnimeType:[self.anime.type intValue]];
-        label.clipsToBounds = YES;
-        [self.statusScrollView addSubview:label];
-        
-        if(UI_DEBUG) {
-            label.backgroundColor = [UIColor colorWithRed:.1*i green:.1*i blue:.1*i alpha:1.0f];
-            self.statusScrollView.backgroundColor = [UIColor blueColor];
-        }
-    }
 
     CAGradientLayer *gradient = [CAGradientLayer layer];
     gradient.frame = self.maskView.bounds;

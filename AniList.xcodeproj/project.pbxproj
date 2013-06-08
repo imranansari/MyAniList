@@ -162,6 +162,8 @@
 		637CF6F41759940E0009ADF3 /* test_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 637CF6F21759940E0009ADF3 /* test_background@2x.png */; };
 		63859E871763E8FD0029397C /* SparkInspector.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = THBDITSPYVFDWQYYBDCIDIXG /* SparkInspector.framework */; };
 		63859E881763E9DA0029397C /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = HYXIFWTDXJPPRRMDCEPMDTJH /* libz.dylib */; };
+		63859E8B1763F28C0029397C /* AnimeUserInfoEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63859E8A1763F28C0029397C /* AnimeUserInfoEditViewController.m */; };
+		63859E8C1763F28C0029397C /* AnimeUserInfoEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63859E8A1763F28C0029397C /* AnimeUserInfoEditViewController.m */; };
 		63892576175F7ACC00C8489A /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63892575175F7ACC00C8489A /* BaseViewController.m */; };
 		63892577175F7ACC00C8489A /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63892575175F7ACC00C8489A /* BaseViewController.m */; };
 		63922CED171D82C800D41BCE /* spacepyro.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 63922CEC171D82C800D41BCE /* spacepyro.jpg */; };
@@ -330,6 +332,8 @@
 		637CF6EB175986840009ADF3 /* NSObject+AniList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+AniList.m"; path = "Categories/NSObject+AniList.m"; sourceTree = "<group>"; };
 		637CF6EE175986B20009ADF3 /* Categories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Categories.h; path = Categories/Categories.h; sourceTree = "<group>"; };
 		637CF6F21759940E0009ADF3 /* test_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "test_background@2x.png"; sourceTree = "<group>"; };
+		63859E891763F28C0029397C /* AnimeUserInfoEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimeUserInfoEditViewController.h; sourceTree = "<group>"; };
+		63859E8A1763F28C0029397C /* AnimeUserInfoEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimeUserInfoEditViewController.m; sourceTree = "<group>"; };
 		63892574175F7ACC00C8489A /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
 		63892575175F7ACC00C8489A /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
 		63922CEC171D82C800D41BCE /* spacepyro.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = spacepyro.jpg; path = Images/Placeholders/spacepyro.jpg; sourceTree = "<group>"; };
@@ -436,6 +440,8 @@
 				63BEA73B17619E0800432BED /* AniListUserInfoEditViewController.h */,
 				63BEA73C17619E0800432BED /* AniListUserInfoEditViewController.m */,
 				63BEA73D17619E0800432BED /* AniListUserInfoEditViewController.xib */,
+				63859E891763F28C0029397C /* AnimeUserInfoEditViewController.h */,
+				63859E8A1763F28C0029397C /* AnimeUserInfoEditViewController.m */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -985,6 +991,7 @@
 				63BEA7441761A13400432BED /* AniListStepperView.m in Sources */,
 				63BEA7481761A14400432BED /* AniListScoreView.m in Sources */,
 				63BEA74D176213B600432BED /* RRSGlowLabel.m in Sources */,
+				63859E8B1763F28C0029397C /* AnimeUserInfoEditViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1042,6 +1049,7 @@
 				63BEA7451761A13400432BED /* AniListStepperView.m in Sources */,
 				63BEA7491761A14400432BED /* AniListScoreView.m in Sources */,
 				63BEA74E176213B600432BED /* RRSGlowLabel.m in Sources */,
+				63859E8C1763F28C0029397C /* AnimeUserInfoEditViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

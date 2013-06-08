@@ -57,15 +57,15 @@
 						<reference key="NSNextResponder" ref="192674824"/>
 						<int key="NSvFlags">274</int>
 						<array class="NSMutableArray" key="NSSubviews">
-							<object class="IBUIView" id="950364363">
+							<object class="IBUIView" id="243800863">
 								<reference key="NSNextResponder" ref="411749504"/>
 								<int key="NSvFlags">292</int>
 								<array class="NSMutableArray" key="NSSubviews">
 									<object class="IBUIScrollView" id="412838896">
-										<reference key="NSNextResponder" ref="950364363"/>
+										<reference key="NSNextResponder" ref="243800863"/>
 										<int key="NSvFlags">274</int>
 										<string key="NSFrame">{{45, 0}, {230, 80}}</string>
-										<reference key="NSSuperview" ref="950364363"/>
+										<reference key="NSSuperview" ref="243800863"/>
 										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="158459159"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -73,6 +73,7 @@
 										<bool key="IBUIMultipleTouchEnabled">YES</bool>
 										<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 										<bool key="IBUIPagingEnabled">YES</bool>
+										<bool key="IBUIShowsHorizontalScrollIndicator">NO</bool>
 										<bool key="IBUIShowsVerticalScrollIndicator">NO</bool>
 									</object>
 								</array>
@@ -93,7 +94,7 @@
 								<string key="NSFrame">{{20, 41}, {280, 21}}</string>
 								<reference key="NSSuperview" ref="411749504"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="950364363"/>
+								<reference key="NSNextKeyView" ref="243800863"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -563,7 +564,6 @@
 						<string key="NSFrame">{{182, 282}, {94, 27}}</string>
 						<reference key="NSSuperview" ref="192674824"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -605,7 +605,7 @@
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">maskView</string>
 						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="950364363"/>
+						<reference key="destination" ref="243800863"/>
 					</object>
 					<int key="connectionID">58</int>
 				</object>
@@ -671,7 +671,7 @@
 							<reference ref="741297164"/>
 							<reference ref="751788495"/>
 							<reference ref="147502068"/>
-							<reference ref="950364363"/>
+							<reference ref="243800863"/>
 						</array>
 						<reference key="parent" ref="192674824"/>
 					</object>
@@ -781,7 +781,7 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">56</int>
-						<reference key="object" ref="950364363"/>
+						<reference key="object" ref="243800863"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="412838896"/>
 						</array>
@@ -790,7 +790,7 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">21</int>
 						<reference key="object" ref="412838896"/>
-						<reference key="parent" ref="950364363"/>
+						<reference key="parent" ref="243800863"/>
 					</object>
 				</array>
 			</object>
