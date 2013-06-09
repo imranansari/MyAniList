@@ -16,6 +16,8 @@
 @property (nonatomic, strong) IBOutlet UIScrollView *statusScrollView;
 @property (nonatomic, weak) IBOutlet UIButton *startDateButton;
 @property (nonatomic, weak) IBOutlet UIButton *endDateButton;
+@property (nonatomic, weak) IBOutlet UIButton *addItemButton;
+@property (nonatomic, weak) IBOutlet UIButton *removeItemButton;
 @property (nonatomic, strong) IBOutlet AniListScoreView *scoreView;
 @property (nonatomic, strong) Anime *anime;
 @end

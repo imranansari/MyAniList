@@ -44,6 +44,13 @@
     gradient.endPoint = CGPointMake(1.0f, 0.0f);
     
     self.maskView.layer.mask = gradient;
+    
+    UIColor *shadowColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
+    
+    [self.startDateButton setTitleShadowColor:shadowColor forState:UIControlStateNormal];
+    [self.endDateButton setTitleShadowColor:shadowColor forState:UIControlStateNormal];
+    [self.addItemButton setTitleShadowColor:shadowColor forState:UIControlStateNormal];
+    [self.removeItemButton setTitleShadowColor:shadowColor forState:UIControlStateNormal];
 
 }
 
