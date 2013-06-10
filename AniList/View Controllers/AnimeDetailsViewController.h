@@ -7,6 +7,7 @@
 //
 
 #import "AniListDetailsViewController.h"
+#import <QuartzCore/QuartzCore.h>
 
 @class Anime;
 

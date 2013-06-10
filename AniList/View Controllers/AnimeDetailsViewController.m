@@ -44,6 +44,9 @@
     self.indicator.alpha = 1.0f;
     self.detailView.alpha = 0.0f;
     
+    self.poster.layer.borderColor = [UIColor colorWithWhite:1.0f alpha:0.2f].CGColor;
+    self.poster.layer.borderWidth = 1.0f;
+    
     if(self.anime) {
         self.animeTitle.text = self.anime.title;
         self.animeType.text = [NSString stringWithFormat:@"%@, %d episodes", [Anime stringForAnimeType:[self.anime.type intValue]], [self.anime.total_episodes intValue]];
