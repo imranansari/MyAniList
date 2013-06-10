@@ -53,9 +53,10 @@ static NSArray *animeStatusOrder;
         }
     }
     
-    
     [self.startDateButton setTitle:[self startDateStringWithDate:self.anime.user_date_start] forState:UIControlStateNormal];
     [self.endDateButton setTitle:[self finishDateStringWithDate:self.anime.user_date_finish] forState:UIControlStateNormal];
+    
+    [self configureProgressLabel];
 }
 
 #pragma mark - NSString Methods
@@ -78,7 +79,37 @@ static NSArray *animeStatusOrder;
     }
 }
 
+#pragma mark - UIView Methods
+
+- (void)configureProgressLabel {
+    if([self.anime.current_episode intValue] > 0) {
+        if([self.anime.current_episode intValue] == [self.anime.total_episodes intValue]) {
+            self.progressLabel.text = [NSString stringWithFormat:@"Finished all %d episodes", [self.anime.total_episodes intValue]];
+        }
+        else {
+            self.progressLabel.text = [NSString stringWithFormat:@"On episode %d of %d", [self.anime.current_episode intValue], [self.anime.total_episodes intValue]];
+        }
+    }
+    else {
+        self.progressLabel.text = @"On the first episode";
+    }
+}
+
 #pragma mark - IBAction Methods
+
+- (IBAction)addItemButtonPressed:(id)sender {
+    if([self.anime.current_episode intValue] < [self.anime.total_episodes intValue])
+        self.anime.current_episode = @([self.anime.current_episode intValue] + 1);
+    
+    [self configureProgressLabel];
+}
+
+- (IBAction)removeItemButtonPressed:(id)sender {
+    if([self.anime.current_episode intValue] > 0)
+        self.anime.current_episode = @([self.anime.current_episode intValue] - 1);
+    
+    [self configureProgressLabel];
+}
 
 #pragma mark - AniListDatePickerViewDelegate Methods
 

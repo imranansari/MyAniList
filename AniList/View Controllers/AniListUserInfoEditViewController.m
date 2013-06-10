@@ -15,11 +15,6 @@
 @property (nonatomic, weak) IBOutlet UIView *maskView;
 @property (nonatomic, strong) AniListDatePickerView *datePicker;
 
-- (IBAction)addItemButtonPressed:(id)sender;
-- (IBAction)removeItemButtonPressed:(id)sender;
-- (IBAction)startDateButtonPressed:(id)sender;
-- (IBAction)endDateButtonPressed:(id)sender;
-
 @end
 
 @implementation AniListUserInfoEditViewController

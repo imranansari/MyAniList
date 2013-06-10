@@ -14,6 +14,7 @@
 @class AniListScoreView;
 
 @interface AniListUserInfoEditViewController : UIViewController<AniListDatePickerViewDelegate>
+
 @property (nonatomic, strong) IBOutlet UIScrollView *statusScrollView;
 @property (nonatomic, weak) IBOutlet UIButton *startDateButton;
 @property (nonatomic, weak) IBOutlet UIButton *endDateButton;
@@ -22,4 +23,10 @@
 @property (nonatomic, weak) IBOutlet UIButton *removeItemButton;
 @property (nonatomic, strong) IBOutlet AniListScoreView *scoreView;
 @property (nonatomic, strong) Anime *anime;
+
+- (IBAction)addItemButtonPressed:(id)sender;
+- (IBAction)removeItemButtonPressed:(id)sender;
+- (IBAction)startDateButtonPressed:(id)sender;
+- (IBAction)endDateButtonPressed:(id)sender;
+
 @end
