@@ -11,6 +11,9 @@
 
 #define kAnimeDidUpdate @"kAnimeDidUpdate"
 
+// Defaults
+#define kNoSynopsisString @"Unable to get synopsis. Please try again later."
+
 static BOOL UI_DEBUG = NO;
 
 #endif

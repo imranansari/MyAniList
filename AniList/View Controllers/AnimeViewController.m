@@ -55,7 +55,7 @@
         [AnimeService addAnime:response];
         [[NSNotificationCenter defaultCenter] postNotificationName:kAnimeDidUpdate object:nil];
     } failure:^(NSURLRequest *operation, NSError *error) {
-        [self updateViews];
+        [self updateViewsOnFailure:YES];
     }];
 }
 
@@ -97,9 +97,12 @@
     self.scrollView.contentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width, self.animeDetailsViewController.view.frame.size.height + self.userInfoView.view.frame.size.height + self.detailsLabel.frame.size.height + [UIScreen mainScreen].bounds.size.height - 90);
 }
 
-- (void)updateViews {
+- (void)updateViewsOnFailure:(BOOL)failure {
     if(self.anime.synopsis) {
         [self.synopsisView addSynopsis:self.anime.synopsis];
+    }
+    else if(failure) {
+        [self.synopsisView addSynopsis:kNoSynopsisString];
     }
     
     self.synopsisView.frame = CGRectMake(0, self.detailsLabel.frame.origin.y + self.detailsLabel.frame.size.height, self.synopsisView.frame.size.width, self.synopsisView.frame.size.height);

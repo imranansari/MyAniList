@@ -49,10 +49,16 @@
 }
 
 - (void)addSynopsis:(NSString *)synopsis {
+    
     self.synopsis.text = synopsis;
 
 #warning - iOS 5 does some goofy stuff with this.
     [self.synopsis sizeToFit];
+    
+    if([synopsis isEqualToString:kNoSynopsisString]) {
+        self.synopsis.frame = CGRectMake(0, self.synopsis.frame.origin.y, [UIScreen mainScreen].bounds.size.width, self.synopsis.frame.size.height);
+        self.synopsis.textAlignment = NSTextAlignmentCenter;
+    }
     
     self.synopsis.frame = CGRectMake(self.synopsis.frame.origin.x, self.synopsis.frame.origin.y, self.synopsis.frame.size.width, self.synopsis.frame.size.height);
     
