@@ -15,5 +15,6 @@
 #import "UIView+AniList.h"
 #import "NSString+AniList.h"
 #import "NSDate+AniList.h"
+#import "UIColor+AniList.h"
 
 #endif
