@@ -107,6 +107,7 @@
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     dateFormatter.dateFormat = @"MMM dd, yyyy";
+
     
     if(self.anime.date_start) {
         NSString *startDate = [dateFormatter stringFromDate:self.anime.date_start];

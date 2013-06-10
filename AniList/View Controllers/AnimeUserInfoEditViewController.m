@@ -1,4 +1,4 @@
-//
+ //
 //  AnimeUserInfoEditViewController.m
 //  AniList
 //
@@ -53,6 +53,50 @@ static NSArray *animeStatusOrder;
         }
     }
     
+    
+    [self.startDateButton setTitle:[self startDateStringWithDate:self.anime.user_date_start] forState:UIControlStateNormal];
+    [self.endDateButton setTitle:[self finishDateStringWithDate:self.anime.user_date_finish] forState:UIControlStateNormal];
+}
+
+#pragma mark - NSString Methods
+
+- (NSString *)startDateStringWithDate:(NSDate *)date {
+    if(date) {
+        return [NSString stringWithFormat:@"Started watching on %@", [NSString stringWithDate:date]];
+    }
+    else {
+        return @"When did you start watching this?";
+    }
+}
+
+- (NSString *)finishDateStringWithDate:(NSDate *)date {
+    if(date) {
+        return [NSString stringWithFormat:@"Finished watching on %@", [NSString stringWithDate:date]];
+    }
+    else {
+        return @"When did you finish watching this?";
+    }
+}
+
+#pragma mark - IBAction Methods
+
+#pragma mark - AniListDatePickerViewDelegate Methods
+
+- (void)dateSelected:(NSDate *)date forType:(AniListDatePickerViewType)datePickerType {
+    [super dateSelected:date forType:datePickerType];
+
+    switch (datePickerType) {
+        case AniListDatePickerStartDate:
+            self.anime.user_date_start = date;
+            [self.startDateButton setTitle:[self startDateStringWithDate:self.anime.user_date_start] forState:UIControlStateNormal];
+            break;
+        case AniListDatePickerEndDate:
+            self.anime.user_date_finish = date;
+            [self.endDateButton setTitle:[self finishDateStringWithDate:self.anime.user_date_finish] forState:UIControlStateNormal];
+            break;
+        default:
+            break;
+    }
 }
 
 @end

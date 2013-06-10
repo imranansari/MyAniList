@@ -11,5 +11,6 @@
 @interface NSString (AniList)
 
 - (NSString *)cleanHTMLTags;
++ (NSString *)stringWithDate:(NSDate *)date;
 
 @end

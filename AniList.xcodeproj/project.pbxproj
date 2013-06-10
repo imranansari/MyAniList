@@ -43,6 +43,8 @@
 		6301D952175D6F1D00163160 /* AnimeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 635027AC171E601E0004C106 /* AnimeCell.xib */; };
 		6301D955175D729600163160 /* NSString+AniList.m in Sources */ = {isa = PBXBuildFile; fileRef = 6301D954175D729600163160 /* NSString+AniList.m */; };
 		6301D956175D729600163160 /* NSString+AniList.m in Sources */ = {isa = PBXBuildFile; fileRef = 6301D954175D729600163160 /* NSString+AniList.m */; };
+		63047A4217656CE10039D795 /* AniListDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63047A4117656CE10039D795 /* AniListDatePickerView.m */; };
+		63047A4317656CE10039D795 /* AniListDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63047A4117656CE10039D795 /* AniListDatePickerView.m */; };
 		630965181737E82100B43489 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 630965171737E82100B43489 /* Icon@2x.png */; };
 		6309651A1737E82500B43489 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 630965191737E82500B43489 /* Icon.png */; };
 		631693461760C56300D526C0 /* NSDate+AniList.m in Sources */ = {isa = PBXBuildFile; fileRef = 631693451760C56300D526C0 /* NSDate+AniList.m */; };
@@ -198,6 +200,8 @@
 		6301D94A175D66AE00163160 /* AniListSummaryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AniListSummaryViewController.xib; sourceTree = "<group>"; };
 		6301D953175D729600163160 /* NSString+AniList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+AniList.h"; path = "Categories/NSString+AniList.h"; sourceTree = "<group>"; };
 		6301D954175D729600163160 /* NSString+AniList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+AniList.m"; path = "Categories/NSString+AniList.m"; sourceTree = "<group>"; };
+		63047A4017656CE10039D795 /* AniListDatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AniListDatePickerView.h; path = Views/AniListDatePickerView.h; sourceTree = "<group>"; };
+		63047A4117656CE10039D795 /* AniListDatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AniListDatePickerView.m; path = Views/AniListDatePickerView.m; sourceTree = "<group>"; };
 		630965171737E82100B43489 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		630965191737E82500B43489 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		631693441760C56300D526C0 /* NSDate+AniList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDate+AniList.h"; path = "Categories/NSDate+AniList.h"; sourceTree = "<group>"; };
@@ -459,6 +463,8 @@
 				63BEA7431761A13400432BED /* AniListStepperView.m */,
 				63BEA7461761A14400432BED /* AniListScoreView.h */,
 				63BEA7471761A14400432BED /* AniListScoreView.m */,
+				63047A4017656CE10039D795 /* AniListDatePickerView.h */,
+				63047A4117656CE10039D795 /* AniListDatePickerView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -992,6 +998,7 @@
 				63BEA7481761A14400432BED /* AniListScoreView.m in Sources */,
 				63BEA74D176213B600432BED /* RRSGlowLabel.m in Sources */,
 				63859E8B1763F28C0029397C /* AnimeUserInfoEditViewController.m in Sources */,
+				63047A4217656CE10039D795 /* AniListDatePickerView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1050,6 +1057,7 @@
 				63BEA7491761A14400432BED /* AniListScoreView.m in Sources */,
 				63BEA74E176213B600432BED /* RRSGlowLabel.m in Sources */,
 				63859E8C1763F28C0029397C /* AnimeUserInfoEditViewController.m in Sources */,
+				63047A4317656CE10039D795 /* AniListDatePickerView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

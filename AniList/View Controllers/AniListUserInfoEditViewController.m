@@ -11,7 +11,14 @@
 #import "Anime.h"
 
 @interface AniListUserInfoEditViewController ()
+
 @property (nonatomic, weak) IBOutlet UIView *maskView;
+@property (nonatomic, strong) AniListDatePickerView *datePicker;
+
+- (IBAction)addItemButtonPressed:(id)sender;
+- (IBAction)removeItemButtonPressed:(id)sender;
+- (IBAction)startDateButtonPressed:(id)sender;
+- (IBAction)endDateButtonPressed:(id)sender;
 
 @end
 
@@ -24,7 +31,7 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-
+        self.datePicker = [[AniListDatePickerView alloc] init];
     }
     return self;
 }
@@ -51,7 +58,64 @@
     [self.endDateButton setTitleShadowColor:shadowColor forState:UIControlStateNormal];
     [self.addItemButton setTitleShadowColor:shadowColor forState:UIControlStateNormal];
     [self.removeItemButton setTitleShadowColor:shadowColor forState:UIControlStateNormal];
+    
+    self.datePicker.delegate = self;
+    self.datePicker.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y + self.view.frame.size.height, self.datePicker.frame.size.width, self.datePicker.frame.size.height);
+    [self.view addSubview:self.datePicker];
+}
 
+#pragma mark - UIView Methods
+
+- (void)dismissDate {
+    [UIView animateWithDuration:0.5f
+                          delay:0.0f
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         self.datePicker.frame = CGRectMake(self.datePicker.frame.origin.x, self.view.frame.size.height, self.datePicker.frame.size.width, self.datePicker.frame.size.height);
+                     }
+                     completion:nil];
+}
+
+#pragma mark - IBAction Methods
+
+- (IBAction)startDateButtonPressed:(id)sender {
+    
+    self.datePicker.datePickerType = AniListDatePickerStartDate;
+    
+    [UIView animateWithDuration:0.5f
+                          delay:0.0f
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         self.datePicker.frame = CGRectMake(self.datePicker.frame.origin.x, self.view.frame.size.height - self.datePicker.frame.size.height, self.datePicker.frame.size.width, self.datePicker.frame.size.height);
+                     }
+                     completion:nil];
+}
+
+- (IBAction)endDateButtonPressed:(id)sender {
+    
+    self.datePicker.datePickerType = AniListDatePickerEndDate;
+    
+    [UIView animateWithDuration:0.5f
+                          delay:0.0f
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         self.datePicker.frame = CGRectMake(self.datePicker.frame.origin.x, self.view.frame.size.height - self.datePicker.frame.size.height, self.datePicker.frame.size.width, self.datePicker.frame.size.height);
+                     }
+                     completion:nil];
+}
+
+- (IBAction)addItemButtonPressed:(id)sender {
+    
+}
+
+- (IBAction)removeItemButtonPressed:(id)sender {
+    
+}
+
+#pragma mark - AniListDatePickerViewDelegate Methods
+
+- (void)dateSelected:(NSDate *)date forType:(AniListDatePickerViewType)datePickerType {
+    [self dismissDate];
 }
 
 

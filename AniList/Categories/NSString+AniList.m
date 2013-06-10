@@ -19,4 +19,10 @@
     return s;
 }
 
++ (NSString *)stringWithDate:(NSDate *)date {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat = @"MMM dd, yyyy";
+    return [dateFormatter stringFromDate:date];
+}
+
 @end
