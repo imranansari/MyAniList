@@ -22,5 +22,6 @@ typedef enum {
 
 @property (nonatomic, assign) AniListDatePickerViewType datePickerType;
 @property (nonatomic, assign) id<AniListDatePickerViewDelegate> delegate;
+@property (nonatomic, strong) NSDate *date;
 
 @end

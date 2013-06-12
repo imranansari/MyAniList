@@ -58,4 +58,13 @@
     }
 }
 
+- (void)setDate:(NSDate *)date {
+    if(date) {
+        self.datePicker.date = date;
+    }
+    else {
+        self.datePicker.date = [NSDate date];
+    }
+}
+
 @end

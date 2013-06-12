@@ -76,6 +76,7 @@
 - (IBAction)startDateButtonPressed:(id)sender {
     
     self.datePicker.datePickerType = AniListDatePickerStartDate;
+    self.datePicker.date = self.anime.user_date_start;
     
     [UIView animateWithDuration:0.5f
                           delay:0.0f
@@ -89,6 +90,7 @@
 - (IBAction)endDateButtonPressed:(id)sender {
     
     self.datePicker.datePickerType = AniListDatePickerEndDate;
+    self.datePicker.date = self.anime.user_date_finish;
     
     [UIView animateWithDuration:0.5f
                           delay:0.0f
