@@ -31,10 +31,13 @@
     return self;
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [self setupLabels];
+
+}
+
+- (void)setupLabels {
     UILabel *watchingStatusLabel = [self labelForView:self.watchingStatusView];
     UILabel *startDate = [self labelForView:self.startDateView];
     UILabel *endDate = [self labelForView:self.endDateView];
@@ -70,10 +73,9 @@
     else {
         scoreLabel.text = @"Not scored yet";
     }
-
-
+    
+    
     progressLabel.text = [NSString stringWithFormat:@"Progress: %d / %d", [self.anime.current_episode intValue], [self.anime.total_episodes intValue]];
-
 }
 
 - (void)didReceiveMemoryWarning {
@@ -97,7 +99,12 @@
     if(self.delegate && [self.delegate respondsToSelector:@selector(userInfoPressed)]) {
         [self.delegate userInfoPressed];
     }
+}
 
+- (void)setAnime:(Anime *)anime {
+    _anime = anime;
+    
+    [self setupLabels];
 }
 
 @end

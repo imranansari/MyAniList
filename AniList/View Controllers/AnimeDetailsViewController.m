@@ -49,6 +49,7 @@
     
     if(self.anime) {
         self.animeTitle.text = self.anime.title;
+#warning - plural version needed.
         self.animeType.text = [NSString stringWithFormat:@"%@, %d episodes", [Anime stringForAnimeType:[self.anime.type intValue]], [self.anime.total_episodes intValue]];
         self.airing.text = [self airText];
         
