@@ -38,7 +38,7 @@
         
         self.pickerView = [[AniListPickerView alloc] initWithFrame:CGRectMake(self.userInfoView.view.frame.origin.x, self.userInfoView.view.frame.origin.y + self.userInfoView.view.frame.size.height, [UIScreen mainScreen].bounds.size.width, 146)];
         
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateViews) name:kAnimeDidUpdate object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateViewsOnFailure:) name:kAnimeDidUpdate object:nil];
     }
     return self;
 }
@@ -53,7 +53,7 @@
     
     [MALHTTPClient getAnimeDetailsForID:self.anime.anime_id success:^(NSURLRequest *operation, id response) {
         [AnimeService addAnime:response];
-        [[NSNotificationCenter defaultCenter] postNotificationName:kAnimeDidUpdate object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kAnimeDidUpdate object:@(YES)];
     } failure:^(NSURLRequest *operation, NSError *error) {
         [self updateViewsOnFailure:YES];
     }];

@@ -36,6 +36,7 @@ static NSArray *animeStatusOrder;
     [super viewDidLoad];
     
     self.statusScrollView.contentSize = CGSizeMake(self.statusScrollView.frame.size.width * animeStatusOrder.count, 1);
+    self.statusScrollView.superview.backgroundColor = [UIColor defaultBackgroundColor];
     
     for(int i = 0; i < animeStatusOrder.count; i++) {
         UILabel *label = [UILabel whiteLabelWithFrame:CGRectMake(i * self.statusScrollView.frame.size.width, 0, self.statusScrollView.frame.size.width, self.statusScrollView.frame.size.height) andFontSize:18];

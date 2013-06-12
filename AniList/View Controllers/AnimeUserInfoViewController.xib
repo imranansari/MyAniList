@@ -206,7 +206,6 @@
 								<string key="NSFrameSize">{120, 44}</string>
 								<reference key="NSSuperview" ref="290484705"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -499,6 +498,7 @@
 				<string key="6.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="66.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="68.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<real value="1" key="68.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="7.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="8.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="9.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -522,20 +522,17 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">AnimeUserInfoViewController</string>
 					<string key="superclassName">AniListUserInfoViewController</string>
-					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="progressViewPressed:">id</string>
-						<string key="userInfoViewPressed:">id</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="progressViewPressed:">
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">progressViewPressed:</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">progressViewPressed:</string>
+						<object class="IBActionInfo" key="NS.object.0">
 							<string key="name">progressViewPressed:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-						<object class="IBActionInfo" key="userInfoViewPressed:">
-							<string key="name">userInfoViewPressed:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</dictionary>
+					</object>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="endDateView">UIView</string>
 						<string key="progressView">UIView</string>
