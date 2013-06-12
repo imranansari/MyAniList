@@ -109,6 +109,10 @@
 
 #pragma mark - AniListDatePickerViewDelegate Methods
 
+- (void)cancelPressed {
+    [self dismissDate];
+}
+
 - (void)dateSelected:(NSDate *)date forType:(AniListDatePickerViewType)datePickerType {
     [self dismissDate];
 }

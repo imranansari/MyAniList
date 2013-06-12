@@ -101,7 +101,7 @@
 								<string key="NSFrame">{{63, 48}, {180, 21}}</string>
 								<reference key="NSSuperview" ref="137011593"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="736164014"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -166,7 +166,12 @@
 								<reference key="IBUIHighlightedColor" ref="708666416"/>
 								<int key="IBUIBaselineAdjustment">0</int>
 								<int key="IBUITextAlignment">2</int>
-								<reference key="IBUIFontDescription" ref="668191811"/>
+								<object class="IBUIFontDescription" key="IBUIFontDescription">
+									<string key="name">HelveticaNeue-Medium</string>
+									<string key="family">Helvetica Neue</string>
+									<int key="traits">0</int>
+									<double key="pointSize">14</double>
+								</object>
 								<reference key="IBUIFont" ref="566411554"/>
 								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 							</object>
@@ -316,7 +321,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">71</int>
+			<int key="maxID">73</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">

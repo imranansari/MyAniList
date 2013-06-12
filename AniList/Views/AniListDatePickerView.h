@@ -15,6 +15,7 @@ typedef enum {
 
 @protocol AniListDatePickerViewDelegate <NSObject>
 - (void)dateSelected:(NSDate *)date forType:(AniListDatePickerViewType)datePickerType;
+- (void)cancelPressed;
 @end
 
 @interface AniListDatePickerView : UIView

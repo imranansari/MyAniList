@@ -23,11 +23,13 @@
         self.datePicker = [[UIDatePicker alloc] init];
         self.datePicker.datePickerMode = UIDatePickerModeDate;
         
+        UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelButtonPressed:)];
+        
         UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonPressed:)];
         
         UIBarButtonItem *flex = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
         
-        self.toolbar.items = @[flex, doneButton];
+        self.toolbar.items = @[cancelButton, flex, doneButton];
         
         self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, [UIScreen mainScreen].bounds.size.width, self.toolbar.frame.size.height + self.datePicker.frame.size.height);
         
@@ -38,6 +40,13 @@
         [self addSubview:self.datePicker];
     }
     return self;
+}
+
+- (void)cancelButtonPressed:(id)sender {
+    if(self.delegate && [self.delegate respondsToSelector:@selector(cancelPressed)]) {
+        // Send date to delegate.
+        [self.delegate cancelPressed];
+    }
 }
 
 - (void)doneButtonPressed:(id)sender {
