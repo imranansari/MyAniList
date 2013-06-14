@@ -11,6 +11,8 @@
 #import "MenuViewController.h"
 #import "AnimeListViewController.h"
 #import "AniListViewController.h"
+#import "LoginViewController.h"
+#import "UserProfile.h"
 
 #if TARGET_IPHONE_SIMULATOR
 #import <SparkInspector/SparkInspector.h>
@@ -37,13 +39,22 @@
 
     MenuViewController *menuVC = [[MenuViewController alloc] init];
     AnimeListViewController *animeVC = [[AnimeListViewController alloc] init];
+    LoginViewController *loginVC = [[LoginViewController alloc] init];
     
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:animeVC];
+    UINavigationController *navigationController;
+    
+    if([UserProfile userIsLoggedIn]) {
+        navigationController = [[UINavigationController alloc] initWithRootViewController:animeVC];
+    }
+    else {
+        navigationController = [[UINavigationController alloc] initWithRootViewController:loginVC];
+    }
     
     SWRevealViewController *vc = [[SWRevealViewController alloc] initWithRearViewController:menuVC
                                                                         frontViewController:navigationController];
     
     self.window.rootViewController = vc;
+    
     
     [Crashlytics startWithAPIKey:@"c01aa6f0d36b5000da6aa8c83dda558c23be54f8"];
     
