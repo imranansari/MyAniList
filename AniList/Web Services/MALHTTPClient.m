@@ -25,9 +25,9 @@
     if(!self)
         return nil;
     
-    [self registerHTTPOperationClass:[AFJSONRequestOperation class]];
-    [self setDefaultHeader:@"Accept" value:@"application/xml"];
-    [self setParameterEncoding:AFJSONParameterEncoding];
+    [self registerHTTPOperationClass:[AFHTTPRequestOperation class]];
+//    [self setDefaultHeader:@"Accept" value:@"application/xml"];
+    [self setParameterEncoding:AFFormURLParameterEncoding];
     
     [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
     
@@ -73,8 +73,8 @@
 - (void)getAnimeDetailsForID:(NSNumber *)animeID success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure {
     NSString *path = [NSString stringWithFormat:@"/anime/%d", [animeID intValue]];
 
-    [[MALHTTPClient sharedClient] setUsername:@"SpacePyro" andPassword:@"pyro08"];
-    [[MALHTTPClient sharedClient] getPath:path parameters:@{@"mine" : @"1"} success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[UMALHTTPClient sharedClient] setUsername:@"SpacePyro" andPassword:@"pyro08"];
+    [[UMALHTTPClient sharedClient] getPath:path parameters:@{@"mine" : @"1"} success:^(AFHTTPRequestOperation *operation, id responseObject) {
         success(operation, responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         failure(operation, error);
@@ -86,8 +86,9 @@
     
     NSString *animeToXML = [AnimeService animeToXML:animeID];
     
-    [[UMALHTTPClient sharedClient] setUsername:@"SpacePyro" andPassword:@"pyro08"];
-    [[UMALHTTPClient sharedClient] postPath:path parameters:@{@"data" : animeToXML} success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[MALHTTPClient sharedClient] setUsername:@"SpacePyro" andPassword:@"pyro08"];
+    [[MALHTTPClient sharedClient] postPath:path parameters:@{@"data" : animeToXML} success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"response: %@", operation.responseString);
         NSError *parseError = nil;
         NSDictionary *xmlDictionary = [XMLReader dictionaryForXMLData:operation.responseData error:&parseError];
         success(operation, xmlDictionary);

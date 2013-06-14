@@ -342,14 +342,20 @@
     NSString *startDate = [dateFormatter stringFromDate:anime.user_date_start];
     NSString *endDate = [dateFormatter stringFromDate:anime.user_date_finish];
     
-    NSMutableString *XML = [NSMutableString stringWithString:@"<?xml version=\"1.0\" encoding=\"UTF-8\"?><entry>"];
+    NSMutableString *XML = [NSMutableString stringWithString:@"<entry>"];
     [XML appendString:[NSString stringWithFormat:@"<episode>%d</episode>", [anime.current_episode intValue]]];
     [XML appendString:[NSString stringWithFormat:@"<status>%d</status>", [anime.status intValue]]];
-    [XML appendString:[NSString stringWithFormat:@"<score>%d</score>", [anime.user_score intValue]]];
-    [XML appendString:[NSString stringWithFormat:@"<date_start>%@</date_start>", startDate]];
-    [XML appendString:[NSString stringWithFormat:@"<date_finish>%@</date_finish>", endDate]];
 
-    [XML appendString:@"</entry></xml>"];
+    if([anime.user_score intValue] > 0)
+        [XML appendString:[NSString stringWithFormat:@"<score>%d</score>", [anime.user_score intValue]]];
+    
+    if(startDate)
+        [XML appendString:[NSString stringWithFormat:@"<date_start>%@</date_start>", startDate]];
+    
+    if(endDate)
+        [XML appendString:[NSString stringWithFormat:@"<date_finish>%@</date_finish>", endDate]];
+
+    [XML appendString:@"</entry>"];
     
     return XML;
 }

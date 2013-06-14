@@ -28,6 +28,8 @@ static NSArray *animeStatusOrder;
                                 @(AnimeWatchedStatusPlanToWatch)
                                 // Rewatch
                              ];
+        
+        self.scoreView.delegate = self;
     }
     return self;
 }
@@ -38,6 +40,8 @@ static NSArray *animeStatusOrder;
     } failure:^(id operation, NSError *error) {
         NSLog(@"update");
     }];
+    
+    self.scoreView.delegate = nil;
 }
 
 - (void)viewDidLoad {
@@ -66,6 +70,8 @@ static NSArray *animeStatusOrder;
     [self.endDateButton setTitle:[self finishDateStringWithDate:self.anime.user_date_finish] forState:UIControlStateNormal];
     
     [self configureProgressLabel];
+    
+    [self configureRating];
 }
 
 #pragma mark - NSString Methods
@@ -101,6 +107,12 @@ static NSArray *animeStatusOrder;
     }
     else {
         self.progressLabel.text = @"On the first episode";
+    }
+}
+
+- (void)configureRating {
+    if([self.anime.user_score intValue] > 0) {
+        [self.scoreView updateScore:self.anime.user_score];
     }
 }
 

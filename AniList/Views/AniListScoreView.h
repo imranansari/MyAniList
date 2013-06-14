@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol AniListScoreViewDelegate <NSObject>
+- (void)scoreUpdated:(NSNumber *)number;
+@end
+
 @interface AniListScoreView : UIView
+
+@property (nonatomic, assign) id<AniListScoreViewDelegate> delegate;
+
+- (void)updateScore:(NSNumber *)score;
 
 @end
