@@ -11,7 +11,7 @@
 
 @class Anime;
 
-@interface AnimeUserInfoEditViewController : AniListUserInfoEditViewController<AniListScoreViewDelegate>
+@interface AnimeUserInfoEditViewController : AniListUserInfoEditViewController<AniListScoreViewDelegate, UIScrollViewDelegate>
 
 @property (nonatomic, strong) Anime *anime;
 

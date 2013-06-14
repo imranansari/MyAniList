@@ -28,8 +28,6 @@ static NSArray *animeStatusOrder;
                                 @(AnimeWatchedStatusPlanToWatch)
                                 // Rewatch
                              ];
-        
-        self.scoreView.delegate = self;
     }
     return self;
 }
@@ -38,7 +36,7 @@ static NSArray *animeStatusOrder;
     [[MALHTTPClient sharedClient] updateDetailsForAnimeWithID:self.anime.anime_id success:^(id operation, id response) {
         NSLog(@"update");
     } failure:^(id operation, NSError *error) {
-        NSLog(@"update");
+        NSLog(@"failed");
     }];
     
     self.scoreView.delegate = nil;
@@ -49,6 +47,7 @@ static NSArray *animeStatusOrder;
     
     self.statusScrollView.contentSize = CGSizeMake(self.statusScrollView.frame.size.width * animeStatusOrder.count, 1);
     self.statusScrollView.superview.backgroundColor = [UIColor defaultBackgroundColor];
+    self.scoreView.delegate = self;
     
     for(int i = 0; i < animeStatusOrder.count; i++) {
         UILabel *label = [UILabel whiteLabelWithFrame:CGRectMake(i * self.statusScrollView.frame.size.width, 0, self.statusScrollView.frame.size.width, self.statusScrollView.frame.size.height) andFontSize:18];
@@ -56,6 +55,7 @@ static NSArray *animeStatusOrder;
         label.backgroundColor = [UIColor clearColor];
         label.textAlignment = NSTextAlignmentCenter;
         label.text = [Anime stringForAnimeWatchedStatus:[animeStatusOrder[i] intValue] forAnimeType:[self.anime.type intValue]];
+        label.tag = i;
         label.clipsToBounds = YES;
         [self.statusScrollView addSubview:label];
         
@@ -149,6 +149,19 @@ static NSArray *animeStatusOrder;
         default:
             break;
     }
+}
+
+#pragma mark - AniListScoreViewDelegate Methods
+
+- (void)scoreUpdated:(NSNumber *)number {
+    self.anime.user_score = number;
+}
+
+#pragma mark - UIScrollViewDelegate Methods
+
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+    // Calculate the page that we're currently looking at, and then fetch the appropriate status.
+    
 }
 
 @end

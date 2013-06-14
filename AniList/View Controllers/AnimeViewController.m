@@ -59,6 +59,10 @@
     }];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [self.userInfoView viewWillAppear:animated];
+}
+
 - (void)viewWillDisappear:(BOOL)animated {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }

@@ -105,14 +105,12 @@
 
 #pragma mark - UILabel Management Methods
 
-- (NSString *)airText {
-    
+- (NSString *)airText {    
     NSString *text = @"";
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     dateFormatter.dateFormat = @"MMM dd, yyyy";
 
-    
     if(self.anime.date_start) {
         NSString *startDate = [dateFormatter stringFromDate:self.anime.date_start];
         text = [text stringByAppendingFormat:@"Started airing on %@ ", startDate];

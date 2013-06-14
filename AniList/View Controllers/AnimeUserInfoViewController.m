@@ -33,8 +33,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setupLabels];
+}
 
+- (void)viewWillAppear:(BOOL)animated {
+    [self setupLabels];
 }
 
 - (void)setupLabels {
