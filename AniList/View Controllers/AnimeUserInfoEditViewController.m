@@ -32,6 +32,14 @@ static NSArray *animeStatusOrder;
     return self;
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [[MALHTTPClient sharedClient] updateDetailsForAnimeWithID:self.anime.anime_id success:^(id operation, id response) {
+        NSLog(@"update");
+    } failure:^(id operation, NSError *error) {
+        NSLog(@"update");
+    }];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     

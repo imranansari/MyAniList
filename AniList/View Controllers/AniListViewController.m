@@ -35,13 +35,21 @@
     SWRevealViewController *revealController = self.revealViewController;
     
     UINavigationController *nvc = ((UINavigationController *)self.revealViewController.frontViewController);
-    nvc.navigationBar.translucent = YES; // Setting this slides the view up, underneath the nav bar (otherwise it'll appear black)
-    const float colorMask[6] = {222, 255, 222, 255, 222, 255};
-    UIImage *img = [[UIImage alloc] init];
-    UIImage *maskedImage = [UIImage imageWithCGImage: CGImageCreateWithMaskingColors(img.CGImage, colorMask)];
     
-    [nvc.navigationBar setShadowImage:[[UIImage alloc] init]];
-    [nvc.navigationBar setBackgroundImage:maskedImage forBarMetrics:UIBarMetricsDefault];
+    // This value is implicitly set to YES in iOS 7.0.
+    nvc.navigationBar.translucent = YES; // Setting this slides the view up, underneath the nav bar (otherwise it'll appear black)
+
+    if([[UIDevice currentDevice].systemVersion compare:@"7.0" options:NSNumericSearch] != NSOrderedAscending) {
+//        nvc.navigationBar.barTintColor = [UIColor clearColor];
+    }
+    else {
+        const float colorMask[6] = {222, 255, 222, 255, 222, 255};
+        UIImage *img = [[UIImage alloc] init];
+        UIImage *maskedImage = [UIImage imageWithCGImage: CGImageCreateWithMaskingColors(img.CGImage, colorMask)];
+        
+        [nvc.navigationBar setShadowImage:[[UIImage alloc] init]];
+        [nvc.navigationBar setBackgroundImage:maskedImage forBarMetrics:UIBarMetricsDefault];
+    }
     
 #warning - Why does this break for unit testing?
     if(revealController) {

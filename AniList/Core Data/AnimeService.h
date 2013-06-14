@@ -17,4 +17,6 @@
 + (Anime *)editAnime:(NSDictionary *)data;
 + (void)deleteAnime:(Anime *)anime;
 
++ (NSString *)animeToXML:(NSNumber *)animeID;
+
 @end

@@ -51,7 +51,7 @@
     
     self.titleLabel.text = self.anime.title;
     
-    [MALHTTPClient getAnimeDetailsForID:self.anime.anime_id success:^(NSURLRequest *operation, id response) {
+    [[MALHTTPClient sharedClient] getAnimeDetailsForID:self.anime.anime_id success:^(NSURLRequest *operation, id response) {
         [AnimeService addAnime:response];
         [[NSNotificationCenter defaultCenter] postNotificationName:kAnimeDidUpdate object:@(YES)];
     } failure:^(NSURLRequest *operation, NSError *error) {

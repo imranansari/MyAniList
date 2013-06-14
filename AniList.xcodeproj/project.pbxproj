@@ -178,6 +178,12 @@
 		63859E8C1763F28C0029397C /* AnimeUserInfoEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63859E8A1763F28C0029397C /* AnimeUserInfoEditViewController.m */; };
 		63892576175F7ACC00C8489A /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63892575175F7ACC00C8489A /* BaseViewController.m */; };
 		63892577175F7ACC00C8489A /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63892575175F7ACC00C8489A /* BaseViewController.m */; };
+		63894CC1176A9C05007D2D05 /* UserProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 63894CC0176A9C05007D2D05 /* UserProfile.m */; };
+		63894CC2176A9C05007D2D05 /* UserProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 63894CC0176A9C05007D2D05 /* UserProfile.m */; };
+		63894CC6176A9E37007D2D05 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63894CC4176A9E37007D2D05 /* LoginViewController.m */; };
+		63894CC7176A9E37007D2D05 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63894CC4176A9E37007D2D05 /* LoginViewController.m */; };
+		63894CC8176A9E37007D2D05 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63894CC5176A9E37007D2D05 /* LoginViewController.xib */; };
+		63894CC9176A9E37007D2D05 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63894CC5176A9E37007D2D05 /* LoginViewController.xib */; };
 		63922CED171D82C800D41BCE /* spacepyro.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 63922CEC171D82C800D41BCE /* spacepyro.jpg */; };
 		63BEA7371761859300432BED /* AniListPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63BEA7361761859300432BED /* AniListPickerView.m */; };
 		63BEA7381761859300432BED /* AniListPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63BEA7361761859300432BED /* AniListPickerView.m */; };
@@ -191,6 +197,8 @@
 		63BEA7491761A14400432BED /* AniListScoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63BEA7471761A14400432BED /* AniListScoreView.m */; };
 		63BEA74D176213B600432BED /* RRSGlowLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 63BEA74C176213B600432BED /* RRSGlowLabel.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		63BEA74E176213B600432BED /* RRSGlowLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 63BEA74C176213B600432BED /* RRSGlowLabel.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		63EFEC3D176966B8009CEAB3 /* UMALHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 63EFEC3C176966B7009CEAB3 /* UMALHTTPClient.m */; };
+		63EFEC3E176966B8009CEAB3 /* UMALHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 63EFEC3C176966B7009CEAB3 /* UMALHTTPClient.m */; };
 		KIYDQKWBMRKIEYEVRWSLKUDQ /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = HYXIFWTDXJPPRRMDCEPMDTJH /* libz.dylib */; };
 /* End PBXBuildFile section */
 
@@ -356,6 +364,11 @@
 		63859E8A1763F28C0029397C /* AnimeUserInfoEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimeUserInfoEditViewController.m; sourceTree = "<group>"; };
 		63892574175F7ACC00C8489A /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
 		63892575175F7ACC00C8489A /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
+		63894CBF176A9C05007D2D05 /* UserProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserProfile.h; path = Classes/UserProfile.h; sourceTree = "<group>"; };
+		63894CC0176A9C05007D2D05 /* UserProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserProfile.m; path = Classes/UserProfile.m; sourceTree = "<group>"; };
+		63894CC3176A9E37007D2D05 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		63894CC4176A9E37007D2D05 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		63894CC5176A9E37007D2D05 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		63922CEC171D82C800D41BCE /* spacepyro.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = spacepyro.jpg; path = Images/Placeholders/spacepyro.jpg; sourceTree = "<group>"; };
 		63BEA7351761859300432BED /* AniListPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AniListPickerView.h; path = Views/AniListPickerView.h; sourceTree = "<group>"; };
 		63BEA7361761859300432BED /* AniListPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AniListPickerView.m; path = Views/AniListPickerView.m; sourceTree = "<group>"; };
@@ -368,6 +381,8 @@
 		63BEA7471761A14400432BED /* AniListScoreView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AniListScoreView.m; path = Views/AniListScoreView.m; sourceTree = "<group>"; };
 		63BEA74B176213B600432BED /* RRSGlowLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RRSGlowLabel.h; sourceTree = "<group>"; };
 		63BEA74C176213B600432BED /* RRSGlowLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RRSGlowLabel.m; sourceTree = "<group>"; };
+		63EFEC3B176966B7009CEAB3 /* UMALHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UMALHTTPClient.h; path = "Web Services/UMALHTTPClient.h"; sourceTree = "<group>"; };
+		63EFEC3C176966B7009CEAB3 /* UMALHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UMALHTTPClient.m; path = "Web Services/UMALHTTPClient.m"; sourceTree = "<group>"; };
 		HYXIFWTDXJPPRRMDCEPMDTJH /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		THBDITSPYVFDWQYYBDCIDIXG /* SparkInspector.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SparkInspector.framework; path = "/Applications/Spark Inspector.app/Contents/Resources/Frameworks/SparkInspector.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -462,6 +477,9 @@
 				63BEA73D17619E0800432BED /* AniListUserInfoEditViewController.xib */,
 				63859E891763F28C0029397C /* AnimeUserInfoEditViewController.h */,
 				63859E8A1763F28C0029397C /* AnimeUserInfoEditViewController.m */,
+				63894CC3176A9E37007D2D05 /* LoginViewController.h */,
+				63894CC4176A9E37007D2D05 /* LoginViewController.m */,
+				63894CC5176A9E37007D2D05 /* LoginViewController.xib */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -493,6 +511,8 @@
 				632F4390171CDA3000A5B43A /* Other */,
 				632F438F171CDA2C00A5B43A /* Core Data */,
 				635027AF171ECEA00004C106 /* Status.h */,
+				63894CBF176A9C05007D2D05 /* UserProfile.h */,
+				63894CC0176A9C05007D2D05 /* UserProfile.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -775,6 +795,8 @@
 				6372893A17542D110032F425 /* MALHTTPClient.m */,
 				636F8678175A7D17007E1FB6 /* MALUserClient.h */,
 				636F8679175A7D17007E1FB6 /* MALUserClient.m */,
+				63EFEC3B176966B7009CEAB3 /* UMALHTTPClient.h */,
+				63EFEC3C176966B7009CEAB3 /* UMALHTTPClient.m */,
 			);
 			name = Requests;
 			sourceTree = "<group>";
@@ -913,6 +935,7 @@
 				636F86AC175BA037007E1FB6 /* header_bg@2x.png in Resources */,
 				6301D94D175D66AF00163160 /* AniListSummaryViewController.xib in Resources */,
 				63BEA74017619E0800432BED /* AniListUserInfoEditViewController.xib in Resources */,
+				63894CC8176A9E37007D2D05 /* LoginViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -938,6 +961,7 @@
 				6301D951175D6F1D00163160 /* ProfileCell.xib in Resources */,
 				6301D952175D6F1D00163160 /* AnimeCell.xib in Resources */,
 				63BEA74117619E0800432BED /* AniListUserInfoEditViewController.xib in Resources */,
+				63894CC9176A9E37007D2D05 /* LoginViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1030,6 +1054,9 @@
 				63859E8B1763F28C0029397C /* AnimeUserInfoEditViewController.m in Sources */,
 				63047A4217656CE10039D795 /* AniListDatePickerView.m in Sources */,
 				6331027B176605DF00097658 /* UIColor+AniList.m in Sources */,
+				63EFEC3D176966B8009CEAB3 /* UMALHTTPClient.m in Sources */,
+				63894CC1176A9C05007D2D05 /* UserProfile.m in Sources */,
+				63894CC6176A9E37007D2D05 /* LoginViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1090,6 +1117,9 @@
 				63859E8C1763F28C0029397C /* AnimeUserInfoEditViewController.m in Sources */,
 				63047A4317656CE10039D795 /* AniListDatePickerView.m in Sources */,
 				6331027C176605DF00097658 /* UIColor+AniList.m in Sources */,
+				63EFEC3E176966B8009CEAB3 /* UMALHTTPClient.m in Sources */,
+				63894CC2176A9C05007D2D05 /* UserProfile.m in Sources */,
+				63894CC7176A9E37007D2D05 /* LoginViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1137,7 +1167,9 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = "\"/Applications/Spark Inspector.app/Contents/Resources/Frameworks\"";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"/Applications/Spark Inspector.app/Contents/Resources/Frameworks\"",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;

@@ -1,16 +1,16 @@
 //
-//  MALUserClient.m
+//  UMALHTTPClient.m
 //  AniList
 //
-//  Created by Corey Roberts on 6/1/13.
+//  Created by Corey Roberts on 6/12/13.
 //  Copyright (c) 2013 SpacePyro Inc. All rights reserved.
 //
 
-#import "MALUserClient.h"
+#import "UMALHTTPClient.h"
 
-#define MAL_GET_USER_INFO_BASE_URL      @"http://myanimelist.net"
+#define MAL_UNOFFICIAL_API_BASE_URL     @"http://mal-api.com"
 
-@implementation MALUserClient
+@implementation UMALHTTPClient
 
 #pragma mark - Initialization
 
@@ -20,7 +20,7 @@
         return nil;
     
     [self registerHTTPOperationClass:[AFJSONRequestOperation class]];
-    [self setDefaultHeader:@"Accept" value:@"application/xml"];
+    [self setDefaultHeader:@"Accept" value:@"application/json"];
     [self setParameterEncoding:AFJSONParameterEncoding];
     
     [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
@@ -30,12 +30,12 @@
 
 #pragma mark - Singleton Methods
 
-+ (MALUserClient *)sharedClient {
++ (UMALHTTPClient *)sharedClient {
     static dispatch_once_t pred;
-    static MALUserClient *sharedClient = nil;
+    static UMALHTTPClient *sharedClient = nil;
     
     dispatch_once(&pred, ^{
-        sharedClient = [[self alloc] initWithBaseURL:[NSURL URLWithString:MAL_GET_USER_INFO_BASE_URL]];
+        sharedClient = [[self alloc] initWithBaseURL:[NSURL URLWithString:MAL_UNOFFICIAL_API_BASE_URL]];
     });
     
     return sharedClient;

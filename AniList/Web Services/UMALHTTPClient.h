@@ -1,16 +1,16 @@
 //
-//  MALUserClient.h
+//  UMALHTTPClient.h
 //  AniList
 //
-//  Created by Corey Roberts on 6/1/13.
+//  Created by Corey Roberts on 6/12/13.
 //  Copyright (c) 2013 SpacePyro Inc. All rights reserved.
 //
 
 #import "AFHTTPClient.h"
 
-@interface MALUserClient : AFHTTPClient
+@interface UMALHTTPClient : AFHTTPClient
 
-+ (MALUserClient *)sharedClient;
++ (UMALHTTPClient *)sharedClient;
 - (void)setUsername:(NSString *)username andPassword:(NSString *)password;
 
 @end

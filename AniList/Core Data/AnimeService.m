@@ -308,5 +308,50 @@
     return nil;
 }
 
+#pragma mark - Data Conversion Methods
+
++ (NSString *)animeToXML:(NSNumber *)animeID {
+    
+    /*
+     <?xml version="1.0" encoding="UTF-8"?>
+     <entry>
+     <episode>11</episode>
+     <status>1</status>
+     <score>7</score>
+     <downloaded_episodes></downloaded_episodes>
+     <storage_type></storage_type>
+     <storage_value></storage_value>
+     <times_rewatched></times_rewatched>
+     <rewatch_value></rewatch_value>
+     <date_start></date_start>
+     <date_finish></date_finish>
+     <priority></priority>
+     <enable_discussion></enable_discussion>
+     <enable_rewatching></enable_rewatching>
+     <comments></comments>
+     <fansub_group></fansub_group>
+     <tags>test tag, 2nd tag</tags>
+     </entry>
+     */
+    
+    Anime *anime = [AnimeService animeForID:animeID];
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat = @"MMddyyyy";
+    
+    NSString *startDate = [dateFormatter stringFromDate:anime.user_date_start];
+    NSString *endDate = [dateFormatter stringFromDate:anime.user_date_finish];
+    
+    NSMutableString *XML = [NSMutableString stringWithString:@"<?xml version=\"1.0\" encoding=\"UTF-8\"?><entry>"];
+    [XML appendString:[NSString stringWithFormat:@"<episode>%d</episode>", [anime.current_episode intValue]]];
+    [XML appendString:[NSString stringWithFormat:@"<status>%d</status>", [anime.status intValue]]];
+    [XML appendString:[NSString stringWithFormat:@"<score>%d</score>", [anime.user_score intValue]]];
+    [XML appendString:[NSString stringWithFormat:@"<date_start>%@</date_start>", startDate]];
+    [XML appendString:[NSString stringWithFormat:@"<date_finish>%@</date_finish>", endDate]];
+
+    [XML appendString:@"</entry></xml>"];
+    
+    return XML;
+}
 
 @end
