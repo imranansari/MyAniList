@@ -55,6 +55,7 @@
         [AnimeService addAnime:response];
         [[NSNotificationCenter defaultCenter] postNotificationName:kAnimeDidUpdate object:@(YES)];
     } failure:^(NSURLRequest *operation, NSError *error) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kAnimeDidUpdate object:@(NO)];
         [self updateViewsOnFailure:YES];
     }];
 }

@@ -21,6 +21,7 @@
 @property (nonatomic, weak) IBOutlet UILabel *totalPeopleScored;
 @property (nonatomic, weak) IBOutlet UILabel *rank;
 @property (nonatomic, weak) IBOutlet UILabel *popularity;
+@property (nonatomic, weak) IBOutlet UILabel *errorMessageLabel;
 
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView *indicator;
 
@@ -41,6 +42,7 @@
     
     self.view.backgroundColor = [UIColor clearColor];
     
+    self.errorMessageLabel.alpha = 0.0f;
     self.indicator.alpha = 1.0f;
     self.detailView.alpha = 0.0f;
     
@@ -182,12 +184,39 @@
     [self.totalPeopleScored addShadow];
     [self.rank addShadow];
     [self.popularity addShadow];
+    [self.errorMessageLabel addShadow];
+}
+
+- (void)displayErrorMessage {
+    [UIView animateWithDuration:0.5f
+                          delay:0.0f
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         self.errorMessageLabel.alpha = 1.0f;
+                         self.indicator.alpha = 0.0f;
+                     }
+                     completion:^(BOOL finished) {
+                         [self.indicator removeFromSuperview];
+                     }];
+
 }
 
 #pragma mark - NSNotification Methods
 
 - (void)updateAnime:(NSNotification *)notification {
-    [self displayDetailsViewAnimated:YES];
+    BOOL didUpdate = [((NSNumber *)notification.object) boolValue];
+    
+    if(didUpdate) {
+        [self displayDetailsViewAnimated:YES];
+    }
+    else {
+        if([self.anime.average_score doubleValue] > 0) {
+            [self displayDetailsViewAnimated:YES];
+        }
+        else {
+            [self displayErrorMessage];
+        }
+    }
 }
 
 @end
