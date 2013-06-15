@@ -13,7 +13,7 @@
 @class Anime;
 @class AniListScoreView;
 
-@interface AniListUserInfoEditViewController : UIViewController<AniListDatePickerViewDelegate>
+@interface AniListUserInfoEditViewController : UIViewController<AniListDatePickerViewDelegate, UIScrollViewDelegate>
 
 @property (nonatomic, strong) IBOutlet UIScrollView *statusScrollView;
 @property (nonatomic, weak) IBOutlet UIButton *startDateButton;

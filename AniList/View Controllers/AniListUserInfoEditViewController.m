@@ -36,6 +36,7 @@
     
     self.statusScrollView.pagingEnabled = YES;
     self.statusScrollView.clipsToBounds = NO;
+    self.statusScrollView.delegate = self;
     self.statusScrollView.backgroundColor = [UIColor clearColor];
 
     CAGradientLayer *gradient = [CAGradientLayer layer];

@@ -47,10 +47,12 @@ static NSArray *animeStatusOrder;
     
     self.statusScrollView.contentSize = CGSizeMake(self.statusScrollView.frame.size.width * animeStatusOrder.count, 1);
     self.statusScrollView.superview.backgroundColor = [UIColor defaultBackgroundColor];
+    self.statusScrollView.delegate = self;
+    
     self.scoreView.delegate = self;
     
     for(int i = 0; i < animeStatusOrder.count; i++) {
-        UILabel *label = [UILabel whiteLabelWithFrame:CGRectMake(i * self.statusScrollView.frame.size.width, 0, self.statusScrollView.frame.size.width, self.statusScrollView.frame.size.height) andFontSize:18];
+        UILabel *label = [UILabel whiteLabelWithFrame:CGRectMake(i * self.statusScrollView.frame.size.width, 0, self.statusScrollView.frame.size.width, self.statusScrollView.frame.size.height) andFontSize:17];
         
         label.backgroundColor = [UIColor clearColor];
         label.textAlignment = NSTextAlignmentCenter;
@@ -69,8 +71,8 @@ static NSArray *animeStatusOrder;
     [self.startDateButton setTitle:[self startDateStringWithDate:self.anime.user_date_start] forState:UIControlStateNormal];
     [self.endDateButton setTitle:[self finishDateStringWithDate:self.anime.user_date_finish] forState:UIControlStateNormal];
     
+    [self configureStatus];
     [self configureProgressLabel];
-    
     [self configureRating];
 }
 
@@ -95,6 +97,19 @@ static NSArray *animeStatusOrder;
 }
 
 #pragma mark - UIView Methods
+
+- (void)configureStatus {
+    for(int i = 0; i < animeStatusOrder.count; i++) {
+        if([self.anime.watched_status intValue] == [animeStatusOrder[i] intValue]) {
+            int contentOffset = i * self.statusScrollView.frame.size.width;
+            [self.statusScrollView scrollRectToVisible:CGRectMake(contentOffset,
+                                                                  self.statusScrollView.frame.origin.y,
+                                                                  self.statusScrollView.frame.size.width,
+                                                                  self.statusScrollView.frame.size.height) animated:NO];
+            return;
+        }
+    }
+}
 
 - (void)configureProgressLabel {
     if([self.anime.current_episode intValue] > 0) {
@@ -159,9 +174,10 @@ static NSArray *animeStatusOrder;
 
 #pragma mark - UIScrollViewDelegate Methods
 
-- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     // Calculate the page that we're currently looking at, and then fetch the appropriate status.
-    
+    int page = (int)(scrollView.contentOffset.x / scrollView.frame.size.width);
+    NSLog(@"Current page: %d", page);
+    self.anime.watched_status = animeStatusOrder[page];
 }
-
 @end
