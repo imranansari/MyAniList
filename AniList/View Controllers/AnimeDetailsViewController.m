@@ -57,8 +57,7 @@
         self.airing.text = [self airText];
         
         // This block of text requires data.
-        
-        if([self.anime.average_score doubleValue] > 0) {
+        if([self.anime hasAdditionalDetails]) {
             [self displayDetailsViewAnimated:NO];
         }
         
@@ -210,7 +209,7 @@
         [self displayDetailsViewAnimated:YES];
     }
     else {
-        if([self.anime.average_score doubleValue] > 0) {
+        if([self.anime hasAdditionalDetails]) {
             [self displayDetailsViewAnimated:YES];
         }
         else {

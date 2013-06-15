@@ -48,20 +48,29 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - Animation Methods
+
+- (void)displayTitle {
+    [UIView animateWithDuration:0.5f animations:^{
+        self.titleLabel.alpha = 1.0f;
+    }];
+}
+
+- (void)removeTitle {
+    [UIView animateWithDuration:0.3f animations:^{
+        self.titleLabel.alpha = 0.0f;
+    }];
+}
+
 #pragma mark - UIScrollViewDelegate Methods
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    // y = 36; scrolled off completely.
-    // y = 48; matched completely.
-//    NSLog(@"y: %f", scrollView.contentOffset.y);
+
     if(scrollView.contentOffset.y < 36) {
-        self.titleLabel.alpha = 0.0f;
-    }
-    else if(scrollView.contentOffset.y >= 36 && scrollView.contentOffset.y < 48) {
-        self.titleLabel.alpha = (scrollView.contentOffset.y - 36.0f) / (48.0f - 36.0f);
+        [self removeTitle];
     }
     else {
-        self.titleLabel.alpha = 1.0f;
+        [self displayTitle];
     }
 }
 

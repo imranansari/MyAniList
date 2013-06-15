@@ -126,17 +126,45 @@
 }
 
 + (NSString *)stringForAnimeWatchedStatus:(AnimeWatchedStatus)watchedStatus forAnimeType:(AnimeType)animeType {
+    
+    NSString *seriesText = @"";
+    
+    switch (animeType) {
+        case AnimeTypeTV:
+            seriesText = @"series";
+            break;
+        case AnimeTypeMovie:
+            seriesText = @"movie";
+            break;
+        case AnimeTypeOVA:
+            seriesText = @"OVA";
+            break;
+        case AnimeTypeONA:
+            seriesText = @"ONA";
+            break;
+        case AnimeTypeSpecial:
+            seriesText = @"special";
+            break;
+        case AnimeTypeMusic:
+            seriesText = @"song";  // Not sure about this one
+            break;
+        case AnimeTypeUnknown:
+        default:
+            seriesText = @"series";
+            break;
+    }
+    
     switch (watchedStatus) {
         case AnimeWatchedStatusWatching:
-            return @"Currently watching this series.";
+            return [NSString stringWithFormat:@"Currently watching this %@.", seriesText];
         case AnimeWatchedStatusCompleted:
-            return @"Finished with this series.";
+            return [NSString stringWithFormat:@"Finished with this %@.", seriesText];
         case AnimeWatchedStatusOnHold:
-            return @"Putting this series on hold.";
+            return [NSString stringWithFormat:@"Putting this %@ on hold.", seriesText];
         case AnimeWatchedStatusDropped:
-            return @"Dropping this series.";
+            return [NSString stringWithFormat:@"Dropping this %@.", seriesText];
         case AnimeWatchedStatusPlanToWatch:
-            return @"Planning to watch this series.";
+                    return [NSString stringWithFormat:@"Planning to watch this %@.", seriesText];
         case AnimeWatchedStatusUnknown:
         default:
             return @"Unknown?";
@@ -204,6 +232,10 @@
         default:
             return @(5);
     }
+}
+
+- (BOOL)hasAdditionalDetails {
+    return [self.average_score intValue] > 0;
 }
 
 @end
