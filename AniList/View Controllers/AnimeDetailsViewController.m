@@ -49,8 +49,9 @@
     
     if(self.anime) {
         self.animeTitle.text = self.anime.title;
-#warning - plural version needed.
-        self.animeType.text = [NSString stringWithFormat:@"%@, %d episodes", [Anime stringForAnimeType:[self.anime.type intValue]], [self.anime.total_episodes intValue]];
+        
+        self.animeType.text = [self animeTypeText];
+        
         self.airing.text = [self airText];
         
         // This block of text requires data.
@@ -122,6 +123,52 @@
     }
     else if([self.anime.status intValue] == AnimeAirStatusCurrentlyAiring) {
         text = [text stringByAppendingString:@"and is still airing"];
+    }
+    
+    return text;
+}
+
+- (NSString *)animeTypeText {
+    
+    BOOL plural = [self.anime.total_episodes intValue] > 1;
+    
+    NSString *text = @"";
+    
+    NSString *episodeText = plural ? @"episodes" : @"episode";
+    NSString *musicText = plural ? @"songs" : @"song";
+    NSString *animeType = [Anime stringForAnimeType:[self.anime.type intValue]];
+    int numberOfEpisodes = [self.anime.total_episodes intValue];
+    
+    switch([self.anime.type intValue]) {
+        case AnimeTypeTV: {
+            text = [NSString stringWithFormat:@"%@, %d %@", animeType, numberOfEpisodes, episodeText];
+            break;
+        }
+        case AnimeTypeSpecial: {
+            text = [NSString stringWithFormat:@"%@, %d %@", animeType, numberOfEpisodes, episodeText];
+            break;
+        }
+        case AnimeTypeOVA: {
+            text = [NSString stringWithFormat:@"%@, %d %@", animeType, numberOfEpisodes, episodeText];
+            break;
+        }
+        case AnimeTypeONA: {
+            text = [NSString stringWithFormat:@"%@, %d %@", animeType, numberOfEpisodes, episodeText];
+            break;
+        }
+        case AnimeTypeMusic: {
+            text = [NSString stringWithFormat:@"%@, %d %@", animeType, numberOfEpisodes, musicText];
+            break;
+        }
+        case AnimeTypeMovie: {
+            text = [NSString stringWithFormat:@"%@", animeType];
+            break;
+        }
+        case AnimeTypeUnknown:
+        default: {
+            text = [NSString stringWithFormat:@"%@, %d %@", animeType, numberOfEpisodes, episodeText];
+            break;
+        }
     }
     
     return text;
