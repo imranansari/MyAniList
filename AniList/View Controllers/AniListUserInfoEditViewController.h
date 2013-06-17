@@ -28,5 +28,6 @@
 - (IBAction)removeItemButtonPressed:(id)sender;
 - (IBAction)startDateButtonPressed:(id)sender;
 - (IBAction)endDateButtonPressed:(id)sender;
+- (void)save:(id)sender;
 
 @end

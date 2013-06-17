@@ -34,6 +34,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithTitle:@"Save" style:UIBarButtonItemStyleDone target:self action:@selector(save:)];
+    
+    self.navigationItem.rightBarButtonItem = saveButton;
+    
     self.statusScrollView.pagingEnabled = YES;
     self.statusScrollView.clipsToBounds = NO;
     self.statusScrollView.delegate = self;
@@ -108,6 +112,10 @@
 
 - (IBAction)removeItemButtonPressed:(id)sender {
     
+}
+
+- (void)save:(id)sender {
+    // override
 }
 
 #pragma mark - AniListDatePickerViewDelegate Methods

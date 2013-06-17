@@ -72,7 +72,7 @@
 //    
 //    [[UIBarButtonItem appearance] setBackBarButtonItem:backButton];
     
-    [[UIBarButtonItem appearance] setTitleTextAttributes:@{UITextAttributeFont: [UIFont fontWithName:@"HelveticaNeue-Light" size:0.0], UITextAttributeTextShadowOffset: [NSValue valueWithUIOffset:UIOffsetMake(0, -1)]} forState:UIControlStateNormal];
+    [[UIBarButtonItem appearance] setTitleTextAttributes:@{UITextAttributeFont: [UIFont fontWithName:@"HelveticaNeue-Medium" size:0.0], UITextAttributeTextShadowOffset: [NSValue valueWithUIOffset:UIOffsetMake(0, -1)]} forState:UIControlStateNormal];
     
     [[UINavigationBar appearance] setTitleTextAttributes:@{UITextAttributeFont: [UIFont fontWithName:@"HelveticaNeue-Light" size:0.0], UITextAttributeTextShadowOffset: [NSValue valueWithUIOffset:UIOffsetMake(0, -1)]}];
 

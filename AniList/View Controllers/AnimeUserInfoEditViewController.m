@@ -33,12 +33,6 @@ static NSArray *animeStatusOrder;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-    [[MALHTTPClient sharedClient] updateDetailsForAnimeWithID:self.anime.anime_id success:^(id operation, id response) {
-        NSLog(@"update");
-    } failure:^(id operation, NSError *error) {
-        NSLog(@"failed");
-    }];
-    
     self.scoreView.delegate = nil;
 }
 
@@ -147,6 +141,17 @@ static NSArray *animeStatusOrder;
         self.anime.current_episode = @([self.anime.current_episode intValue] - 1);
     
     [self configureProgressLabel];
+}
+
+- (void)save:(id)sender {
+    NSLog(@"Saving...");
+    
+    [self.navigationController popViewControllerAnimated:YES];
+    [[MALHTTPClient sharedClient] updateDetailsForAnimeWithID:self.anime.anime_id success:^(id operation, id response) {
+        NSLog(@"Updated. Returning to anime details view.");
+    } failure:^(id operation, NSError *error) {
+        NSLog(@"Failed to update.");
+    }];
 }
 
 #pragma mark - AniListDatePickerViewDelegate Methods

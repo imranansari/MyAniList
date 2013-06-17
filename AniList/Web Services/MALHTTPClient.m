@@ -88,7 +88,7 @@
     
     [[MALHTTPClient sharedClient] setUsername:@"SpacePyro" andPassword:@"pyro08"];
     [[MALHTTPClient sharedClient] postPath:path parameters:@{@"data" : animeToXML} success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"response: %@", operation.responseString);
+        NSLog(@"Response: %@", operation.responseString);
         NSError *parseError = nil;
         NSDictionary *xmlDictionary = [XMLReader dictionaryForXMLData:operation.responseData error:&parseError];
         success(operation, xmlDictionary);
