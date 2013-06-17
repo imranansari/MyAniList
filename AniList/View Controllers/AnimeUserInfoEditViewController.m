@@ -111,6 +111,8 @@ static NSArray *animeStatusOrder;
     }
 }
 
+
+#warning - will need tweaking.
 - (void)configureProgressLabel {
     if([self.anime.current_episode intValue] > 0) {
         if([self.anime.current_episode intValue] == [self.anime.total_episodes intValue]) {

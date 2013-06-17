@@ -10,7 +10,7 @@
 #import "XMLReader.h"
 #import "AnimeService.h"
 
-#define MAL_OFFICIAL_API_BASE_URL       @"http://myanimelist.net/api"
+#define MAL_OFFICIAL_API_BASE_URL       @"http://myanimelist.net"
 
 @interface MALHTTPClient()
 - (void)setUsername:(NSString *)username andPassword:(NSString *)password;
@@ -82,7 +82,7 @@
 }
 
 - (void)updateDetailsForAnimeWithID:(NSNumber *)animeID success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure {
-    NSString *path = [NSString stringWithFormat:@"api/animelist/update/%d.xml", [animeID intValue]];
+    NSString *path = [NSString stringWithFormat:@"/api/animelist/update/%d.xml", [animeID intValue]];
     
     NSString *animeToXML = [AnimeService animeToXML:animeID];
     
