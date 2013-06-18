@@ -17,7 +17,8 @@ typedef enum {
     AnimeWatchedStatusCompleted,
     AnimeWatchedStatusOnHold,
     AnimeWatchedStatusDropped,
-    AnimeWatchedStatusPlanToWatch = 6
+    AnimeWatchedStatusPlanToWatch = 6,
+    AnimeWatchedStatusNotWatching
 } AnimeWatchedStatus;
 
 typedef enum {

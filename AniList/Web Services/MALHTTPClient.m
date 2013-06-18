@@ -87,7 +87,7 @@
     NSDictionary *parameters = @{
                                  @"status"  : @"all",
                                  @"type"    : @"anime",
-                                 @"u"       : [[UserProfile profile] username]
+                                 @"u"       : user
                                  };
     
     [[MALUserClient sharedClient] getPath:@"/malappinfo.php"
@@ -129,14 +129,55 @@
                                 parameters:parameters
                                    success:^(AFHTTPRequestOperation *operation, id responseObject) {
                                        NSLog(@"response: %@", operation.responseString);
-                                       NSError *parseError = nil;
-                                       NSDictionary *xmlDictionary = [XMLReader dictionaryForXMLData:operation.responseData error:&parseError];
-                                       success(operation, xmlDictionary);
+                                       success(operation, responseObject);
                                    }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        failure(operation, error);
                                    }];
     
+}
+
+- (void)searchForAnimeWithQuery:(NSString *)query success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure {
+    //http://myanimelist.net/api/anime/search.xml?q=bleach
+    
+    NSString *path = [NSString stringWithFormat:@"/api/anime/search.xml?q=%@", query];
+    
+    [[MALHTTPClient sharedClient] authenticate];
+    [[MALHTTPClient sharedClient] getPath:path
+                               parameters:@{}
+                                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                      NSError *parseError = nil;
+                                      NSDictionary *xmlDictionary = [XMLReader dictionaryForXMLData:operation.responseData error:&parseError];
+                                      NSArray *animelist = xmlDictionary[@"anime"][@"entry"];
+                                      
+                                      NSMutableArray *cleanedList = [NSMutableArray array];
+                                      NSDictionary *cleanedAnime;
+                                      for(NSDictionary *anime in animelist) {
+                                          cleanedAnime = [anime cleanupTextTags];
+                                          [cleanedList addObject:cleanedAnime];
+                                      }
+
+                                      success(operation, cleanedList);
+                                  }
+                                  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                      failure(operation, error);
+                                  }];
+}
+
+- (void)searchForMangaWithQuery:(NSString *)query success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure {
+    NSString *path = [NSString stringWithFormat:@"/api/manga/search.xml?q=%@", query];
+    
+    [[MALHTTPClient sharedClient] authenticate];
+    [[MALHTTPClient sharedClient] getPath:path
+                               parameters:@{}
+                                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                      NSError *parseError = nil;
+                                      NSDictionary *xmlDictionary = [XMLReader dictionaryForXMLData:operation.responseData error:&parseError];
+                                      success(operation, xmlDictionary);
+                                  }
+                                  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                      failure(operation, error);
+                                  }];
 }
 
 #pragma mark - Manga Request Methods

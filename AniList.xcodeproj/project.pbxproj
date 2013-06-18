@@ -166,6 +166,12 @@
 		636F86B1175BA1E3007E1FB6 /* UILabel+AniList.m in Sources */ = {isa = PBXBuildFile; fileRef = 636F86AF175BA1E3007E1FB6 /* UILabel+AniList.m */; };
 		636F86B4175BA3B8007E1FB6 /* UIView+AniList.m in Sources */ = {isa = PBXBuildFile; fileRef = 636F86B3175BA3B8007E1FB6 /* UIView+AniList.m */; };
 		636F86B5175BA3B8007E1FB6 /* UIView+AniList.m in Sources */ = {isa = PBXBuildFile; fileRef = 636F86B3175BA3B8007E1FB6 /* UIView+AniList.m */; };
+		6371444A1770074600E60B9F /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 637144481770074600E60B9F /* SearchViewController.m */; };
+		6371444B1770074600E60B9F /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 637144481770074600E60B9F /* SearchViewController.m */; };
+		6371444C1770074600E60B9F /* SearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 637144491770074600E60B9F /* SearchViewController.xib */; };
+		6371444D1770074600E60B9F /* SearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 637144491770074600E60B9F /* SearchViewController.xib */; };
+		637144501770157A00E60B9F /* NSDictionary+AniList.m in Sources */ = {isa = PBXBuildFile; fileRef = 6371444F1770157A00E60B9F /* NSDictionary+AniList.m */; };
+		637144511770157A00E60B9F /* NSDictionary+AniList.m in Sources */ = {isa = PBXBuildFile; fileRef = 6371444F1770157A00E60B9F /* NSDictionary+AniList.m */; };
 		6372893B17542D110032F425 /* MALHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 6372893A17542D110032F425 /* MALHTTPClient.m */; };
 		6372893C17542D110032F425 /* MALHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 6372893A17542D110032F425 /* MALHTTPClient.m */; };
 		637CF6EC175986840009ADF3 /* NSObject+AniList.m in Sources */ = {isa = PBXBuildFile; fileRef = 637CF6EB175986840009ADF3 /* NSObject+AniList.m */; };
@@ -354,6 +360,11 @@
 		636F86AF175BA1E3007E1FB6 /* UILabel+AniList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UILabel+AniList.m"; path = "Categories/UILabel+AniList.m"; sourceTree = "<group>"; };
 		636F86B2175BA3B8007E1FB6 /* UIView+AniList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+AniList.h"; path = "Categories/UIView+AniList.h"; sourceTree = "<group>"; };
 		636F86B3175BA3B8007E1FB6 /* UIView+AniList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+AniList.m"; path = "Categories/UIView+AniList.m"; sourceTree = "<group>"; };
+		637144471770074600E60B9F /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
+		637144481770074600E60B9F /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
+		637144491770074600E60B9F /* SearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchViewController.xib; sourceTree = "<group>"; };
+		6371444E1770157A00E60B9F /* NSDictionary+AniList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+AniList.h"; path = "Categories/NSDictionary+AniList.h"; sourceTree = "<group>"; };
+		6371444F1770157A00E60B9F /* NSDictionary+AniList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+AniList.m"; path = "Categories/NSDictionary+AniList.m"; sourceTree = "<group>"; };
 		6372893917542D110032F425 /* MALHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MALHTTPClient.h; path = "Web Services/MALHTTPClient.h"; sourceTree = "<group>"; };
 		6372893A17542D110032F425 /* MALHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MALHTTPClient.m; path = "Web Services/MALHTTPClient.m"; sourceTree = "<group>"; };
 		637CF6EA175986840009ADF3 /* NSObject+AniList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+AniList.h"; path = "Categories/NSObject+AniList.h"; sourceTree = "<group>"; };
@@ -480,6 +491,9 @@
 				63894CC3176A9E37007D2D05 /* LoginViewController.h */,
 				63894CC4176A9E37007D2D05 /* LoginViewController.m */,
 				63894CC5176A9E37007D2D05 /* LoginViewController.xib */,
+				637144471770074600E60B9F /* SearchViewController.h */,
+				637144481770074600E60B9F /* SearchViewController.m */,
+				637144491770074600E60B9F /* SearchViewController.xib */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -625,6 +639,8 @@
 				6301D954175D729600163160 /* NSString+AniList.m */,
 				63310279176605DF00097658 /* UIColor+AniList.h */,
 				6331027A176605DF00097658 /* UIColor+AniList.m */,
+				6371444E1770157A00E60B9F /* NSDictionary+AniList.h */,
+				6371444F1770157A00E60B9F /* NSDictionary+AniList.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -936,6 +952,7 @@
 				6301D94D175D66AF00163160 /* AniListSummaryViewController.xib in Resources */,
 				63BEA74017619E0800432BED /* AniListUserInfoEditViewController.xib in Resources */,
 				63894CC8176A9E37007D2D05 /* LoginViewController.xib in Resources */,
+				6371444C1770074600E60B9F /* SearchViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -962,6 +979,7 @@
 				6301D952175D6F1D00163160 /* AnimeCell.xib in Resources */,
 				63BEA74117619E0800432BED /* AniListUserInfoEditViewController.xib in Resources */,
 				63894CC9176A9E37007D2D05 /* LoginViewController.xib in Resources */,
+				6371444D1770074600E60B9F /* SearchViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1057,6 +1075,8 @@
 				63EFEC3D176966B8009CEAB3 /* UMALHTTPClient.m in Sources */,
 				63894CC1176A9C05007D2D05 /* UserProfile.m in Sources */,
 				63894CC6176A9E37007D2D05 /* LoginViewController.m in Sources */,
+				6371444A1770074600E60B9F /* SearchViewController.m in Sources */,
+				637144501770157A00E60B9F /* NSDictionary+AniList.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1120,6 +1140,8 @@
 				63EFEC3E176966B8009CEAB3 /* UMALHTTPClient.m in Sources */,
 				63894CC2176A9C05007D2D05 /* UserProfile.m in Sources */,
 				63894CC7176A9E37007D2D05 /* LoginViewController.m in Sources */,
+				6371444B1770074600E60B9F /* SearchViewController.m in Sources */,
+				637144511770157A00E60B9F /* NSDictionary+AniList.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

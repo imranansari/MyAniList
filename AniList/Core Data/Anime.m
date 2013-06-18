@@ -122,7 +122,7 @@
     if(status == 4 || [value isEqualToString:@"dropped"]) return AnimeWatchedStatusDropped;
     if(status == 6 || [value isEqualToString:@"plan to watch"]) return AnimeWatchedStatusPlanToWatch;
     
-    return AnimeWatchedStatusUnknown;
+    return AnimeWatchedStatusNotWatching;
 }
 
 + (NSString *)stringForAnimeWatchedStatus:(AnimeWatchedStatus)watchedStatus forAnimeType:(AnimeType)animeType {
@@ -164,7 +164,9 @@
         case AnimeWatchedStatusDropped:
             return [NSString stringWithFormat:@"Dropping this %@.", seriesText];
         case AnimeWatchedStatusPlanToWatch:
-                    return [NSString stringWithFormat:@"Planning to watch this %@.", seriesText];
+            return [NSString stringWithFormat:@"Planning to watch this %@.", seriesText];
+        case AnimeWatchedStatusNotWatching:
+            return [NSString stringWithFormat:@"Add this %@ to your list?", seriesText];
         case AnimeWatchedStatusUnknown:
         default:
             return @"Unknown?";

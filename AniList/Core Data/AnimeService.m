@@ -117,7 +117,7 @@
     
     Anime *anime = [NSEntityDescription insertNewObjectForEntityForName:ENTITY_NAME inManagedObjectContext:[AnimeService managedObjectContext]];
     
-    anime.anime_id = data[kID];
+    anime.anime_id = [data[kID] isKindOfClass:[NSString class]] ? @([data[kID] intValue]) : data[kID];
     anime.title = data[kTitle];
     
 //    anime.synonyms = data[@"other_titles"];
@@ -129,7 +129,7 @@
     
     anime.image = data[kImageURL];
     anime.type = @([Anime animeTypeForValue:data[kType]]);
-    anime.total_episodes = [data[kEpisodes] isNull] ? @(-1) : data[kEpisodes];
+    anime.total_episodes = [data[kEpisodes] isNull] ? @(-1) : [data[kEpisodes] isKindOfClass:[NSString class]] ? @([data[kEpisodes] intValue]) : data[kEpisodes];
     anime.status = @([Anime animeAirStatusForValue:data[kAirStatus]]);
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -157,7 +157,7 @@
     
     anime.watched_status = @([Anime animeWatchedStatusForValue:data[kUserWatchedStatus]]);
     anime.current_episode = data[kUserWatchedEpisodes];
-    anime.user_score = [data[kUserScore] intValue] == 0 ? @(-1) : data[kUserScore];
+    anime.user_score = [data[kUserScore] intValue] == 0 ? @(-1) : [data[kUserScore] isKindOfClass:[NSString class]] ? @([data[kUserScore] intValue]) : data[kUserScore];
     
     [[AnimeService managedObjectContext] save:&error];
     
@@ -201,7 +201,7 @@
     
     Anime *anime = [AnimeService animeForID:data[kID]];
     
-    anime.anime_id = data[kID];
+    anime.anime_id = [data[kID] isKindOfClass:[NSString class]] ? @([data[kID] intValue]) : data[kID];
     anime.title = data[kTitle];
     //    anime.synonyms = data[@"other_titles"];
     // english
@@ -225,7 +225,7 @@
     
     anime.image = data[kImageURL];
     anime.type = @([Anime animeTypeForValue:data[kType]]);
-    anime.total_episodes = [data[kEpisodes] isNull] ? @(-1) : data[kEpisodes];
+    anime.total_episodes = [data[kEpisodes] isNull] ? @(-1) : [data[kEpisodes] isKindOfClass:[NSString class]] ? @([data[kEpisodes] intValue]) : data[kEpisodes];
     anime.status = @([Anime animeAirStatusForValue:data[kAirStatus]]);
     
     if(data[kAirStartDate] && ![data[kAirStartDate] isNull])
@@ -254,7 +254,7 @@
     
     anime.watched_status = @([Anime animeWatchedStatusForValue:data[kUserWatchedStatus]]);
     anime.current_episode = data[kUserWatchedEpisodes];
-    anime.user_score = ([data[kUserScore] isNull] || [data[kUserScore] intValue] == 0) ? @(-1) : data[kUserScore];
+    anime.user_score = ([data[kUserScore] isNull] || [data[kUserScore] intValue] == 0) ? @(-1) : [data[kUserScore] isKindOfClass:[NSString class]] ? @([data[kUserScore] intValue]) : data[kUserScore];
     
     
     [[AnimeService managedObjectContext] save:&error];

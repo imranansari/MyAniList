@@ -31,7 +31,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [[MALHTTPClient sharedClient] getAnimeListForUser:@"spacepyro"
+    [[MALHTTPClient sharedClient] getAnimeListForUser:[[UserProfile profile] username]
                                success:^(NSURLRequest *operation, id response) {
                                    [AnimeService addAnimeList:(NSDictionary *)response];
                                }
