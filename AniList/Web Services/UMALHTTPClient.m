@@ -46,4 +46,9 @@
     [self setAuthorizationHeaderWithUsername:username password:password];
 }
 
+- (void)authenticate {
+    if([UserProfile userIsLoggedIn])
+        [self setUsername:[[UserProfile profile] username] andPassword:[[UserProfile profile] password]];
+}
+
 @end

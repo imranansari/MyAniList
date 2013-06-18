@@ -10,13 +10,21 @@
 
 @implementation UserProfile
 
-- (id)initWithUsername:(NSString *)username andPassword:(NSString *)password {
-    self = [super init];
-    if(self) {
-        self.username = username;
-        self.password = password;
-    }
-    return self;
+static UserProfile *profile = nil;
+
++ (UserProfile *)profile {
+    static dispatch_once_t pred;
+    
+    dispatch_once(&pred, ^{
+        profile = [[UserProfile alloc] init];
+    });
+    
+    return profile;
+}
+
+- (void)setUsername:(NSString *)username andPassword:(NSString *)password {
+    profile.username = username;
+    profile.password = password;
 }
 
 - (NSString *)username {
@@ -33,7 +41,7 @@
 }
 
 - (void)setPassword:(NSString *)password {
-    [[NSUserDefaults standardUserDefaults] setValue:password forKey:kUsernameKey];
+    [[NSUserDefaults standardUserDefaults] setValue:password forKey:kPasswordKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
 }

@@ -16,4 +16,5 @@
     #import "Categories.h"
     #import "MALHTTPClient.h"
     #import "Constants.h"
+    #import "UserProfile.h"
 #endif

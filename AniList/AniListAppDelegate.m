@@ -37,7 +37,7 @@
     
     UINavigationController *navigationController;
     
-    if(YES || [UserProfile userIsLoggedIn]) {
+    if(/*YES ||*/ [UserProfile userIsLoggedIn]) {
         navigationController = [[UINavigationController alloc] initWithRootViewController:animeVC];
     }
     else {

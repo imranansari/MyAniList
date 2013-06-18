@@ -228,10 +228,15 @@
     anime.total_episodes = [data[kEpisodes] isNull] ? @(-1) : data[kEpisodes];
     anime.status = @([Anime animeAirStatusForValue:data[kAirStatus]]);
     
-    if(data[kAirStartDate] &&![data[kAirStartDate] isNull])
+    if(data[kAirStartDate] && ![data[kAirStartDate] isNull])
         anime.date_start = [AnimeService parseDate:data[kAirStartDate]];
-    if(data[kAirEndDate] &&![data[kAirEndDate] isNull])
+    if(data[kAirEndDate] && ![data[kAirEndDate] isNull])
         anime.date_finish = [AnimeService parseDate:data[kAirEndDate]];
+    
+    if(data[kUserStartDate] && ![data[kUserStartDate] isNull])
+        anime.user_date_start = [AnimeService parseDate:data[kUserStartDate]];
+    if(data[kUserEndDate] && ![data[kUserEndDate] isNull])
+        anime.user_date_finish = [AnimeService parseDate:data[kUserEndDate]];
     
     //    anime.classification = data[@"classification"];
     if(data[kMembersScore] && ![data[kMembersScore] isNull])

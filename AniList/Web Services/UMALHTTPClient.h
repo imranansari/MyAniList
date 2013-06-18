@@ -12,5 +12,6 @@
 
 + (UMALHTTPClient *)sharedClient;
 - (void)setUsername:(NSString *)username andPassword:(NSString *)password;
+- (void)authenticate;
 
 @end

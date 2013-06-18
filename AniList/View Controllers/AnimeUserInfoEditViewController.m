@@ -7,6 +7,7 @@
 //
 
 #import "AnimeUserInfoEditViewController.h"
+#import "AnimeService.h"
 #import "Anime.h"
 
 @interface AnimeUserInfoEditViewController ()
@@ -152,6 +153,8 @@ static NSArray *animeStatusOrder;
     } failure:^(id operation, NSError *error) {
         NSLog(@"Failed to update.");
     }];
+    
+    [self.anime.managedObjectContext save:nil];
 }
 
 #pragma mark - AniListDatePickerViewDelegate Methods

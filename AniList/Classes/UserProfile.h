@@ -16,6 +16,8 @@
 @property (nonatomic, copy) NSString *username;
 @property (nonatomic, copy) NSString *password;
 
++ (UserProfile *)profile;
+- (void)setUsername:(NSString *)username andPassword:(NSString *)password;
 + (BOOL)userIsLoggedIn;
 
 @end
