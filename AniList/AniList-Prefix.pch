@@ -12,9 +12,5 @@
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
     #import <CoreData/CoreData.h>
-    #import "AFNetworking.h"
-    #import "Categories.h"
-    #import "MALHTTPClient.h"
     #import "Constants.h"
-    #import "UserProfile.h"
 #endif
