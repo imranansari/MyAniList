@@ -9,6 +9,7 @@
 #import "AnimeDetailsViewController.h"
 #import "AnimeService.h"
 #import "Anime.h"
+#import "MALHTTPClient.h"
 
 @interface AnimeDetailsViewController ()
 @property (nonatomic, weak) IBOutlet UIImageView *poster;

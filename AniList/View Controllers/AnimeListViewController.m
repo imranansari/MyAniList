@@ -11,6 +11,7 @@
 #import "AnimeService.h"
 #import "AnimeCell.h"
 #import "Anime.h"
+#import "MALHTTPClient.h"
 
 @interface AnimeListViewController ()
 
@@ -39,13 +40,16 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [[MALHTTPClient sharedClient] getAnimeListForUser:[[UserProfile profile] username]
-                                              success:^(NSURLRequest *operation, id response) {
-                                                  [AnimeService addAnimeList:(NSDictionary *)response];
-                                              }
-                                              failure:^(NSURLRequest *operation, NSError *error) {
-                                                  // Derp.
-                                              }];
+    
+    if([UserProfile userIsLoggedIn]) {
+        [[MALHTTPClient sharedClient] getAnimeListForUser:[[UserProfile profile] username]
+                                                  success:^(NSURLRequest *operation, id response) {
+                                                      [AnimeService addAnimeList:(NSDictionary *)response];
+                                                  }
+                                                  failure:^(NSURLRequest *operation, NSError *error) {
+                                                      // Derp.
+                                                  }];
+    }
 }
 
 - (void)didReceiveMemoryWarning {

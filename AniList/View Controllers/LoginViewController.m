@@ -9,6 +9,8 @@
 #import "LoginViewController.h"
 #import "SWRevealViewController.h"
 #import "UserProfile.h"
+#import "AniListAppDelegate.h"
+#import "MALHTTPClient.h"
 
 @interface LoginViewController ()
 @property (nonatomic, weak) IBOutlet UITextField *username;
@@ -56,7 +58,8 @@
     [[MALHTTPClient sharedClient] loginWithUsername:self.username.text andPassword:self.password.text success:^(id operation, id response) {
         [[UserProfile profile] setUsername:self.username.text andPassword:self.password.text];
         NSLog(@"Logged in!");
-        // Progress to anime list screen.
+        [self revokeLoginScreen];
+        
     } failure:^(id operation, NSError *error) {
         NSLog(@"Could not log in.");
         // Error logic to handle failure.
@@ -66,6 +69,19 @@
 - (IBAction)backgroundButtonPressed:(id)sender {
     [self.username resignFirstResponder];
     [self.password resignFirstResponder];
+}
+
+#pragma mark - Screen Revoke Methods
+
+- (void)revokeLoginScreen {
+    if([UserProfile userIsLoggedIn]) {
+        AniListAppDelegate *delegate = (AniListAppDelegate *)[UIApplication sharedApplication].delegate;
+        SWRevealViewController *rvc = (SWRevealViewController *)delegate.window.rootViewController;
+        UINavigationController *nvc = (UINavigationController *)rvc.frontViewController;
+        nvc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+        
+        [nvc dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 #pragma mark - UITextFieldDelegate Methods

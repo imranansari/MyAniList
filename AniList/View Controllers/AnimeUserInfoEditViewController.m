@@ -9,6 +9,7 @@
 #import "AnimeUserInfoEditViewController.h"
 #import "AnimeService.h"
 #import "Anime.h"
+#import "MALHTTPClient.h"
 
 @interface AnimeUserInfoEditViewController ()
 

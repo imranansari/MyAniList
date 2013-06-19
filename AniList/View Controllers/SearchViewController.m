@@ -11,6 +11,7 @@
 #import "AniListAppDelegate.h"
 #import "AnimeCell.h"
 #import "AnimeViewController.h"
+#import "MALHTTPClient.h"
 
 @interface SearchViewController ()
 @property (nonatomic, weak) UISearchDisplayController *searchController;

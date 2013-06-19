@@ -35,20 +35,17 @@
     AnimeListViewController *animeVC = [[AnimeListViewController alloc] init];
     LoginViewController *loginVC = [[LoginViewController alloc] init];
     
-    UINavigationController *navigationController;
-    
-    if(/*YES ||*/ [UserProfile userIsLoggedIn]) {
-        navigationController = [[UINavigationController alloc] initWithRootViewController:animeVC];
-    }
-    else {
-        navigationController = [[UINavigationController alloc] initWithRootViewController:loginVC];
-    }
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:animeVC];
     
     SWRevealViewController *vc = [[SWRevealViewController alloc] initWithRearViewController:menuVC
                                                                         frontViewController:navigationController];
     
     self.window.rootViewController = vc;
     
+    if(![UserProfile userIsLoggedIn]) {
+        navigationController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+        [navigationController presentViewController:loginVC animated:NO completion:nil];
+    }
     
     [Crashlytics startWithAPIKey:@"c01aa6f0d36b5000da6aa8c83dda558c23be54f8"];
     

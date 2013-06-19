@@ -7,6 +7,7 @@
 //
 
 #import "UMALHTTPClient.h"
+#import "MALHTTPClient.h"
 
 #define MAL_UNOFFICIAL_API_BASE_URL     @"http://mal-api.com"
 

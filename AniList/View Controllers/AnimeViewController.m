@@ -13,6 +13,7 @@
 #import "SynopsisView.h"
 #import "AniListPickerView.h"
 #import "AnimeUserInfoEditViewController.h"
+#import "MALHTTPClient.h"
 
 @interface AnimeViewController ()
 @property (nonatomic, strong) AnimeDetailsViewController *animeDetailsViewController;
