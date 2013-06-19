@@ -28,16 +28,24 @@
     return self;
 }
 
+- (void)dealloc {
+    [NSFetchedResultsController deleteCacheWithName:[self entityName]];
+    NSLog(@"AnimeList deallocating.");
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     [[MALHTTPClient sharedClient] getAnimeListForUser:[[UserProfile profile] username]
-                               success:^(NSURLRequest *operation, id response) {
-                                   [AnimeService addAnimeList:(NSDictionary *)response];
-                               }
-                               failure:^(NSURLRequest *operation, NSError *error) {
-                                   // Derp.
-                               }];
+                                              success:^(NSURLRequest *operation, id response) {
+                                                  [AnimeService addAnimeList:(NSDictionary *)response];
+                                              }
+                                              failure:^(NSURLRequest *operation, NSError *error) {
+                                                  // Derp.
+                                              }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -64,6 +72,7 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    NSLog(@"section count: %d", [[self.fetchedResultsController sections] count]);
     return [[self.fetchedResultsController sections] count];
 }
 

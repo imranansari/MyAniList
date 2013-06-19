@@ -28,6 +28,14 @@
     return self;
 }
 
+- (void)dealloc {
+    self.fetchedResultsController.delegate = nil;
+    [NSFetchedResultsController deleteCacheWithName:[self entityName]];
+    self.fetchedResultsController = nil;
+    
+    NSLog(@"AniList deallocating.");
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -84,7 +92,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
 
 // Must override.
 - (NSString *)entityName {

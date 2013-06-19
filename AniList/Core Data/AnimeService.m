@@ -18,6 +18,7 @@
 #define kType                   @"type"
 #define kRank                   @"rank"
 #define kPopularityRank         @"popularity_rank"
+#define kImage                  @"image"
 #define kImageURL               @"image_url"
 #define kEpisodes               @"episodes"
 #define kAirStatus              @"status"
@@ -127,7 +128,11 @@
     // rank (global)
     // popularity_rank
     
-    anime.image = data[kImageURL];
+    if(data[kImageURL] && ![data[kImageURL] isNull])
+        anime.image = data[kImageURL];
+    else if(data[kImage] && ![data[kImage] isNull])
+        anime.image = data[kImage];
+    
     anime.type = @([Anime animeTypeForValue:data[kType]]);
     anime.total_episodes = [data[kEpisodes] isNull] ? @(-1) : [data[kEpisodes] isKindOfClass:[NSString class]] ? @([data[kEpisodes] intValue]) : data[kEpisodes];
     anime.status = @([Anime animeAirStatusForValue:data[kAirStatus]]);
@@ -191,7 +196,7 @@
 
 
 + (Anime *)editAnime:(NSDictionary *)data {
-    NSLog(@"data: %@", data);
+//    NSLog(@"data: %@", data);
     if(![AnimeService animeForID:data[kID]]) {
         NSLog(@"Anime does not exist; unable to edit!");
         return nil;
@@ -223,7 +228,9 @@
         }
     }
     
-    anime.image = data[kImageURL];
+    if(data[kImageURL] && ![data[kImageURL] isNull])
+        anime.image = data[kImageURL];
+    
     anime.type = @([Anime animeTypeForValue:data[kType]]);
     anime.total_episodes = [data[kEpisodes] isNull] ? @(-1) : [data[kEpisodes] isKindOfClass:[NSString class]] ? @([data[kEpisodes] intValue]) : data[kEpisodes];
     anime.status = @([Anime animeAirStatusForValue:data[kAirStatus]]);
@@ -252,8 +259,13 @@
     //    anime.tags = data[@"tags"];
     //    anime.manga_adaptations = data[@"manga_adaptations"];
     
-    anime.watched_status = @([Anime animeWatchedStatusForValue:data[kUserWatchedStatus]]);
-    anime.current_episode = data[kUserWatchedEpisodes];
+    if(data[kUserWatchedStatus] && ![data[kUserWatchedStatus] isNull])
+        anime.watched_status = @([Anime animeWatchedStatusForValue:data[kUserWatchedStatus]]);
+    else
+        anime.watched_status = @(AnimeWatchedStatusNotWatching);
+    
+    if(data[kUserWatchedEpisodes] && ![data[kUserWatchedEpisodes] isNull])
+        anime.current_episode = data[kUserWatchedEpisodes];
     anime.user_score = ([data[kUserScore] isNull] || [data[kUserScore] intValue] == 0) ? @(-1) : [data[kUserScore] isKindOfClass:[NSString class]] ? @([data[kUserScore] intValue]) : data[kUserScore];
     
     

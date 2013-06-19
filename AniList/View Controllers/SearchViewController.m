@@ -9,6 +9,8 @@
 #import "SearchViewController.h"
 #import "AnimeService.h"
 #import "AniListAppDelegate.h"
+#import "AnimeCell.h"
+#import "AnimeViewController.h"
 
 @interface SearchViewController ()
 @property (nonatomic, weak) UISearchDisplayController *searchController;
@@ -25,6 +27,11 @@
     if (self) {
         AniListAppDelegate *delegate = (AniListAppDelegate *)[UIApplication sharedApplication].delegate;
         self.managedObjectContext = delegate.managedObjectContext;
+        
+        [NSFetchedResultsController deleteCacheWithName:@"Anime"];
+        [NSFetchedResultsController deleteCacheWithName:@"Manga"];
+        
+        [self.managedObjectContext save:nil];
     }
     return self;
 }
@@ -32,7 +39,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    self.searchDisplayController.searchResultsTableView.backgroundColor = [UIColor clearColor];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [self.searchDisplayController.searchBar becomeFirstResponder];
 }
 
 - (void)didReceiveMemoryWarning
@@ -43,10 +54,12 @@
 
 - (void)searchWithQuery:(NSString *)query {
     [[MALHTTPClient sharedClient] searchForAnimeWithQuery:query success:^(id operation, NSArray *response) {
-        NSLog(@"Got anime results: %d", response.count);
-        for(NSDictionary *result in response) {
-            [AnimeService addAnime:result];
-        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSLog(@"Got anime results: %d", response.count);
+            for(NSDictionary *result in response) {
+                [AnimeService addAnime:result];
+            }
+        });
     } failure:^(id operation, NSError *error) {
         NSLog(@"Anime search failure.");
     }];
@@ -60,14 +73,10 @@
     }];
 }
 
-#pragma mark - Table view data source
+#pragma mark - Table view data sourceu
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     return [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 0)];
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 44;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
@@ -75,7 +84,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 44;
+    return [AnimeCell cellHeight];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -98,19 +107,27 @@
     
     static NSString *CellIdentifier = @"Cell";
     
-    UITableViewCell *cell;
-    cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    AnimeCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if(!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"AnimeCell" owner:self options:nil];
+        cell = (AnimeCell *)nib[0];
     }
     
+    [self configureCell:cell atIndexPath:indexPath];
+    
     return cell;
+
 }
 
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    Anime *anime = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
+    AnimeViewController *animeVC = [[AnimeViewController alloc] init];
+    animeVC.anime = anime;
+    
+    [self.navigationController pushViewController:animeVC animated:YES];
 }
 
 #pragma mark - Fetched results controller
@@ -135,13 +152,13 @@
     
     fetchRequest.sortDescriptors = sortDescriptors;
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"title beginswith [cd] %@", self.searchDisplayController.searchBar.text];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"title contains [cd] %@", self.searchDisplayController.searchBar.text];
     
     fetchRequest.predicate = predicate;
     
     // Edit the section name key path and cache name if appropriate.
     // nil for section name key path means "no sections".
-    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:@"Search"];
     aFetchedResultsController.delegate = self;
     self.fetchedResultsController = aFetchedResultsController;
     
@@ -205,16 +222,44 @@
 }
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-    // Must override!
+    Anime *anime = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    AnimeCell *animeCell = (AnimeCell *)cell;
+    animeCell.title.text = anime.title;
+    [animeCell.title addShadow];
+    [animeCell.title sizeToFit];
+    
+    animeCell.progress.text = [AnimeCell progressTextForAnime:anime];
+    [animeCell.progress addShadow];
+    
+    animeCell.rank.text = [anime.user_score intValue] != -1 ? [NSString stringWithFormat:@"%d", [anime.user_score intValue]] : @"";
+    [animeCell.rank addShadow];
+    
+    animeCell.type.text = [Anime stringForAnimeType:[anime.type intValue]];
+    [animeCell.type addShadow];
+    
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:anime.image]];
+    AFImageRequestOperation *operation = [AFImageRequestOperation imageRequestOperationWithRequest:request success:^(UIImage *image) {
+        animeCell.image.image = image;
+    }];
+    
+    [operation start];
 }
 
 #pragma mark - UISearchDisplayDelegate Methods
 
-- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchScope:(NSInteger)searchOption {    
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchScope:(NSInteger)searchOption {
+    
+    [self filterContentForSearchText:[self.searchDisplayController.searchBar text]
+                               scope:[self.searchDisplayController.searchBar selectedScopeButtonIndex]];
+    
     return YES;
 }
 
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString {
+    
+    [self filterContentForSearchText:[self.searchDisplayController.searchBar text]
+                               scope:[self.searchDisplayController.searchBar selectedScopeButtonIndex]];
+    
     if(searchString.length > 5) {
         
         [self searchWithQuery:searchString];
@@ -223,6 +268,28 @@
     }
     
     return YES;
+}
+
+#pragma mark -
+#pragma mark Content Filtering
+
+#warning - how big of a performance cost is this?
+- (void)filterContentForSearchText:(NSString*)searchText scope:(NSInteger)scope {
+    // update the filter, in this case just blow away the FRC and let lazy evaluation create another with the relevant search info
+    self.fetchedResultsController.delegate = nil;
+    [NSFetchedResultsController deleteCacheWithName:@"Search"];
+    self.fetchedResultsController = nil;
+    // if you care about the scope save off the index to be used by the serchFetchedResultsController
+    //self.savedScopeButtonIndex = scope;
+}
+
+
+#pragma mark -
+#pragma mark Search Bar
+- (void)searchDisplayController:(UISearchDisplayController *)controller willUnloadSearchResultsTableView:(UITableView *)tableView; {
+    // search is done so get rid of the search FRC and reclaim memory
+    self.fetchedResultsController.delegate = nil;
+    self.fetchedResultsController = nil;
 }
 
 @end

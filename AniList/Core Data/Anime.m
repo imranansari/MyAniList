@@ -88,6 +88,7 @@
 }
 
 + (AnimeAirStatus)animeAirStatusForValue:(NSString *)value {
+    value = [value lowercaseString];
     int airStatus = [value intValue];
     
     if(airStatus == 1 || [value isEqualToString:@"currently airing"]) return AnimeAirStatusCurrentlyAiring;
