@@ -7,6 +7,7 @@
 //
 
 #import "AFHTTPClient.h"
+#import "AFNetworking.h"
 
 @interface MALUserClient : AFHTTPClient
 

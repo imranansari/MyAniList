@@ -9,11 +9,6 @@
 #ifndef AniList_Constants_h
 #define AniList_Constants_h
 
-#import "AFNetworking.h"
-#import "Categories.h"
-#import "MALHTTPClient.h"
-#import "UserProfile.h"
-
 #define kAnimeDidUpdate @"kAnimeDidUpdate"
 
 // Defaults
