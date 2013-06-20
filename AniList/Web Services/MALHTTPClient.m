@@ -151,9 +151,14 @@
                                       NSArray *animelist = xmlDictionary[@"anime"][@"entry"];
                                       
                                       NSMutableArray *cleanedList = [NSMutableArray array];
-                                      NSDictionary *cleanedAnime;
+                                      NSMutableDictionary *cleanedAnime;
                                       for(NSDictionary *anime in animelist) {
-                                          cleanedAnime = [anime cleanupTextTags];
+                                          cleanedAnime = [[anime cleanupTextTags] mutableCopy];
+                                          if([cleanedAnime valueForKey:@"score"] != nil) {
+                                              NSString *value = cleanedAnime[@"score"];
+                                              [cleanedAnime addEntriesFromDictionary:@{ @"members_score" : value }];
+                                              [cleanedAnime removeObjectForKey:@"score"];
+                                          }
                                           [cleanedList addObject:cleanedAnime];
                                       }
 

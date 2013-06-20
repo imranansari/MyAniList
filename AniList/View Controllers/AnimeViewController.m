@@ -37,6 +37,8 @@
         self.detailsLabel = [UILabel whiteHeaderWithFrame:CGRectMake(0, 0, 320, 60) andFontSize:18];
         self.detailsLabel.text = @"Synopsis";
         
+        self.hidesBackButton = NO;
+        
         self.pickerView = [[AniListPickerView alloc] initWithFrame:CGRectMake(self.userInfoView.view.frame.origin.x, self.userInfoView.view.frame.origin.y + self.userInfoView.view.frame.size.height, [UIScreen mainScreen].bounds.size.width, 146)];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateViewsOnFailure:) name:kAnimeDidUpdate object:nil];

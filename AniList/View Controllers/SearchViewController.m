@@ -29,9 +29,6 @@
         AniListAppDelegate *delegate = (AniListAppDelegate *)[UIApplication sharedApplication].delegate;
         self.managedObjectContext = delegate.managedObjectContext;
         
-        [NSFetchedResultsController deleteCacheWithName:@"Anime"];
-        [NSFetchedResultsController deleteCacheWithName:@"Manga"];
-        
         [self.managedObjectContext save:nil];
     }
     return self;
@@ -57,9 +54,12 @@
     [[MALHTTPClient sharedClient] searchForAnimeWithQuery:query success:^(id operation, NSArray *response) {
         dispatch_async(dispatch_get_main_queue(), ^{
             NSLog(@"Got anime results: %d", response.count);
+            NSLog(@"self.fetchedResultsController.delegate %@", self.fetchedResultsController.delegate);
             for(NSDictionary *result in response) {
                 [AnimeService addAnime:result];
             }
+            
+            [self.searchDisplayController.searchResultsTableView reloadData];
         });
     } failure:^(id operation, NSError *error) {
         NSLog(@"Anime search failure.");
@@ -159,7 +159,7 @@
     
     // Edit the section name key path and cache name if appropriate.
     // nil for section name key path means "no sections".
-    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:@"Search"];
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
     aFetchedResultsController.delegate = self;
     self.fetchedResultsController = aFetchedResultsController;
     

@@ -75,16 +75,6 @@
     return [AnimeCell cellHeight];
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    NSLog(@"section count: %d", [[self.fetchedResultsController sections] count]);
-    return [[self.fetchedResultsController sections] count];
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
-    return [sectionInfo numberOfObjects];
-}
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     static NSString *CellIdentifier = @"Cell";

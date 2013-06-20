@@ -247,7 +247,7 @@
     
     //    anime.classification = data[@"classification"];
     if(data[kMembersScore] && ![data[kMembersScore] isNull])
-        anime.average_score = data[kMembersScore];
+        anime.average_score = [data[kMembersScore] isKindOfClass:[NSString class]] ? @([data[kMembersScore] doubleValue]) : data[kMembersScore];
     if(data[kMembersCount] &&![data[kMembersCount] isNull])
         anime.average_count = data[kMembersCount];
     if(data[kFavoritedCount] &&![data[kFavoritedCount] isNull])
@@ -266,7 +266,9 @@
     
     if(data[kUserWatchedEpisodes] && ![data[kUserWatchedEpisodes] isNull])
         anime.current_episode = data[kUserWatchedEpisodes];
-    anime.user_score = ([data[kUserScore] isNull] || [data[kUserScore] intValue] == 0) ? @(-1) : [data[kUserScore] isKindOfClass:[NSString class]] ? @([data[kUserScore] intValue]) : data[kUserScore];
+    
+    if(data[kUserScore] && ![data[kUserScore] isNull])
+        anime.user_score = ([data[kUserScore] isNull] || [data[kUserScore] intValue] == 0) ? @(-1) : [data[kUserScore] isKindOfClass:[NSString class]] ? @([data[kUserScore] intValue]) : data[kUserScore];
     
     
     [[AnimeService managedObjectContext] save:&error];

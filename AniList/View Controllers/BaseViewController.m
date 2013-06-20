@@ -19,7 +19,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        self.hidesBackButton = YES;
     }
     return self;
 }
@@ -63,7 +63,9 @@
     gradient.endPoint = CGPointMake(0.0f, 0.10f);
     
     self.maskView.layer.mask = gradient;
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"hamburger.png"] style:UIBarButtonItemStylePlain target:revealController action:@selector(revealToggle:)];
+    
+    if(self.hidesBackButton)
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"hamburger.png"] style:UIBarButtonItemStylePlain target:revealController action:@selector(revealToggle:)];
 }
 
 - (void)didReceiveMemoryWarning

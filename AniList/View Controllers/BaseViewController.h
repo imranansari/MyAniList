@@ -12,4 +12,6 @@
 
 @interface BaseViewController : UIViewController
 
+@property (nonatomic, assign) BOOL hidesBackButton;
+
 @end

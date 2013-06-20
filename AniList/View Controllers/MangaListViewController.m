@@ -15,7 +15,16 @@
 @implementation MangaListViewController
 
 - (id)init {
-    return [super init];
+    self = [super init];
+    if(self) {
+        self.title = @"Manga";
+        self.sectionHeaders = @[@"Reading", @"Completed", @"On Hold", @"Dropped", @"Plan To Read"];
+    }
+}
+
+- (void)dealloc {
+    [NSFetchedResultsController deleteCacheWithName:[self entityName]];
+    NSLog(@"MangaList deallocating.");
 }
 
 - (void)viewDidLoad {
@@ -26,6 +35,10 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (NSString *)entityName {
+    return @"Manga";
 }
 
 #pragma mark - Table view data source

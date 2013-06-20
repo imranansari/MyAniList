@@ -219,26 +219,55 @@
     return AnimeWatchedStatusUnknown;
 }
 
-- (NSNumber *)column {
+- (void)setWatched_status:(NSNumber *)watched_status {
+    [self willChangeValueForKey:@"watched_status"];
+    [self setPrimitiveValue:watched_status forKey:@"watched_status"];
+    [self didChangeValueForKey:@"watched_status"];
+    
     switch ([self.watched_status intValue]) {
         case AnimeWatchedStatusWatching:
-            return @(0);
+            self.column = @(0);
+            break;
         case AnimeWatchedStatusCompleted:
-            return @(1);
+            self.column = @(1);
+            break;
         case AnimeWatchedStatusOnHold:
-            return @(2);
+            self.column = @(2);
+            break;
         case AnimeWatchedStatusDropped:
-            return @(3);
+            self.column = @(3);
+            break;
         case AnimeWatchedStatusPlanToWatch:
-            return @(4);
+            self.column = @(4);
+            break;
         case AnimeWatchedStatusUnknown:
         default:
-            return @(5);
+            self.column = @(5);
+            break;
     }
 }
 
+//- (NSNumber *)column {
+//    NSLog(@"%@ - %d", self.title, [self.watched_status intValue]);
+//    switch ([self.watched_status intValue]) {
+//        case AnimeWatchedStatusWatching:
+//            return @(0);
+//        case AnimeWatchedStatusCompleted:
+//            return @(1);
+//        case AnimeWatchedStatusOnHold:
+//            return @(2);
+//        case AnimeWatchedStatusDropped:
+//            return @(3);
+//        case AnimeWatchedStatusPlanToWatch:
+//            return @(4);
+//        case AnimeWatchedStatusUnknown:
+//        default:
+//            return @(5);
+//    }
+//}
+
 - (BOOL)hasAdditionalDetails {
-    return [self.average_score intValue] > 0;
+    return [self.average_count intValue] > 0;
 }
 
 @end

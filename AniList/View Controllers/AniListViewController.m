@@ -172,7 +172,9 @@
     
     fetchRequest.sortDescriptors = sortDescriptors;
     
-    [fetchRequest setSortDescriptors:sortDescriptors];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"watched_status < 7"];
+    
+    fetchRequest.predicate = predicate;
     
     // Edit the section name key path and cache name if appropriate.
     // nil for section name key path means "no sections".
