@@ -19,5 +19,7 @@
 
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
+- (NSURL *)animeImageDirectory;
+- (NSURL *)mangaImageDirectory;
 
 @end

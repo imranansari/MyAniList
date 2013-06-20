@@ -62,7 +62,7 @@
             [self displayDetailsViewAnimated:NO];
         }
         
-        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:self.anime.image]];
+        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:self.anime.image_url]];
         
         AFImageRequestOperation *operation = [AFImageRequestOperation imageRequestOperationWithRequest:request success:^(UIImage *image) {
             self.poster.image = image;

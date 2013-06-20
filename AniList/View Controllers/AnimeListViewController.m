@@ -12,6 +12,7 @@
 #import "AnimeCell.h"
 #import "Anime.h"
 #import "MALHTTPClient.h"
+#import "AniListAppDelegate.h"
 
 @interface AnimeListViewController ()
 
@@ -117,12 +118,36 @@
     animeCell.type.text = [Anime stringForAnimeType:[anime.type intValue]];
     [animeCell.type addShadow];
     
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:anime.image]];
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:anime.image_url]];
     AFImageRequestOperation *operation = [AFImageRequestOperation imageRequestOperationWithRequest:request success:^(UIImage *image) {
         animeCell.image.image = image;
     }];
-    
     [operation start];
+    
+    /*
+     
+    if(anime.image) {
+        animeCell.image.image = [UIImage imageWithContentsOfFile:anime.image];
+    }
+    else {
+        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:anime.image_url]];
+        AFImageRequestOperation *operation = [AFImageRequestOperation imageRequestOperationWithRequest:request success:^(UIImage *image) {
+            animeCell.image.image = image;
+            
+            // Save the image onto disk.
+            AniListAppDelegate *delegate = (AniListAppDelegate *)[UIApplication sharedApplication].delegate;
+            NSArray *segmentedURL = [[request.URL absoluteString] componentsSeparatedByString:@"/"];
+            NSString *filename = [segmentedURL lastObject];
+            NSString *animeImagePath = [NSString stringWithFormat:@"%@%@", [delegate animeImageDirectory], filename];
+            
+            [UIImageJPEGRepresentation(image, 1.0) writeToFile:animeImagePath options:NSAtomicWrite error:nil];
+            
+            anime.image = animeImagePath;
+        }];
+        [operation start];
+    }
+    
+    */
 }
 
 @end

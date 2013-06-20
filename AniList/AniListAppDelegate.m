@@ -188,4 +188,16 @@
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
 
+- (NSURL *)animeImageDirectory {
+    NSString *absoluteURL = [[self applicationDocumentsDirectory] absoluteString];
+    
+    return [NSURL URLWithString:[NSString stringWithFormat:@"%@anime/", absoluteURL]];
+}
+
+- (NSURL *)mangaImageDirectory {
+    NSString *absoluteURL = [[self applicationDocumentsDirectory] absoluteString];
+    
+    return [NSURL URLWithString:[NSString stringWithFormat:@"%@manga/", absoluteURL]];
+}
+
 @end

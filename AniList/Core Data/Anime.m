@@ -28,6 +28,7 @@
 @dynamic favorited_count;
 @dynamic anime_id;
 @dynamic image;
+@dynamic image_url;
 @dynamic popularity_rank;
 @dynamic priority;
 @dynamic rank;
@@ -224,6 +225,7 @@
     [self setPrimitiveValue:watched_status forKey:@"watched_status"];
     [self didChangeValueForKey:@"watched_status"];
     
+    // Update column appropriately.
     switch ([self.watched_status intValue]) {
         case AnimeWatchedStatusWatching:
             self.column = @(0);
@@ -246,25 +248,6 @@
             break;
     }
 }
-
-//- (NSNumber *)column {
-//    NSLog(@"%@ - %d", self.title, [self.watched_status intValue]);
-//    switch ([self.watched_status intValue]) {
-//        case AnimeWatchedStatusWatching:
-//            return @(0);
-//        case AnimeWatchedStatusCompleted:
-//            return @(1);
-//        case AnimeWatchedStatusOnHold:
-//            return @(2);
-//        case AnimeWatchedStatusDropped:
-//            return @(3);
-//        case AnimeWatchedStatusPlanToWatch:
-//            return @(4);
-//        case AnimeWatchedStatusUnknown:
-//        default:
-//            return @(5);
-//    }
-//}
 
 - (BOOL)hasAdditionalDetails {
     return [self.average_count intValue] > 0;

@@ -129,9 +129,9 @@
     // popularity_rank
     
     if(data[kImageURL] && ![data[kImageURL] isNull])
-        anime.image = data[kImageURL];
+        anime.image_url = data[kImageURL];
     else if(data[kImage] && ![data[kImage] isNull])
-        anime.image = data[kImage];
+        anime.image_url = data[kImage];
     
     anime.type = @([Anime animeTypeForValue:data[kType]]);
     anime.total_episodes = [data[kEpisodes] isNull] ? @(-1) : [data[kEpisodes] isKindOfClass:[NSString class]] ? @([data[kEpisodes] intValue]) : data[kEpisodes];
@@ -229,7 +229,7 @@
     }
     
     if(data[kImageURL] && ![data[kImageURL] isNull])
-        anime.image = data[kImageURL];
+        anime.image_url = data[kImageURL];
     
     anime.type = @([Anime animeTypeForValue:data[kType]]);
     anime.total_episodes = [data[kEpisodes] isNull] ? @(-1) : [data[kEpisodes] isKindOfClass:[NSString class]] ? @([data[kEpisodes] intValue]) : data[kEpisodes];

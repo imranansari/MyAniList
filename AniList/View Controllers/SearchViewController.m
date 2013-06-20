@@ -238,7 +238,7 @@
     animeCell.type.text = [Anime stringForAnimeType:[anime.type intValue]];
     [animeCell.type addShadow];
     
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:anime.image]];
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:anime.image_url]];
     AFImageRequestOperation *operation = [AFImageRequestOperation imageRequestOperationWithRequest:request success:^(UIImage *image) {
         animeCell.image.image = image;
     }];
