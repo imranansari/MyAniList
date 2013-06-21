@@ -1259,6 +1259,7 @@
 					SparkInspector,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/AFNetworking/AFNetworking";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1280,6 +1281,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/AFNetworking/AFNetworking";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -1299,6 +1301,7 @@
 				INFOPLIST_FILE = "AniListTests/AniListTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/AFNetworking/AFNetworking";
 				WRAPPER_EXTENSION = octest;
 			};
 			name = Debug;
@@ -1318,6 +1321,7 @@
 				INFOPLIST_FILE = "AniListTests/AniListTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/AFNetworking/AFNetworking";
 				WRAPPER_EXTENSION = octest;
 			};
 			name = Release;
