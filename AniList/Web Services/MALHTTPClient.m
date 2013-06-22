@@ -141,13 +141,14 @@
     //http://myanimelist.net/api/anime/search.xml?q=bleach
     
     NSString *path = [NSString stringWithFormat:@"/api/anime/search.xml?q=%@", query];
+    path = [path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
     [[MALHTTPClient sharedClient] authenticate];
     [[MALHTTPClient sharedClient] getPath:path
                                parameters:@{}
                                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
                                       NSError *parseError = nil;
-                                      NSDictionary *xmlDictionary = [XMLReader dictionaryForXMLData:operation.responseData error:&parseError];
+                                      NSDictionary *xmlDictionary = [XMLReader dictionaryForXMLData:responseObject error:&parseError];
                                       NSArray *animelist = xmlDictionary[@"anime"][@"entry"];
                                       
                                       NSMutableArray *cleanedList = [NSMutableArray array];

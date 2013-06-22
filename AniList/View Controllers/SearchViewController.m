@@ -17,7 +17,7 @@
 @property (nonatomic, weak) UISearchDisplayController *searchController;
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
-
+@property (nonatomic, assign) BOOL fromMenu;
 @end
 
 @implementation SearchViewController
@@ -28,7 +28,7 @@
     if (self) {
         AniListAppDelegate *delegate = (AniListAppDelegate *)[UIApplication sharedApplication].delegate;
         self.managedObjectContext = delegate.managedObjectContext;
-        
+        self.fromMenu = YES;
         [self.managedObjectContext save:nil];
     }
     return self;
@@ -37,11 +37,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     self.searchDisplayController.searchResultsTableView.backgroundColor = [UIColor clearColor];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    [self.searchDisplayController.searchBar becomeFirstResponder];
+    if(self.fromMenu) {
+        [self.searchDisplayController.searchBar becomeFirstResponder];
+        self.fromMenu = NO;
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -54,7 +58,6 @@
     [[MALHTTPClient sharedClient] searchForAnimeWithQuery:query success:^(id operation, NSArray *response) {
         dispatch_async(dispatch_get_main_queue(), ^{
             NSLog(@"Got anime results: %d", response.count);
-            NSLog(@"self.fetchedResultsController.delegate %@", self.fetchedResultsController.delegate);
             for(NSDictionary *result in response) {
                 [AnimeService addAnime:result];
             }

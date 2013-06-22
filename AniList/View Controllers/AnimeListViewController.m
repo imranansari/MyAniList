@@ -37,20 +37,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self loadList];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
-    if([UserProfile userIsLoggedIn]) {
-        [[MALHTTPClient sharedClient] getAnimeListForUser:[[UserProfile profile] username]
-                                                  success:^(NSURLRequest *operation, id response) {
-                                                      [AnimeService addAnimeList:(NSDictionary *)response];
-                                                  }
-                                                  failure:^(NSURLRequest *operation, NSError *error) {
-                                                      // Derp.
-                                                  }];
-    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -60,6 +52,18 @@
 
 - (NSString *)entityName {
     return @"Anime";
+}
+
+- (void)loadList {
+    if([UserProfile userIsLoggedIn]) {
+        [[MALHTTPClient sharedClient] getAnimeListForUser:[[UserProfile profile] username]
+                                                  success:^(NSURLRequest *operation, id response) {
+                                                      [AnimeService addAnimeList:(NSDictionary *)response];
+                                                  }
+                                                  failure:^(NSURLRequest *operation, NSError *error) {
+                                                      // Derp.
+                                                  }];
+    }
 }
 
 #pragma mark - Table view data source

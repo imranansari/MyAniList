@@ -222,8 +222,6 @@
     
     if(data[kUserWatchedStatus] && ![data[kUserWatchedStatus] isNull])
         anime.watched_status = @([Anime animeWatchedStatusForValue:data[kUserWatchedStatus]]);
-    else
-        anime.watched_status = @(AnimeWatchedStatusNotWatching);
     
     if(data[kUserWatchedEpisodes] && ![data[kUserWatchedEpisodes] isNull])
         anime.current_episode = data[kUserWatchedEpisodes];
