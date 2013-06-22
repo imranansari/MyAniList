@@ -12,7 +12,11 @@
 #import "MALHTTPClient.h"
 
 @interface AnimeUserInfoEditViewController ()
-
+#warning - I don't like this implementation, but it's safer than having nil values in a dictionary.
+@property (nonatomic, strong) NSDate *originalStartDate;
+@property (nonatomic, strong) NSDate *originalEndDate;
+@property (nonatomic, strong) NSNumber *originalCurrentEpisode;
+@property (nonatomic, strong) NSNumber *originalUserScore;
 @end
 
 @implementation AnimeUserInfoEditViewController
@@ -41,6 +45,8 @@ static NSArray *animeStatusOrder;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self setOriginalValues];
+    
     self.statusScrollView.contentSize = CGSizeMake(self.statusScrollView.frame.size.width * animeStatusOrder.count, 1);
     self.statusScrollView.superview.backgroundColor = [UIColor defaultBackgroundColor];
     self.statusScrollView.delegate = self;
@@ -64,12 +70,12 @@ static NSArray *animeStatusOrder;
         }
     }
     
-    [self.startDateButton setTitle:[self startDateStringWithDate:self.anime.user_date_start] forState:UIControlStateNormal];
-    [self.endDateButton setTitle:[self finishDateStringWithDate:self.anime.user_date_finish] forState:UIControlStateNormal];
+    // If we're coming into this screen after we've done a search (i.e. status is 'not watching' and user tapped
+    // to add this to their list), then automatically set the start date to today.
+    if([self.anime.watched_status intValue] == AnimeWatchedStatusNotWatching)
+        self.anime.user_date_start = [NSDate date];
     
-    [self configureStatus];
-    [self configureProgressLabel];
-    [self configureRating];
+    [self updateLabels];
 }
 
 #pragma mark - NSString Methods
@@ -129,6 +135,18 @@ static NSArray *animeStatusOrder;
     }
 }
 
+- (void)configureDates {
+    [self.startDateButton setTitle:[self startDateStringWithDate:self.anime.user_date_start] forState:UIControlStateNormal];
+    [self.endDateButton setTitle:[self finishDateStringWithDate:self.anime.user_date_finish] forState:UIControlStateNormal];
+}
+
+- (void)updateLabels {
+    [self configureStatus];
+    [self configureProgressLabel];
+    [self configureRating];
+    [self configureDates];
+}
+
 #pragma mark - IBAction Methods
 
 - (IBAction)addItemButtonPressed:(id)sender {
@@ -148,14 +166,28 @@ static NSArray *animeStatusOrder;
 - (void)save:(id)sender {
     NSLog(@"Saving...");
     
+    [self.anime.managedObjectContext save:nil];
+    
     [self.navigationController popViewControllerAnimated:YES];
     [[MALHTTPClient sharedClient] updateDetailsForAnimeWithID:self.anime.anime_id success:^(id operation, id response) {
         NSLog(@"Updated. Returning to anime details view.");
     } failure:^(id operation, NSError *error) {
         NSLog(@"Failed to update.");
     }];
-    
-    [self.anime.managedObjectContext save:nil];
+}
+
+- (void)setOriginalValues {
+    self.originalStartDate = self.anime.user_date_start;
+    self.originalEndDate = self.anime.user_date_finish;
+    self.originalCurrentEpisode = self.anime.current_episode;
+    self.originalUserScore = self.anime.user_score;
+}
+
+- (void)revertValuesToDefault {
+    self.anime.user_date_start = self.originalStartDate;
+    self.anime.user_date_finish = self.originalEndDate;
+    self.anime.current_episode = self.originalCurrentEpisode;
+    self.anime.user_score = self.originalUserScore;
 }
 
 #pragma mark - AniListDatePickerViewDelegate Methods
@@ -190,5 +222,30 @@ static NSArray *animeStatusOrder;
     int page = (int)(scrollView.contentOffset.x / scrollView.frame.size.width);
     NSLog(@"Current page: %d", page);
     self.anime.watched_status = animeStatusOrder[page];
+    
+    [self revertValuesToDefault];
+    
+    switch ([self.anime.watched_status intValue]) {
+        case AnimeWatchedStatusCompleted: {
+            if(!self.anime.user_date_finish) {
+                self.anime.user_date_finish = [NSDate date];
+            }
+            self.anime.current_episode = self.anime.total_episodes;
+            break;
+        }
+        case AnimeWatchedStatusWatching: {
+            if(!self.anime.user_date_start) {
+                self.anime.user_date_start = [NSDate date];
+            }
+            break;
+        }
+        case AnimeWatchedStatusDropped:
+        case AnimeWatchedStatusOnHold:
+        case AnimeWatchedStatusPlanToWatch:
+        default:
+            break;
+    }
+    
+    [self updateLabels];
 }
 @end
