@@ -25,6 +25,8 @@ static UserProfile *profile = nil;
 - (void)setUsername:(NSString *)username andPassword:(NSString *)password {
     profile.username = username;
     profile.password = password;
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedIn object:nil];
 }
 
 - (NSString *)username {

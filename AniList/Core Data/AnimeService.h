@@ -51,8 +51,8 @@
 
 + (Anime *)animeForID:(NSNumber *)ID;
 + (BOOL)addAnimeList:(NSDictionary *)data;
-+ (Anime *)addAnime:(NSDictionary *)data;
-+ (Anime *)editAnime:(NSDictionary *)data;
++ (Anime *)addAnime:(NSDictionary *)data fromList:(BOOL)fromList;
++ (Anime *)editAnime:(NSDictionary *)data fromList:(BOOL)fromList;
 + (void)deleteAnime:(Anime *)anime;
 
 + (NSString *)animeToXML:(NSNumber *)animeID;

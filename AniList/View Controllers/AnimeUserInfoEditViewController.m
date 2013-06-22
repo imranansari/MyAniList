@@ -48,9 +48,7 @@ static NSArray *animeStatusOrder;
     [self setOriginalValues];
     
     self.statusScrollView.contentSize = CGSizeMake(self.statusScrollView.frame.size.width * animeStatusOrder.count, 1);
-    self.statusScrollView.superview.backgroundColor = [UIColor defaultBackgroundColor];
     self.statusScrollView.delegate = self;
-    
     self.scoreView.delegate = self;
     
     for(int i = 0; i < animeStatusOrder.count; i++) {

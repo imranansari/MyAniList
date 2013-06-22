@@ -51,6 +51,8 @@
     
     [self setStyleAttributes];
     
+    [self createDirectories];
+    
     return YES;
 }
 
@@ -73,6 +75,42 @@
     
     [[UINavigationBar appearance] setTitleTextAttributes:@{UITextAttributeFont: [UIFont fontWithName:@"HelveticaNeue-Light" size:0.0], UITextAttributeTextShadowOffset: [NSValue valueWithUIOffset:UIOffsetMake(0, -1)]}];
 
+}
+
+- (void)createDirectories {
+    if(![self directoryExistsWithName:@"anime"]) {
+        [self createDirectoryNamed:@"anime"];
+    }
+    if(![self directoryExistsWithName:@"manga"]) {
+        [self createDirectoryNamed:@"manga"];
+    }
+}
+
+- (void)createDirectoryNamed:(NSString *)directory {
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSArray *directories = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                               NSUserDomainMask, YES);
+    
+    NSString *documentsDirectory = [directories objectAtIndex:0];
+    NSString *newDirectory = [documentsDirectory stringByAppendingPathComponent:directory];
+    
+    if ([fileManager createDirectoryAtPath:newDirectory withIntermediateDirectories:YES attributes:nil error:NULL] == NO) {
+        NSLog(@"Failed to create directory '%@'.", directory);
+    }
+}
+
+- (BOOL)directoryExistsWithName:(NSString *)directory {
+    NSArray *directories = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                               NSUserDomainMask, YES);
+    
+    NSString *documentsDirectory = [directories objectAtIndex:0];
+    NSString *path = [documentsDirectory stringByAppendingPathComponent:directory];
+    
+    BOOL isDirectory;
+    BOOL fileExistsAtPath = [[NSFileManager defaultManager] fileExistsAtPath:path isDirectory:&isDirectory];
+    
+    return fileExistsAtPath && isDirectory;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

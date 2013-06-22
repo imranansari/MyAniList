@@ -63,16 +63,18 @@
         [anime addEntriesFromDictionary:@{ kTitle : animeItem[@"series_title"][@"text"] }];
         [anime addEntriesFromDictionary:@{ kType : animeItem[@"series_type"][@"text"] }];
         
-        [AnimeService addAnime:anime];
+        [AnimeService addAnime:anime fromList:YES];
     }
+    
+    [[AnimeService managedObjectContext] save:nil];
     
     return NO;
 }
 
-+ (Anime *)addAnime:(NSDictionary *)data {
++ (Anime *)addAnime:(NSDictionary *)data fromList:(BOOL)fromList {
     if([AnimeService animeForID:data[@"id"]]) {
         NSLog(@"Anime exists. Updating details.");
-        return [AnimeService editAnime:data];
+        return [AnimeService editAnime:data fromList:fromList];
     }
     
     NSError *error = nil;
@@ -125,7 +127,8 @@
     anime.current_episode = data[kUserWatchedEpisodes];
     anime.user_score = [data[kUserScore] intValue] == 0 ? @(-1) : [data[kUserScore] isKindOfClass:[NSString class]] ? @([data[kUserScore] intValue]) : data[kUserScore];
     
-    [[AnimeService managedObjectContext] save:&error];
+    if(!fromList)
+        [[AnimeService managedObjectContext] save:&error];
     
     if(!error) {
         return anime;
@@ -156,7 +159,7 @@
  */
 
 
-+ (Anime *)editAnime:(NSDictionary *)data {
++ (Anime *)editAnime:(NSDictionary *)data fromList:(BOOL)fromList {
 //    NSLog(@"data: %@", data);
     if(![AnimeService animeForID:data[kID]]) {
         NSLog(@"Anime does not exist; unable to edit!");
@@ -229,8 +232,8 @@
     if(data[kUserScore] && ![data[kUserScore] isNull])
         anime.user_score = ([data[kUserScore] isNull] || [data[kUserScore] intValue] == 0) ? @(-1) : [data[kUserScore] isKindOfClass:[NSString class]] ? @([data[kUserScore] intValue]) : data[kUserScore];
     
-    
-    [[AnimeService managedObjectContext] save:&error];
+    if(!fromList)
+        [[AnimeService managedObjectContext] save:&error];
     
     if(!error) {
         return anime;

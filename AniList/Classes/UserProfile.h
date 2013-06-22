@@ -11,6 +11,9 @@
 #define kUsernameKey @"kUsernameKey"
 #define kPasswordKey @"kPasswordKey"
 
+// Notification Names
+#define kUserLoggedIn @"kUserLoggedIn"
+
 @interface UserProfile : NSObject
 
 @property (nonatomic, copy) NSString *username;

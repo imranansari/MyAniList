@@ -59,7 +59,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             NSLog(@"Got anime results: %d", response.count);
             for(NSDictionary *result in response) {
-                [AnimeService addAnime:result];
+                [AnimeService addAnime:result fromList:NO];
             }
             
             [self.searchDisplayController.searchResultsTableView reloadData];

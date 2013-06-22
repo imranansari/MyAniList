@@ -25,6 +25,8 @@
     if(self) {
         self.title = @"Anime";
         self.sectionHeaders = @[@"Watching", @"Completed", @"On Hold", @"Dropped", @"Plan To Watch"];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadList) name:kUserLoggedIn object:nil];
     }
     
     return self;
@@ -121,37 +123,48 @@
     
     animeCell.type.text = [Anime stringForAnimeType:[anime.type intValue]];
     [animeCell.type addShadow];
+
+    NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:anime.image_url]];
-    AFImageRequestOperation *operation = [AFImageRequestOperation imageRequestOperationWithRequest:request success:^(UIImage *image) {
-        animeCell.image.image = image;
-    }];
-    [operation start];
+    NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:anime.image_url]];
+    NSString *cachedImageLocation = [NSString stringWithFormat:@"%@/%@", documentsDirectory, anime.image];
+    UIImage *cachedImage = [UIImage imageWithContentsOfFile:cachedImageLocation];
     
-    /*
-     
-    if(anime.image) {
-        animeCell.image.image = [UIImage imageWithContentsOfFile:anime.image];
+    if(cachedImage) {
+        NSLog(@"Image on disk exists for %@.", anime.title);
     }
     else {
-        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:anime.image_url]];
-        AFImageRequestOperation *operation = [AFImageRequestOperation imageRequestOperationWithRequest:request success:^(UIImage *image) {
-            animeCell.image.image = image;
-            
-            // Save the image onto disk.
-            AniListAppDelegate *delegate = (AniListAppDelegate *)[UIApplication sharedApplication].delegate;
-            NSArray *segmentedURL = [[request.URL absoluteString] componentsSeparatedByString:@"/"];
-            NSString *filename = [segmentedURL lastObject];
-            NSString *animeImagePath = [NSString stringWithFormat:@"%@%@", [delegate animeImageDirectory], filename];
-            
-            [UIImageJPEGRepresentation(image, 1.0) writeToFile:animeImagePath options:NSAtomicWrite error:nil];
-            
-            anime.image = animeImagePath;
-        }];
-        [operation start];
+        NSLog(@"Image on disk does not exist for %@.", anime.title);
     }
     
-    */
+    [animeCell.image setImageWithURLRequest:imageRequest placeholderImage:cachedImage success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+        
+        NSLog(@"Got image for anime %@.", anime.title);
+        animeCell.image.image = image;
+        
+        // Save the image onto disk if it doesn't exist or they aren't the same.
+#warning - need to compare cached image to this new image, and replace if necessary.
+#warning - will need to be fast and efficient! Alternatively, we can recycle the cache if need be.
+        if(!anime.image) {
+            NSLog(@"Saving image to disk...");
+            NSArray *segmentedURL = [[request.URL absoluteString] componentsSeparatedByString:@"/"];
+            NSString *filename = [segmentedURL lastObject];
+
+            NSString *animeImagePath = [NSString stringWithFormat:@"%@/anime/%@", documentsDirectory, filename];
+            
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+                BOOL saved = NO;
+                saved = [UIImageJPEGRepresentation(image, 1.0) writeToFile:animeImagePath options:NSAtomicWrite error:nil];
+                NSLog(@"Image %@", saved ? @"saved." : @"did not save.");
+            });
+            
+            // Only save relative URL since Documents URL can change on updates.
+            anime.image = [NSString stringWithFormat:@"anime/%@", filename];
+        }
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+        // Log failure.
+        NSLog(@"Couldn't fetch image at URL %@.", [request.URL absoluteString]);
+    }];
 }
 
 @end
