@@ -129,7 +129,6 @@
 #pragma mark - AniListUserInfoViewControllerDelegate Methods
 
 - (void)userInfoPressed {
-    
     AnimeUserInfoEditViewController *vc = [[AnimeUserInfoEditViewController alloc] init];
     vc.anime = self.anime;
     [self.navigationController pushViewController:vc animated:YES];

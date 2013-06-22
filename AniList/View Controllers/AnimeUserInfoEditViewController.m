@@ -13,6 +13,7 @@
 
 @interface AnimeUserInfoEditViewController ()
 #warning - I don't like this implementation, but it's safer than having nil values in a dictionary.
+@property (nonatomic, assign) BOOL addAnimeToList;
 @property (nonatomic, strong) NSDate *originalStartDate;
 @property (nonatomic, strong) NSDate *originalEndDate;
 @property (nonatomic, strong) NSNumber *originalCurrentEpisode;
@@ -34,6 +35,8 @@ static NSArray *animeStatusOrder;
                                 @(AnimeWatchedStatusPlanToWatch)
                                 // Rewatch
                              ];
+        
+        self.addAnimeToList = NO;
     }
     return self;
 }
@@ -44,6 +47,8 @@ static NSArray *animeStatusOrder;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.addAnimeToList = [self.anime.watched_status intValue] == AnimeWatchedStatusNotWatching ? YES : NO;
     
     [self setOriginalValues];
     
@@ -98,14 +103,19 @@ static NSArray *animeStatusOrder;
 
 #pragma mark - UIView Methods
 
-- (void)configureStatus {
+- (void)configureStatusAnimated:(BOOL)animated {
+    
+    if([self.anime.watched_status intValue] == AnimeWatchedStatusNotWatching) {
+        self.anime.watched_status = @(AnimeWatchedStatusPlanToWatch);
+    }
+    
     for(int i = 0; i < animeStatusOrder.count; i++) {
         if([self.anime.watched_status intValue] == [animeStatusOrder[i] intValue]) {
             int contentOffset = i * self.statusScrollView.frame.size.width;
             [self.statusScrollView scrollRectToVisible:CGRectMake(contentOffset,
                                                                   self.statusScrollView.frame.origin.y,
                                                                   self.statusScrollView.frame.size.width,
-                                                                  self.statusScrollView.frame.size.height) animated:NO];
+                                                                  self.statusScrollView.frame.size.height) animated:animated];
             return;
         }
     }
@@ -139,7 +149,7 @@ static NSArray *animeStatusOrder;
 }
 
 - (void)updateLabels {
-    [self configureStatus];
+    [self configureStatusAnimated:NO];
     [self configureProgressLabel];
     [self configureRating];
     [self configureDates];
@@ -148,15 +158,34 @@ static NSArray *animeStatusOrder;
 #pragma mark - IBAction Methods
 
 - (IBAction)addItemButtonPressed:(id)sender {
-    if([self.anime.current_episode intValue] < [self.anime.total_episodes intValue])
+    if([self.anime.current_episode intValue] < [self.anime.total_episodes intValue]) {
         self.anime.current_episode = @([self.anime.current_episode intValue] + 1);
+        self.originalCurrentEpisode = self.anime.current_episode;
+        
+        
+        if([self.anime.current_episode intValue] == [self.anime.total_episodes intValue] && [self.anime.watched_status intValue] != AnimeWatchedStatusCompleted) {
+            // Set scroller to completed.
+            
+            self.anime.watched_status = @(AnimeWatchedStatusCompleted);
+            [self configureStatusAnimated:YES];
+        }
+    }
     
     [self configureProgressLabel];
 }
 
 - (IBAction)removeItemButtonPressed:(id)sender {
-    if([self.anime.current_episode intValue] > 0)
+    if([self.anime.current_episode intValue] > 0) {
         self.anime.current_episode = @([self.anime.current_episode intValue] - 1);
+        self.originalCurrentEpisode = self.anime.current_episode;
+        
+        if([self.anime.current_episode intValue] < [self.anime.total_episodes intValue] && [self.anime.watched_status intValue] == AnimeWatchedStatusCompleted) {
+            // Set scroller to currently watching, if we're coming back from completed.
+            
+            self.anime.watched_status = @(AnimeWatchedStatusWatching);
+            [self configureStatusAnimated:YES];
+        }
+    }
     
     [self configureProgressLabel];
 }
@@ -166,12 +195,22 @@ static NSArray *animeStatusOrder;
     
     [self.anime.managedObjectContext save:nil];
     
+    if(self.addAnimeToList) {
+        [[MALHTTPClient sharedClient] addAnimeToListWithID:self.anime.anime_id success:^(id operation, id response) {
+            NSLog(@"Added anime to list! Returning to anime details view.");
+        } failure:^(id operation, NSError *error) {
+            NSLog(@"Failed to update.");
+        }];
+    }
+    else {
+        [[MALHTTPClient sharedClient] updateDetailsForAnimeWithID:self.anime.anime_id success:^(id operation, id response) {
+            NSLog(@"Updated. Returning to anime details view.");
+        } failure:^(id operation, NSError *error) {
+            NSLog(@"Failed to update.");
+        }];
+    }
+
     [self.navigationController popViewControllerAnimated:YES];
-    [[MALHTTPClient sharedClient] updateDetailsForAnimeWithID:self.anime.anime_id success:^(id operation, id response) {
-        NSLog(@"Updated. Returning to anime details view.");
-    } failure:^(id operation, NSError *error) {
-        NSLog(@"Failed to update.");
-    }];
 }
 
 - (void)setOriginalValues {
@@ -196,10 +235,12 @@ static NSArray *animeStatusOrder;
     switch (datePickerType) {
         case AniListDatePickerStartDate:
             self.anime.user_date_start = date;
+            self.originalStartDate = self.anime.user_date_start;
             [self.startDateButton setTitle:[self startDateStringWithDate:self.anime.user_date_start] forState:UIControlStateNormal];
             break;
         case AniListDatePickerEndDate:
             self.anime.user_date_finish = date;
+            self.originalEndDate = self.anime.user_date_finish;
             [self.endDateButton setTitle:[self finishDateStringWithDate:self.anime.user_date_finish] forState:UIControlStateNormal];
             break;
         default:

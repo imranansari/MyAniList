@@ -21,6 +21,7 @@
 @property (nonatomic, weak) IBOutlet UIButton *menuButton;
 
 - (NSString *)entityName;
+- (NSArray *)sortDescriptors;
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 
 @end

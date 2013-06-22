@@ -68,10 +68,8 @@
         NSLog(@"Anime search failure.");
     }];
     
-    return;
-    
-    [[MALHTTPClient sharedClient] searchForMangaWithQuery:query success:^(id operation, id response) {
-        NSLog(@"Got manga results: %@", response);
+    [[MALHTTPClient sharedClient] searchForMangaWithQuery:query success:^(id operation, NSArray *response) {
+        NSLog(@"Got manga results: %d", response.count);
     } failure:^(id operation, NSError *error) {
         NSLog(@"Manga search failure.");
     }];

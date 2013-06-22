@@ -118,6 +118,26 @@
                                    }];
 }
 
+- (void)addAnimeToListWithID:(NSNumber *)animeID success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure {
+    NSString *path = [NSString stringWithFormat:@"/api/animelist/add/%d.xml", [animeID intValue]];
+    
+    NSString *animeToXML = [AnimeService animeToXML:animeID];
+    NSDictionary *parameters = @{ @"data" : animeToXML };
+    
+    [[MALHTTPClient sharedClient] authenticate];
+    [[MALHTTPClient sharedClient] postPath:path
+                                parameters:parameters
+                                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                       NSLog(@"response: %@", operation.responseString);
+                                       success(operation, responseObject);
+                                   }
+                                   failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                       NSLog(@"failed response: %@", operation.responseString);
+                                       failure(operation, error);
+                                   }];
+    
+}
+
 - (void)updateDetailsForAnimeWithID:(NSNumber *)animeID success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure {
     NSString *path = [NSString stringWithFormat:@"/api/animelist/update/%d.xml", [animeID intValue]];
 
@@ -172,14 +192,30 @@
 
 - (void)searchForMangaWithQuery:(NSString *)query success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure {
     NSString *path = [NSString stringWithFormat:@"/api/manga/search.xml?q=%@", query];
+    path = [path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
     [[MALHTTPClient sharedClient] authenticate];
     [[MALHTTPClient sharedClient] getPath:path
                                parameters:@{}
                                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
                                       NSError *parseError = nil;
-                                      NSDictionary *xmlDictionary = [XMLReader dictionaryForXMLData:operation.responseData error:&parseError];
-                                      success(operation, xmlDictionary);
+                                      NSDictionary *xmlDictionary = [XMLReader dictionaryForXMLData:responseObject error:&parseError];
+                                      NSArray *mangalist = xmlDictionary[@"manga"][@"entry"];
+                                      
+                                      NSMutableArray *cleanedList = [NSMutableArray array];
+                                      NSMutableDictionary *cleanedManga;
+                                      for(NSDictionary *manga in mangalist) {
+                                          cleanedManga = [[manga cleanupTextTags] mutableCopy];
+                                          if([cleanedManga valueForKey:@"score"] != nil) {
+                                              NSString *value = cleanedManga[@"score"];
+                                              [cleanedManga addEntriesFromDictionary:@{ @"members_score" : value }];
+                                              [cleanedManga removeObjectForKey:@"score"];
+                                          }
+                                          [cleanedList addObject:cleanedManga];
+                                      }
+                                      
+                                      success(operation, cleanedList);
+
                                   }
                                   failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                       failure(operation, error);

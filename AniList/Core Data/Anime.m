@@ -56,7 +56,7 @@
 
 + (AnimeType)animeTypeForValue:(NSString *)value {
     
-    // If value is passed in as an int, conver it.
+    // If value is passed in as an int, convert it.
     int type = [value intValue];
     
     if(type == 1 || [value isEqualToString:@"TV"]) return AnimeTypeTV;

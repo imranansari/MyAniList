@@ -93,9 +93,19 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - Override Methods
+
 // Must override.
 - (NSString *)entityName {
     return @"";
+}
+
+- (NSArray *)sortDescriptors {
+    return nil;
+}
+
+- (NSPredicate *)predicate {
+    return nil;
 }
 
 #pragma mark - Table view data source
@@ -166,15 +176,8 @@
     [fetchRequest setFetchBatchSize:20];
     
     // Edit the sort key as appropriate.
-    NSSortDescriptor *statusDescriptor = [[NSSortDescriptor alloc] initWithKey:@"watched_status" ascending:YES];
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:YES];
-    NSArray *sortDescriptors = @[statusDescriptor, sortDescriptor];
-    
-    fetchRequest.sortDescriptors = sortDescriptors;
-    
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"watched_status < 7"];
-    
-    fetchRequest.predicate = predicate;
+    fetchRequest.sortDescriptors = [self sortDescriptors];
+    fetchRequest.predicate = [self predicate];
     
     // Edit the section name key path and cache name if appropriate.
     // nil for section name key path means "no sections".

@@ -48,27 +48,39 @@
         <relationship name="anime" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Anime" inverseName="genres" inverseEntity="Anime" syncable="YES"/>
         <relationship name="manga" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Manga" syncable="YES"/>
     </entity>
-    <entity name="Manga" syncable="YES">
-        <attribute name="chapter" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+    <entity name="Manga" representedClassName="Manga" syncable="YES">
+        <attribute name="average_count" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="average_score" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="column" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="comments" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="current_chapter" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="current_volume" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="date_finish" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="date_start" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="downloaded_chapters" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="enable_discussion" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="enable_rereading" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="english_title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="favorited_count" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="image_url" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="manga_id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="popularity_rank" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="priority" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="rank" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="read_status" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="reread_value" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="retail_volumes" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="scan_group" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="score" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="status" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="synopsis" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="times_reread" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="volume" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="total_chapters" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="total_volumes" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="user_date_finish" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="user_date_start" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="user_score" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <relationship name="anime_adaptations" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Anime" syncable="YES"/>
         <relationship name="tags" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Tag" inverseName="manga" inverseEntity="Tag" syncable="YES"/>
     </entity>
@@ -85,7 +97,7 @@
     <elements>
         <element name="Anime" positionX="160" positionY="192" width="128" height="660"/>
         <element name="Genre" positionX="160" positionY="192" width="128" height="90"/>
-        <element name="Manga" positionX="160" positionY="192" width="128" height="375"/>
+        <element name="Manga" positionX="160" positionY="192" width="128" height="555"/>
         <element name="Synonym" positionX="160" positionY="192" width="128" height="90"/>
         <element name="Tag" positionX="160" positionY="192" width="128" height="90"/>
     </elements>

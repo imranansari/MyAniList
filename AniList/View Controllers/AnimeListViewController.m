@@ -43,10 +43,6 @@
     [self loadList];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-}
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -54,6 +50,16 @@
 
 - (NSString *)entityName {
     return @"Anime";
+}
+
+- (NSArray *)sortDescriptors {
+    NSSortDescriptor *statusDescriptor = [[NSSortDescriptor alloc] initWithKey:@"watched_status" ascending:YES];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:YES];
+    return @[statusDescriptor, sortDescriptor];
+}
+
+- (NSPredicate *)predicate {
+    return [NSPredicate predicateWithFormat:@"watched_status < 7"];
 }
 
 - (void)loadList {

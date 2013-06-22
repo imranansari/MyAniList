@@ -7,6 +7,9 @@
 //
 
 #import "MangaListViewController.h"
+#import "MangaService.h"
+#import "Manga.h"
+#import "MALHTTPClient.h"
 
 @interface MangaListViewController ()
 
@@ -18,18 +21,23 @@
     self = [super init];
     if(self) {
         self.title = @"Manga";
-        self.sectionHeaders = @[@"Reading", @"Completed", @"On Hold", @"Dropped", @"Plan To Read"];
+        self.sectionHeaders = @[@"Reading", @"Completed", @"On Hold",
+                                @"Dropped", @"Plan To Read"];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadList) name:kUserLoggedIn object:nil];
     }
+    
+    return self;
 }
 
 - (void)dealloc {
-    [NSFetchedResultsController deleteCacheWithName:[self entityName]];
     NSLog(@"MangaList deallocating.");
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"Manga";
+    
+    [self loadList];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -39,6 +47,28 @@
 
 - (NSString *)entityName {
     return @"Manga";
+}
+
+- (NSArray *)sortDescriptors {
+    NSSortDescriptor *statusDescriptor = [[NSSortDescriptor alloc] initWithKey:@"read_status" ascending:YES];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:YES];
+    return @[statusDescriptor, sortDescriptor];
+}
+
+- (NSPredicate *)predicate {
+    return [NSPredicate predicateWithFormat:@"read_status < 7"];
+}
+
+- (void)loadList {
+    if([UserProfile userIsLoggedIn]) {
+        [[MALHTTPClient sharedClient] getMangaListForUser:[[UserProfile profile] username]
+                                                  success:^(NSURLRequest *operation, id response) {
+//                                                      [AnimeService addAnimeList:(NSDictionary *)response];
+                                                  }
+                                                  failure:^(NSURLRequest *operation, NSError *error) {
+                                                      // Derp.
+                                                  }];
+    }
 }
 
 #pragma mark - Table view data source
@@ -53,14 +83,6 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 44;
-}
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -79,6 +101,10 @@
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+
+}
+
+- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath  {
     
 }
 
