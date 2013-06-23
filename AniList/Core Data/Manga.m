@@ -32,6 +32,7 @@
 @dynamic times_reread;
 @dynamic title;
 @dynamic total_volumes;
+@dynamic type;
 @dynamic average_count;
 @dynamic average_score;
 @dynamic current_volume;
@@ -47,7 +48,7 @@
 @dynamic anime_adaptations;
 @dynamic tags;
 
-+ (MangaType)MangaTypeForValue:(NSString *)value {
++ (MangaType)mangaTypeForValue:(NSString *)value {
     
     // If value is passed in as an int, convert it.
     int type = [value intValue];
@@ -79,6 +80,7 @@
 //        default:
 //            return @"Unknown";
 //    }
+    return @"nothing";
 }
 
 + (MangaPublishStatus)mangaPublishStatusForValue:(NSString *)value {
@@ -111,13 +113,19 @@
 // 1/reading, 2/completed, 3/onhold, 4/dropped, 6/plantoread
     int status = [value intValue];
     
-//    if(status == 1 || [value isEqualToString:@"watching"]) return AnimeWatchedStatusWatching;
-//    if(status == 2 || [value isEqualToString:@"completed"]) return AnimeWatchedStatusCompleted;
-//    if(status == 3 || [value isEqualToString:@"on-hold"]) return AnimeWatchedStatusOnHold;
-//    if(status == 4 || [value isEqualToString:@"dropped"]) return AnimeWatchedStatusDropped;
-//    if(status == 6 || [value isEqualToString:@"plan to watch"]) return AnimeWatchedStatusPlanToWatch;
-//    
-//    return AnimeWatchedStatusNotWatching;
+#warning - unit tests.
+    if(status == 1 || ([value isKindOfClass:[NSString class]] && [value isEqualToString:@"watching"]))
+        return MangaReadStatusReading;
+    if(status == 2 || ([value isKindOfClass:[NSString class]] && [value isEqualToString:@"completed"]))
+        return MangaReadStatusCompleted;
+    if(status == 3 || ([value isKindOfClass:[NSString class]] && [value isEqualToString:@"on-hold"]))
+        return MangaReadStatusOnHold;
+    if(status == 4 || ([value isKindOfClass:[NSString class]] && [value isEqualToString:@"dropped"]))
+        return MangaReadStatusDropped;
+    if(status == 6 || ([value isKindOfClass:[NSString class]] && [value isEqualToString:@"plan to read"]))
+        return MangaReadStatusPlanToRead;
+    
+    return MangaReadStatusNotReading;
 }
 
 + (NSString *)stringForMangaReadStatus:(MangaReadStatus)readStatus forMangaType:(MangaType)mangaType {

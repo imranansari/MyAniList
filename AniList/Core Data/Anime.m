@@ -118,6 +118,7 @@
     // 1/watching, 2/completed, 3/onhold, 4/dropped, 6/plantowatch
     int status = [value intValue];
     
+#warning - ensure value is string based.
     if(status == 1 || [value isEqualToString:@"watching"]) return AnimeWatchedStatusWatching;
     if(status == 2 || [value isEqualToString:@"completed"]) return AnimeWatchedStatusCompleted;
     if(status == 3 || [value isEqualToString:@"on-hold"]) return AnimeWatchedStatusOnHold;

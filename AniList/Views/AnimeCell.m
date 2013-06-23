@@ -33,15 +33,6 @@
     return 90;
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
-
 + (NSString *)progressTextForAnime:(Anime *)anime {
     if([anime.current_episode intValue] == [anime.total_episodes intValue]) {
         return @"";

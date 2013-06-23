@@ -8,6 +8,13 @@
 
 #import "AniListCell.h"
 
+@class Manga;
+
 @interface MangaCell : AniListCell
+
++ (CGFloat)cellHeight;
+
++ (NSString *)progressTextForManga:(Manga *)manga;
+- (void)addShadow;
 
 @end

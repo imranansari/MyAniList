@@ -93,6 +93,7 @@ typedef enum {
 @property (nonatomic, retain) NSNumber *times_reread;
 @property (nonatomic, retain) NSString *title;
 @property (nonatomic, retain) NSNumber *total_volumes;
+@property (nonatomic, retain) NSNumber *type;
 @property (nonatomic, retain) NSNumber *average_count;
 @property (nonatomic, retain) NSNumber *average_score;
 @property (nonatomic, retain) NSNumber *current_volume;
@@ -108,7 +109,7 @@ typedef enum {
 @property (nonatomic, retain) Anime *anime_adaptations;
 @property (nonatomic, retain) NSManagedObject *tags;
 
-+ (MangaType)MangaTypeForValue:(NSString *)value;
++ (MangaType)mangaTypeForValue:(NSString *)value;
 + (NSString *)stringForMangaType:(MangaType)mangaType;
 + (MangaPublishStatus)mangaPublishStatusForValue:(NSString *)value;
 + (NSString *)stringForMangaPublishStatus:(MangaPublishStatus)publishStatus;

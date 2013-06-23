@@ -78,6 +78,7 @@
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="total_chapters" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="total_volumes" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="user_date_finish" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="user_date_start" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="user_score" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
@@ -97,7 +98,7 @@
     <elements>
         <element name="Anime" positionX="160" positionY="192" width="128" height="660"/>
         <element name="Genre" positionX="160" positionY="192" width="128" height="90"/>
-        <element name="Manga" positionX="160" positionY="192" width="128" height="555"/>
+        <element name="Manga" positionX="160" positionY="192" width="128" height="570"/>
         <element name="Synonym" positionX="160" positionY="192" width="128" height="90"/>
         <element name="Tag" positionX="160" positionY="192" width="128" height="90"/>
     </elements>

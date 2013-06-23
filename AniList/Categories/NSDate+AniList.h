@@ -11,5 +11,6 @@
 @interface NSDate (AniList)
 
 - (NSString *)stringValue;
++ (NSDate *)parseDate:(NSString *)stringDate;
 
 @end

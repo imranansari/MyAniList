@@ -200,14 +200,14 @@
     anime.status = @([Anime animeAirStatusForValue:data[kAirStatus]]);
     
     if(data[kAirStartDate] && ![data[kAirStartDate] isNull])
-        anime.date_start = [AnimeService parseDate:data[kAirStartDate]];
+        anime.date_start = [NSDate parseDate:data[kAirStartDate]];
     if(data[kAirEndDate] && ![data[kAirEndDate] isNull])
-        anime.date_finish = [AnimeService parseDate:data[kAirEndDate]];
+        anime.date_finish = [NSDate parseDate:data[kAirEndDate]];
     
     if(data[kUserStartDate] && ![data[kUserStartDate] isNull])
-        anime.user_date_start = [AnimeService parseDate:data[kUserStartDate]];
+        anime.user_date_start = [NSDate parseDate:data[kUserStartDate]];
     if(data[kUserEndDate] && ![data[kUserEndDate] isNull])
-        anime.user_date_finish = [AnimeService parseDate:data[kUserEndDate]];
+        anime.user_date_finish = [NSDate parseDate:data[kUserEndDate]];
     
     //    anime.classification = data[@"classification"];
     if(data[kMembersScore] && ![data[kMembersScore] isNull])
@@ -255,38 +255,6 @@
 + (NSManagedObjectContext *)managedObjectContext {
     AniListAppDelegate *delegate = (AniListAppDelegate *)[UIApplication sharedApplication].delegate;
     return delegate.managedObjectContext;
-}
-
-#pragma mark - Helper Methods
-
-+ (NSDate *)parseDate:(NSString *)stringDate {
-    // First format: from malappinfo.php.
-    
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    NSDate *date;
-    
-    // There exist two date formats. Should probably consolidate this somehow.
-    // Typically, we'd add a Z for timezone instead of hardcoding +0000, but we want to preserve the raw date
-    // since it seems like timezones are not used in the database.
-    dateFormatter.dateFormat = @"yyyy-MM-dd";
-    
-    date = [dateFormatter dateFromString:stringDate];
-    
-    if(date) {
-        return date;
-    }
-    
-    // Typically, we'd add a Z for timezone instead of hardcoding +0000, but we want to preserve the raw date
-    // since it seems like timezones are not used in the database.
-    dateFormatter.dateFormat = @"yyyy-MM-dd HH:mm:ss +0000";
-    
-    date = [dateFormatter dateFromString:stringDate];
-    
-    if(date) {
-        return date;
-    }
-
-    return nil;
 }
 
 #pragma mark - Data Conversion Methods
