@@ -7,12 +7,13 @@
 //
 
 #import "SearchViewController.h"
-#import "AnimeService.h"
-#import "MangaService.h"
 #import "AniListAppDelegate.h"
-#import "AnimeCell.h"
-#import "MangaCell.h"
 #import "AnimeViewController.h"
+#import "AnimeCell.h"
+#import "AnimeService.h"
+#import "MangaViewController.h"
+#import "MangaCell.h"
+#import "MangaService.h"
 #import "MALHTTPClient.h"
 
 @interface SearchViewController ()
@@ -132,12 +133,20 @@
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    Anime *anime = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
-    AnimeViewController *animeVC = [[AnimeViewController alloc] init];
-    animeVC.anime = anime;
-    
-    [self.navigationController pushViewController:animeVC animated:YES];
+    if([object isKindOfClass:[Anime class]]) {
+        Anime *anime = (Anime *)object;
+        AnimeViewController *avc = [[AnimeViewController alloc] init];
+        avc.anime = anime;
+        [self.navigationController pushViewController:avc animated:YES];
+    }
+    else {
+        Manga *manga = (Manga *)object;
+        MangaViewController *mvc = [[MangaViewController alloc] init];
+        mvc.manga = manga;
+        [self.navigationController pushViewController:mvc animated:YES];
+    }
 }
 
 #pragma mark - Fetched results controller
@@ -148,8 +157,6 @@
     }
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    // Edit the entity name as appropriate.
-#warning - Need to change this!
     NSEntityDescription *entity = [NSEntityDescription entityForName:[self currentEntity] inManagedObjectContext:self.managedObjectContext];
     [fetchRequest setEntity:entity];
     

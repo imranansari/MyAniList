@@ -10,18 +10,14 @@
 #import "AnimeService.h"
 #import "AnimeDetailsViewController.h"
 #import "AnimeUserInfoViewController.h"
+#import "Anime.h"
 #import "SynopsisView.h"
-#import "AniListPickerView.h"
 #import "AnimeUserInfoEditViewController.h"
 #import "MALHTTPClient.h"
 
 @interface AnimeViewController ()
 @property (nonatomic, strong) AnimeDetailsViewController *animeDetailsViewController;
 @property (nonatomic, strong) AnimeUserInfoViewController *userInfoView;
-@property (nonatomic, strong) UILabel *synopsisLabel;
-@property (nonatomic, strong) SynopsisView *synopsisView;
-@property (nonatomic, strong) UILabel *detailsLabel;
-@property (nonatomic, strong) AniListPickerView *pickerView;
 @end
 
 @implementation AnimeViewController
@@ -38,8 +34,6 @@
         self.detailsLabel.text = @"Synopsis";
         
         self.hidesBackButton = NO;
-        
-        self.pickerView = [[AniListPickerView alloc] initWithFrame:CGRectMake(self.userInfoView.view.frame.origin.x, self.userInfoView.view.frame.origin.y + self.userInfoView.view.frame.size.height, [UIScreen mainScreen].bounds.size.width, 146)];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateViewsOnFailure:) name:kAnimeDidUpdate object:nil];
     }
@@ -132,20 +126,6 @@
     AnimeUserInfoEditViewController *vc = [[AnimeUserInfoEditViewController alloc] init];
     vc.anime = self.anime;
     [self.navigationController pushViewController:vc animated:YES];
-    
-//    self.pickerView.pickerType = AniListPickerStatusPicker;
-//    self.pickerView.anime = self.anime;
-
-//    [self.scrollView scrollRectToVisible:CGRectMake(self.userInfoView.view.frame.origin.x, 133, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height - 20) animated:YES];
-    
-//    [self.scrollView scrollRectToVisible:CGRectMake(self.userInfoView.view.frame.origin.x, self.userInfoView.view.frame.origin.y - ([UIScreen mainScreen].bounds.size.height - 16 - self.userInfoView.view.frame.size.height - picker.frame.size.height), [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height) animated:YES];
-}
-
-- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
-    self.pickerView.frame = CGRectMake(self.userInfoView.view.frame.origin.x, self.userInfoView.view.frame.origin.y + self.userInfoView.view.frame.size.height, [UIScreen mainScreen].bounds.size.width, 146);
-    [self.pickerView refresh];
-
-    [self.scrollView addSubview:self.pickerView];
 }
 
 @end

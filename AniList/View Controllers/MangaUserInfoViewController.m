@@ -1,15 +1,19 @@
 //
-//  AnimeUserInfoViewController.m
+//  MangaUserInfoViewController.m
 //  AniList
 //
-//  Created by Corey Roberts on 6/2/13.
+//  Created by Corey Roberts on 6/23/13.
 //  Copyright (c) 2013 SpacePyro Inc. All rights reserved.
 //
 
-#import "AnimeUserInfoViewController.h"
-#import "Anime.h"
+#import "MangaUserInfoViewController.h"
+#import "Manga.h"
 
-@implementation AnimeUserInfoViewController
+@interface MangaUserInfoViewController ()
+
+@end
+
+@implementation MangaUserInfoViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -20,8 +24,16 @@
     return self;
 }
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
+	// Do any additional setup after loading the view.
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -35,17 +47,17 @@
     UILabel *progressLabel = [self labelForView:self.progressView];
     UILabel *scoreLabel = [self labelForView:self.scoreView];
     
-    if(self.anime.watched_status) {
+    if(self.manga.read_status) {
         // If we're coming from the Search view, we should just show a single string
         // to inquire the user for adding the anime to their list.
-        if([self.anime.watched_status intValue] == AnimeWatchedStatusNotWatching) {
+        if([self.manga.read_status intValue] == MangaReadStatusNotReading) {
             startDate.hidden = YES;
             endDate.hidden = YES;
             progressLabel.hidden = YES;
             scoreLabel.hidden = YES;
             
             watchingStatusLabel.frame = self.view.bounds;
-            watchingStatusLabel.text = [Anime stringForAnimeWatchedStatus:[self.anime.watched_status intValue] forAnimeType:[self.anime.type intValue]];
+            watchingStatusLabel.text = [Manga stringForMangaReadStatus:[self.manga.read_status intValue] forMangaType:[self.manga.type intValue]];
             watchingStatusLabel.font = [UIFont mediumFontWithSize:18];
         }
         else {
@@ -57,39 +69,39 @@
             
             // 320, 40
             watchingStatusLabel.frame = CGRectMake(0, 0, 320, 40);
-            watchingStatusLabel.text = [Anime stringForAnimeWatchedStatus:[self.anime.watched_status intValue] forAnimeType:[self.anime.type intValue]];
+            watchingStatusLabel.text = [Manga stringForMangaReadStatus:[self.manga.read_status intValue] forMangaType:[self.manga.type intValue]];;
             watchingStatusLabel.font = [UIFont mediumFontWithSize:16];
             
-            if(self.anime.user_date_start) {
-                startDate.text = [NSString stringWithFormat:@"Started on %@", [self.anime.user_date_start stringValue]];
+            if(self.manga.user_date_start) {
+                startDate.text = [NSString stringWithFormat:@"Started on %@", [self.manga.user_date_start stringValue]];
             }
             else {
-                startDate.text = @"When did you start watching?";
+                startDate.text = @"When did you start reading?";
             }
             
-            if(self.anime.user_date_finish) {
-                endDate.text = [NSString stringWithFormat:@"Finished on %@", [self.anime.user_date_finish stringValue]];
+            if(self.manga.user_date_finish) {
+                endDate.text = [NSString stringWithFormat:@"Finished on %@", [self.manga.user_date_finish stringValue]];
             }
             else {
                 endDate.text = @"When did you finish?";
             }
             
-            if([self.anime.user_score intValue] > 0) {
-                scoreLabel.text = [NSString stringWithFormat:@"You gave this a %d.", [self.anime.user_score intValue]];
+            if([self.manga.user_score intValue] > 0) {
+                scoreLabel.text = [NSString stringWithFormat:@"You gave this a %d.", [self.manga.user_score intValue]];
             }
             else {
                 scoreLabel.text = @"Not scored yet";
             }
-               
-            progressLabel.text = [NSString stringWithFormat:@"On episode %d of %d", [self.anime.current_episode intValue], [self.anime.total_episodes intValue]];
+            
+            progressLabel.text = [NSString stringWithFormat:@"On chapter %d of %d", [self.manga.current_chapter intValue], [self.manga.total_chapters intValue]];
         }
     }
 }
 
 #pragma mark - Setter Methods
 
-- (void)setAnime:(Anime *)anime {
-    _anime = anime;
+- (void)setManga:(Manga *)manga {
+    _manga = manga;
     
     [self setupLabels];
 }

@@ -8,15 +8,10 @@
 
 #import "AniListUserInfoViewController.h"
 
-@protocol AniListUserInfoViewControllerDelegate <NSObject>
-- (void)userInfoPressed;
-@end
-
 @class Anime;
 
 @interface AnimeUserInfoViewController : AniListUserInfoViewController
 
 @property (nonatomic, strong) Anime *anime;
-@property (nonatomic, assign) id<AniListUserInfoViewControllerDelegate> delegate;
 
 @end

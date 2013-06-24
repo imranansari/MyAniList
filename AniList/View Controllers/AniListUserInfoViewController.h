@@ -8,6 +8,20 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AniListUserInfoViewController : UIViewController<UIPickerViewDataSource, UIPickerViewDelegate>
+@protocol AniListUserInfoViewControllerDelegate <NSObject>
+- (void)userInfoPressed;
+@end
+
+@interface AniListUserInfoViewController : UIViewController
+
+@property (nonatomic, weak) IBOutlet UIView *seriesStatusView;
+@property (nonatomic, weak) IBOutlet UIView *startDateView;
+@property (nonatomic, weak) IBOutlet UIView *endDateView;
+@property (nonatomic, weak) IBOutlet UIView *progressView;
+@property (nonatomic, weak) IBOutlet UIView *scoreView;
+
+@property (nonatomic, assign) id<AniListUserInfoViewControllerDelegate> delegate;
+
+- (UILabel *)labelForView:(UIView *)view;
 
 @end

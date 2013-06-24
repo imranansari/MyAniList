@@ -108,7 +108,12 @@
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-
+    Manga *manga = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    
+    MangaViewController *mvc = [[MangaViewController alloc] init];
+    mvc.manga = manga;
+    
+    [self.navigationController pushViewController:mvc animated:YES];
 }
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath  {
@@ -143,7 +148,7 @@
     
     [mangaCell.image setImageWithURLRequest:imageRequest placeholderImage:cachedImage success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
         
-        NSLog(@"Got image for anime %@.", manga.title);
+        NSLog(@"Got image for manga %@.", manga.title);
         mangaCell.image.image = image;
         
         // Save the image onto disk if it doesn't exist or they aren't the same.
@@ -163,7 +168,7 @@
             });
             
             // Only save relative URL since Documents URL can change on updates.
-            manga.image = [NSString stringWithFormat:@"anime/%@", filename];
+            manga.image = [NSString stringWithFormat:@"manga/%@", filename];
         }
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
         // Log failure.

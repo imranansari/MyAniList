@@ -80,6 +80,16 @@
 		632F43AE171D7DFB00A5B43A /* MangaListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 632F43AD171D7DFB00A5B43A /* MangaListViewController.m */; };
 		6331027B176605DF00097658 /* UIColor+AniList.m in Sources */ = {isa = PBXBuildFile; fileRef = 6331027A176605DF00097658 /* UIColor+AniList.m */; };
 		6331027C176605DF00097658 /* UIColor+AniList.m in Sources */ = {isa = PBXBuildFile; fileRef = 6331027A176605DF00097658 /* UIColor+AniList.m */; };
+		63461A0C1777F4700053652C /* MangaDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63461A0B1777F4700053652C /* MangaDetailsViewController.m */; };
+		63461A0D1777F4700053652C /* MangaDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63461A0B1777F4700053652C /* MangaDetailsViewController.m */; };
+		63461A101777F8A20053652C /* MangaUserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63461A0F1777F8A20053652C /* MangaUserInfoViewController.m */; };
+		63461A111777F8A20053652C /* MangaUserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63461A0F1777F8A20053652C /* MangaUserInfoViewController.m */; };
+		63461A141777FA620053652C /* MangaUserInfoEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63461A131777FA620053652C /* MangaUserInfoEditViewController.m */; };
+		63461A151777FA620053652C /* MangaUserInfoEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63461A131777FA620053652C /* MangaUserInfoEditViewController.m */; };
+		63461A191778004D0053652C /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63461A171778004C0053652C /* SettingsViewController.m */; };
+		63461A1A1778004D0053652C /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63461A171778004C0053652C /* SettingsViewController.m */; };
+		63461A1B1778004D0053652C /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63461A181778004D0053652C /* SettingsViewController.xib */; };
+		63461A1C1778004D0053652C /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63461A181778004D0053652C /* SettingsViewController.xib */; };
 		63502795171E4D430004C106 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 63502793171E4D430004C106 /* bg.png */; };
 		63502798171E4D760004C106 /* bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63502797171E4D760004C106 /* bg@2x.png */; };
 		6350279C171E4EA20004C106 /* UIFont+AniList.m in Sources */ = {isa = PBXBuildFile; fileRef = 6350279B171E4EA20004C106 /* UIFont+AniList.m */; };
@@ -152,12 +162,8 @@
 		636F8698175B116F007E1FB6 /* AniListDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 636F8694175B116F007E1FB6 /* AniListDetailsViewController.xib */; };
 		636F869C175B117D007E1FB6 /* AnimeDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 636F869A175B117D007E1FB6 /* AnimeDetailsViewController.m */; };
 		636F869D175B117D007E1FB6 /* AnimeDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 636F869A175B117D007E1FB6 /* AnimeDetailsViewController.m */; };
-		636F869E175B117D007E1FB6 /* AnimeDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 636F869B175B117D007E1FB6 /* AnimeDetailsViewController.xib */; };
-		636F869F175B117D007E1FB6 /* AnimeDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 636F869B175B117D007E1FB6 /* AnimeDetailsViewController.xib */; };
 		636F86A2175B1232007E1FB6 /* SynopsisView.m in Sources */ = {isa = PBXBuildFile; fileRef = 636F86A1175B1232007E1FB6 /* SynopsisView.m */; };
 		636F86A3175B1232007E1FB6 /* SynopsisView.m in Sources */ = {isa = PBXBuildFile; fileRef = 636F86A1175B1232007E1FB6 /* SynopsisView.m */; };
-		636F86A5175B8A5C007E1FB6 /* AnimeUserInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 636F86A4175B8A5C007E1FB6 /* AnimeUserInfoViewController.xib */; };
-		636F86A6175B8A5C007E1FB6 /* AnimeUserInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 636F86A4175B8A5C007E1FB6 /* AnimeUserInfoViewController.xib */; };
 		636F86AA175BA037007E1FB6 /* header_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 636F86A8175BA037007E1FB6 /* header_bg.png */; };
 		636F86AB175BA037007E1FB6 /* header_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 636F86A8175BA037007E1FB6 /* header_bg.png */; };
 		636F86AC175BA037007E1FB6 /* header_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 636F86A9175BA037007E1FB6 /* header_bg@2x.png */; };
@@ -201,6 +207,8 @@
 		63B386B81777BA39001A7E31 /* MangaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B386B61777BA38001A7E31 /* MangaViewController.m */; };
 		63B386BA1777DCAB001A7E31 /* AniListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63B386B91777DCAB001A7E31 /* AniListCell.xib */; };
 		63B386BB1777DCAB001A7E31 /* AniListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63B386B91777DCAB001A7E31 /* AniListCell.xib */; };
+		63B386BE1777E29D001A7E31 /* AniListSearchDisplayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B386BD1777E29C001A7E31 /* AniListSearchDisplayController.m */; };
+		63B386BF1777E29D001A7E31 /* AniListSearchDisplayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B386BD1777E29C001A7E31 /* AniListSearchDisplayController.m */; };
 		63BEA7371761859300432BED /* AniListPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63BEA7361761859300432BED /* AniListPickerView.m */; };
 		63BEA7381761859300432BED /* AniListPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63BEA7361761859300432BED /* AniListPickerView.m */; };
 		63BEA73E17619E0800432BED /* AniListUserInfoEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63BEA73C17619E0800432BED /* AniListUserInfoEditViewController.m */; };
@@ -279,6 +287,15 @@
 		632F43AD171D7DFB00A5B43A /* MangaListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MangaListViewController.m; sourceTree = "<group>"; };
 		63310279176605DF00097658 /* UIColor+AniList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+AniList.h"; path = "Categories/UIColor+AniList.h"; sourceTree = "<group>"; };
 		6331027A176605DF00097658 /* UIColor+AniList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+AniList.m"; path = "Categories/UIColor+AniList.m"; sourceTree = "<group>"; };
+		63461A0A1777F4700053652C /* MangaDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MangaDetailsViewController.h; sourceTree = "<group>"; };
+		63461A0B1777F4700053652C /* MangaDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MangaDetailsViewController.m; sourceTree = "<group>"; };
+		63461A0E1777F8A20053652C /* MangaUserInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MangaUserInfoViewController.h; sourceTree = "<group>"; };
+		63461A0F1777F8A20053652C /* MangaUserInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MangaUserInfoViewController.m; sourceTree = "<group>"; };
+		63461A121777FA620053652C /* MangaUserInfoEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MangaUserInfoEditViewController.h; sourceTree = "<group>"; };
+		63461A131777FA620053652C /* MangaUserInfoEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MangaUserInfoEditViewController.m; sourceTree = "<group>"; };
+		63461A161778004B0053652C /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		63461A171778004C0053652C /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		63461A181778004D0053652C /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		63502793171E4D430004C106 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
 		63502797171E4D760004C106 /* bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg@2x.png"; sourceTree = "<group>"; };
 		6350279A171E4EA20004C106 /* UIFont+AniList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIFont+AniList.h"; path = "Categories/UIFont+AniList.h"; sourceTree = "<group>"; };
@@ -359,10 +376,8 @@
 		636F8694175B116F007E1FB6 /* AniListDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AniListDetailsViewController.xib; sourceTree = "<group>"; };
 		636F8699175B117D007E1FB6 /* AnimeDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimeDetailsViewController.h; sourceTree = "<group>"; };
 		636F869A175B117D007E1FB6 /* AnimeDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimeDetailsViewController.m; sourceTree = "<group>"; };
-		636F869B175B117D007E1FB6 /* AnimeDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AnimeDetailsViewController.xib; sourceTree = "<group>"; };
 		636F86A0175B1232007E1FB6 /* SynopsisView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SynopsisView.h; path = AniList/Views/SynopsisView.h; sourceTree = SOURCE_ROOT; };
 		636F86A1175B1232007E1FB6 /* SynopsisView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SynopsisView.m; path = AniList/Views/SynopsisView.m; sourceTree = SOURCE_ROOT; };
-		636F86A4175B8A5C007E1FB6 /* AnimeUserInfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AnimeUserInfoViewController.xib; sourceTree = "<group>"; };
 		636F86A7175B9960007E1FB6 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Constants.h; path = Headers/Constants.h; sourceTree = "<group>"; };
 		636F86A8175BA037007E1FB6 /* header_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = header_bg.png; sourceTree = "<group>"; };
 		636F86A9175BA037007E1FB6 /* header_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "header_bg@2x.png"; sourceTree = "<group>"; };
@@ -399,6 +414,8 @@
 		63B386B51777BA38001A7E31 /* MangaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MangaViewController.h; sourceTree = "<group>"; };
 		63B386B61777BA38001A7E31 /* MangaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MangaViewController.m; sourceTree = "<group>"; };
 		63B386B91777DCAB001A7E31 /* AniListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AniListCell.xib; path = Views/AniListCell.xib; sourceTree = "<group>"; };
+		63B386BC1777E29B001A7E31 /* AniListSearchDisplayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AniListSearchDisplayController.h; sourceTree = "<group>"; };
+		63B386BD1777E29C001A7E31 /* AniListSearchDisplayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AniListSearchDisplayController.m; sourceTree = "<group>"; };
 		63BEA7351761859300432BED /* AniListPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AniListPickerView.h; path = Views/AniListPickerView.h; sourceTree = "<group>"; };
 		63BEA7361761859300432BED /* AniListPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AniListPickerView.m; path = Views/AniListPickerView.m; sourceTree = "<group>"; };
 		63BEA73B17619E0800432BED /* AniListUserInfoEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AniListUserInfoEditViewController.h; sourceTree = "<group>"; };
@@ -477,7 +494,8 @@
 				636F8686175B1091007E1FB6 /* AniListUserInfoViewController.xib */,
 				636F868B175B10A6007E1FB6 /* AnimeUserInfoViewController.h */,
 				636F868C175B10A6007E1FB6 /* AnimeUserInfoViewController.m */,
-				636F86A4175B8A5C007E1FB6 /* AnimeUserInfoViewController.xib */,
+				63461A0E1777F8A20053652C /* MangaUserInfoViewController.h */,
+				63461A0F1777F8A20053652C /* MangaUserInfoViewController.m */,
 				632F4369171CD6FA00A5B43A /* MenuViewController.h */,
 				632F436A171CD6FA00A5B43A /* MenuViewController.m */,
 				632F436B171CD6FA00A5B43A /* MenuViewController.xib */,
@@ -500,7 +518,8 @@
 				636F8694175B116F007E1FB6 /* AniListDetailsViewController.xib */,
 				636F8699175B117D007E1FB6 /* AnimeDetailsViewController.h */,
 				636F869A175B117D007E1FB6 /* AnimeDetailsViewController.m */,
-				636F869B175B117D007E1FB6 /* AnimeDetailsViewController.xib */,
+				63461A0A1777F4700053652C /* MangaDetailsViewController.h */,
+				63461A0B1777F4700053652C /* MangaDetailsViewController.m */,
 				63892574175F7ACC00C8489A /* BaseViewController.h */,
 				63892575175F7ACC00C8489A /* BaseViewController.m */,
 				63BEA73B17619E0800432BED /* AniListUserInfoEditViewController.h */,
@@ -508,12 +527,19 @@
 				63BEA73D17619E0800432BED /* AniListUserInfoEditViewController.xib */,
 				63859E891763F28C0029397C /* AnimeUserInfoEditViewController.h */,
 				63859E8A1763F28C0029397C /* AnimeUserInfoEditViewController.m */,
+				63461A121777FA620053652C /* MangaUserInfoEditViewController.h */,
+				63461A131777FA620053652C /* MangaUserInfoEditViewController.m */,
 				63894CC3176A9E37007D2D05 /* LoginViewController.h */,
 				63894CC4176A9E37007D2D05 /* LoginViewController.m */,
 				63894CC5176A9E37007D2D05 /* LoginViewController.xib */,
 				637144471770074600E60B9F /* SearchViewController.h */,
 				637144481770074600E60B9F /* SearchViewController.m */,
 				637144491770074600E60B9F /* SearchViewController.xib */,
+				63B386BC1777E29B001A7E31 /* AniListSearchDisplayController.h */,
+				63B386BD1777E29C001A7E31 /* AniListSearchDisplayController.m */,
+				63461A161778004B0053652C /* SettingsViewController.h */,
+				63461A171778004C0053652C /* SettingsViewController.m */,
+				63461A181778004D0053652C /* SettingsViewController.xib */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -970,8 +996,6 @@
 				637CF6F31759940E0009ADF3 /* test_background@2x.png in Resources */,
 				636F8689175B1091007E1FB6 /* AniListUserInfoViewController.xib in Resources */,
 				636F8697175B116F007E1FB6 /* AniListDetailsViewController.xib in Resources */,
-				636F869E175B117D007E1FB6 /* AnimeDetailsViewController.xib in Resources */,
-				636F86A5175B8A5C007E1FB6 /* AnimeUserInfoViewController.xib in Resources */,
 				636F86AA175BA037007E1FB6 /* header_bg.png in Resources */,
 				630E0FE61768E9980061110A /* plus@2x.png in Resources */,
 				636F86AC175BA037007E1FB6 /* header_bg@2x.png in Resources */,
@@ -981,6 +1005,7 @@
 				6371444C1770074600E60B9F /* SearchViewController.xib in Resources */,
 				63B386B31777B91C001A7E31 /* MangaCell.xib in Resources */,
 				63B386BA1777DCAB001A7E31 /* AniListCell.xib in Resources */,
+				63461A1B1778004D0053652C /* SettingsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -993,9 +1018,7 @@
 				637CF6F41759940E0009ADF3 /* test_background@2x.png in Resources */,
 				636F868A175B1091007E1FB6 /* AniListUserInfoViewController.xib in Resources */,
 				636F8698175B116F007E1FB6 /* AniListDetailsViewController.xib in Resources */,
-				636F869F175B117D007E1FB6 /* AnimeDetailsViewController.xib in Resources */,
 				630E0FE31768E9980061110A /* minus@2x.png in Resources */,
-				636F86A6175B8A5C007E1FB6 /* AnimeUserInfoViewController.xib in Resources */,
 				636F86AB175BA037007E1FB6 /* header_bg.png in Resources */,
 				636F86AD175BA037007E1FB6 /* header_bg@2x.png in Resources */,
 				630E0FE11768E9980061110A /* minus.png in Resources */,
@@ -1010,6 +1033,7 @@
 				6371444D1770074600E60B9F /* SearchViewController.xib in Resources */,
 				63B386B41777B91C001A7E31 /* MangaCell.xib in Resources */,
 				63B386BB1777DCAB001A7E31 /* AniListCell.xib in Resources */,
+				63461A1C1778004D0053652C /* SettingsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1110,6 +1134,11 @@
 				63B386AC1776401D001A7E31 /* MangaService.m in Sources */,
 				63B386B017764721001A7E31 /* Manga.m in Sources */,
 				63B386B71777BA39001A7E31 /* MangaViewController.m in Sources */,
+				63B386BE1777E29D001A7E31 /* AniListSearchDisplayController.m in Sources */,
+				63461A0C1777F4700053652C /* MangaDetailsViewController.m in Sources */,
+				63461A101777F8A20053652C /* MangaUserInfoViewController.m in Sources */,
+				63461A141777FA620053652C /* MangaUserInfoEditViewController.m in Sources */,
+				63461A191778004D0053652C /* SettingsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1178,6 +1207,11 @@
 				63B386AD1776401D001A7E31 /* MangaService.m in Sources */,
 				63B386B117764721001A7E31 /* Manga.m in Sources */,
 				63B386B81777BA39001A7E31 /* MangaViewController.m in Sources */,
+				63B386BF1777E29D001A7E31 /* AniListSearchDisplayController.m in Sources */,
+				63461A0D1777F4700053652C /* MangaDetailsViewController.m in Sources */,
+				63461A111777F8A20053652C /* MangaUserInfoViewController.m in Sources */,
+				63461A151777FA620053652C /* MangaUserInfoEditViewController.m in Sources */,
+				63461A1A1778004D0053652C /* SettingsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

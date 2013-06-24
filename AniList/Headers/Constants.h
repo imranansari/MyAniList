@@ -10,6 +10,7 @@
 #define AniList_Constants_h
 
 #define kAnimeDidUpdate @"kAnimeDidUpdate"
+#define kMangaDidUpdate @"kMangaDidUpdate"
 
 // Defaults
 #define kNoSynopsisString @"Unable to get synopsis. Please try again later."
@@ -30,7 +31,7 @@
 #define kAirStatus              @"status"
 #define kAirStartDate           @"start_date"
 #define kAirEndDate             @"end_date"
-#define kSeriesStatus           @"series_status"
+#define kSeriesStatus           @"status"
 #define kSeriesStartDate        @"series_start"
 #define kSeriesEndDate          @"series_end"
 #define kGenres                 @"genres"

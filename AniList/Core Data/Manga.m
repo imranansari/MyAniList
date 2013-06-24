@@ -122,7 +122,7 @@
     int status = [value intValue];
     
 #warning - unit tests.
-    if(status == 1 || ([value isKindOfClass:[NSString class]] && [value isEqualToString:@"watching"]))
+    if(status == 1 || ([value isKindOfClass:[NSString class]] && [value isEqualToString:@"reading"]))
         return MangaReadStatusReading;
     if(status == 2 || ([value isKindOfClass:[NSString class]] && [value isEqualToString:@"completed"]))
         return MangaReadStatusCompleted;

@@ -16,7 +16,7 @@
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super initWithNibName:@"AniListUserInfoViewController" bundle:[NSBundle mainBundle]];
     if (self) {
         // Custom initialization
     }
@@ -34,5 +34,24 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+#pragma mark - Helper Methods
+
+- (UILabel *)labelForView:(UIView *)view {
+    for(UIView *subview in view.subviews) {
+        if([subview isMemberOfClass:[UILabel class]]) {
+            return (UILabel *)subview;
+        }
+    }
+    
+    return nil;
+}
+
+- (IBAction)userInfoViewPressed:(id)sender {
+    if(self.delegate && [self.delegate respondsToSelector:@selector(userInfoPressed)]) {
+        [self.delegate userInfoPressed];
+    }
+}
+
 
 @end

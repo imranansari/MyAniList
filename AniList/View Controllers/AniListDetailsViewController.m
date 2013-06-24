@@ -14,11 +14,15 @@
 
 @implementation AniListDetailsViewController
 
+//- (id)init {
+//    return [self initWithNibName:@"AniListDetailsViewController" bundle:[NSBundle mainBundle]];
+//}
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super initWithNibName:@"AniListDetailsViewController" bundle:[NSBundle mainBundle]];
     if (self) {
-        // Custom initialization
+        
     }
     return self;
 }
@@ -26,13 +30,65 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    
+    self.view.backgroundColor = [UIColor clearColor];
+    
+    self.errorMessageLabel.alpha = 0.0f;
+    self.indicator.alpha = 1.0f;
+    self.detailView.alpha = 0.0f;
+    
+    self.poster.layer.borderColor = [UIColor colorWithWhite:1.0f alpha:0.2f].CGColor;
+    self.poster.layer.borderWidth = 1.0f;
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)displayDetailsViewAnimated:(BOOL)animated {
+    if(animated) {
+        [UIView animateWithDuration:0.5f
+                              delay:0.0f
+                            options:UIViewAnimationOptionCurveEaseInOut
+                         animations:^{
+                             self.detailView.alpha = 1.0f;
+                             self.indicator.alpha = 0.0f;
+                         }
+                         completion:^(BOOL finished) {
+                             [self.indicator removeFromSuperview];
+                         }];
+    }
+    else {
+        self.detailView.alpha = 1.0f;
+        [self.indicator removeFromSuperview];
+    }
+}
+
+- (void)displayErrorMessage {
+    [UIView animateWithDuration:0.5f
+                          delay:0.0f
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         self.errorMessageLabel.alpha = 1.0f;
+                         self.indicator.alpha = 0.0f;
+                     }
+                     completion:^(BOOL finished) {
+                         [self.indicator removeFromSuperview];
+                     }];
+    
+}
+
+- (void)adjustLabels {
+    [self.titleLabel addShadow];
+    [self.type addShadow];
+    [self.seriesStatus addShadow];
+    [self.score addShadow];
+    [self.totalPeopleScored addShadow];
+    [self.rank addShadow];
+    [self.popularity addShadow];
+    [self.errorMessageLabel addShadow];
 }
 
 @end

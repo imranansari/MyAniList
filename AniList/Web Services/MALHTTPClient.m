@@ -249,8 +249,8 @@
     
     NSDictionary *parameters = @{ @"mine" : @"1" };
     
-    [[MALHTTPClient sharedClient] authenticate];
-    [[MALHTTPClient sharedClient] getPath:path
+    [[UMALHTTPClient sharedClient] authenticate];
+    [[UMALHTTPClient sharedClient] getPath:path
                                parameters:parameters
                                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
                                       success(operation, responseObject);

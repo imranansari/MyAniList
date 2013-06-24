@@ -11,23 +11,6 @@
 #import "Anime.h"
 #import "MALHTTPClient.h"
 
-@interface AnimeDetailsViewController ()
-@property (nonatomic, weak) IBOutlet UIImageView *poster;
-@property (nonatomic, weak) IBOutlet UILabel *animeTitle;
-@property (nonatomic, weak) IBOutlet UILabel *animeType;
-@property (nonatomic, weak) IBOutlet UILabel *airing;
-
-@property (nonatomic, weak) IBOutlet UIView *detailView;
-@property (nonatomic, weak) IBOutlet UILabel *score;
-@property (nonatomic, weak) IBOutlet UILabel *totalPeopleScored;
-@property (nonatomic, weak) IBOutlet UILabel *rank;
-@property (nonatomic, weak) IBOutlet UILabel *popularity;
-@property (nonatomic, weak) IBOutlet UILabel *errorMessageLabel;
-
-@property (nonatomic, weak) IBOutlet UIActivityIndicatorView *indicator;
-
-@end
-
 @implementation AnimeDetailsViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -41,21 +24,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor clearColor];
-    
-    self.errorMessageLabel.alpha = 0.0f;
-    self.indicator.alpha = 1.0f;
-    self.detailView.alpha = 0.0f;
-    
-    self.poster.layer.borderColor = [UIColor colorWithWhite:1.0f alpha:0.2f].CGColor;
-    self.poster.layer.borderWidth = 1.0f;
-    
     if(self.anime) {
-        self.animeTitle.text = self.anime.title;
+        self.titleLabel.text = self.anime.title;
         
-        self.animeType.text = [self animeTypeText];
+        self.type.text = [self animeTypeText];
         
-        self.airing.text = [self airText];
+        self.seriesStatus.text = [self airText];
         
         // This block of text requires data.
         if([self.anime hasAdditionalDetails]) {
@@ -88,22 +62,7 @@
     self.rank.text = [NSString stringWithFormat:@"Rank: #%d", [self.anime.rank intValue]];
     self.popularity.text = [NSString stringWithFormat:@"Popularity: #%d", [self.anime.popularity_rank intValue]];
     
-    if(animated) {
-        [UIView animateWithDuration:0.5f
-                              delay:0.0f
-                            options:UIViewAnimationOptionCurveEaseInOut
-                         animations:^{
-                             self.detailView.alpha = 1.0f;
-                             self.indicator.alpha = 0.0f;
-                         }
-                         completion:^(BOOL finished) {
-                             [self.indicator removeFromSuperview];
-                         }];
-    }
-    else {
-        self.detailView.alpha = 1.0f;
-        [self.indicator removeFromSuperview];
-    }
+    [super displayDetailsViewAnimated:animated];
 }
 
 #pragma mark - UILabel Management Methods
@@ -174,31 +133,6 @@
     }
     
     return text;
-}
-
-- (void)adjustLabels {
-    [self.animeTitle addShadow];
-    [self.animeType addShadow];
-    [self.airing addShadow];
-    [self.score addShadow];
-    [self.totalPeopleScored addShadow];
-    [self.rank addShadow];
-    [self.popularity addShadow];
-    [self.errorMessageLabel addShadow];
-}
-
-- (void)displayErrorMessage {
-    [UIView animateWithDuration:0.5f
-                          delay:0.0f
-                        options:UIViewAnimationOptionCurveEaseInOut
-                     animations:^{
-                         self.errorMessageLabel.alpha = 1.0f;
-                         self.indicator.alpha = 0.0f;
-                     }
-                     completion:^(BOOL finished) {
-                         [self.indicator removeFromSuperview];
-                     }];
-
 }
 
 #pragma mark - NSNotification Methods
