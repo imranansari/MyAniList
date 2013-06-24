@@ -128,6 +128,26 @@
     return AnimeWatchedStatusNotWatching;
 }
 
++ (NSString *)stringForAnimeWatchedStatus:(AnimeWatchedStatus)watchedStatus {
+    switch (watchedStatus) {
+        case AnimeWatchedStatusWatching:
+            return @"Watching";
+        case AnimeWatchedStatusCompleted:
+            return @"Completed";
+        case AnimeWatchedStatusOnHold:
+            return @"On Hold";
+        case AnimeWatchedStatusDropped:
+            return @"Dropped";
+        case AnimeWatchedStatusPlanToWatch:
+            return @"Plan to Watch";
+        case AnimeWatchedStatusNotWatching:
+            return @"";
+        case AnimeWatchedStatusUnknown:
+        default:
+            return @"";
+    }
+}
+
 + (NSString *)stringForAnimeWatchedStatus:(AnimeWatchedStatus)watchedStatus forAnimeType:(AnimeType)animeType {
     
     NSString *seriesText = @"";

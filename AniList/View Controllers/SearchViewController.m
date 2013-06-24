@@ -245,13 +245,12 @@
     NSURLRequest *imageRequest;
     NSString *cachedImageLocation = @"";
     
-    [anilistCell.title sizeToFit];
 #warning - all of this code is gross. Will need to add a core data parent entity here with common traits.
     
     if([object isKindOfClass:[Anime class]]) {
         Anime *anime = (Anime *)object;
         anilistCell.title.text = anime.title;
-        anilistCell.progress.text = [AnimeCell progressTextForAnime:anime];
+        anilistCell.progress.text = [Anime stringForAnimeWatchedStatus:[anime.watched_status intValue]];
         anilistCell.rank.text = [anime.user_score intValue] != -1 ? [NSString stringWithFormat:@"%d", [anime.user_score intValue]] : @"";
         anilistCell.type.text = [Anime stringForAnimeType:[anime.type intValue]];
         imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:anime.image_url]];
@@ -260,12 +259,14 @@
     else if([object isKindOfClass:[Manga class]]) {
         Manga *manga = (Manga *)object;
         anilistCell.title.text = manga.title;
-        anilistCell.progress.text = [MangaCell progressTextForManga:manga];
+        anilistCell.progress.text = [Manga stringForMangaReadStatus:[manga.read_status intValue]];
         anilistCell.rank.text = [manga.user_score intValue] != -1 ? [NSString stringWithFormat:@"%d", [manga.user_score intValue]] : @"";
         anilistCell.type.text = [Manga stringForMangaType:[manga.type intValue]];
         imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:manga.image_url]];
         cachedImageLocation = [NSString stringWithFormat:@"%@/%@", documentsDirectory, manga.image];
     }
+    
+    [anilistCell.title sizeToFit];
     
     UIImage *cachedImage = [UIImage imageWithContentsOfFile:cachedImageLocation];
     

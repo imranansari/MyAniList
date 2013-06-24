@@ -7,11 +7,10 @@
 //
 
 #import "AniListUserInfoEditViewController.h"
-#import "AniListScoreView.h"
 
 @class Anime;
 
-@interface AnimeUserInfoEditViewController : AniListUserInfoEditViewController<AniListScoreViewDelegate, UIScrollViewDelegate>
+@interface AnimeUserInfoEditViewController : AniListUserInfoEditViewController<UIScrollViewDelegate>
 
 @property (nonatomic, strong) Anime *anime;
 

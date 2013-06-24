@@ -9,11 +9,12 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 #import "AniListDatePickerView.h"
+#import "AniListScoreView.h"
 
 @class Anime;
 @class AniListScoreView;
 
-@interface AniListUserInfoEditViewController : UIViewController<AniListDatePickerViewDelegate, UIScrollViewDelegate>
+@interface AniListUserInfoEditViewController : UIViewController<AniListDatePickerViewDelegate, AniListScoreViewDelegate, UIScrollViewDelegate>
 
 @property (nonatomic, strong) IBOutlet UIScrollView *statusScrollView;
 @property (nonatomic, weak) IBOutlet UIButton *startDateButton;

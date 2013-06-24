@@ -136,6 +136,26 @@
     return MangaReadStatusNotReading;
 }
 
++ (NSString *)stringForMangaReadStatus:(MangaReadStatus)readStatus {
+    switch (readStatus) {
+        case MangaReadStatusReading:
+            return @"Reading";
+        case MangaReadStatusCompleted:
+            return @"Completed";
+        case MangaReadStatusOnHold:
+            return @"On Hold";
+        case MangaReadStatusDropped:
+            return @"Dropped";
+        case MangaReadStatusPlanToRead:
+            return @"Plan to Read";
+        case MangaReadStatusNotReading:
+            return @"";
+        case MangaReadStatusUnknown:
+        default:
+            return @"";
+    }
+}
+
 + (NSString *)stringForMangaReadStatus:(MangaReadStatus)readStatus forMangaType:(MangaType)mangaType {
     
     NSString *seriesText = @"";
