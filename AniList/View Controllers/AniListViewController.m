@@ -245,7 +245,7 @@
 }
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-    // Must override!
+
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {

@@ -16,6 +16,7 @@
 @property (nonatomic, weak) IBOutlet UILabel *type;
 @property (nonatomic, weak) IBOutlet UILabel *rank;
 
-- (CGFloat)cellHeight;
++ (CGFloat)cellHeight;
+- (void)addShadow;
 
 @end

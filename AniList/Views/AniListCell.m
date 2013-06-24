@@ -40,10 +40,22 @@
     UIView *select = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 340, 90)];
     select.backgroundColor = [UIColor colorWithWhite:1.0f alpha:0.1f];
     self.selectedBackgroundView = select;
+    
+    [self addShadow];
 }
 
-- (CGFloat)cellHeight {
++ (CGFloat)cellHeight {
     return 90;
+}
+
+#pragma mark - Text Methods
+
+- (void)addShadow {
+    for(UIView *view in self.subviews) {
+        if([view isMemberOfClass:[UILabel class]]) {
+            [((UILabel *)view) addShadow];
+        }
+    }
 }
 
 @end

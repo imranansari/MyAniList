@@ -11,11 +11,11 @@
 #import "MangaService.h"
 #import "AniListAppDelegate.h"
 #import "AnimeCell.h"
+#import "MangaCell.h"
 #import "AnimeViewController.h"
 #import "MALHTTPClient.h"
 
 @interface SearchViewController ()
-@property (nonatomic, weak) UISearchDisplayController *searchController;
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, assign) BOOL fromMenu;
@@ -77,6 +77,10 @@
     } failure:^(id operation, NSError *error) {
         NSLog(@"Manga search failure.");
     }];
+}
+
+- (NSString *)currentEntity {
+    return self.searchDisplayController.searchBar.selectedScopeButtonIndex == 0 ? @"Anime" : @"Manga";
 }
 
 #pragma mark - Table view data sourceu
@@ -146,7 +150,7 @@
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     // Edit the entity name as appropriate.
 #warning - Need to change this!
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Anime" inManagedObjectContext:self.managedObjectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:[self currentEntity] inManagedObjectContext:self.managedObjectContext];
     [fetchRequest setEntity:entity];
     
     // Set the batch size to a suitable number.
@@ -154,7 +158,7 @@
     
     // Edit the sort key as appropriate.
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:YES];
-    NSArray *sortDescriptors = @[/*statusDescriptor,*/ sortDescriptor];
+    NSArray *sortDescriptors = @[sortDescriptor];
     
     fetchRequest.sortDescriptors = sortDescriptors;
     
@@ -228,27 +232,101 @@
 }
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-    Anime *anime = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    AnimeCell *animeCell = (AnimeCell *)cell;
-    animeCell.title.text = anime.title;
-    [animeCell.title addShadow];
-    [animeCell.title sizeToFit];
+    NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    AniListCell *anilistCell = (AniListCell *)cell;
+    NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSURLRequest *imageRequest;
+    NSString *cachedImageLocation = @"";
     
-    animeCell.progress.text = [AnimeCell progressTextForAnime:anime];
-    [animeCell.progress addShadow];
+    [anilistCell.title sizeToFit];
+#warning - all of this code is gross. Will need to add a core data parent entity here with common traits.
     
-    animeCell.rank.text = [anime.user_score intValue] != -1 ? [NSString stringWithFormat:@"%d", [anime.user_score intValue]] : @"";
-    [animeCell.rank addShadow];
+    if([object isKindOfClass:[Anime class]]) {
+        Anime *anime = (Anime *)object;
+        anilistCell.title.text = anime.title;
+        anilistCell.progress.text = [AnimeCell progressTextForAnime:anime];
+        anilistCell.rank.text = [anime.user_score intValue] != -1 ? [NSString stringWithFormat:@"%d", [anime.user_score intValue]] : @"";
+        anilistCell.type.text = [Anime stringForAnimeType:[anime.type intValue]];
+        imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:anime.image_url]];
+        cachedImageLocation = [NSString stringWithFormat:@"%@/%@", documentsDirectory, anime.image];
+    }
+    else if([object isKindOfClass:[Manga class]]) {
+        Manga *manga = (Manga *)object;
+        anilistCell.title.text = manga.title;
+        anilistCell.progress.text = [MangaCell progressTextForManga:manga];
+        anilistCell.rank.text = [manga.user_score intValue] != -1 ? [NSString stringWithFormat:@"%d", [manga.user_score intValue]] : @"";
+        anilistCell.type.text = [Manga stringForMangaType:[manga.type intValue]];
+        imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:manga.image_url]];
+        cachedImageLocation = [NSString stringWithFormat:@"%@/%@", documentsDirectory, manga.image];
+    }
     
-    animeCell.type.text = [Anime stringForAnimeType:[anime.type intValue]];
-    [animeCell.type addShadow];
+    UIImage *cachedImage = [UIImage imageWithContentsOfFile:cachedImageLocation];
     
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:anime.image_url]];
-    AFImageRequestOperation *operation = [AFImageRequestOperation imageRequestOperationWithRequest:request success:^(UIImage *image) {
-        animeCell.image.image = image;
+    if(cachedImage) {
+        NSLog(@"Image on disk exists.");// for %@.", anime.title);
+    }
+    else {
+        NSLog(@"Image on disk does not exist.");// for %@.", anime.title);
+    }
+    
+    [anilistCell.image setImageWithURLRequest:imageRequest placeholderImage:cachedImage success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+        
+        NSString *directory = @"";
+        BOOL imageSaved = NO;
+        
+        if([object isKindOfClass:[Anime class]]) {
+            directory = @"anime";
+            Anime *anime = (Anime *)object;
+            NSLog(@"Got image for anime %@.", anime.title);
+            imageSaved = anime.image != nil;
+        }
+        else if([object isKindOfClass:[Manga class]]) {
+            directory = @"manga";
+            Manga *manga = (Manga *)object;
+            NSLog(@"Got image for manga %@.", manga.title);
+            imageSaved = manga.image != nil;
+        }
+
+        anilistCell.image.image = image;
+        
+        
+        
+        // Save the image onto disk if it doesn't exist or they aren't the same.
+#warning - need to compare cached image to this new image, and replace if necessary.
+#warning - will need to be fast and efficient! Alternatively, we can recycle the cache if need be.
+        if(!imageSaved) {
+            NSLog(@"Saving image to disk...");
+            NSArray *segmentedURL = [[request.URL absoluteString] componentsSeparatedByString:@"/"];
+            NSString *filename = [segmentedURL lastObject];
+            
+            NSString *imagePath = [NSString stringWithFormat:@"%@/%@/%@", documentsDirectory, directory, filename];
+            
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+                BOOL saved = NO;
+                saved = [UIImageJPEGRepresentation(image, 1.0) writeToFile:imagePath options:NSAtomicWrite error:nil];
+                NSLog(@"Image %@", saved ? @"saved." : @"did not save.");
+            });
+            
+            
+            if([object isKindOfClass:[Anime class]]) {
+                Anime *anime = (Anime *)object;
+                anime.image = [NSString stringWithFormat:@"anime/%@", filename];
+            }
+            else if([object isKindOfClass:[Manga class]]) {
+                Manga *manga = (Manga *)object;
+                manga.image = [NSString stringWithFormat:@"manga/%@", filename];
+            }
+        }
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+        // Log failure.
+        NSLog(@"Couldn't fetch image at URL %@.", [request.URL absoluteString]);
     }];
     
-    [operation start];
+//    AFImageRequestOperation *operation = [AFImageRequestOperation imageRequestOperationWithRequest:request success:^(UIImage *image) {
+//        anilistCell.image.image = image;
+//    }];
+//    
+//    [operation start];
 }
 
 #pragma mark - UISearchDisplayDelegate Methods
@@ -283,7 +361,6 @@
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSInteger)scope {
     // update the filter, in this case just blow away the FRC and let lazy evaluation create another with the relevant search info
     self.fetchedResultsController.delegate = nil;
-    [NSFetchedResultsController deleteCacheWithName:@"Search"];
     self.fetchedResultsController = nil;
     // if you care about the scope save off the index to be used by the serchFetchedResultsController
     //self.savedScopeButtonIndex = scope;

@@ -21,14 +21,6 @@
     return self;
 }
 
-- (id)initWithCoder:(NSCoder *)aDecoder {
-    self = [super initWithCoder:aDecoder];
-    if(self) {
-    }
-    
-    return self;
-}
-
 + (CGFloat)cellHeight {
     return 90;
 }

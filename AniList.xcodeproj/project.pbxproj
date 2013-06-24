@@ -199,6 +199,8 @@
 		63B386B41777B91C001A7E31 /* MangaCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63B386B21777B91C001A7E31 /* MangaCell.xib */; };
 		63B386B71777BA39001A7E31 /* MangaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B386B61777BA38001A7E31 /* MangaViewController.m */; };
 		63B386B81777BA39001A7E31 /* MangaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B386B61777BA38001A7E31 /* MangaViewController.m */; };
+		63B386BA1777DCAB001A7E31 /* AniListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63B386B91777DCAB001A7E31 /* AniListCell.xib */; };
+		63B386BB1777DCAB001A7E31 /* AniListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63B386B91777DCAB001A7E31 /* AniListCell.xib */; };
 		63BEA7371761859300432BED /* AniListPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63BEA7361761859300432BED /* AniListPickerView.m */; };
 		63BEA7381761859300432BED /* AniListPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63BEA7361761859300432BED /* AniListPickerView.m */; };
 		63BEA73E17619E0800432BED /* AniListUserInfoEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63BEA73C17619E0800432BED /* AniListUserInfoEditViewController.m */; };
@@ -396,6 +398,7 @@
 		63B386B21777B91C001A7E31 /* MangaCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MangaCell.xib; path = Views/MangaCell.xib; sourceTree = "<group>"; };
 		63B386B51777BA38001A7E31 /* MangaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MangaViewController.h; sourceTree = "<group>"; };
 		63B386B61777BA38001A7E31 /* MangaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MangaViewController.m; sourceTree = "<group>"; };
+		63B386B91777DCAB001A7E31 /* AniListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AniListCell.xib; path = Views/AniListCell.xib; sourceTree = "<group>"; };
 		63BEA7351761859300432BED /* AniListPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AniListPickerView.h; path = Views/AniListPickerView.h; sourceTree = "<group>"; };
 		63BEA7361761859300432BED /* AniListPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AniListPickerView.m; path = Views/AniListPickerView.m; sourceTree = "<group>"; };
 		63BEA73B17619E0800432BED /* AniListUserInfoEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AniListUserInfoEditViewController.h; sourceTree = "<group>"; };
@@ -605,6 +608,7 @@
 				632F4380171CD9C900A5B43A /* MenuCell.m */,
 				632F4382171CD9E100A5B43A /* AniListCell.h */,
 				632F4383171CD9E100A5B43A /* AniListCell.m */,
+				63B386B91777DCAB001A7E31 /* AniListCell.xib */,
 				632F4388171CDA0000A5B43A /* AnimeCell.h */,
 				632F4389171CDA0000A5B43A /* AnimeCell.m */,
 				635027AC171E601E0004C106 /* AnimeCell.xib */,
@@ -976,6 +980,7 @@
 				63894CC8176A9E37007D2D05 /* LoginViewController.xib in Resources */,
 				6371444C1770074600E60B9F /* SearchViewController.xib in Resources */,
 				63B386B31777B91C001A7E31 /* MangaCell.xib in Resources */,
+				63B386BA1777DCAB001A7E31 /* AniListCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1004,6 +1009,7 @@
 				63894CC9176A9E37007D2D05 /* LoginViewController.xib in Resources */,
 				6371444D1770074600E60B9F /* SearchViewController.xib in Resources */,
 				63B386B41777B91C001A7E31 /* MangaCell.xib in Resources */,
+				63B386BB1777DCAB001A7E31 /* AniListCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
