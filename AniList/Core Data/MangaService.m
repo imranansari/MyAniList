@@ -79,6 +79,8 @@
     manga.manga_id = [data[kID] isKindOfClass:[NSString class]] ? @([data[kID] intValue]) : data[kID];
     manga.title = data[kTitle];
     
+    NSLog(@"manga: %@", manga.title);
+    
     if(data[kImageURL] && ![data[kImageURL] isNull])
         manga.image_url = data[kImageURL];
     else if(data[kImage] && ![data[kImage] isNull])

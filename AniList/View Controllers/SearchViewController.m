@@ -8,6 +8,7 @@
 
 #import "SearchViewController.h"
 #import "AnimeService.h"
+#import "MangaService.h"
 #import "AniListAppDelegate.h"
 #import "AnimeCell.h"
 #import "AnimeViewController.h"
@@ -70,6 +71,9 @@
     
     [[MALHTTPClient sharedClient] searchForMangaWithQuery:query success:^(id operation, NSArray *response) {
         NSLog(@"Got manga results: %d", response.count);
+        for(NSDictionary *result in response) {
+            [MangaService addManga:result fromList:NO];
+        }
     } failure:^(id operation, NSError *error) {
         NSLog(@"Manga search failure.");
     }];

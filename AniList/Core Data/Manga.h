@@ -29,14 +29,14 @@ typedef enum {
     MangaTypeDoujin,
     MangaTypeManwha,
     MangaTypeManhua,
-    MangaTypeOEL
+    MangaTypeOEL // none found.
 } MangaType;
 
 typedef enum {
-    MangaAirStatusUnknown = -1,
-    MangaAirStatusCurrentlyPublishing = 1,
-    MangaAirStatusFinishedPublishing,
-    MangaAirStatusNotYetPublished
+    MangaPublishStatusUnknown = -1,
+    MangaPublishStatusCurrentlyPublishing = 1,
+    MangaPublishStatusFinishedPublishing,
+    MangaPublishStatusNotYetPublished
 } MangaPublishStatus;
 
 #pragma mark - Unofficial typedefs

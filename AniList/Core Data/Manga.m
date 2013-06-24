@@ -48,64 +48,72 @@
 @dynamic anime_adaptations;
 @dynamic tags;
 
-+ (MangaType)mangaTypeForValue:(NSString *)value {
-    
++ (MangaType)mangaTypeForValue:(NSString *)value {    
     // If value is passed in as an int, convert it.
     int type = [value intValue];
-//    
-//    if(type == 1 || [value isEqualToString:@"TV"]) return AnimeTypeTV;
-//    if(type == 2 || [value isEqualToString:@"OVA"]) return AnimeTypeOVA;
-//    if(type == 3 || [value isEqualToString:@"Movie"]) return AnimeTypeMovie;
-//    if(type == 4 || [value isEqualToString:@"Special"]) return AnimeTypeSpecial;
-//    if(type == 5 || [value isEqualToString:@"ONA"]) return AnimeTypeONA;
-//    if(type == 6 || [value isEqualToString:@"Music"]) return AnimeTypeMusic;
-//    
-//    return AnimeTypeUnknown;
+
+    if(type == 1 || [value isEqualToString:@"Manga"]) return MangaTypeManga;
+    if(type == 2 || [value isEqualToString:@"Novel"]) return MangaTypeNovel;
+    if(type == 3 || [value isEqualToString:@"One Shot"]) return MangaTypeOneShot;
+    if(type == 4 || [value isEqualToString:@"Doujin"]) return MangaTypeDoujin;
+    if(type == 5 || [value isEqualToString:@"Manwha"]) return MangaTypeManwha;
+    if(type == 6 || [value isEqualToString:@"Manhua"]) return MangaTypeManhua;
+    
+    // An assumption.
+    if(type == 7 || [value isEqualToString:@"OEL"]) return MangaTypeOEL;
+
+    return MangaTypeUnknown;
 }
 
 + (NSString *)stringForMangaType:(MangaType)mangaType {
-//    switch (animeType) {
-//        case AnimeTypeTV:
-//            return @"TV";
-//        case AnimeTypeMovie:
-//            return @"Movie";
-//        case AnimeTypeOVA:
-//            return @"OVA";
-//        case AnimeTypeONA:
-//            return @"ONA";
-//        case AnimeTypeSpecial:
-//            return @"Special";
-//        case AnimeTypeMusic:
-//            return @"Music";
-//        default:
-//            return @"Unknown";
-//    }
-    return @"nothing";
+    
+    switch (mangaType) {
+        case MangaTypeManga:
+            return @"Manga";
+        case MangaTypeNovel:
+            return @"Novel";
+        case MangaTypeOneShot:
+            return @"One Shot";
+        case MangaTypeDoujin:
+            return @"Doujin";
+        case MangaTypeManwha:
+            return @"Manwha";
+        case MangaTypeManhua:
+            return @"Manhua";
+        case MangaTypeOEL:
+            return @"OEL";
+        case MangaTypeUnknown:
+        default:
+            return @"Unknown";
+            break;
+    }
 }
 
 + (MangaPublishStatus)mangaPublishStatusForValue:(NSString *)value {
+    NSLog(@"publish status: %@", value);
     value = [value lowercaseString];
     int publishStatus = [value intValue];
-//    
-//    if(airStatus == 1 || [value isEqualToString:@"currently airing"]) return AnimeAirStatusCurrentlyAiring;
-//    if(airStatus == 2 || [value isEqualToString:@"finished airing"]) return AnimeAirStatusFinishedAiring;
-//    if(airStatus == 3 || [value isEqualToString:@"not yet aired"]) return AnimeAirStatusNotYetAired;
-//    
-//    return AnimeAirStatusUnknown;
+
+    if(publishStatus == 1 || [value isEqualToString:@"publishing"]) return MangaPublishStatusCurrentlyPublishing;
+    if(publishStatus == 2 || [value isEqualToString:@"finished"]) return MangaPublishStatusFinishedPublishing;
+    if(publishStatus == 3 || [value isEqualToString:@"not yet published"]) return MangaPublishStatusNotYetPublished;
+
+    return MangaPublishStatusUnknown;
 }
 
 + (NSString *)stringForMangaPublishStatus:(MangaPublishStatus)publishStatus {
-//    switch (publishStatus) {
-//        case AnimeAirStatusCurrentlyAiring:
-//            return @"Currently airing";
-//        case AnimeAirStatusFinishedAiring:
-//            return @"Finished airing";
-//        case AnimeAirStatusNotYetAired:
-//            return @"Not yet aired";
-//        case AnimeAirStatusUnknown:
-//        default:
-//            return @"Unknown";
-//    }
+    
+    switch (publishStatus) {
+        case MangaPublishStatusCurrentlyPublishing:
+            return @"Currently publishing";
+        case MangaPublishStatusFinishedPublishing:
+            return @"Finished";
+        case MangaPublishStatusNotYetPublished:
+            return @"Not yet published";
+        case MangaPublishStatusUnknown:
+        default:
+            return @"Unknown";
+    }
 }
 
 + (MangaReadStatus)mangaReadStatusForValue:(NSString *)value {
@@ -130,50 +138,53 @@
 
 + (NSString *)stringForMangaReadStatus:(MangaReadStatus)readStatus forMangaType:(MangaType)mangaType {
     
-//    NSString *seriesText = @"";
-//    
-//    switch (animeType) {
-//        case AnimeTypeTV:
-//            seriesText = @"series";
-//            break;
-//        case AnimeTypeMovie:
-//            seriesText = @"movie";
-//            break;
-//        case AnimeTypeOVA:
-//            seriesText = @"OVA";
-//            break;
-//        case AnimeTypeONA:
-//            seriesText = @"ONA";
-//            break;
-//        case AnimeTypeSpecial:
-//            seriesText = @"special";
-//            break;
-//        case AnimeTypeMusic:
-//            seriesText = @"song";  // Not sure about this one
-//            break;
-//        case AnimeTypeUnknown:
-//        default:
-//            seriesText = @"series";
-//            break;
-//    }
-//    
-//    switch (watchedStatus) {
-//        case AnimeWatchedStatusWatching:
-//            return [NSString stringWithFormat:@"Currently watching this %@.", seriesText];
-//        case AnimeWatchedStatusCompleted:
-//            return [NSString stringWithFormat:@"Finished with this %@.", seriesText];
-//        case AnimeWatchedStatusOnHold:
-//            return [NSString stringWithFormat:@"Putting this %@ on hold.", seriesText];
-//        case AnimeWatchedStatusDropped:
-//            return [NSString stringWithFormat:@"Dropping this %@.", seriesText];
-//        case AnimeWatchedStatusPlanToWatch:
-//            return [NSString stringWithFormat:@"Planning to watch this %@.", seriesText];
-//        case AnimeWatchedStatusNotWatching:
-//            return [NSString stringWithFormat:@"Add this %@ to your list?", seriesText];
-//        case AnimeWatchedStatusUnknown:
-//        default:
-//            return @"Unknown?";
-//    }
+    NSString *seriesText = @"";
+    
+    switch (mangaType) {
+        case MangaTypeNovel:
+            seriesText = @"novel";
+            break;
+        case MangaTypeManga:
+            seriesText = @"manga";
+            break;
+        case MangaTypeOneShot:
+            seriesText = @"one shot";
+            break;
+        case MangaTypeDoujin:
+            seriesText = @"doujin";
+            break;
+        case MangaTypeManwha:
+            seriesText = @"manwha";
+            break;
+        case MangaTypeManhua:
+            seriesText = @"manhua";
+            break;
+        case MangaTypeOEL:
+            seriesText = @"OEL";
+            break;
+        case MangaTypeUnknown:
+        default:
+            seriesText = @"manga";
+            break;
+    }
+    
+    switch (readStatus) {
+        case MangaReadStatusReading:
+            return [NSString stringWithFormat:@"Currently reading this %@.", seriesText];
+        case MangaReadStatusCompleted:
+            return [NSString stringWithFormat:@"Finished with this %@.", seriesText];
+        case MangaReadStatusOnHold:
+            return [NSString stringWithFormat:@"Putting this %@ on hold.", seriesText];
+        case MangaReadStatusDropped:
+            return [NSString stringWithFormat:@"Dropping this %@.", seriesText];
+        case MangaReadStatusPlanToRead:
+            return [NSString stringWithFormat:@"Planning to read this %@.", seriesText];
+        case MangaReadStatusNotReading:
+            return [NSString stringWithFormat:@"Add this %@ to your list?", seriesText];
+        case MangaReadStatusUnknown:
+        default:
+            return @"Unknown?";
+    }
 }
 
 #pragma mark - Unofficial API Methods
