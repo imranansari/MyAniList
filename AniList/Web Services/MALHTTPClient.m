@@ -9,6 +9,7 @@
 #import "MALHTTPClient.h"
 #import "XMLReader.h"
 #import "AnimeService.h"
+#import "MangaService.h"
 
 #define MAL_OFFICIAL_API_BASE_URL       @"http://myanimelist.net"
 
@@ -244,8 +245,8 @@
     }];
 }
 
-- (void)getMangaDetailsForID:(NSNumber *)animeID success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure {
-    NSString *path = [NSString stringWithFormat:@"/manga/%d", [animeID intValue]];
+- (void)getMangaDetailsForID:(NSNumber *)mangaID success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure {
+    NSString *path = [NSString stringWithFormat:@"/manga/%d", [mangaID intValue]];
     
     NSDictionary *parameters = @{ @"mine" : @"1" };
     
@@ -260,11 +261,31 @@
                                   }];
 }
 
-- (void)updateDetailsForMangaWithID:(NSNumber *)animeID success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure {
-    NSString *path = [NSString stringWithFormat:@"api/mangalist/update/%d.xml", [animeID intValue]];
+- (void)addMangaToListWithID:(NSNumber *)mangaID success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure {
+    NSString *path = [NSString stringWithFormat:@"/api/mangalist/add/%d.xml", [mangaID intValue]];
     
-    NSString *animeToXML = [AnimeService animeToXML:animeID];
-    NSDictionary *parameters = @{ @"data" : animeToXML };
+    NSString *mangaToXML = [MangaService mangaToXML:mangaID];
+    NSDictionary *parameters = @{ @"data" : mangaToXML };
+    
+    [[MALHTTPClient sharedClient] authenticate];
+    [[MALHTTPClient sharedClient] postPath:path
+                                parameters:parameters
+                                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                       NSLog(@"response: %@", operation.responseString);
+                                       success(operation, responseObject);
+                                   }
+                                   failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                       NSLog(@"failed response: %@", operation.responseString);
+                                       failure(operation, error);
+                                   }];
+    
+}
+
+- (void)updateDetailsForMangaWithID:(NSNumber *)mangaID success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure {
+    NSString *path = [NSString stringWithFormat:@"api/mangalist/update/%d.xml", [mangaID intValue]];
+    
+    NSString *mangaToXML = [MangaService mangaToXML:mangaID];
+    NSDictionary *parameters = @{ @"data" : mangaToXML };
     
     [[UMALHTTPClient sharedClient] authenticate];
     [[UMALHTTPClient sharedClient] postPath:path

@@ -62,6 +62,11 @@
     [self.view addSubview:self.datePicker];
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    self.scoreView.delegate = nil;
+}
+
 #pragma mark - UIView Methods
 
 - (void)dismissDate {

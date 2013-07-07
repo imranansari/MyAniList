@@ -42,7 +42,11 @@ static NSArray *animeStatusOrder;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-    self.scoreView.delegate = nil;
+    [super viewWillDisappear:animated];
+    
+    if(!self.saving) {
+        [self.anime.managedObjectContext rollback];
+    }
 }
 
 - (void)viewDidLoad {
@@ -211,6 +215,8 @@ static NSArray *animeStatusOrder;
 
 - (void)save:(id)sender {
     NSLog(@"Saving...");
+    
+    self.saving = YES;
     
     [self.anime.managedObjectContext save:nil];
     

@@ -26,6 +26,7 @@
 @property (nonatomic, weak) IBOutlet UIButton *secondaryRemoveItemButton;
 @property (nonatomic, strong) IBOutlet AniListScoreView *scoreView;
 @property (nonatomic, strong) AniListDatePickerView *datePicker;
+@property (nonatomic, assign) BOOL saving;
 
 
 - (NSString *)startDateStringWithDate:(NSDate *)date;

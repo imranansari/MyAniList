@@ -78,6 +78,14 @@ static NSArray *mangaStatusOrder;
     [self updateLabels];
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    if(!self.saving) {
+        [self.manga.managedObjectContext rollback];
+    }
+}
+
 #pragma mark - NSString Methods
 
 - (NSString *)startDateStringWithDate:(NSDate *)date {
@@ -175,10 +183,12 @@ static NSArray *mangaStatusOrder;
 #pragma mark - IBAction Methods
 
 - (IBAction)addItemButtonPressed:(id)sender {
-    if([self.manga.current_volume intValue] < [self.manga.total_volumes intValue]) {
+    if([self.manga.total_volumes intValue] == 0) {
+        self.manga.current_volume = @([self.manga.current_volume intValue] + 1);
+    }
+    else if([self.manga.current_volume intValue] < [self.manga.total_volumes intValue]) {
         self.manga.current_volume = @([self.manga.current_volume intValue] + 1);
         self.originalCurrentEpisode = self.manga.current_volume;
-        
         
         if([self.manga.current_volume intValue] == [self.manga.total_volumes intValue] && [self.manga.read_status intValue] != MangaReadStatusCompleted) {
             // Set scroller to completed.
@@ -208,7 +218,10 @@ static NSArray *mangaStatusOrder;
 }
 
 - (IBAction)addSecondaryItemButtonPressed:(id)sender {
-    if([self.manga.current_chapter intValue] < [self.manga.total_chapters intValue]) {
+    if([self.manga.total_chapters intValue] == 0) {
+        self.manga.current_chapter = @([self.manga.current_chapter intValue] + 1);
+    }
+    else if([self.manga.current_chapter intValue] < [self.manga.total_chapters intValue]) {
         self.manga.current_chapter = @([self.manga.current_chapter intValue] + 1);
         self.originalCurrentEpisode = self.manga.current_chapter;
         
@@ -253,7 +266,28 @@ static NSArray *mangaStatusOrder;
 #pragma mark - Data Methods
 
 - (void)save:(id)sender {
+    NSLog(@"Saving...");
     
+    self.saving = YES;
+    
+    [self.manga.managedObjectContext save:nil];
+    
+    if(self.addMangaToList) {
+        [[MALHTTPClient sharedClient] addMangaToListWithID:self.manga.manga_id success:^(id operation, id response) {
+            NSLog(@"Added manga to list! Returning to manga details view.");
+        } failure:^(id operation, NSError *error) {
+            NSLog(@"Failed to update.");
+        }];
+    }
+    else {
+        [[MALHTTPClient sharedClient] updateDetailsForMangaWithID:self.manga.manga_id success:^(id operation, id response) {
+            NSLog(@"Updated. Returning to manga details view.");
+        } failure:^(id operation, NSError *error) {
+            NSLog(@"Failed to update.");
+        }];
+    }
+    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)setOriginalValues {

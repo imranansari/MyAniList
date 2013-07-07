@@ -201,6 +201,10 @@
 		63B0DFA41789C3F7006F0868 /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B0DFA21789C3F7006F0868 /* NSString+HTML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		63B0DFA71789C529006F0868 /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B0DFA61789C529006F0868 /* GTMNSString+HTML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		63B0DFA81789C529006F0868 /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B0DFA61789C529006F0868 /* GTMNSString+HTML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		63B0DFAE1789D065006F0868 /* AnimeServiceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B0DFAD1789D065006F0868 /* AnimeServiceTests.m */; };
+		63B0DFB11789D087006F0868 /* AnimeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B0DFB01789D087006F0868 /* AnimeTests.m */; };
+		63B0DFB41789D091006F0868 /* MangaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B0DFB31789D091006F0868 /* MangaTests.m */; };
+		63B0DFB71789D09B006F0868 /* MangaServiceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B0DFB61789D09B006F0868 /* MangaServiceTests.m */; };
 		63B386AC1776401D001A7E31 /* MangaService.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B386AB1776401D001A7E31 /* MangaService.m */; };
 		63B386AD1776401D001A7E31 /* MangaService.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B386AB1776401D001A7E31 /* MangaService.m */; };
 		63B386B017764721001A7E31 /* Manga.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B386AF17764720001A7E31 /* Manga.m */; };
@@ -414,6 +418,14 @@
 		63B0DFA21789C3F7006F0868 /* NSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+HTML.m"; path = "Categories/NSString+HTML.m"; sourceTree = "<group>"; };
 		63B0DFA51789C529006F0868 /* GTMNSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "GTMNSString+HTML.h"; path = "Categories/GTMNSString+HTML.h"; sourceTree = "<group>"; };
 		63B0DFA61789C529006F0868 /* GTMNSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "GTMNSString+HTML.m"; path = "Categories/GTMNSString+HTML.m"; sourceTree = "<group>"; };
+		63B0DFAC1789D065006F0868 /* AnimeServiceTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimeServiceTests.h; sourceTree = "<group>"; };
+		63B0DFAD1789D065006F0868 /* AnimeServiceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimeServiceTests.m; sourceTree = "<group>"; };
+		63B0DFAF1789D087006F0868 /* AnimeTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimeTests.h; sourceTree = "<group>"; };
+		63B0DFB01789D087006F0868 /* AnimeTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimeTests.m; sourceTree = "<group>"; };
+		63B0DFB21789D091006F0868 /* MangaTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MangaTests.h; sourceTree = "<group>"; };
+		63B0DFB31789D091006F0868 /* MangaTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MangaTests.m; sourceTree = "<group>"; };
+		63B0DFB51789D09B006F0868 /* MangaServiceTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MangaServiceTests.h; sourceTree = "<group>"; };
+		63B0DFB61789D09B006F0868 /* MangaServiceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MangaServiceTests.m; sourceTree = "<group>"; };
 		63B386AA1776401D001A7E31 /* MangaService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MangaService.h; path = "Core Data/MangaService.h"; sourceTree = "<group>"; };
 		63B386AB1776401D001A7E31 /* MangaService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MangaService.m; path = "Core Data/MangaService.m"; sourceTree = "<group>"; };
 		63B386AE17764720001A7E31 /* Manga.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Manga.h; path = "Core Data/Manga.h"; sourceTree = "<group>"; };
@@ -846,6 +858,14 @@
 				635484CE171C2FA7003457CB /* AniListTests.h */,
 				635484CF171C2FA7003457CB /* AniListTests.m */,
 				635484C9171C2FA7003457CB /* Supporting Files */,
+				63B0DFAF1789D087006F0868 /* AnimeTests.h */,
+				63B0DFB01789D087006F0868 /* AnimeTests.m */,
+				63B0DFAC1789D065006F0868 /* AnimeServiceTests.h */,
+				63B0DFAD1789D065006F0868 /* AnimeServiceTests.m */,
+				63B0DFB21789D091006F0868 /* MangaTests.h */,
+				63B0DFB31789D091006F0868 /* MangaTests.m */,
+				63B0DFB51789D09B006F0868 /* MangaServiceTests.h */,
+				63B0DFB61789D09B006F0868 /* MangaServiceTests.m */,
 			);
 			path = AniListTests;
 			sourceTree = "<group>";
@@ -1228,6 +1248,10 @@
 				63461A1A1778004D0053652C /* SettingsViewController.m in Sources */,
 				63B0DFA41789C3F7006F0868 /* NSString+HTML.m in Sources */,
 				63B0DFA81789C529006F0868 /* GTMNSString+HTML.m in Sources */,
+				63B0DFAE1789D065006F0868 /* AnimeServiceTests.m in Sources */,
+				63B0DFB11789D087006F0868 /* AnimeTests.m in Sources */,
+				63B0DFB41789D091006F0868 /* MangaTests.m in Sources */,
+				63B0DFB71789D09B006F0868 /* MangaServiceTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
