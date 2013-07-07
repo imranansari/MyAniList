@@ -2,10 +2,10 @@
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1552</int>
-		<string key="IBDocument.SystemVersion">12E55</string>
+		<string key="IBDocument.SystemVersion">13A497d</string>
 		<string key="IBDocument.InterfaceBuilderVersion">3084</string>
-		<string key="IBDocument.AppKitVersion">1187.39</string>
-		<string key="IBDocument.HIToolboxVersion">626.00</string>
+		<string key="IBDocument.AppKitVersion">1240</string>
+		<string key="IBDocument.HIToolboxVersion">681.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			<string key="NS.object.0">2083</string>
@@ -154,7 +154,7 @@
 								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 							</object>
 						</array>
-						<string key="NSFrame">{{0, 44}, {200, 44}}</string>
+						<string key="NSFrame">{{0, 44}, {190, 44}}</string>
 						<reference key="NSSuperview" ref="631971004"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="342828112"/>
@@ -188,7 +188,7 @@
 								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 							</object>
 						</array>
-						<string key="NSFrame">{{0, 88}, {200, 44}}</string>
+						<string key="NSFrame">{{0, 88}, {190, 44}}</string>
 						<reference key="NSSuperview" ref="631971004"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="799031832"/>
@@ -206,6 +206,7 @@
 								<string key="NSFrameSize">{120, 44}</string>
 								<reference key="NSSuperview" ref="206679210"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -216,12 +217,13 @@
 								<reference key="IBUITextColor" ref="623945510"/>
 								<nil key="IBUIHighlightedColor"/>
 								<int key="IBUIBaselineAdjustment">0</int>
+								<int key="IBUITextAlignment">2</int>
 								<reference key="IBUIFontDescription" ref="189920373"/>
 								<reference key="IBUIFont" ref="942406265"/>
 								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 							</object>
 						</array>
-						<string key="NSFrame">{{200, 88}, {120, 44}}</string>
+						<string key="NSFrame">{{190, 88}, {120, 44}}</string>
 						<reference key="NSSuperview" ref="631971004"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="994775907"/>
@@ -250,12 +252,13 @@
 								<reference key="IBUITextColor" ref="623945510"/>
 								<nil key="IBUIHighlightedColor"/>
 								<int key="IBUIBaselineAdjustment">0</int>
+								<int key="IBUITextAlignment">2</int>
 								<reference key="IBUIFontDescription" ref="189920373"/>
 								<reference key="IBUIFont" ref="942406265"/>
 								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 							</object>
 						</array>
-						<string key="NSFrame">{{200, 44}, {120, 44}}</string>
+						<string key="NSFrame">{{190, 44}, {120, 44}}</string>
 						<reference key="NSSuperview" ref="631971004"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="869710729"/>
@@ -514,6 +517,17 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">AniListUserInfoViewController</string>
 					<string key="superclassName">UIViewController</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">userInfoViewPressed:</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">userInfoViewPressed:</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">userInfoViewPressed:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</object>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="endDateView">UIView</string>
 						<string key="progressView">UIView</string>

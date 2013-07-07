@@ -196,6 +196,38 @@
     }
 }
 
++ (NSString *)unitForAnimeType:(AnimeType)animeType plural:(BOOL)plural {
+    
+    NSString *unit = @"";
+    
+    switch (animeType) {
+        case AnimeTypeTV:
+            unit = plural ? @"episodes" : @"episode";
+            break;
+        case AnimeTypeMovie:
+            unit = plural ? @"movies" : @"movie";
+            break;
+        case AnimeTypeOVA:
+            unit = plural ? @"OVAs" : @"OVA";
+            break;
+        case AnimeTypeONA:
+            unit = plural ? @"ONAs" : @"ONA";
+            break;
+        case AnimeTypeSpecial:
+            unit = plural ? @"specials" : @"special";
+            break;
+        case AnimeTypeMusic:
+            unit = plural ? @"songs" : @"song";  // Not sure about this one
+            break;
+        case AnimeTypeUnknown:
+        default:
+            unit = plural ? @"episodes" : @"episode";
+            break;
+    }
+    
+    return unit;
+}
+
 #pragma mark - Unofficial API Methods
 
 + (AnimeType)unofficialAnimeTypeForValue:(NSString *)value {

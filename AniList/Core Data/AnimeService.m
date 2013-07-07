@@ -171,7 +171,7 @@
     Anime *anime = [AnimeService animeForID:data[kID]];
     
     anime.anime_id = [data[kID] isKindOfClass:[NSString class]] ? @([data[kID] intValue]) : data[kID];
-    anime.title = data[kTitle];
+    anime.title = [data[kTitle] stringByDecodingHTMLEntities];
     //    anime.synonyms = data[@"other_titles"];
     // english
     // japanese
@@ -218,6 +218,7 @@
         anime.favorited_count = data[kFavoritedCount];
     if(data[kSynopsis] &&![data[kSynopsis] isNull]) {
         anime.synopsis = [((NSString *)data[kSynopsis]) cleanHTMLTags];
+        anime.synopsis = [anime.synopsis stringByConvertingHTMLToPlainText];
     }
     //    anime.genres = data[@"genres"];
     //    anime.tags = data[@"tags"];

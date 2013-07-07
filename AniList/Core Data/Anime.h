@@ -127,6 +127,7 @@ typedef enum {
 + (AnimeWatchedStatus)animeWatchedStatusForValue:(NSString *)value;
 + (NSString *)stringForAnimeWatchedStatus:(AnimeWatchedStatus)watchedStatus;
 + (NSString *)stringForAnimeWatchedStatus:(AnimeWatchedStatus)watchedStatus forAnimeType:(AnimeType)animeType;
++ (NSString *)unitForAnimeType:(AnimeType)animeType plural:(BOOL)plural;
 
 - (BOOL)hasAdditionalDetails;
 

@@ -8,12 +8,10 @@
 
 #import "AniListUserInfoEditViewController.h"
 #import "AniListScoreView.h"
-#import "Anime.h"
 
 @interface AniListUserInfoEditViewController ()
 
 @property (nonatomic, weak) IBOutlet UIView *maskView;
-@property (nonatomic, strong) AniListDatePickerView *datePicker;
 
 @end
 
@@ -76,12 +74,23 @@
                      completion:nil];
 }
 
+#pragma mark - NSString Methods
+
+- (NSString *)startDateStringWithDate:(NSDate *)date {
+    // override
+    return nil;
+}
+
+- (NSString *)finishDateStringWithDate:(NSDate *)date {
+    // override
+    return nil;
+}
+
 #pragma mark - IBAction Methods
 
 - (IBAction)startDateButtonPressed:(id)sender {
     
     self.datePicker.datePickerType = AniListDatePickerStartDate;
-    self.datePicker.date = self.anime.user_date_start;
     
     [UIView animateWithDuration:0.5f
                           delay:0.0f
@@ -95,7 +104,6 @@
 - (IBAction)endDateButtonPressed:(id)sender {
     
     self.datePicker.datePickerType = AniListDatePickerEndDate;
-    self.datePicker.date = self.anime.user_date_finish;
     
     [UIView animateWithDuration:0.5f
                           delay:0.0f
@@ -116,6 +124,14 @@
 
 - (void)save:(id)sender {
     // override
+}
+
+- (void)setOriginalValues {
+    // override
+}
+
+- (void)revertValuesToDefault {
+   // override
 }
 
 #pragma mark - AniListDatePickerViewDelegate Methods

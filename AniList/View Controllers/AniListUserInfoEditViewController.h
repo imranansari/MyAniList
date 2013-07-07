@@ -11,7 +11,6 @@
 #import "AniListDatePickerView.h"
 #import "AniListScoreView.h"
 
-@class Anime;
 @class AniListScoreView;
 
 @interface AniListUserInfoEditViewController : UIViewController<AniListDatePickerViewDelegate, AniListScoreViewDelegate, UIScrollViewDelegate>
@@ -20,13 +19,21 @@
 @property (nonatomic, weak) IBOutlet UIButton *startDateButton;
 @property (nonatomic, weak) IBOutlet UIButton *endDateButton;
 @property (nonatomic, weak) IBOutlet UILabel *progressLabel;
+@property (nonatomic, weak) IBOutlet UILabel *secondaryProgressLabel;
 @property (nonatomic, weak) IBOutlet UIButton *addItemButton;
 @property (nonatomic, weak) IBOutlet UIButton *removeItemButton;
+@property (nonatomic, weak) IBOutlet UIButton *secondaryAddItemButton;
+@property (nonatomic, weak) IBOutlet UIButton *secondaryRemoveItemButton;
 @property (nonatomic, strong) IBOutlet AniListScoreView *scoreView;
-@property (nonatomic, strong) Anime *anime;
+@property (nonatomic, strong) AniListDatePickerView *datePicker;
 
+
+- (NSString *)startDateStringWithDate:(NSDate *)date;
+- (NSString *)finishDateStringWithDate:(NSDate *)date;
 - (IBAction)addItemButtonPressed:(id)sender;
 - (IBAction)removeItemButtonPressed:(id)sender;
+- (IBAction)addSecondaryItemButtonPressed:(id)sender;
+- (IBAction)removeSecondaryItemButtonPressed:(id)sender;
 - (IBAction)startDateButtonPressed:(id)sender;
 - (IBAction)endDateButtonPressed:(id)sender;
 - (void)save:(id)sender;

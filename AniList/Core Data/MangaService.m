@@ -139,7 +139,7 @@
     Manga *manga = [MangaService mangaForID:data[kID]];
     
     manga.manga_id = [data[kID] isKindOfClass:[NSString class]] ? @([data[kID] intValue]) : data[kID];
-    manga.title = data[kTitle];
+    manga.title = [data[kTitle] stringByDecodingHTMLEntities];
     
     //    anime.synonyms = data[@"other_titles"];
     // english
@@ -190,6 +190,7 @@
         manga.favorited_count = data[kFavoritedCount];
     if(data[kSynopsis] &&![data[kSynopsis] isNull]) {
         manga.synopsis = [((NSString *)data[kSynopsis]) cleanHTMLTags];
+        manga.synopsis = [manga.synopsis stringByDecodingHTMLEntities];
     }
     //    anime.genres = data[@"genres"];
     //    anime.tags = data[@"tags"];

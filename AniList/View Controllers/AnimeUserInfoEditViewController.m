@@ -48,6 +48,11 @@ static NSArray *animeStatusOrder;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.secondaryAddItemButton.hidden = YES;
+    self.secondaryRemoveItemButton.hidden = YES;
+    self.secondaryProgressLabel.hidden = YES;
+    self.secondaryProgressLabel.superview.hidden = YES;
+    
     self.addAnimeToList = [self.anime.watched_status intValue] == AnimeWatchedStatusNotWatching ? YES : NO;
     
     [self setOriginalValues];
@@ -121,19 +126,23 @@ static NSArray *animeStatusOrder;
     }
 }
 
-
 #warning - will need tweaking.
 - (void)configureProgressLabel {
+    
+    BOOL plural = [self.anime.total_episodes intValue] > 1;
+    
+    NSString *unit = [Anime unitForAnimeType:[self.anime.type intValue] plural:plural];
+    
     if([self.anime.current_episode intValue] > 0) {
         if([self.anime.current_episode intValue] == [self.anime.total_episodes intValue]) {
-            self.progressLabel.text = [NSString stringWithFormat:@"Finished all %d episodes", [self.anime.total_episodes intValue]];
+            self.progressLabel.text = [NSString stringWithFormat:@"Finished all %d %@", [self.anime.total_episodes intValue], unit];
         }
         else {
-            self.progressLabel.text = [NSString stringWithFormat:@"On episode %d of %d", [self.anime.current_episode intValue], [self.anime.total_episodes intValue]];
+            self.progressLabel.text = [NSString stringWithFormat:@"Finished %@ %d of %d", [Anime unitForAnimeType:[self.anime.type intValue] plural:NO], [self.anime.current_episode intValue], [self.anime.total_episodes intValue]];
         }
     }
     else {
-        self.progressLabel.text = @"On the first episode";
+        self.progressLabel.text = [NSString stringWithFormat:@"On the first %@", [Anime unitForAnimeType:[self.anime.type intValue] plural:NO]];
     }
 }
 
@@ -188,6 +197,16 @@ static NSArray *animeStatusOrder;
     }
     
     [self configureProgressLabel];
+}
+
+- (IBAction)startDateButtonPressed:(id)sender {
+    self.datePicker.date = self.anime.user_date_start;
+    [super startDateButtonPressed:sender];
+}
+
+- (IBAction)endDateButtonPressed:(id)sender {
+    self.datePicker.date = self.anime.user_date_finish;
+    [super endDateButtonPressed:sender];
 }
 
 - (void)save:(id)sender {
@@ -287,4 +306,5 @@ static NSArray *animeStatusOrder;
     
     [self updateLabels];
 }
+
 @end
