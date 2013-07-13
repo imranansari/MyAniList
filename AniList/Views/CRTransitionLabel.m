@@ -5,6 +5,23 @@
 //  Created by Corey Roberts on 7/13/13.
 //  Copyright (c) 2013 SpacePyro Inc. All rights reserved.
 //
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//  THE SOFTWARE.
 
 #import "CRTransitionLabel.h"
 
@@ -23,22 +40,17 @@
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
+        
         self.firstLabel = [[UILabel alloc] initWithFrame:self.bounds];
         self.secondLabel = [[UILabel alloc] initWithFrame:self.bounds];
         
-        self.firstLabel.backgroundColor = self.backgroundColor;
-        self.secondLabel.backgroundColor = self.backgroundColor;
+        self.backgroundColor = [UIColor clearColor];
+        self.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
+        self.textColor = [UIColor lightGrayColor];
+        self.textAlignment = NSTextAlignmentCenter;
         
-        self.firstLabel.font = self.secondLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
+        [self addShadow];
         
-        self.firstLabel.textColor = self.secondLabel.textColor = [UIColor lightGrayColor];
-        
-        self.firstLabel.textAlignment = self.secondLabel.textAlignment = NSTextAlignmentCenter;
-        
-        [self.firstLabel addShadow];
-        [self.secondLabel addShadow];
-        
-        _text = @"";
         self.transitionRate = 0.3f;
         
         [self addSubview:self.firstLabel];
@@ -47,8 +59,43 @@
     return self;
 }
 
+#pragma mark - UILabel Overridden Methods
+
+- (void)setFont:(UIFont *)font {
+    self.firstLabel.font = self.secondLabel.font = font;
+}
+
+- (void)setTextAlignment:(NSTextAlignment)textAlignment {
+    self.firstLabel.textAlignment = self.secondLabel.textAlignment = textAlignment;
+}
+
+- (void)setBackgroundColor:(UIColor *)backgroundColor {
+    [super setBackgroundColor:backgroundColor];
+    self.firstLabel.backgroundColor = self.secondLabel.backgroundColor = backgroundColor;
+}
+
+- (void)setFrame:(CGRect)frame {
+    [super setFrame:frame];
+    self.firstLabel.bounds = self.secondLabel.bounds = frame;
+}
+
+- (void)setTextColor:(UIColor *)textColor {
+    self.firstLabel.textColor = self.secondLabel.textColor = textColor;
+}
+
+- (void)setShadowColor:(UIColor *)shadowColor {
+    self.firstLabel.shadowColor = self.secondLabel.shadowColor = shadowColor;
+}
+
+- (void)setShadowOffset:(CGSize)shadowOffset {
+    self.firstLabel.shadowOffset = self.secondLabel.shadowOffset = shadowOffset;
+}
+
 - (void)setText:(NSString *)text {
     dispatch_async(dispatch_get_main_queue(), ^{
+        
+        [super setText:@""];
+        
         if(self.firstLabel.text.length == 0) {
             self.firstLabel.text = text;
             self.firstLabel.alpha = 1.0f;
@@ -79,6 +126,12 @@
                              }];
         }
     });
+}
+
+#pragma mark - Public Setters
+
+- (void)setTransitionRate:(float)transitionRate {
+    _transitionRate = transitionRate < 0.0f ? 0.0f : transitionRate;
 }
 
 @end
