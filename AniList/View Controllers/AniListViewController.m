@@ -8,9 +8,10 @@
 
 #import "AniListViewController.h"
 #import "AniListAppDelegate.h"
+#import "CRTransitionLabel.h"
 
 @interface AniListViewController ()
-
+@property (nonatomic, weak) IBOutlet CRTransitionLabel *topSectionLabel;
 @end
 
 @implementation AniListViewController
@@ -265,8 +266,9 @@
             
             NSNumber *headerSection = [self.fetchedResultsController sectionIndexTitles][topSection];
             
+            self.topSectionLabel.text = self.sectionHeaders[[headerSection intValue]];
+            
             [UIView animateWithDuration:0.2f animations:^{
-                self.topSectionLabel.text = self.sectionHeaders[[headerSection intValue]];
                 self.topSectionLabel.alpha = 1.0f;
             }];
         }

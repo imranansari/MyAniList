@@ -19,7 +19,6 @@
 @property (nonatomic, weak) IBOutlet UIView *maskView;
 @property (nonatomic, weak) IBOutlet AniListTableView *tableView;
 @property (nonatomic, weak) IBOutlet UIButton *menuButton;
-@property (nonatomic, weak) IBOutlet UILabel *topSectionLabel;
 
 - (NSString *)entityName;
 - (NSArray *)sortDescriptors;
