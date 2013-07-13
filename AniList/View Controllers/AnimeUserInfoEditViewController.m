@@ -142,7 +142,7 @@ static NSArray *animeStatusOrder;
             self.progressLabel.text = [NSString stringWithFormat:@"Finished all %d %@", [self.anime.total_episodes intValue], unit];
         }
         else {
-            self.progressLabel.text = [NSString stringWithFormat:@"Finished %@ %d of %d", [Anime unitForAnimeType:[self.anime.type intValue] plural:NO], [self.anime.current_episode intValue], [self.anime.total_episodes intValue]];
+            self.progressLabel.text = [NSString stringWithFormat:@"Watched %d of %d %@", [self.anime.current_episode intValue], [self.anime.total_episodes intValue], [Anime unitForAnimeType:[self.anime.type intValue] plural:NO]];
         }
     }
     else {

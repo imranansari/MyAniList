@@ -156,6 +156,11 @@
         return _fetchedResultsController;
     }
     
+    // Can't fetch anything if the search query is empty...
+    if(self.searchDisplayController.searchBar.text == nil) {
+        return _fetchedResultsController;
+    }
+    
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:[self currentEntity] inManagedObjectContext:self.managedObjectContext];
     [fetchRequest setEntity:entity];

@@ -11,7 +11,7 @@
 @implementation UIColor (AniList)
 
 + (UIColor *)defaultBackgroundColor {
-    return [UIColor colorWithWhite:1.0f alpha:0.2f];
+    return [UIColor colorWithWhite:1.0f alpha:0.1f];
 }
 
 @end

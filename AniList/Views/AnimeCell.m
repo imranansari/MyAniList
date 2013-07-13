@@ -38,7 +38,7 @@
     // Unsure of this format for now, will stick to this until further notice.
 //    switch([anime.type intValue]) {
 //        case AnimeTypeTV:
-    return [NSString stringWithFormat:@"Finished %d of %d episodes", [anime.current_episode intValue], [anime.total_episodes intValue]];
+    return [NSString stringWithFormat:@"Watched %d of %d episodes", [anime.current_episode intValue], [anime.total_episodes intValue]];
             
 //    }
 

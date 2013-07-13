@@ -76,6 +76,9 @@
     
     self.maskView.layer.mask = gradient;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"hamburger.png"] style:UIBarButtonItemStylePlain target:revealController action:@selector(revealToggle:)];
+    
+    self.topSectionLabel.text = @"";
+    self.topSectionLabel.alpha = 0.0f;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -249,7 +252,30 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-
+    
+//    NSLog(@"content offset: %f", scrollView.contentOffset.y);
+    
+    if(scrollView.contentOffset.y > 36) {
+        NSArray *visibleSections = [[[NSSet setWithArray:[[self.tableView indexPathsForVisibleRows] valueForKey:@"section"]] allObjects] sortedArrayUsingSelector:@selector(compare:)];
+//        NSLog(@"indices: %@", [self.tableView indexPathsForVisibleRows]);
+//        NSLog(@"visible sections: %@", visibleSections);
+        
+        if(visibleSections.count > 0) {
+            int topSection = [visibleSections[0] intValue];
+            
+            NSNumber *headerSection = [self.fetchedResultsController sectionIndexTitles][topSection];
+            
+            [UIView animateWithDuration:0.2f animations:^{
+                self.topSectionLabel.text = self.sectionHeaders[[headerSection intValue]];
+                self.topSectionLabel.alpha = 1.0f;
+            }];
+        }
+    }
+    else {
+        [UIView animateWithDuration:0.2f animations:^{
+            self.topSectionLabel.alpha = 0.0f;
+        }];
+    }
 }
 
 

@@ -135,13 +135,15 @@
     NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:anime.image_url]];
     NSString *cachedImageLocation = [NSString stringWithFormat:@"%@/%@", documentsDirectory, anime.image];
     UIImage *cachedImage = [UIImage imageWithContentsOfFile:cachedImageLocation];
-    
+
     if(cachedImage) {
         NSLog(@"Image on disk exists for %@.", anime.title);
     }
     else {
         NSLog(@"Image on disk does not exist for %@.", anime.title);
     }
+
+    NSLog(@"location: %@", cachedImageLocation);
     
     [animeCell.image setImageWithURLRequest:imageRequest placeholderImage:cachedImage success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
         
