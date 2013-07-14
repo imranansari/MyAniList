@@ -68,7 +68,7 @@
 
 + (Manga *)addManga:(NSDictionary *)data fromList:(BOOL)fromList {
     if([MangaService mangaForID:data[@"id"]]) {
-        NSLog(@"Manga exists. Updating details.");
+        ALLog(@"Manga exists. Updating details.");
         return [MangaService editManga:data fromList:fromList];
     }
     
@@ -79,7 +79,7 @@
     manga.manga_id = [data[kID] isKindOfClass:[NSString class]] ? @([data[kID] intValue]) : data[kID];
     manga.title = data[kTitle];
     
-    NSLog(@"manga: %@", manga.title);
+    ALLog(@"manga: %@", manga.title);
     
     if(data[kImageURL] && ![data[kImageURL] isNull])
         manga.image_url = data[kImageURL];
@@ -123,7 +123,7 @@
 
 + (Manga *)editManga:(NSDictionary *)data fromList:(BOOL)fromList {
     if(![MangaService mangaForID:data[kID]]) {
-        NSLog(@"Manga does not exist; unable to edit!");
+        ALLog(@"Manga does not exist; unable to edit!");
         return nil;
     }
     

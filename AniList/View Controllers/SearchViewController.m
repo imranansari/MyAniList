@@ -59,7 +59,7 @@
 - (void)searchWithQuery:(NSString *)query {
     [[MALHTTPClient sharedClient] searchForAnimeWithQuery:query success:^(id operation, NSArray *response) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            NSLog(@"Got anime results: %d", response.count);
+            ALLog(@"Got anime results: %d", response.count);
             for(NSDictionary *result in response) {
                 [AnimeService addAnime:result fromList:NO];
             }
@@ -67,16 +67,16 @@
             [self.searchDisplayController.searchResultsTableView reloadData];
         });
     } failure:^(id operation, NSError *error) {
-        NSLog(@"Anime search failure.");
+        ALLog(@"Anime search failure.");
     }];
-    
+    return;
     [[MALHTTPClient sharedClient] searchForMangaWithQuery:query success:^(id operation, NSArray *response) {
-        NSLog(@"Got manga results: %d", response.count);
+        ALLog(@"Got manga results: %d", response.count);
         for(NSDictionary *result in response) {
             [MangaService addManga:result fromList:NO];
         }
     } failure:^(id operation, NSError *error) {
-        NSLog(@"Manga search failure.");
+        ALLog(@"Manga search failure.");
     }];
 }
 
@@ -104,7 +104,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
-    NSLog(@"Number of objects fetched: %d", [sectionInfo numberOfObjects]);
+    ALLog(@"Number of objects fetched: %d", [sectionInfo numberOfObjects]);
     return [sectionInfo numberOfObjects];
 }
 
@@ -188,7 +188,7 @@
 	if (![self.fetchedResultsController performFetch:&error]) {
         // Replace this implementation with code to handle the error appropriately.
         // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-	    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+	    ALLog(@"Unresolved error %@, %@", error, [error userInfo]);
 #ifdef DEBUG
         abort();
 #endif
@@ -276,10 +276,10 @@
     UIImage *cachedImage = [UIImage imageWithContentsOfFile:cachedImageLocation];
     
     if(cachedImage) {
-        NSLog(@"Image on disk exists.");// for %@.", anime.title);
+        ALLog(@"Image on disk exists.");// for %@.", anime.title);
     }
     else {
-        NSLog(@"Image on disk does not exist.");// for %@.", anime.title);
+        ALLog(@"Image on disk does not exist.");// for %@.", anime.title);
     }
     
     [anilistCell.image setImageWithURLRequest:imageRequest placeholderImage:cachedImage success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
@@ -290,13 +290,13 @@
         if([object isKindOfClass:[Anime class]]) {
             directory = @"anime";
             Anime *anime = (Anime *)object;
-            NSLog(@"Got image for anime %@.", anime.title);
+            ALLog(@"Got image for anime %@.", anime.title);
             imageSaved = anime.image != nil;
         }
         else if([object isKindOfClass:[Manga class]]) {
             directory = @"manga";
             Manga *manga = (Manga *)object;
-            NSLog(@"Got image for manga %@.", manga.title);
+            ALLog(@"Got image for manga %@.", manga.title);
             imageSaved = manga.image != nil;
         }
 
@@ -308,7 +308,7 @@
 #warning - need to compare cached image to this new image, and replace if necessary.
 #warning - will need to be fast and efficient! Alternatively, we can recycle the cache if need be.
         if(!imageSaved) {
-            NSLog(@"Saving image to disk...");
+            ALLog(@"Saving image to disk...");
             NSArray *segmentedURL = [[request.URL absoluteString] componentsSeparatedByString:@"/"];
             NSString *filename = [segmentedURL lastObject];
             
@@ -317,7 +317,7 @@
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
                 BOOL saved = NO;
                 saved = [UIImageJPEGRepresentation(image, 1.0) writeToFile:imagePath options:NSAtomicWrite error:nil];
-                NSLog(@"Image %@", saved ? @"saved." : @"did not save.");
+                ALLog(@"Image %@", saved ? @"saved." : @"did not save.");
             });
             
             
@@ -332,7 +332,7 @@
         }
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
         // Log failure.
-        NSLog(@"Couldn't fetch image at URL %@.", [request.URL absoluteString]);
+        ALLog(@"Couldn't fetch image at URL %@.", [request.URL absoluteString]);
     }];
     
 //    AFImageRequestOperation *operation = [AFImageRequestOperation imageRequestOperationWithRequest:request success:^(UIImage *image) {
@@ -359,7 +359,6 @@
     
     if(searchString.length > 2) {
         [self searchWithQuery:searchString];
-        return NO;
     }
     
     return YES;

@@ -34,7 +34,7 @@
     [NSFetchedResultsController deleteCacheWithName:[self entityName]];
     self.fetchedResultsController = nil;
     
-    NSLog(@"AniList deallocating.");
+    ALLog(@"AniList deallocating.");
 }
 
 - (void)viewDidLoad
@@ -193,7 +193,7 @@
 	if (![self.fetchedResultsController performFetch:&error]) {
         // Replace this implementation with code to handle the error appropriately.
         // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-	    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+	    ALLog(@"Unresolved error %@, %@", error, [error userInfo]);
 #ifdef DEBUG
         abort();
 #endif
@@ -254,12 +254,12 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
-//    NSLog(@"content offset: %f", scrollView.contentOffset.y);
+//    ALLog(@"content offset: %f", scrollView.contentOffset.y);
     
     if(scrollView.contentOffset.y > 36) {
         NSArray *visibleSections = [[[NSSet setWithArray:[[self.tableView indexPathsForVisibleRows] valueForKey:@"section"]] allObjects] sortedArrayUsingSelector:@selector(compare:)];
-//        NSLog(@"indices: %@", [self.tableView indexPathsForVisibleRows]);
-//        NSLog(@"visible sections: %@", visibleSections);
+//        ALLog(@"indices: %@", [self.tableView indexPathsForVisibleRows]);
+//        ALLog(@"visible sections: %@", visibleSections);
         
         if(visibleSections.count > 0) {
             int topSection = [visibleSections[0] intValue];

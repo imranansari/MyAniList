@@ -214,7 +214,7 @@ static NSArray *animeStatusOrder;
 }
 
 - (void)save:(id)sender {
-    NSLog(@"Saving...");
+    ALLog(@"Saving...");
     
     self.saving = YES;
     
@@ -222,16 +222,16 @@ static NSArray *animeStatusOrder;
     
     if(self.addAnimeToList) {
         [[MALHTTPClient sharedClient] addAnimeToListWithID:self.anime.anime_id success:^(id operation, id response) {
-            NSLog(@"Added anime to list! Returning to anime details view.");
+            ALLog(@"Added anime to list! Returning to anime details view.");
         } failure:^(id operation, NSError *error) {
-            NSLog(@"Failed to update.");
+            ALLog(@"Failed to update.");
         }];
     }
     else {
         [[MALHTTPClient sharedClient] updateDetailsForAnimeWithID:self.anime.anime_id success:^(id operation, id response) {
-            NSLog(@"Updated. Returning to anime details view.");
+            ALLog(@"Updated. Returning to anime details view.");
         } failure:^(id operation, NSError *error) {
-            NSLog(@"Failed to update.");
+            ALLog(@"Failed to update.");
         }];
     }
 
@@ -284,7 +284,7 @@ static NSArray *animeStatusOrder;
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     // Calculate the page that we're currently looking at, and then fetch the appropriate status.
     int page = (int)(scrollView.contentOffset.x / scrollView.frame.size.width);
-    NSLog(@"Current page: %d", page);
+    ALLog(@"Current page: %d", page);
     self.anime.watched_status = animeStatusOrder[page];
     
     [self revertValuesToDefault];

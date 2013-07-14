@@ -50,7 +50,7 @@
 }
 
 - (void)doneButtonPressed:(id)sender {
-    NSLog(@"Done button pressed. Sending date %@.", self.datePicker.date);
+    ALLog(@"Done button pressed. Sending date %@.", self.datePicker.date);
     
     if(self.delegate && [self.delegate respondsToSelector:@selector(dateSelected:forType:)]) {
         // Send date to delegate.

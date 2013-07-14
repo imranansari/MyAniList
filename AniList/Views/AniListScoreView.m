@@ -93,7 +93,7 @@
 #pragma mark - Button Methods
 
 - (void)buttonPressed:(id)sender {
-    NSLog(@"Number pressed.");
+    ALLog(@"Number pressed.");
     
     UIButton *button = (UIButton *)sender;
     UILabel *selectedLabel;
@@ -101,7 +101,7 @@
     for(UIView *subview in button.subviews) {
         if(subview.tag == 1) {
             selectedLabel = (UILabel *)subview;
-            NSLog(@"Found %@ as the updated score.", selectedLabel.text);
+            ALLog(@"Found %@ as the updated score.", selectedLabel.text);
             [UIView animateWithDuration:0.2f animations:^{
                 // This is the selected score. Pass value to delegate if possible.
                 selectedLabel.alpha = SELECTED_ALPHA;

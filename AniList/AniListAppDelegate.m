@@ -96,7 +96,7 @@
     NSString *newDirectory = [documentsDirectory stringByAppendingPathComponent:directory];
     
     if ([fileManager createDirectoryAtPath:newDirectory withIntermediateDirectories:YES attributes:nil error:NULL] == NO) {
-        NSLog(@"Failed to create directory '%@'.", directory);
+        ALLog(@"Failed to create directory '%@'.", directory);
     }
 }
 
@@ -143,7 +143,7 @@
         if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
              // Replace this implementation with code to handle the error appropriately.
              // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            ALLog(@"Unresolved error %@, %@", error, [error userInfo]);
             abort();
         } 
     }
@@ -212,7 +212,7 @@
          Lightweight migration will only work for a limited set of schema changes; consult "Core Data Model Versioning and Data Migration Programming Guide" for details.
          
          */
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        ALLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }    
     
@@ -220,7 +220,7 @@
 }
 
 - (void)clearDatabase {
-    NSLog(@"Clearing persistent store.");
+    ALLog(@"Clearing persistent store.");
     _managedObjectContext = nil;
     _managedObjectModel = nil;
     _persistentStoreCoordinator = nil;
@@ -230,7 +230,7 @@
     [[NSFileManager defaultManager] removeItemAtPath:storeURL.path error:&error];
     
     if(!error) {
-        NSLog(@"Persistent store removed.");
+        ALLog(@"Persistent store removed.");
     }
 }
 

@@ -57,11 +57,11 @@
 - (IBAction)loginButtonPressed:(id)sender {
     [[MALHTTPClient sharedClient] loginWithUsername:self.username.text andPassword:self.password.text success:^(id operation, id response) {
         [[UserProfile profile] setUsername:self.username.text andPassword:self.password.text];
-        NSLog(@"Logged in!");
+        ALLog(@"Logged in!");
         [self revokeLoginScreen];
         
     } failure:^(id operation, NSError *error) {
-        NSLog(@"Could not log in.");
+        ALLog(@"Could not log in.");
         // Error logic to handle failure.
     }];
 }

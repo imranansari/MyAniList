@@ -34,7 +34,7 @@
 
 - (void)dealloc {
     [NSFetchedResultsController deleteCacheWithName:[self entityName]];
-    NSLog(@"AnimeList deallocating.");
+    ALLog(@"AnimeList deallocating.");
 }
 
 - (void)viewDidLoad {
@@ -129,41 +129,40 @@
     
     animeCell.type.text = [Anime stringForAnimeType:[anime.type intValue]];
     [animeCell.type addShadow];
-
-    NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     
     NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:anime.image_url]];
-    NSString *cachedImageLocation = [NSString stringWithFormat:@"%@/%@", documentsDirectory, anime.image];
-    UIImage *cachedImage = [UIImage imageWithContentsOfFile:cachedImageLocation];
+
+    UIImage *cachedImage = [anime imageForAnime];
 
     if(cachedImage) {
-        NSLog(@"Image on disk exists for %@.", anime.title);
+//        ALLog(@"Image on disk exists for %@.", anime.title);
     }
     else {
-        NSLog(@"Image on disk does not exist for %@.", anime.title);
+//        ALLog(@"Image on disk does not exist for %@.", anime.title);
     }
 
-    NSLog(@"location: %@", cachedImageLocation);
+//    ALLog(@"location: %@", cachedImageLocation);
     
+    if(!cachedImage) {
     [animeCell.image setImageWithURLRequest:imageRequest placeholderImage:cachedImage success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
         
-        NSLog(@"Got image for anime %@.", anime.title);
+//        ALLog(@"Got image for anime %@.", anime.title);
         animeCell.image.image = image;
         
         // Save the image onto disk if it doesn't exist or they aren't the same.
 #warning - need to compare cached image to this new image, and replace if necessary.
 #warning - will need to be fast and efficient! Alternatively, we can recycle the cache if need be.
         if(!anime.image) {
-            NSLog(@"Saving image to disk...");
+//            ALLog(@"Saving image to disk...");
             NSArray *segmentedURL = [[request.URL absoluteString] componentsSeparatedByString:@"/"];
             NSString *filename = [segmentedURL lastObject];
-
+            NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
             NSString *animeImagePath = [NSString stringWithFormat:@"%@/anime/%@", documentsDirectory, filename];
             
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
                 BOOL saved = NO;
                 saved = [UIImageJPEGRepresentation(image, 1.0) writeToFile:animeImagePath options:NSAtomicWrite error:nil];
-                NSLog(@"Image %@", saved ? @"saved." : @"did not save.");
+//                ALLog(@"Image %@", saved ? @"saved." : @"did not save.");
             });
             
             // Only save relative URL since Documents URL can change on updates.
@@ -171,8 +170,12 @@
         }
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
         // Log failure.
-        NSLog(@"Couldn't fetch image at URL %@.", [request.URL absoluteString]);
+//        ALLog(@"Couldn't fetch image at URL %@.", [request.URL absoluteString]);
     }];
+    }
+    else {
+        animeCell.image.image = cachedImage;
+    }
 }
 
 @end

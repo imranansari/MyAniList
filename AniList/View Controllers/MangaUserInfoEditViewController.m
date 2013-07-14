@@ -266,7 +266,7 @@ static NSArray *mangaStatusOrder;
 #pragma mark - Data Methods
 
 - (void)save:(id)sender {
-    NSLog(@"Saving...");
+    ALLog(@"Saving...");
     
     self.saving = YES;
     
@@ -274,16 +274,16 @@ static NSArray *mangaStatusOrder;
     
     if(self.addMangaToList) {
         [[MALHTTPClient sharedClient] addMangaToListWithID:self.manga.manga_id success:^(id operation, id response) {
-            NSLog(@"Added manga to list! Returning to manga details view.");
+            ALLog(@"Added manga to list! Returning to manga details view.");
         } failure:^(id operation, NSError *error) {
-            NSLog(@"Failed to update.");
+            ALLog(@"Failed to update.");
         }];
     }
     else {
         [[MALHTTPClient sharedClient] updateDetailsForMangaWithID:self.manga.manga_id success:^(id operation, id response) {
-            NSLog(@"Updated. Returning to manga details view.");
+            ALLog(@"Updated. Returning to manga details view.");
         } failure:^(id operation, NSError *error) {
-            NSLog(@"Failed to update.");
+            ALLog(@"Failed to update.");
         }];
     }
     
@@ -330,7 +330,7 @@ static NSArray *mangaStatusOrder;
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     // Calculate the page that we're currently looking at, and then fetch the appropriate status.
     int page = (int)(scrollView.contentOffset.x / scrollView.frame.size.width);
-    NSLog(@"Current page: %d", page);
+    ALLog(@"Current page: %d", page);
     self.manga.read_status = mangaStatusOrder[page];
     
     [self revertValuesToDefault];
