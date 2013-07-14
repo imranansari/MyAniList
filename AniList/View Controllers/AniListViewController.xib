@@ -52,10 +52,10 @@
 							<string key="NSResourceName">test_background@2x.png</string>
 						</object>
 					</object>
-					<object class="IBUILabel" id="61186675">
+					<object class="IBUILabel" id="204089194">
 						<reference key="NSNextResponder" ref="542935395"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{0, 28}, {320, 21}}</string>
+						<string key="NSFrame">{{0, 28}, {316, 21}}</string>
 						<reference key="NSSuperview" ref="542935395"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView"/>
@@ -96,7 +96,7 @@
 								<string key="NSFrame">{{-10, 0}, {340, 568}}</string>
 								<reference key="NSSuperview" ref="191373211"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="61186675"/>
+								<reference key="NSNextKeyView" ref="204089194"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<object class="NSColor" key="IBUIBackgroundColor" id="805085461">
 									<int key="NSColorSpace">3</int>
@@ -181,7 +181,7 @@
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">topSectionLabel</string>
 						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="61186675"/>
+						<reference key="destination" ref="204089194"/>
 					</object>
 					<int key="connectionID">45</int>
 				</object>
@@ -227,7 +227,7 @@
 						<array class="NSMutableArray" key="children">
 							<reference ref="191373211"/>
 							<reference ref="975091285"/>
-							<reference ref="61186675"/>
+							<reference ref="204089194"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -251,7 +251,7 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">41</int>
-						<reference key="object" ref="61186675"/>
+						<reference key="object" ref="204089194"/>
 						<reference key="parent" ref="542935395"/>
 					</object>
 				</array>

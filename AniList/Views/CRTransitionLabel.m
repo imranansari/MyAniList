@@ -102,26 +102,32 @@
             self.secondLabel.alpha = 0.0f;
         }
         // String is the same, no need to animate.
-        else if([self.firstLabel.text isEqualToString:text] || [self.secondLabel.text isEqualToString:text]) {
+        else if([self.firstLabel.text isEqualToString:text] || [self.secondLabel.text isEqualToString:text] || text.length == 0) {
             return;
         }
         else {
             self.secondLabel.text = text;
             
             [UIView animateWithDuration:self.transitionRate
+                                  delay:0.0f
+                                options:UIViewAnimationOptionBeginFromCurrentState
                              animations:^{
                                  self.firstLabel.alpha = 0.0f;
                                  self.secondLabel.alpha = 1.0f;
-                                 
-//                                 NSLog(@"alpha: %f | %f", self.firstLabel.alpha, self.secondLabel.alpha);
                              }
                              completion:^(BOOL finished) {
                                  if(finished) {
+
+                                     // If too many requests come in, this text label can get to 0.
+                                     // Any way of keeping track of animations? Wrap in a queue maybe?
+                                     if(self.secondLabel.text.length == 0) {
+                                         self.secondLabel.text = text;
+                                     }
+                                     
                                      self.firstLabel.text = self.secondLabel.text;
                                      self.secondLabel.text = @"";
                                      self.firstLabel.alpha = 1.0f;
                                      self.secondLabel.alpha = 0.0f;
-//                                     NSLog(@"completed alpha: %f | %f", self.firstLabel.alpha, self.secondLabel.alpha);
                                  }
                              }];
         }

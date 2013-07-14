@@ -287,13 +287,12 @@
     NSString *mangaToXML = [MangaService mangaToXML:mangaID];
     NSDictionary *parameters = @{ @"data" : mangaToXML };
     
-    [[UMALHTTPClient sharedClient] authenticate];
-    [[UMALHTTPClient sharedClient] postPath:path
+    [[MALHTTPClient sharedClient] authenticate];
+    [[MALHTTPClient sharedClient] postPath:path
                                  parameters:parameters
                                     success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                        NSError *parseError = nil;
-                                        NSDictionary *xmlDictionary = [XMLReader dictionaryForXMLData:operation.responseData error:&parseError];
-                                        success(operation, xmlDictionary);
+                                        NSLog(@"response: %@", operation.responseString);
+                                        success(operation, responseObject);
                                     }
                                     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                         failure(operation, error);
