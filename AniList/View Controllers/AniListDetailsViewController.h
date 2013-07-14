@@ -29,4 +29,6 @@
 - (void)displayErrorMessage;
 - (void)adjustLabels;
 
+- (void)updatePoster;
+
 @end

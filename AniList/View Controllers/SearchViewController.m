@@ -357,10 +357,8 @@
     [self filterContentForSearchText:[self.searchDisplayController.searchBar text]
                                scope:[self.searchDisplayController.searchBar selectedScopeButtonIndex]];
     
-    if(searchString.length > 5) {
-        
+    if(searchString.length > 2) {
         [self searchWithQuery:searchString];
-        
         return NO;
     }
     

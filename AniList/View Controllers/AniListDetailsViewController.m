@@ -47,6 +47,12 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)updatePoster {
+    [UIView animateWithDuration:0.3f animations:^{
+        self.poster.alpha = 1.0f;
+    }];
+}
+
 - (void)displayDetailsViewAnimated:(BOOL)animated {
     if(animated) {
         [UIView animateWithDuration:0.5f

@@ -306,4 +306,12 @@
     return [self.average_count intValue] > 0;
 }
 
+- (UIImage *)imageForAnime {
+    NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *cachedImageLocation = [NSString stringWithFormat:@"%@/%@", documentsDirectory, self.image];
+    UIImage *cachedImage = [UIImage imageWithContentsOfFile:cachedImageLocation];
+    
+    return cachedImage;
+}
+
 @end

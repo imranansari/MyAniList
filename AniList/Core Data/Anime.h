@@ -130,6 +130,7 @@ typedef enum {
 + (NSString *)unitForAnimeType:(AnimeType)animeType plural:(BOOL)plural;
 
 - (BOOL)hasAdditionalDetails;
+- (UIImage *)imageForAnime;
 
 // Methods for Unofficial API
 + (AnimeType)unofficialAnimeTypeForValue:(NSString *)value;
