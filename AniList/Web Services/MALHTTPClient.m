@@ -72,7 +72,7 @@
     [[MALHTTPClient sharedClient] getPath:@"/api/account/verify_credentials.xml"
                                parameters:@{}
                                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                      NSLog(@"Logged in successfully!");
+                                      ALLog(@"Logged in successfully!");
                                       success(operation, responseObject);
                                   }
                                   failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -129,11 +129,11 @@
     [[MALHTTPClient sharedClient] postPath:path
                                 parameters:parameters
                                    success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                       NSLog(@"response: %@", operation.responseString);
+                                       ALLog(@"response: %@", operation.responseString);
                                        success(operation, responseObject);
                                    }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       NSLog(@"failed response: %@", operation.responseString);
+                                       ALLog(@"failed response: %@", operation.responseString);
                                        failure(operation, error);
                                    }];
     
@@ -149,7 +149,7 @@
     [[MALHTTPClient sharedClient] postPath:path
                                 parameters:parameters
                                    success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                       NSLog(@"response: %@", operation.responseString);
+                                       ALLog(@"response: %@", operation.responseString);
                                        success(operation, responseObject);
                                    }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -168,23 +168,45 @@
     [[MALHTTPClient sharedClient] getPath:path
                                parameters:@{}
                                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                      NSError *parseError = nil;
-                                      NSDictionary *xmlDictionary = [XMLReader dictionaryForXMLData:responseObject error:&parseError];
-                                      NSArray *animelist = xmlDictionary[@"anime"][@"entry"];
-                                      
-                                      NSMutableArray *cleanedList = [NSMutableArray array];
-                                      NSMutableDictionary *cleanedAnime;
-                                      for(NSDictionary *anime in animelist) {
-                                          cleanedAnime = [[anime cleanupTextTags] mutableCopy];
-                                          if([cleanedAnime valueForKey:@"score"] != nil) {
-                                              NSString *value = cleanedAnime[@"score"];
-                                              [cleanedAnime addEntriesFromDictionary:@{ @"members_score" : value }];
-                                              [cleanedAnime removeObjectForKey:@"score"];
+                                      dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                                          NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+//                                          ALLog(@"result: %@", result);
+                                          result = [result stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"];
+                                          result = [result stringByDecodingHTMLEntities];
+                                          
+                                          // If there still are ampersands out there, escape them.
+                                          result = [result stringByReplacingOccurrencesOfString:@"<br />" withString:@""];
+                                          result = [result stringByReplacingOccurrencesOfString:@"&" withString:@"&amp;"];
+//                                          ALLog(@"result: %@", result);
+                                          NSError *parseError = nil;
+                                          NSDictionary *xmlDictionary = [XMLReader dictionaryForXMLString:result error:&parseError];
+                                          
+                                          NSArray *animelist;
+                                          id list = xmlDictionary[@"anime"][@"entry"];
+                                          
+                                          if([list isKindOfClass:[NSDictionary class]]) {
+                                              animelist = @[xmlDictionary[@"anime"][@"entry"]];
                                           }
-                                          [cleanedList addObject:cleanedAnime];
-                                      }
-
-                                      success(operation, cleanedList);
+                                          else if([list isKindOfClass:[NSArray class]]) {
+                                              animelist = xmlDictionary[@"anime"][@"entry"];
+                                          }
+                                          
+                                          NSMutableArray *cleanedList = [NSMutableArray array];
+                                          NSMutableDictionary *cleanedAnime;
+                                          for(NSDictionary *anime in animelist) {
+                                              cleanedAnime = [[anime cleanupTextTags] mutableCopy];
+                                              if([cleanedAnime valueForKey:@"score"] != nil) {
+                                                  NSString *value = cleanedAnime[@"score"];
+                                                  [cleanedAnime addEntriesFromDictionary:@{ @"members_score" : value }];
+                                                  [cleanedAnime removeObjectForKey:@"score"];
+                                              }
+                                              [cleanedList addObject:cleanedAnime];
+                                          }
+                                          
+                                          dispatch_async(dispatch_get_main_queue(), ^{
+                                              success(operation, cleanedList);
+                                          });
+                                      });
                                   }
                                   failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                       failure(operation, error);
@@ -199,8 +221,13 @@
     [[MALHTTPClient sharedClient] getPath:path
                                parameters:@{}
                                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                      NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+                                      result = [result stringByDecodingHTMLEntities];
+                                      result = [result stringByReplacingOccurrencesOfString:@"<br />" withString:@""];
+                                      ALLog(@"result: %@", result);
                                       NSError *parseError = nil;
-                                      NSDictionary *xmlDictionary = [XMLReader dictionaryForXMLData:responseObject error:&parseError];
+                                      NSDictionary *xmlDictionary = [XMLReader dictionaryForXMLString:result error:&parseError];
+                                      NSArray *manga = xmlDictionary[@"manga"];
                                       NSArray *mangalist = xmlDictionary[@"manga"][@"entry"];
                                       
                                       NSMutableArray *cleanedList = [NSMutableArray array];
@@ -271,11 +298,11 @@
     [[MALHTTPClient sharedClient] postPath:path
                                 parameters:parameters
                                    success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                       NSLog(@"response: %@", operation.responseString);
+                                       ALLog(@"response: %@", operation.responseString);
                                        success(operation, responseObject);
                                    }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       NSLog(@"failed response: %@", operation.responseString);
+                                       ALLog(@"failed response: %@", operation.responseString);
                                        failure(operation, error);
                                    }];
     
@@ -291,7 +318,7 @@
     [[MALHTTPClient sharedClient] postPath:path
                                  parameters:parameters
                                     success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                        NSLog(@"response: %@", operation.responseString);
+                                        ALLog(@"response: %@", operation.responseString);
                                         success(operation, responseObject);
                                     }
                                     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
