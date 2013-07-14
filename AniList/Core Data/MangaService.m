@@ -91,19 +91,12 @@
     manga.total_volumes = [data[kVolumes] isNull] ? @(0) : [data[kVolumes] isKindOfClass:[NSString class]] ? @([data[kVolumes] intValue]) : data[kVolumes];
     manga.status = @([Manga mangaPublishStatusForValue:data[kSeriesStatus]]);
     
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    
-    // There exist two date formats. Should probably consolidate this somehow.
-    // Typically, we'd add a Z for timezone instead of hardcoding +0000, but we want to preserve the raw date
-    // since it seems like timezones are not used in the database.
-    dateFormatter.dateFormat = @"yyyy-MM-dd";
-    
     // note: not the user start/end date.
-    manga.date_start = [dateFormatter dateFromString:data[kSeriesStartDate]];
-    manga.date_finish = [dateFormatter dateFromString:data[kSeriesEndDate]];
+    manga.date_start = [NSDate parseDate:data[kSeriesStartDate]];
+    manga.date_finish = [NSDate parseDate:data[kSeriesEndDate]];
     
-    manga.user_date_start = [dateFormatter dateFromString:data[kUserStartDate]];
-    manga.user_date_finish = [dateFormatter dateFromString:data[kUserEndDate]];
+    manga.user_date_start = [NSDate parseDate:data[kUserStartDate]];
+    manga.user_date_finish = [NSDate parseDate:data[kUserEndDate]];
     
     //    anime.classification = data[@"classification"];
     //    anime.average_score = data[@"members_score"];

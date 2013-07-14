@@ -47,6 +47,8 @@
 		63047A4317656CE10039D795 /* AniListDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63047A4117656CE10039D795 /* AniListDatePickerView.m */; };
 		630965181737E82100B43489 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 630965171737E82100B43489 /* Icon@2x.png */; };
 		6309651A1737E82500B43489 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 630965191737E82500B43489 /* Icon.png */; };
+		630CC0941792532D0029D021 /* TVDBHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 630CC0931792532D0029D021 /* TVDBHTTPClient.m */; };
+		630CC0951792532D0029D021 /* TVDBHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 630CC0931792532D0029D021 /* TVDBHTTPClient.m */; };
 		630E0FE01768E9980061110A /* minus.png in Resources */ = {isa = PBXBuildFile; fileRef = 630E0FDC1768E9980061110A /* minus.png */; };
 		630E0FE11768E9980061110A /* minus.png in Resources */ = {isa = PBXBuildFile; fileRef = 630E0FDC1768E9980061110A /* minus.png */; };
 		630E0FE21768E9980061110A /* minus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 630E0FDD1768E9980061110A /* minus@2x.png */; };
@@ -256,6 +258,8 @@
 		63047A4117656CE10039D795 /* AniListDatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AniListDatePickerView.m; path = Views/AniListDatePickerView.m; sourceTree = "<group>"; };
 		630965171737E82100B43489 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		630965191737E82500B43489 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		630CC0921792532D0029D021 /* TVDBHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVDBHTTPClient.h; path = "Web Services/TVDBHTTPClient.h"; sourceTree = "<group>"; };
+		630CC0931792532D0029D021 /* TVDBHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVDBHTTPClient.m; path = "Web Services/TVDBHTTPClient.m"; sourceTree = "<group>"; };
 		630E0FDC1768E9980061110A /* minus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = minus.png; path = Images/Icons/minus.png; sourceTree = "<group>"; };
 		630E0FDD1768E9980061110A /* minus@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "minus@2x.png"; path = "Images/Icons/minus@2x.png"; sourceTree = "<group>"; };
 		630E0FDE1768E9980061110A /* plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = plus.png; path = Images/Icons/plus.png; sourceTree = "<group>"; };
@@ -903,6 +907,8 @@
 				636F8679175A7D17007E1FB6 /* MALUserClient.m */,
 				63EFEC3B176966B7009CEAB3 /* UMALHTTPClient.h */,
 				63EFEC3C176966B7009CEAB3 /* UMALHTTPClient.m */,
+				630CC0921792532D0029D021 /* TVDBHTTPClient.h */,
+				630CC0931792532D0029D021 /* TVDBHTTPClient.m */,
 			);
 			name = Requests;
 			sourceTree = "<group>";
@@ -1180,6 +1186,7 @@
 				63B0DFA31789C3F7006F0868 /* NSString+HTML.m in Sources */,
 				63B0DFA71789C529006F0868 /* GTMNSString+HTML.m in Sources */,
 				63FC20A717920EB000DFD544 /* CRTransitionLabel.m in Sources */,
+				630CC0941792532D0029D021 /* TVDBHTTPClient.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1260,6 +1267,7 @@
 				63B0DFB41789D091006F0868 /* MangaTests.m in Sources */,
 				63B0DFB71789D09B006F0868 /* MangaServiceTests.m in Sources */,
 				63FC20A817920EB000DFD544 /* CRTransitionLabel.m in Sources */,
+				630CC0951792532D0029D021 /* TVDBHTTPClient.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
