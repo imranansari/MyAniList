@@ -219,6 +219,8 @@
 		63B386BB1777DCAB001A7E31 /* AniListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63B386B91777DCAB001A7E31 /* AniListCell.xib */; };
 		63B386BE1777E29D001A7E31 /* AniListSearchDisplayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B386BD1777E29C001A7E31 /* AniListSearchDisplayController.m */; };
 		63B386BF1777E29D001A7E31 /* AniListSearchDisplayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B386BD1777E29C001A7E31 /* AniListSearchDisplayController.m */; };
+		63B551141792F0B1001D74A3 /* Settings.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B551131792F0B1001D74A3 /* Settings.m */; };
+		63B551151792F0B1001D74A3 /* Settings.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B551131792F0B1001D74A3 /* Settings.m */; };
 		63BEA7371761859300432BED /* AniListPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63BEA7361761859300432BED /* AniListPickerView.m */; };
 		63BEA7381761859300432BED /* AniListPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63BEA7361761859300432BED /* AniListPickerView.m */; };
 		63BEA73E17619E0800432BED /* AniListUserInfoEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63BEA73C17619E0800432BED /* AniListUserInfoEditViewController.m */; };
@@ -442,6 +444,8 @@
 		63B386B91777DCAB001A7E31 /* AniListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AniListCell.xib; path = Views/AniListCell.xib; sourceTree = "<group>"; };
 		63B386BC1777E29B001A7E31 /* AniListSearchDisplayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AniListSearchDisplayController.h; sourceTree = "<group>"; };
 		63B386BD1777E29C001A7E31 /* AniListSearchDisplayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AniListSearchDisplayController.m; sourceTree = "<group>"; };
+		63B551121792F0B1001D74A3 /* Settings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Settings.h; path = Classes/Settings.h; sourceTree = "<group>"; };
+		63B551131792F0B1001D74A3 /* Settings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Settings.m; path = Classes/Settings.m; sourceTree = "<group>"; };
 		63BEA7351761859300432BED /* AniListPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AniListPickerView.h; path = Views/AniListPickerView.h; sourceTree = "<group>"; };
 		63BEA7361761859300432BED /* AniListPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AniListPickerView.m; path = Views/AniListPickerView.m; sourceTree = "<group>"; };
 		63BEA73B17619E0800432BED /* AniListUserInfoEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AniListUserInfoEditViewController.h; sourceTree = "<group>"; };
@@ -517,46 +521,28 @@
 		632F4368171CD6FA00A5B43A /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				63B551111792F033001D74A3 /* Manga */,
+				63B551101792F02F001D74A3 /* Anime */,
 				636F8684175B1091007E1FB6 /* AniListUserInfoViewController.h */,
 				636F8685175B1091007E1FB6 /* AniListUserInfoViewController.m */,
 				636F8686175B1091007E1FB6 /* AniListUserInfoViewController.xib */,
-				636F868B175B10A6007E1FB6 /* AnimeUserInfoViewController.h */,
-				636F868C175B10A6007E1FB6 /* AnimeUserInfoViewController.m */,
-				63461A0E1777F8A20053652C /* MangaUserInfoViewController.h */,
-				63461A0F1777F8A20053652C /* MangaUserInfoViewController.m */,
 				632F4369171CD6FA00A5B43A /* MenuViewController.h */,
 				632F436A171CD6FA00A5B43A /* MenuViewController.m */,
 				632F436B171CD6FA00A5B43A /* MenuViewController.xib */,
 				632F4398171CDDEA00A5B43A /* AniListViewController.h */,
 				632F4399171CDDEA00A5B43A /* AniListViewController.m */,
 				632F439A171CDDEB00A5B43A /* AniListViewController.xib */,
-				632F43A9171D7DF100A5B43A /* AnimeListViewController.h */,
-				632F43AA171D7DF100A5B43A /* AnimeListViewController.m */,
-				632F43AC171D7DFB00A5B43A /* MangaListViewController.h */,
-				632F43AD171D7DFB00A5B43A /* MangaListViewController.m */,
 				6301D948175D66AD00163160 /* AniListSummaryViewController.h */,
 				6301D949175D66AE00163160 /* AniListSummaryViewController.m */,
 				6301D94A175D66AE00163160 /* AniListSummaryViewController.xib */,
-				6350279D171E51450004C106 /* AnimeViewController.h */,
-				6350279E171E51450004C106 /* AnimeViewController.m */,
-				63B386B51777BA38001A7E31 /* MangaViewController.h */,
-				63B386B61777BA38001A7E31 /* MangaViewController.m */,
 				636F8692175B116F007E1FB6 /* AniListDetailsViewController.h */,
 				636F8693175B116F007E1FB6 /* AniListDetailsViewController.m */,
 				636F8694175B116F007E1FB6 /* AniListDetailsViewController.xib */,
-				636F8699175B117D007E1FB6 /* AnimeDetailsViewController.h */,
-				636F869A175B117D007E1FB6 /* AnimeDetailsViewController.m */,
-				63461A0A1777F4700053652C /* MangaDetailsViewController.h */,
-				63461A0B1777F4700053652C /* MangaDetailsViewController.m */,
 				63892574175F7ACC00C8489A /* BaseViewController.h */,
 				63892575175F7ACC00C8489A /* BaseViewController.m */,
 				63BEA73B17619E0800432BED /* AniListUserInfoEditViewController.h */,
 				63BEA73C17619E0800432BED /* AniListUserInfoEditViewController.m */,
 				63BEA73D17619E0800432BED /* AniListUserInfoEditViewController.xib */,
-				63859E891763F28C0029397C /* AnimeUserInfoEditViewController.h */,
-				63859E8A1763F28C0029397C /* AnimeUserInfoEditViewController.m */,
-				63461A121777FA620053652C /* MangaUserInfoEditViewController.h */,
-				63461A131777FA620053652C /* MangaUserInfoEditViewController.m */,
 				63894CC3176A9E37007D2D05 /* LoginViewController.h */,
 				63894CC4176A9E37007D2D05 /* LoginViewController.m */,
 				63894CC5176A9E37007D2D05 /* LoginViewController.xib */,
@@ -603,6 +589,8 @@
 				635027AF171ECEA00004C106 /* Status.h */,
 				63894CBF176A9C05007D2D05 /* UserProfile.h */,
 				63894CC0176A9C05007D2D05 /* UserProfile.m */,
+				63B551121792F0B1001D74A3 /* Settings.h */,
+				63B551131792F0B1001D74A3 /* Settings.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -610,6 +598,11 @@
 		632F438F171CDA2C00A5B43A /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
+				635027BB171ED60A0004C106 /* Anime.h */,
+				635027BC171ED60A0004C106 /* Anime.m */,
+				635484B8171C2FA7003457CB /* AniList_1.0.xcdatamodeld */,
+				63B386AE17764720001A7E31 /* Manga.h */,
+				63B386AF17764720001A7E31 /* Manga.m */,
 				635027B8171ED41A0004C106 /* AnimeService.h */,
 				635027B9171ED41A0004C106 /* AnimeService.m */,
 				63B386AA1776401D001A7E31 /* MangaService.h */,
@@ -838,11 +831,6 @@
 				632F4368171CD6FA00A5B43A /* View Controllers */,
 				635484AF171C2FA7003457CB /* AniListAppDelegate.h */,
 				635484B0171C2FA7003457CB /* AniListAppDelegate.m */,
-				635027BB171ED60A0004C106 /* Anime.h */,
-				635027BC171ED60A0004C106 /* Anime.m */,
-				635484B8171C2FA7003457CB /* AniList_1.0.xcdatamodeld */,
-				63B386AE17764720001A7E31 /* Manga.h */,
-				63B386AF17764720001A7E31 /* Manga.m */,
 				635484A7171C2FA7003457CB /* Supporting Files */,
 			);
 			path = AniList;
@@ -928,6 +916,40 @@
 				632F4395171CDC7600A5B43A /* hamburger@2x.png */,
 			);
 			name = Icons;
+			sourceTree = "<group>";
+		};
+		63B551101792F02F001D74A3 /* Anime */ = {
+			isa = PBXGroup;
+			children = (
+				636F868B175B10A6007E1FB6 /* AnimeUserInfoViewController.h */,
+				636F868C175B10A6007E1FB6 /* AnimeUserInfoViewController.m */,
+				632F43A9171D7DF100A5B43A /* AnimeListViewController.h */,
+				632F43AA171D7DF100A5B43A /* AnimeListViewController.m */,
+				6350279D171E51450004C106 /* AnimeViewController.h */,
+				6350279E171E51450004C106 /* AnimeViewController.m */,
+				636F8699175B117D007E1FB6 /* AnimeDetailsViewController.h */,
+				636F869A175B117D007E1FB6 /* AnimeDetailsViewController.m */,
+				63859E891763F28C0029397C /* AnimeUserInfoEditViewController.h */,
+				63859E8A1763F28C0029397C /* AnimeUserInfoEditViewController.m */,
+			);
+			name = Anime;
+			sourceTree = "<group>";
+		};
+		63B551111792F033001D74A3 /* Manga */ = {
+			isa = PBXGroup;
+			children = (
+				63461A0E1777F8A20053652C /* MangaUserInfoViewController.h */,
+				63461A0F1777F8A20053652C /* MangaUserInfoViewController.m */,
+				632F43AC171D7DFB00A5B43A /* MangaListViewController.h */,
+				632F43AD171D7DFB00A5B43A /* MangaListViewController.m */,
+				63B386B51777BA38001A7E31 /* MangaViewController.h */,
+				63B386B61777BA38001A7E31 /* MangaViewController.m */,
+				63461A0A1777F4700053652C /* MangaDetailsViewController.h */,
+				63461A0B1777F4700053652C /* MangaDetailsViewController.m */,
+				63461A121777FA620053652C /* MangaUserInfoEditViewController.h */,
+				63461A131777FA620053652C /* MangaUserInfoEditViewController.m */,
+			);
+			name = Manga;
 			sourceTree = "<group>";
 		};
 		63BEA74A176213B600432BED /* RSSGlowLabel */ = {
@@ -1187,6 +1209,7 @@
 				63B0DFA71789C529006F0868 /* GTMNSString+HTML.m in Sources */,
 				63FC20A717920EB000DFD544 /* CRTransitionLabel.m in Sources */,
 				630CC0941792532D0029D021 /* TVDBHTTPClient.m in Sources */,
+				63B551141792F0B1001D74A3 /* Settings.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1268,6 +1291,7 @@
 				63B0DFB71789D09B006F0868 /* MangaServiceTests.m in Sources */,
 				63FC20A817920EB000DFD544 /* CRTransitionLabel.m in Sources */,
 				630CC0951792532D0029D021 /* TVDBHTTPClient.m in Sources */,
+				63B551151792F0B1001D74A3 /* Settings.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1397,8 +1421,8 @@
 		635484D5171C2FA7003457CB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Corey Roberts (8E236WJF76)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Corey Roberts (8E236WJF76)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -1409,8 +1433,8 @@
 				INFOPLIST_FILE = "AniList/AniList-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE = "BAF95AFD-16BA-44D7-A727-767A9CA2FDBC";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "BAF95AFD-16BA-44D7-A727-767A9CA2FDBC";
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/AFNetworking/AFNetworking";
 				WRAPPER_EXTENSION = app;
 			};

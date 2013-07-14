@@ -45,7 +45,11 @@ static UserProfile *profile = nil;
 - (void)setPassword:(NSString *)password {
     [[NSUserDefaults standardUserDefaults] setValue:password forKey:kPasswordKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    
+}
+
+- (void)logout {
+    self.username = @"";
+    self.password = @"";
 }
 
 + (BOOL)userIsLoggedIn {

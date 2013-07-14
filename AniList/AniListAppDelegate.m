@@ -219,6 +219,21 @@
     return _persistentStoreCoordinator;
 }
 
+- (void)clearDatabase {
+    NSLog(@"Clearing persistent store.");
+    _managedObjectContext = nil;
+    _managedObjectModel = nil;
+    _persistentStoreCoordinator = nil;
+    
+    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"AniList.sqlite"];
+    NSError *error = nil;
+    [[NSFileManager defaultManager] removeItemAtPath:storeURL.path error:&error];
+    
+    if(!error) {
+        NSLog(@"Persistent store removed.");
+    }
+}
+
 #pragma mark - Application's Documents directory
 
 // Returns the URL to the application's Documents directory.

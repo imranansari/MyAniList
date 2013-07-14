@@ -21,5 +21,6 @@
 - (NSURL *)applicationDocumentsDirectory;
 - (NSURL *)animeImageDirectory;
 - (NSURL *)mangaImageDirectory;
+- (void)clearDatabase;
 
 @end

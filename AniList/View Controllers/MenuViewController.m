@@ -9,6 +9,8 @@
 #import "MenuViewController.h"
 #import "MenuCell.h"
 #import "ProfileCell.h"
+#import "AnimeListViewController.h"
+#import "AniListAppDelegate.h"
 
 #define kCellTitleKey @"kCellTitleKey"
 #define kCellViewControllerKey @"kCellViewControllerKey"
@@ -60,9 +62,11 @@ static NSString *CellIdentifier = @"Cell";
                       kCellViewControllerKey : @"SettingsViewController",
                       kCellActionKey : @"loadViewController:"
                       },
-                  
-                  
-                  
+                  @{
+                      kCellTitleKey : @"Log Out",
+                      kCellViewControllerKey : @"LoginViewController",
+                      kCellActionKey : @"logout:"
+                      }
                   ];
     }
 }
@@ -73,8 +77,28 @@ static NSString *CellIdentifier = @"Cell";
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - Cell Action Methods
+
 - (void)loadViewController:(UIViewController *)viewController {
-    [self.revealViewController setFrontViewController:viewController animated:YES];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
+    [self.revealViewController setFrontViewController:navigationController animated:YES];
+}
+
+- (void)loadModalViewController:(UIViewController *)viewController {
+    AnimeListViewController *animeVC = [[AnimeListViewController alloc] init];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:animeVC];
+    navigationController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    [navigationController presentViewController:viewController animated:YES completion:^{
+        [self.revealViewController setFrontViewController:navigationController animated:YES];
+    }];
+}
+
+- (void)logout:(UIViewController *)viewController {
+    // wipe all cached data.
+    AniListAppDelegate *delegate = (AniListAppDelegate *)[UIApplication sharedApplication].delegate;
+    [delegate clearDatabase];
+    
+    [self loadModalViewController:viewController];
 }
 
 #pragma mark - Table view data source
@@ -115,10 +139,11 @@ static NSString *CellIdentifier = @"Cell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     Class class = NSClassFromString(items[indexPath.row][kCellViewControllerKey]);
+    SEL selector = NSSelectorFromString(items[indexPath.row][kCellActionKey]);
+    
     if([class isSubclassOfClass:[UIViewController class]]) {
         UIViewController *viewController = [[class alloc] init];
-        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
-        [self loadViewController:navigationController];
+        [self performSelector:selector withObject:viewController];
     }
 }
 

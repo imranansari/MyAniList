@@ -9,9 +9,13 @@
 #import "SettingsViewController.h"
 #import "AniListTableView.h"
 
+#define kOptionName @"kOptionName"
+#define kAction     @"kAction"
+
 @interface SettingsViewController ()
 @property (nonatomic, weak) IBOutlet UIView *maskView;
 @property (nonatomic, weak) IBOutlet AniListTableView *tableView;
+@property (nonatomic, strong) NSArray *options;
 @end
 
 @implementation SettingsViewController
@@ -20,7 +24,10 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+//        self.options = @[
+//                         @{<#key#>: <#object, ...#>}
+//                         
+//                         ];
     }
     return self;
 }

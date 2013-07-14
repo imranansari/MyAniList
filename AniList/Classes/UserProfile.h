@@ -21,6 +21,7 @@
 
 + (UserProfile *)profile;
 - (void)setUsername:(NSString *)username andPassword:(NSString *)password;
+- (void)logout;
 + (BOOL)userIsLoggedIn;
 
 @end
