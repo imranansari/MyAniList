@@ -11,22 +11,53 @@
 
 #define ENTITY_NAME @"Anime"
 
+@interface AnimeService()
+
+@end
+
+static NSArray *cachedAnimeList = nil;
+
 @implementation AnimeService
 
 + (Anime *)animeForID:(NSNumber *)ID {
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITY_NAME inManagedObjectContext:[AnimeService managedObjectContext]];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"anime_id == %d", [ID intValue]];
-    request.entity = entity;
-    request.predicate = predicate;
+    return [self animeForID:ID fromCache:NO];
+}
+
++ (Anime *)animeForID:(NSNumber *)ID fromCache:(BOOL)fromCache {
     
-    NSError *error = nil;
-    NSArray *results = [[AnimeService managedObjectContext] executeFetchRequest:request error:&error];
-    
-    if(results.count) {
-        return (Anime *)results[0];
+    if(fromCache) {
+        if(!cachedAnimeList) {
+            NSFetchRequest *request = [[NSFetchRequest alloc] init];
+            NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITY_NAME inManagedObjectContext:[AnimeService managedObjectContext]];
+            request.entity = entity;
+            
+            NSError *error = nil;
+            cachedAnimeList = [[AnimeService managedObjectContext] executeFetchRequest:request error:&error];
+        }
+        
+        for(Anime *anime in cachedAnimeList) {
+            if([anime.anime_id intValue] == [ID intValue])
+                return anime;
+        }
+        
+        return nil;
     }
-    else return nil;
+    else {
+        NSFetchRequest *request = [[NSFetchRequest alloc] init];
+        NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITY_NAME inManagedObjectContext:[AnimeService managedObjectContext]];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"anime_id == %d", [ID intValue]];
+        request.entity = entity;
+        request.predicate = predicate;
+        request.fetchLimit = 1;
+        
+        NSError *error = nil;
+        NSArray *results = [[AnimeService managedObjectContext] executeFetchRequest:request error:&error];
+        
+        if(results.count) {
+            return (Anime *)results[0];
+        }
+        else return nil;
+    }
 }
 
 + (BOOL)addAnimeList:(NSDictionary *)data {
@@ -35,46 +66,54 @@
     NSDictionary *animeDictionary = animeDetails[@"anime"];
     NSDictionary *animeUserInfo = animeDetails[@"myinfo"];
     
-    for(NSDictionary *animeItem in animeDictionary) {
-        NSMutableDictionary *anime = [[NSMutableDictionary alloc] init];
-        
-        [anime addEntriesFromDictionary:@{ kID : @([animeItem[@"series_animedb_id"][@"text"] intValue]) } ];
-        [anime addEntriesFromDictionary:@{ kUserEndDate : animeItem[@"my_finish_date"][@"text"] }];
-        [anime addEntriesFromDictionary:@{ kUserLastUpdated : @([animeItem[@"my_last_updated"][@"text"] intValue]) }];
-        [anime addEntriesFromDictionary:@{ kUserStartDate : animeItem[@"my_start_date"][@"text"] }];
-        [anime addEntriesFromDictionary:@{ kUserRewatchingStatus : @([animeItem[@"my_rewatching"][@"text"] intValue]) }];
-        [anime addEntriesFromDictionary:@{ kUserRewatchingEpisode : @([animeItem[@"my_rewatching_ep"][@"text"] intValue]) }];
-        [anime addEntriesFromDictionary:@{ kUserScore : @([animeItem[@"my_score"][@"text"] intValue]) }];
-        [anime addEntriesFromDictionary:@{ kUserWatchedStatus : animeItem[@"my_status"][@"text"] }];
-        
-        // no tag support...yet.
-//        [anime addEntriesFromDictionary:@{ @"user_tags" : animeItem[@"my_tags"][@"text"] }];
-        
-        [anime addEntriesFromDictionary:@{ kUserWatchedEpisodes : @([animeItem[@"my_watched_episodes"][@"text"] intValue]) }];
-        [anime addEntriesFromDictionary:@{ kAirEndDate : animeItem[@"series_end"][@"text"] }];
-        [anime addEntriesFromDictionary:@{ kEpisodes : @([animeItem[@"series_episodes"][@"text"] intValue]) }];
-        [anime addEntriesFromDictionary:@{ kImageURL : animeItem[@"series_image"][@"text"] }];
-        [anime addEntriesFromDictionary:@{ kAirStartDate : animeItem[@"series_start"][@"text"] }];
-        [anime addEntriesFromDictionary:@{ kAirStatus : animeItem[@"series_status"][@"text"] }];
-        
-        // no synonym support...yet.
-//        [anime addEntriesFromDictionary:@{ @"series_synonyms" : animeItem[@"series_synonyms"][@"text"] }];
-        
-        [anime addEntriesFromDictionary:@{ kTitle : animeItem[@"series_title"][@"text"] }];
-        [anime addEntriesFromDictionary:@{ kType : animeItem[@"series_type"][@"text"] }];
-        
-        [AnimeService addAnime:anime fromList:YES];
-    }
+    cachedAnimeList = nil;
     
-    [[AnimeService managedObjectContext] save:nil];
+    MVComputeTimeWithNameAndBlock((const char *)"animelist", ^{
+        
+        for(NSDictionary *animeItem in animeDictionary) {
+            NSMutableDictionary *anime = [[NSMutableDictionary alloc] init];
+            
+            [anime addEntriesFromDictionary:@{ kID : @([animeItem[@"series_animedb_id"][@"text"] intValue]) } ];
+            [anime addEntriesFromDictionary:@{ kUserEndDate : animeItem[@"my_finish_date"][@"text"] }];
+            [anime addEntriesFromDictionary:@{ kUserLastUpdated : @([animeItem[@"my_last_updated"][@"text"] intValue]) }];
+            [anime addEntriesFromDictionary:@{ kUserStartDate : animeItem[@"my_start_date"][@"text"] }];
+            [anime addEntriesFromDictionary:@{ kUserRewatchingStatus : @([animeItem[@"my_rewatching"][@"text"] intValue]) }];
+            [anime addEntriesFromDictionary:@{ kUserRewatchingEpisode : @([animeItem[@"my_rewatching_ep"][@"text"] intValue]) }];
+            [anime addEntriesFromDictionary:@{ kUserScore : @([animeItem[@"my_score"][@"text"] intValue]) }];
+            [anime addEntriesFromDictionary:@{ kUserWatchedStatus : animeItem[@"my_status"][@"text"] }];
+            
+            // no tag support...yet.
+            //        [anime addEntriesFromDictionary:@{ @"user_tags" : animeItem[@"my_tags"][@"text"] }];
+            
+            [anime addEntriesFromDictionary:@{ kUserWatchedEpisodes : @([animeItem[@"my_watched_episodes"][@"text"] intValue]) }];
+            [anime addEntriesFromDictionary:@{ kAirEndDate : animeItem[@"series_end"][@"text"] }];
+            [anime addEntriesFromDictionary:@{ kEpisodes : @([animeItem[@"series_episodes"][@"text"] intValue]) }];
+            [anime addEntriesFromDictionary:@{ kImageURL : animeItem[@"series_image"][@"text"] }];
+            [anime addEntriesFromDictionary:@{ kAirStartDate : animeItem[@"series_start"][@"text"] }];
+            [anime addEntriesFromDictionary:@{ kAirStatus : animeItem[@"series_status"][@"text"] }];
+            
+            // no synonym support...yet.
+            //        [anime addEntriesFromDictionary:@{ @"series_synonyms" : animeItem[@"series_synonyms"][@"text"] }];
+            
+            [anime addEntriesFromDictionary:@{ kTitle : animeItem[@"series_title"][@"text"] }];
+            [anime addEntriesFromDictionary:@{ kType : animeItem[@"series_type"][@"text"] }];
+            
+            [AnimeService addAnime:anime fromList:YES];
+        }
+        
+        [[AnimeService managedObjectContext] save:nil];
+    });
     
     return NO;
 }
 
 + (Anime *)addAnime:(NSDictionary *)data fromList:(BOOL)fromList {
-    if([AnimeService animeForID:data[@"id"]]) {
-        NSLog(@"Anime exists. Updating details.");
-        return [AnimeService editAnime:data fromList:fromList];
+    
+    Anime *existingAnime = [AnimeService animeForID:data[@"id"] fromCache:fromList];
+    
+    if(existingAnime) {
+        ALLog(@"Anime exists. Updating details.");
+        return [AnimeService editAnime:data fromList:fromList withObject:existingAnime];
     }
     
     NSError *error = nil;
@@ -151,17 +190,13 @@
  altenative_versions
  */
 
-
-+ (Anime *)editAnime:(NSDictionary *)data fromList:(BOOL)fromList {
-//    NSLog(@"data: %@", data);
-    if(![AnimeService animeForID:data[kID]]) {
-        NSLog(@"Anime does not exist; unable to edit!");
++ (Anime *)editAnime:(NSDictionary *)data fromList:(BOOL)fromList withObject:(Anime *)anime {
+    if(!anime) {
+        ALLog(@"Anime does not exist; unable to edit!");
         return nil;
     }
     
     NSError *error = nil;
-    
-    Anime *anime = [AnimeService animeForID:data[kID]];
     
     anime.anime_id = [data[kID] isKindOfClass:[NSString class]] ? @([data[kID] intValue]) : data[kID];
     anime.title = [data[kTitle] stringByDecodingHTMLEntities];
@@ -181,7 +216,7 @@
         NSArray *prequels = data[kPrequels];
         for(NSDictionary *prequel in prequels) {
 #warning - fix this later.
-//            [AnimeService addAnime:prequel];
+            //            [AnimeService addAnime:prequel];
         }
     }
     
@@ -233,6 +268,18 @@
         return anime;
     }
     else return nil;
+
+}
+
+
++ (Anime *)editAnime:(NSDictionary *)data fromList:(BOOL)fromList {
+    Anime *anime = [AnimeService animeForID:data[@"id"] fromCache:fromList];
+    if(!anime) {
+        ALLog(@"Unable to edit anime; anime does not exist!");
+        return nil;
+    }
+    
+    return [self editAnime:data fromList:fromList withObject:anime];
 }
 
 + (void)deleteAnime:(Anime *)anime {
@@ -242,7 +289,7 @@
     [[AnimeService managedObjectContext] save:&error];
     
     if(!error) {
-        NSLog(@"There was an error trying to delete this anime with ID (%d).", [anime.anime_id intValue]);
+        ALLog(@"There was an error trying to delete this anime with ID (%d).", [anime.anime_id intValue]);
     }
 }
 

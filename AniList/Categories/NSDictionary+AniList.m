@@ -23,8 +23,11 @@
             value = self[key];
         }
         
-        NSLog(@"%@ = %@", key, value);
-        [cleanDictionary addEntriesFromDictionary:@{ key : value }];
+//        ALLog(@"%@ = %@", key, value);
+        if(value)
+            [cleanDictionary addEntriesFromDictionary:@{ key : value }];
+        else
+            [cleanDictionary addEntriesFromDictionary:@{ key : @""}];
     }];
     
     return [cleanDictionary copy];

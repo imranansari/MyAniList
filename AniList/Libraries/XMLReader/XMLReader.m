@@ -38,7 +38,7 @@ NSString *const kXMLReaderAttributePrefix	= @"@";
 + (NSDictionary *)dictionaryForXMLString:(NSString *)string error:(NSError **)error
 {
     NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
-    return [XMLReader dictionaryForXMLData:data error:error];
+    return [XMLReader dictionaryForXMLData:data options:XMLReaderOptionsResolveExternalEntities error:error];
 }
 
 + (NSDictionary *)dictionaryForXMLData:(NSData *)data options:(XMLReaderOptions)options error:(NSError **)error
@@ -85,6 +85,8 @@ NSString *const kXMLReaderAttributePrefix	= @"@";
     
     parser.delegate = self;
     BOOL success = [parser parse];
+    
+    ALLog(@"error: %@", parser.parserError);
 	
     // Return the stack's root dictionary on success
     if (success)
@@ -100,7 +102,8 @@ NSString *const kXMLReaderAttributePrefix	= @"@";
 #pragma mark -  NSXMLParserDelegate methods
 
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict
-{   
+{
+//    NSLog(@"element: %@", elementName);
     // Get the dictionary for the current level in the stack
     NSMutableDictionary *parentDict = [self.dictionaryStack lastObject];
 
@@ -151,6 +154,7 @@ NSString *const kXMLReaderAttributePrefix	= @"@";
     {
         // trim after concatenating
         NSString *trimmedString = [self.textInProgress stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+//        ALLog(@"trim: %@", trimmedString);
         [dictInProgress setObject:[trimmedString mutableCopy] forKey:kXMLReaderTextNodeKey];
 
         // Reset the text
@@ -163,6 +167,7 @@ NSString *const kXMLReaderAttributePrefix	= @"@";
 
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
 {
+//    NSLog(@"string: %@", string);
     // Build the text value
     [self.textInProgress appendString:string];
 }
@@ -170,6 +175,7 @@ NSString *const kXMLReaderAttributePrefix	= @"@";
 - (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError
 {
     // Set the error pointer to the parser's error object
+    ALLog(@"Error occurred on column %d, line %d.", parser.columnNumber, parser.lineNumber);
     self.errorPointer = parseError;
 }
 
