@@ -96,7 +96,12 @@
     self.detailsLabel.frame = CGRectMake(self.detailsLabel.frame.origin.x, self.userInfoView.view.frame.origin.y + self.userInfoView.view.frame.size.height, self.detailsLabel.frame.size.width, self.detailsLabel.frame.size.height);
     
     self.synopsisView.frame = CGRectMake(0, self.detailsLabel.frame.origin.y + self.detailsLabel.frame.size.height, self.synopsisView.frame.size.width, self.synopsisView.frame.size.height);
-    self.scrollView.contentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width, self.mangaDetailsViewController.view.frame.size.height + self.userInfoView.view.frame.size.height + self.detailsLabel.frame.size.height + [UIScreen mainScreen].bounds.size.height - 90);
+    
+    int defaultContentSize = self.mangaDetailsViewController.view.frame.size.height + self.userInfoView.view.frame.size.height + self.detailsLabel.frame.size.height + [UIScreen mainScreen].bounds.size.height - 90;
+    
+    int contentSizeWithSynopsis = self.mangaDetailsViewController.view.frame.size.height + self.userInfoView.view.frame.size.height + self.detailsLabel.frame.size.height + self.synopsisView.frame.size.height + 90;
+    
+    self.scrollView.contentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width, MAX(contentSizeWithSynopsis, defaultContentSize));
 }
 
 - (void)updateViewsOnFailure:(BOOL)failure {
@@ -111,11 +116,9 @@
     
     int defaultContentSize = self.mangaDetailsViewController.view.frame.size.height + self.userInfoView.view.frame.size.height + self.detailsLabel.frame.size.height + [UIScreen mainScreen].bounds.size.height - 90;
     
-    int contentSizeWithSynopsis = self.mangaDetailsViewController.view.frame.size.height + self.userInfoView.view.frame.size.height + self.detailsLabel.frame.size.height + self.synopsisView.frame.size.height;
+    int contentSizeWithSynopsis = self.mangaDetailsViewController.view.frame.size.height + self.userInfoView.view.frame.size.height + self.detailsLabel.frame.size.height + self.synopsisView.frame.size.height + 90;
     
-    if(contentSizeWithSynopsis > defaultContentSize) {
-        self.scrollView.contentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width, contentSizeWithSynopsis);
-    }
+    self.scrollView.contentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width, MAX(contentSizeWithSynopsis, defaultContentSize));
 }
 
 #pragma mark - AniListUserInfoViewControllerDelegate Methods
