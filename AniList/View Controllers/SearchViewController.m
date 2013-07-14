@@ -69,7 +69,7 @@
     } failure:^(id operation, NSError *error) {
         ALLog(@"Anime search failure.");
     }];
-    return;
+
     [[MALHTTPClient sharedClient] searchForMangaWithQuery:query success:^(id operation, NSArray *response) {
         ALLog(@"Got manga results: %d", response.count);
         for(NSDictionary *result in response) {

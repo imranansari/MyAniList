@@ -221,29 +221,44 @@
     [[MALHTTPClient sharedClient] getPath:path
                                parameters:@{}
                                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                      NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-                                      result = [result stringByDecodingHTMLEntities];
-                                      result = [result stringByReplacingOccurrencesOfString:@"<br />" withString:@""];
-                                      ALLog(@"result: %@", result);
-                                      NSError *parseError = nil;
-                                      NSDictionary *xmlDictionary = [XMLReader dictionaryForXMLString:result error:&parseError];
-                                      NSArray *manga = xmlDictionary[@"manga"];
-                                      NSArray *mangalist = xmlDictionary[@"manga"][@"entry"];
                                       
-                                      NSMutableArray *cleanedList = [NSMutableArray array];
-                                      NSMutableDictionary *cleanedManga;
-                                      for(NSDictionary *manga in mangalist) {
-                                          cleanedManga = [[manga cleanupTextTags] mutableCopy];
-                                          if([cleanedManga valueForKey:@"score"] != nil) {
-                                              NSString *value = cleanedManga[@"score"];
-                                              [cleanedManga addEntriesFromDictionary:@{ @"members_score" : value }];
-                                              [cleanedManga removeObjectForKey:@"score"];
+                                      dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                                          NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+                                          
+                                          result = [result stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"];
+                                          result = [result stringByDecodingHTMLEntities];
+                                          
+                                          // If there still are ampersands out there, escape them.
+                                          result = [result stringByReplacingOccurrencesOfString:@"<br />" withString:@""];
+                                          result = [result stringByReplacingOccurrencesOfString:@"&" withString:@"&amp;"];
+                                          
+                                          NSError *parseError = nil;
+                                          NSDictionary *xmlDictionary = [XMLReader dictionaryForXMLString:result error:&parseError];
+                                          
+                                          NSArray *mangalist;
+                                          id list = xmlDictionary[@"manga"][@"entry"];
+                                          
+                                          if([list isKindOfClass:[NSDictionary class]]) {
+                                              mangalist = @[xmlDictionary[@"manga"][@"entry"]];
                                           }
-                                          [cleanedList addObject:cleanedManga];
-                                      }
-                                      
-                                      success(operation, cleanedList);
-
+                                          else if([list isKindOfClass:[NSArray class]]) {
+                                              mangalist = xmlDictionary[@"manga"][@"entry"];
+                                          }
+                                          
+                                          NSMutableArray *cleanedList = [NSMutableArray array];
+                                          NSMutableDictionary *cleanedManga;
+                                          for(NSDictionary *manga in mangalist) {
+                                              cleanedManga = [[manga cleanupTextTags] mutableCopy];
+                                              if([cleanedManga valueForKey:@"score"] != nil) {
+                                                  NSString *value = cleanedManga[@"score"];
+                                                  [cleanedManga addEntriesFromDictionary:@{ @"members_score" : value }];
+                                                  [cleanedManga removeObjectForKey:@"score"];
+                                              }
+                                              [cleanedList addObject:cleanedManga];
+                                          }
+                                          
+                                          success(operation, cleanedList);
+                                      });
                                   }
                                   failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                       failure(operation, error);
