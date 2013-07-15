@@ -175,10 +175,14 @@ static NSArray *animeStatusOrder;
         self.anime.current_episode = @([self.anime.current_episode intValue] + 1);
         self.originalCurrentEpisode = self.anime.current_episode;
         
-        
         if([self.anime.current_episode intValue] == [self.anime.total_episodes intValue] && [self.anime.watched_status intValue] != AnimeWatchedStatusCompleted) {
-            // Set scroller to completed.
+
+            if(!self.anime.user_date_finish) {
+                self.anime.user_date_finish = [NSDate date];
+                [self updateLabels];
+            }
             
+            // Set scroller to completed.
             self.anime.watched_status = @(AnimeWatchedStatusCompleted);
             [self configureStatusAnimated:YES];
         }
@@ -193,8 +197,13 @@ static NSArray *animeStatusOrder;
         self.originalCurrentEpisode = self.anime.current_episode;
         
         if([self.anime.current_episode intValue] < [self.anime.total_episodes intValue] && [self.anime.watched_status intValue] == AnimeWatchedStatusCompleted) {
-            // Set scroller to currently watching, if we're coming back from completed.
             
+            if(self.anime.user_date_finish && !self.originalEndDate) {
+                self.anime.user_date_finish = self.originalEndDate;
+                [self updateLabels];
+            }
+            
+            // Set scroller to currently watching, if we're coming back from completed.
             self.anime.watched_status = @(AnimeWatchedStatusWatching);
             [self configureStatusAnimated:YES];
         }

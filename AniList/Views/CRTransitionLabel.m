@@ -44,10 +44,12 @@
         self.firstLabel = [[UILabel alloc] initWithFrame:self.bounds];
         self.secondLabel = [[UILabel alloc] initWithFrame:self.bounds];
         
+        self.firstLabel.font = self.secondLabel.font = self.font;
+        self.firstLabel.textColor = self.secondLabel.textColor = self.textColor;
+        self.firstLabel.shadowColor = self.secondLabel.shadowColor = self.shadowColor;
+        self.firstLabel.shadowOffset = self.secondLabel.shadowOffset = self.shadowOffset;
+        self.firstLabel.textAlignment = self.secondLabel.textAlignment = self.textAlignment;
         self.backgroundColor = [UIColor clearColor];
-        self.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
-        self.textColor = [UIColor lightGrayColor];
-        self.textAlignment = NSTextAlignmentCenter;
         
         [self addShadow];
         

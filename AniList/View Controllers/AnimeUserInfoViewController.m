@@ -80,8 +80,13 @@
             else {
                 scoreLabel.text = @"Not scored yet";
             }
-               
-            progressLabel.text = [NSString stringWithFormat:@"On episode %d of %d", [self.anime.current_episode intValue], [self.anime.total_episodes intValue]];
+            
+            if([self.anime.current_episode intValue] == [self.anime.total_episodes intValue]) {
+                progressLabel.text = [NSString stringWithFormat:@"Finished all %@", [Anime unitForAnimeType:[self.anime.type intValue] plural:YES]];
+            }
+            else {
+                progressLabel.text = [NSString stringWithFormat:@"On %@ %d of %d", [Anime unitForAnimeType:[self.anime.type intValue] plural:NO], [self.anime.current_episode intValue], [self.anime.total_episodes intValue]];
+            }
         }
     }
 }
