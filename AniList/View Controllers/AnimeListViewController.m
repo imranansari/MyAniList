@@ -110,7 +110,7 @@
     
     AnimeViewController *animeVC = [[AnimeViewController alloc] init];
     animeVC.anime = anime;
-    
+        
     [self.navigationController pushViewController:animeVC animated:YES];
 }
 

@@ -13,6 +13,7 @@
 #import "AniListViewController.h"
 #import "LoginViewController.h"
 #import "UserProfile.h"
+#import "AniListNavigationController.h"
 
 #if TARGET_IPHONE_SIMULATOR
 #import <SparkInspector/SparkInspector.h>
@@ -35,7 +36,7 @@
     AnimeListViewController *animeVC = [[AnimeListViewController alloc] init];
     LoginViewController *loginVC = [[LoginViewController alloc] init];
     
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:animeVC];
+    AniListNavigationController *navigationController = [[AniListNavigationController alloc] initWithRootViewController:animeVC];
     
     SWRevealViewController *vc = [[SWRevealViewController alloc] initWithRearViewController:menuVC
                                                                         frontViewController:navigationController];
@@ -57,24 +58,34 @@
 }
 
 - (void)setStyleAttributes {
-//    UIImage *buttonBg = [[UIImage imageNamed:@"nav_btn_bg"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 3, 0, 3)];
     [[UIBarButtonItem appearance] setBackgroundImage:[[UIImage alloc] init] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     [[UIBarButtonItem appearance] setBackgroundImage:[[UIImage alloc] init] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
-//
-//    UIImage *backButtonBg = [[UIImage imageNamed:@"back_arrow.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 10, 0, 2)];
-//    [[UIBarButtonItem appearance] setBackButtonBackgroundImage:[[UIImage alloc] init] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-//    [[UIBarButtonItem appearance] setBackButtonBackgroundImage:[[UIImage alloc] init] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
-//
-//    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back_arrow.png"] style:UIBarButtonItemStyleBordered target:nvc action:@selector(popViewControllerAnimated:)];
-//    
-//    nvc.navigationItem.backBarButtonItem = backButton;
-//    
-//    [[UIBarButtonItem appearance] setBackBarButtonItem:backButton];
-    
-    [[UIBarButtonItem appearance] setTitleTextAttributes:@{UITextAttributeFont: [UIFont fontWithName:@"HelveticaNeue-Medium" size:0.0], UITextAttributeTextShadowOffset: [NSValue valueWithUIOffset:UIOffsetMake(0, -1)]} forState:UIControlStateNormal];
-    
-    [[UINavigationBar appearance] setTitleTextAttributes:@{UITextAttributeFont: [UIFont fontWithName:@"HelveticaNeue-Light" size:0.0], UITextAttributeTextShadowOffset: [NSValue valueWithUIOffset:UIOffsetMake(0, -1)]}];
 
+    UIImage *backButton = [UIImage imageNamed:@"back.png"];
+    backButton = [backButton resizableImageWithCapInsets:UIEdgeInsetsMake(0, backButton.size.width, 0, 0)];
+    [[UIBarButtonItem appearance] setBackButtonBackgroundImage:backButton forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    [[UIBarButtonItem appearance] setBackButtonBackgroundImage:backButton forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
+
+    [[UIBarButtonItem appearance] setTitleTextAttributes:
+                        @{
+                            UITextAttributeFont             : [UIFont fontWithName:@"HelveticaNeue-Light" size:0.0],
+                            UITextAttributeTextShadowOffset : [NSValue valueWithUIOffset:UIOffsetMake(0, -1)]
+                         }
+                                                forState: UIControlStateNormal];
+    
+    [[UINavigationBar appearance] setTitleTextAttributes:
+                        @{
+                            UITextAttributeFont             : [UIFont fontWithName:@"HelveticaNeue-Light" size:0.0],
+                            UITextAttributeTextShadowOffset : [NSValue valueWithUIOffset:UIOffsetMake(0, -1)]
+                         }];
+    
+    NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
+    [attributes setValue:[UIColor whiteColor] forKey:UITextAttributeTextColor];
+    [attributes setValue:[UIColor defaultShadowColor] forKey:UITextAttributeTextShadowColor];
+    [attributes setValue:[NSValue valueWithUIOffset:UIOffsetMake(0, 1)] forKey:UITextAttributeTextShadowOffset];
+    [attributes setValue:[UIFont fontWithName:@"HelveticaNeue-Light" size:0.0] forKey:UITextAttributeFont];
+    
+    [[UIBarButtonItem appearance] setTitleTextAttributes:attributes forState:UIControlStateNormal];
 }
 
 - (void)createDirectories {

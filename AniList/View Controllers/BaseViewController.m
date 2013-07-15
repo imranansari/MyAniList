@@ -7,6 +7,7 @@
 //
 
 #import "BaseViewController.h"
+#import "AniListNavigationController.h"
 
 @interface BaseViewController ()
 @property (nonatomic, strong) UIView *maskView;
@@ -30,7 +31,7 @@
 	
     SWRevealViewController *revealController = self.revealViewController;
     
-    UINavigationController *nvc = ((UINavigationController *)self.revealViewController.frontViewController);
+    AniListNavigationController *nvc = ((AniListNavigationController *)self.revealViewController.frontViewController);
     
     // This value is implicitly set to YES in iOS 7.0.
     nvc.navigationBar.translucent = YES; // Setting this slides the view up, underneath the nav bar (otherwise it'll appear black)

@@ -50,7 +50,7 @@
     
     self.maskView.layer.mask = gradient;
     
-    UIColor *shadowColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
+    UIColor *shadowColor = [UIColor defaultShadowColor];
     
     [self.startDateButton setTitleShadowColor:shadowColor forState:UIControlStateNormal];
     [self.endDateButton setTitleShadowColor:shadowColor forState:UIControlStateNormal];

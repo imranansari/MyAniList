@@ -99,8 +99,6 @@
 		635027A3171E53550004C106 /* 24646.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 635027A2171E53550004C106 /* 24646.jpg */; };
 		635027A8171E58CC0004C106 /* action.png in Resources */ = {isa = PBXBuildFile; fileRef = 635027A4171E58CC0004C106 /* action.png */; };
 		635027A9171E58CC0004C106 /* action@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 635027A5171E58CC0004C106 /* action@2x.png */; };
-		635027AA171E58CC0004C106 /* back_arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 635027A6171E58CC0004C106 /* back_arrow.png */; };
-		635027AB171E58CC0004C106 /* back_arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 635027A7171E58CC0004C106 /* back_arrow@2x.png */; };
 		635027AD171E601E0004C106 /* AnimeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 635027AC171E601E0004C106 /* AnimeCell.xib */; };
 		635027BA171ED41A0004C106 /* AnimeService.m in Sources */ = {isa = PBXBuildFile; fileRef = 635027B9171ED41A0004C106 /* AnimeService.m */; };
 		635027BD171ED60A0004C106 /* Anime.m in Sources */ = {isa = PBXBuildFile; fileRef = 635027BC171ED60A0004C106 /* Anime.m */; };
@@ -199,6 +197,16 @@
 		63894CC8176A9E37007D2D05 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63894CC5176A9E37007D2D05 /* LoginViewController.xib */; };
 		63894CC9176A9E37007D2D05 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63894CC5176A9E37007D2D05 /* LoginViewController.xib */; };
 		63922CED171D82C800D41BCE /* spacepyro.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 63922CEC171D82C800D41BCE /* spacepyro.jpg */; };
+		639FA1DF17936ABF000AA0D1 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 639FA1DD17936ABF000AA0D1 /* back.png */; };
+		639FA1E017936ABF000AA0D1 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 639FA1DD17936ABF000AA0D1 /* back.png */; };
+		639FA1E117936ABF000AA0D1 /* back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 639FA1DE17936ABF000AA0D1 /* back@2x.png */; };
+		639FA1E217936ABF000AA0D1 /* back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 639FA1DE17936ABF000AA0D1 /* back@2x.png */; };
+		639FA1E517936EAB000AA0D1 /* AniListNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 639FA1E417936EAB000AA0D1 /* AniListNavigationController.m */; };
+		639FA1E617936EAB000AA0D1 /* AniListNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 639FA1E417936EAB000AA0D1 /* AniListNavigationController.m */; };
+		639FA1E917937006000AA0D1 /* UINavigationController+AniList.m in Sources */ = {isa = PBXBuildFile; fileRef = 639FA1E817937006000AA0D1 /* UINavigationController+AniList.m */; };
+		639FA1EA17937006000AA0D1 /* UINavigationController+AniList.m in Sources */ = {isa = PBXBuildFile; fileRef = 639FA1E817937006000AA0D1 /* UINavigationController+AniList.m */; };
+		639FA1F317937896000AA0D1 /* UIBarButtonItem+AniList.m in Sources */ = {isa = PBXBuildFile; fileRef = 639FA1F217937896000AA0D1 /* UIBarButtonItem+AniList.m */; };
+		639FA1F417937896000AA0D1 /* UIBarButtonItem+AniList.m in Sources */ = {isa = PBXBuildFile; fileRef = 639FA1F217937896000AA0D1 /* UIBarButtonItem+AniList.m */; };
 		63B0DFA31789C3F7006F0868 /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B0DFA21789C3F7006F0868 /* NSString+HTML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		63B0DFA41789C3F7006F0868 /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B0DFA21789C3F7006F0868 /* NSString+HTML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		63B0DFA71789C529006F0868 /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B0DFA61789C529006F0868 /* GTMNSString+HTML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -321,8 +329,6 @@
 		635027A2171E53550004C106 /* 24646.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 24646.jpg; path = Images/Placeholders/24646.jpg; sourceTree = "<group>"; };
 		635027A4171E58CC0004C106 /* action.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = action.png; path = Images/Icons/action.png; sourceTree = "<group>"; };
 		635027A5171E58CC0004C106 /* action@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "action@2x.png"; path = "Images/Icons/action@2x.png"; sourceTree = "<group>"; };
-		635027A6171E58CC0004C106 /* back_arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = back_arrow.png; path = Images/Icons/back_arrow.png; sourceTree = "<group>"; };
-		635027A7171E58CC0004C106 /* back_arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "back_arrow@2x.png"; path = "Images/Icons/back_arrow@2x.png"; sourceTree = "<group>"; };
 		635027AC171E601E0004C106 /* AnimeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AnimeCell.xib; path = Views/AnimeCell.xib; sourceTree = "<group>"; };
 		635027AF171ECEA00004C106 /* Status.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Status.h; path = Headers/Status.h; sourceTree = "<group>"; };
 		635027B8171ED41A0004C106 /* AnimeService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimeService.h; path = "Core Data/AnimeService.h"; sourceTree = "<group>"; };
@@ -422,6 +428,14 @@
 		63894CC4176A9E37007D2D05 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		63894CC5176A9E37007D2D05 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		63922CEC171D82C800D41BCE /* spacepyro.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = spacepyro.jpg; path = Images/Placeholders/spacepyro.jpg; sourceTree = "<group>"; };
+		639FA1DD17936ABF000AA0D1 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = back.png; path = Images/Icons/back.png; sourceTree = "<group>"; };
+		639FA1DE17936ABF000AA0D1 /* back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "back@2x.png"; path = "Images/Icons/back@2x.png"; sourceTree = "<group>"; };
+		639FA1E317936EAB000AA0D1 /* AniListNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AniListNavigationController.h; sourceTree = "<group>"; };
+		639FA1E417936EAB000AA0D1 /* AniListNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AniListNavigationController.m; sourceTree = "<group>"; };
+		639FA1E717937006000AA0D1 /* UINavigationController+AniList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UINavigationController+AniList.h"; path = "Categories/UINavigationController+AniList.h"; sourceTree = "<group>"; };
+		639FA1E817937006000AA0D1 /* UINavigationController+AniList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UINavigationController+AniList.m"; path = "Categories/UINavigationController+AniList.m"; sourceTree = "<group>"; };
+		639FA1F117937896000AA0D1 /* UIBarButtonItem+AniList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIBarButtonItem+AniList.h"; path = "Categories/UIBarButtonItem+AniList.h"; sourceTree = "<group>"; };
+		639FA1F217937896000AA0D1 /* UIBarButtonItem+AniList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIBarButtonItem+AniList.m"; path = "Categories/UIBarButtonItem+AniList.m"; sourceTree = "<group>"; };
 		63B0DFA11789C3F7006F0868 /* NSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+HTML.h"; path = "Categories/NSString+HTML.h"; sourceTree = "<group>"; };
 		63B0DFA21789C3F7006F0868 /* NSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+HTML.m"; path = "Categories/NSString+HTML.m"; sourceTree = "<group>"; };
 		63B0DFA51789C529006F0868 /* GTMNSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "GTMNSString+HTML.h"; path = "Categories/GTMNSString+HTML.h"; sourceTree = "<group>"; };
@@ -554,6 +568,8 @@
 				63461A161778004B0053652C /* SettingsViewController.h */,
 				63461A171778004C0053652C /* SettingsViewController.m */,
 				63461A181778004D0053652C /* SettingsViewController.xib */,
+				639FA1E317936EAB000AA0D1 /* AniListNavigationController.h */,
+				639FA1E417936EAB000AA0D1 /* AniListNavigationController.m */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -718,6 +734,10 @@
 				6371444F1770157A00E60B9F /* NSDictionary+AniList.m */,
 				63B0DFA11789C3F7006F0868 /* NSString+HTML.h */,
 				63B0DFA21789C3F7006F0868 /* NSString+HTML.m */,
+				639FA1E717937006000AA0D1 /* UINavigationController+AniList.h */,
+				639FA1E817937006000AA0D1 /* UINavigationController+AniList.m */,
+				639FA1F117937896000AA0D1 /* UIBarButtonItem+AniList.h */,
+				639FA1F217937896000AA0D1 /* UIBarButtonItem+AniList.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -904,14 +924,14 @@
 		63922CEB171D82BB00D41BCE /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				639FA1DD17936ABF000AA0D1 /* back.png */,
+				639FA1DE17936ABF000AA0D1 /* back@2x.png */,
 				630E0FDC1768E9980061110A /* minus.png */,
 				630E0FDD1768E9980061110A /* minus@2x.png */,
 				630E0FDE1768E9980061110A /* plus.png */,
 				630E0FDF1768E9980061110A /* plus@2x.png */,
 				635027A4171E58CC0004C106 /* action.png */,
 				635027A5171E58CC0004C106 /* action@2x.png */,
-				635027A6171E58CC0004C106 /* back_arrow.png */,
-				635027A7171E58CC0004C106 /* back_arrow@2x.png */,
 				632F4394171CDC7600A5B43A /* hamburger.png */,
 				632F4395171CDC7600A5B43A /* hamburger@2x.png */,
 			);
@@ -1052,8 +1072,6 @@
 				635027A3171E53550004C106 /* 24646.jpg in Resources */,
 				635027A8171E58CC0004C106 /* action.png in Resources */,
 				635027A9171E58CC0004C106 /* action@2x.png in Resources */,
-				635027AA171E58CC0004C106 /* back_arrow.png in Resources */,
-				635027AB171E58CC0004C106 /* back_arrow@2x.png in Resources */,
 				635027AD171E601E0004C106 /* AnimeCell.xib in Resources */,
 				631898CF17222AE300758BE9 /* image_placeholder.png in Resources */,
 				631898D017222AE300758BE9 /* image_placeholder@2x.png in Resources */,
@@ -1072,6 +1090,8 @@
 				63B386B31777B91C001A7E31 /* MangaCell.xib in Resources */,
 				63B386BA1777DCAB001A7E31 /* AniListCell.xib in Resources */,
 				63461A1B1778004D0053652C /* SettingsViewController.xib in Resources */,
+				639FA1DF17936ABF000AA0D1 /* back.png in Resources */,
+				639FA1E117936ABF000AA0D1 /* back@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1100,6 +1120,8 @@
 				63B386B41777B91C001A7E31 /* MangaCell.xib in Resources */,
 				63B386BB1777DCAB001A7E31 /* AniListCell.xib in Resources */,
 				63461A1C1778004D0053652C /* SettingsViewController.xib in Resources */,
+				639FA1E017936ABF000AA0D1 /* back.png in Resources */,
+				639FA1E217936ABF000AA0D1 /* back@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1210,6 +1232,9 @@
 				63FC20A717920EB000DFD544 /* CRTransitionLabel.m in Sources */,
 				630CC0941792532D0029D021 /* TVDBHTTPClient.m in Sources */,
 				63B551141792F0B1001D74A3 /* Settings.m in Sources */,
+				639FA1E517936EAB000AA0D1 /* AniListNavigationController.m in Sources */,
+				639FA1E917937006000AA0D1 /* UINavigationController+AniList.m in Sources */,
+				639FA1F317937896000AA0D1 /* UIBarButtonItem+AniList.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1292,6 +1317,9 @@
 				63FC20A817920EB000DFD544 /* CRTransitionLabel.m in Sources */,
 				630CC0951792532D0029D021 /* TVDBHTTPClient.m in Sources */,
 				63B551151792F0B1001D74A3 /* Settings.m in Sources */,
+				639FA1E617936EAB000AA0D1 /* AniListNavigationController.m in Sources */,
+				639FA1EA17937006000AA0D1 /* UINavigationController+AniList.m in Sources */,
+				639FA1F417937896000AA0D1 /* UIBarButtonItem+AniList.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

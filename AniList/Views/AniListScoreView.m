@@ -61,8 +61,7 @@
             numberLabel.backgroundColor = [UIColor clearColor];
             numberLabel.textAlignment = NSTextAlignmentCenter;
             numberLabel.font = [UIFont defaultFontWithSize:24];
-            numberLabel.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
-            numberLabel.shadowOffset = CGSizeMake(0, 1);
+            [numberLabel addShadow];
             numberLabel.glowColor = [UIColor whiteColor];
             numberLabel.glowAmount = 50;
             numberLabel.tag = 1;

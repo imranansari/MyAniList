@@ -17,9 +17,9 @@
     TTTAttributedLabel *label = [[TTTAttributedLabel alloc] initWithFrame:CGRectMake(20, 0, 300, 44)];
     label.backgroundColor = [UIColor clearColor];
     label.textColor = [UIColor whiteColor];
-    label.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
-    label.shadowOffset = CGSizeMake(0, 1);
     label.text = [NSString stringWithFormat:@"%@ (%@)", primaryString, secondaryString];
+    [label addShadow];
+    
     [view addSubview:label];
     
     [UILabel setAttributesForLabel:label withPrimaryText:primaryString andSecondaryText:[NSString stringWithFormat:@"(%@)", secondaryString]];

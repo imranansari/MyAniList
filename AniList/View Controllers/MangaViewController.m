@@ -48,6 +48,8 @@
     
     self.titleLabel.text = self.manga.title;
     
+    [self adjustTitle];
+    
     [[MALHTTPClient sharedClient] getMangaDetailsForID:self.manga.manga_id success:^(NSURLRequest *operation, id response) {
         [MangaService addManga:response fromList:NO];
         [[NSNotificationCenter defaultCenter] postNotificationName:kMangaDidUpdate object:@(YES)];
@@ -126,6 +128,9 @@
 - (void)userInfoPressed {
     MangaUserInfoEditViewController *vc = [[MangaUserInfoEditViewController alloc] init];
     vc.manga = self.manga;
+    
+    self.navigationItem.backBarButtonItem = [UIBarButtonItem customBackButtonWithTitle:@"Summary"];
+    
     [self.navigationController pushViewController:vc animated:YES];
 }
 

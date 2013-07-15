@@ -11,5 +11,6 @@
 @interface UIColor (AniList)
 
 + (UIColor *)defaultBackgroundColor;
++ (UIColor *)defaultShadowColor;
 
 @end

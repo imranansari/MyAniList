@@ -39,6 +39,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.title = @"Search";
     
     self.searchDisplayController.searchResultsTableView.backgroundColor = [UIColor clearColor];
 }

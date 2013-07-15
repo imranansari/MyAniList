@@ -18,5 +18,7 @@
 #import "UIColor+AniList.h"
 #import "NSDictionary+AniList.h"
 #import "NSString+HTML.h"
+#import "UINavigationController+AniList.h"
+#import "UIBarButtonItem+AniList.h"
 
 #endif

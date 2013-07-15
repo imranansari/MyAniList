@@ -44,9 +44,11 @@
 {
     [super viewDidLoad];
     
+    
     [self setupViews];
     
     self.titleLabel.text = self.anime.title;
+    [self adjustTitle];
     
     [[MALHTTPClient sharedClient] getAnimeDetailsForID:self.anime.anime_id success:^(NSURLRequest *operation, id response) {
         [AnimeService addAnime:response fromList:NO];
@@ -126,6 +128,9 @@
 - (void)userInfoPressed {
     AnimeUserInfoEditViewController *vc = [[AnimeUserInfoEditViewController alloc] init];
     vc.anime = self.anime;
+    
+    self.navigationItem.backBarButtonItem = [UIBarButtonItem customBackButtonWithTitle:@"Summary"];
+    
     [self.navigationController pushViewController:vc animated:YES];
 }
 

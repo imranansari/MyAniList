@@ -15,7 +15,7 @@
     label.textColor = [UIColor whiteColor];
     label.font = [UIFont defaultFontWithSize:size];
     label.backgroundColor = [UIColor clearColor];
-    label.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
+    [label addShadow];
     label.shadowOffset = CGSizeMake(0, 1);
     
     return label;
@@ -26,8 +26,7 @@
     label.textColor = [UIColor whiteColor];
     label.font = [UIFont defaultFontWithSize:size];
     label.backgroundColor = [UIColor clearColor];
-    label.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
-    label.shadowOffset = CGSizeMake(0, 1);
+    [label addShadow];
     label.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"header_bg.png"]];
     label.textAlignment = NSTextAlignmentCenter;
     
@@ -35,7 +34,7 @@
 }
 
 - (void)addShadow {
-    self.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
+    self.shadowColor = [UIColor defaultShadowColor];
     self.shadowOffset = CGSizeMake(0, 1);
 }
 
