@@ -9,7 +9,7 @@
 #import "AniListNavigationController.h"
 
 @interface AniListNavigationController ()
-
+@property (nonatomic, strong) UIImageView *imageView;
 @end
 
 @implementation AniListNavigationController
@@ -41,10 +41,10 @@
             break;
     }
     
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:backgroundImage];
-    imageView.alpha = 0.75f;
+    self.imageView = [[UIImageView alloc] initWithImage:backgroundImage];
+    self.imageView.alpha = 0.75f;
 
-    [self.view insertSubview:imageView belowSubview:self.view.subviews[0]];
+    [self.view insertSubview:self.imageView belowSubview:self.view.subviews[0]];
 }
 
 #pragma - Overridden Methods

@@ -18,5 +18,6 @@ typedef enum {
 @interface AniListNavigationController : UINavigationController
 
 @property (nonatomic, assign) NavigationStyle navigationStyle;
+@property (nonatomic, readonly) UIImageView *imageView;
 
 @end

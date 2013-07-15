@@ -110,8 +110,11 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     Manga *manga = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
+    AniListNavigationController *navigationController = (AniListNavigationController *)self.navigationController;
+    
     MangaViewController *mvc = [[MangaViewController alloc] init];
     mvc.manga = manga;
+    mvc.currentYBackgroundPosition = navigationController.imageView.frame.origin.y;
     
     [self.navigationController pushViewController:mvc animated:YES];
 }

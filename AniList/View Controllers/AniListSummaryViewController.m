@@ -7,6 +7,7 @@
 //
 
 #import "AniListSummaryViewController.h"
+#import "AniListNavigationController.h"
 
 @interface AniListSummaryViewController ()
 
@@ -41,6 +42,28 @@
     self.maskView.layer.mask = gradient;
 
     [self.titleLabel addShadow];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+//    AniListNavigationController *navigationController = (AniListNavigationController *)self.navigationController;
+//    [UIView animateWithDuration:1.0f
+//                          delay:0.0f
+//                        options:UIViewAnimationOptionCurveEaseInOut | UIViewAnimationOptionBeginFromCurrentState
+//                     animations:^{
+//                         navigationController.imageView.frame = CGRectMake(navigationController.imageView.frame.origin.x, 0, navigationController.imageView.frame.size.width, navigationController.imageView.frame.size.height);
+//                     }
+//                     completion:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+//    AniListNavigationController *navigationController = (AniListNavigationController *)self.navigationController;
+//    [UIView animateWithDuration:1.0f
+//                          delay:0.0f
+//                        options:UIViewAnimationOptionCurveEaseInOut | UIViewAnimationOptionBeginFromCurrentState
+//                     animations:^{
+//                         navigationController.imageView.frame = CGRectMake(navigationController.imageView.frame.origin.x, self.currentYBackgroundPosition, navigationController.imageView.frame.size.width, navigationController.imageView.frame.size.height);
+//                     }
+//                     completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -110,13 +133,25 @@
 #pragma mark - UIScrollViewDelegate Methods
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-
     if(scrollView.contentOffset.y < 38) {
         [self removeTitle];
     }
     else {
         [self displayTitle];
     }
+    
+//    AniListNavigationController *navigationController = (AniListNavigationController *)self.navigationController;
+//    
+//    // Since we know this background will fit the screen height, we can use this value.
+//    float height = [UIScreen mainScreen].bounds.size.height;
+//    
+//    if(scrollView.contentOffset.y <= 0) {
+//        navigationController.imageView.frame = CGRectMake(navigationController.imageView.frame.origin.x, 0, navigationController.imageView.frame.size.width, navigationController.imageView.frame.size.height);
+//    }
+//    else {
+//        float yOrigin = -((navigationController.imageView.frame.size.height - height) * (scrollView.contentOffset.y / scrollView.contentSize.height));
+//        navigationController.imageView.frame = CGRectMake(navigationController.imageView.frame.origin.x, yOrigin, navigationController.imageView.frame.size.width, navigationController.imageView.frame.size.height);
+//    }
 }
 
 @end

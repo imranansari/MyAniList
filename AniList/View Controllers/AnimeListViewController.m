@@ -108,9 +108,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     Anime *anime = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
+    AniListNavigationController *navigationController = (AniListNavigationController *)self.navigationController;
+    
     AnimeViewController *animeVC = [[AnimeViewController alloc] init];
     animeVC.anime = anime;
-        
+    animeVC.currentYBackgroundPosition = navigationController.imageView.frame.origin.y;
+    
     [self.navigationController pushViewController:animeVC animated:YES];
 }
 

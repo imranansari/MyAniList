@@ -9,7 +9,6 @@
 #import "AniListViewController.h"
 #import "AniListAppDelegate.h"
 #import "CRTransitionLabel.h"
-#import "AniListNavigationController.h"
 
 @interface AniListViewController ()
 @property (nonatomic, weak) IBOutlet CRTransitionLabel *topSectionLabel;
@@ -45,6 +44,12 @@
     SWRevealViewController *revealController = self.revealViewController;
     
     AniListNavigationController *nvc = ((AniListNavigationController *)self.revealViewController.frontViewController);
+    
+    
+    self.topSectionLabel.backgroundColor = [UIColor clearColor];
+    self.topSectionLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
+    self.topSectionLabel.textColor = [UIColor lightGrayColor];
+    self.topSectionLabel.textAlignment = NSTextAlignmentCenter;
     
     // This value is implicitly set to YES in iOS 7.0.
     nvc.navigationBar.translucent = YES; // Setting this slides the view up, underneath the nav bar (otherwise it'll appear black)
@@ -278,6 +283,19 @@
         [UIView animateWithDuration:0.2f animations:^{
             self.topSectionLabel.alpha = 0.0f;
         }];
+    }
+    
+    AniListNavigationController *navigationController = (AniListNavigationController *)self.navigationController;
+    
+    // Since we know this background will fit the screen height, we can use this value.
+    float height = [UIScreen mainScreen].bounds.size.height;
+    
+    if(scrollView.contentOffset.y <= 0) {
+        navigationController.imageView.frame = CGRectMake(navigationController.imageView.frame.origin.x, 0, navigationController.imageView.frame.size.width, navigationController.imageView.frame.size.height);
+    }
+    else {
+        float yOrigin = -((navigationController.imageView.frame.size.height - height) * (scrollView.contentOffset.y / scrollView.contentSize.height));
+        navigationController.imageView.frame = CGRectMake(navigationController.imageView.frame.origin.x, yOrigin, navigationController.imageView.frame.size.width, navigationController.imageView.frame.size.height);
     }
 }
 

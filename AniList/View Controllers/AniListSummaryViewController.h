@@ -20,6 +20,7 @@
 @property (nonatomic, weak) IBOutlet UIView *maskView;
 @property (nonatomic, weak) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, weak) IBOutlet UILabel *titleLabel;
+@property (nonatomic, assign) float currentYBackgroundPosition;
 
 - (void)adjustTitle;
 

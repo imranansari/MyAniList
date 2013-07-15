@@ -10,6 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "BaseViewController.h"
 #import "AniListTableView.h"
+#import "AniListNavigationController.h"
 
 @interface AniListViewController : BaseViewController<UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate>
 
