@@ -11,6 +11,7 @@
 #import "UserProfile.h"
 #import "AniListAppDelegate.h"
 #import "MALHTTPClient.h"
+#import "AniListNavigationController.h"
 
 @interface LoginViewController ()
 @property (nonatomic, weak) IBOutlet UITextField *username;
@@ -35,7 +36,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    UINavigationController *nvc = ((UINavigationController *)self.revealViewController.frontViewController);
+    AniListNavigationController *nvc = ((AniListNavigationController *)self.revealViewController.frontViewController);
     
     nvc.navigationBar.hidden = YES;
     if([[UIDevice currentDevice].systemVersion compare:@"7.0" options:NSNumericSearch] != NSOrderedAscending) {
@@ -77,7 +78,7 @@
     if([UserProfile userIsLoggedIn]) {
         AniListAppDelegate *delegate = (AniListAppDelegate *)[UIApplication sharedApplication].delegate;
         SWRevealViewController *rvc = (SWRevealViewController *)delegate.window.rootViewController;
-        UINavigationController *nvc = (UINavigationController *)rvc.frontViewController;
+        AniListNavigationController *nvc = (AniListNavigationController *)rvc.frontViewController;
         nvc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
         
         [nvc dismissViewControllerAnimated:YES completion:nil];

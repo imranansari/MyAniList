@@ -12,7 +12,6 @@
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IBProxyObject</string>
-			<string>IBUIImageView</string>
 			<string>IBUILabel</string>
 			<string>IBUITableView</string>
 			<string>IBUIView</string>
@@ -37,28 +36,12 @@
 				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">292</int>
 				<array class="NSMutableArray" key="NSSubviews">
-					<object class="IBUIImageView" id="975091285">
-						<reference key="NSNextResponder" ref="542935395"/>
-						<int key="NSvFlags">292</int>
-						<string key="NSFrameSize">{320, 568}</string>
-						<reference key="NSSuperview" ref="542935395"/>
-						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="191373211"/>
-						<string key="NSReuseIdentifierKey">_NS:9</string>
-						<bool key="IBUIUserInteractionEnabled">NO</bool>
-						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<object class="NSCustomResource" key="IBUIImage">
-							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">test_background@2x.png</string>
-						</object>
-					</object>
 					<object class="IBUILabel" id="204089194">
 						<reference key="NSNextResponder" ref="542935395"/>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{0, 28}, {316, 21}}</string>
 						<reference key="NSSuperview" ref="542935395"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -144,7 +127,7 @@
 				<string key="NSFrameSize">{320, 568}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
-				<reference key="NSNextKeyView" ref="975091285"/>
+				<reference key="NSNextKeyView"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<reference key="IBUIBackgroundColor" ref="805085461"/>
 				<reference key="IBUISimulatedDestinationMetrics" ref="622224728"/>
@@ -226,7 +209,6 @@
 						<reference key="object" ref="542935395"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="191373211"/>
-							<reference ref="975091285"/>
 							<reference ref="204089194"/>
 						</array>
 						<reference key="parent" ref="0"/>
@@ -237,11 +219,6 @@
 						<array class="NSMutableArray" key="children">
 							<reference ref="768113367"/>
 						</array>
-						<reference key="parent" ref="542935395"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">40</int>
-						<reference key="object" ref="975091285"/>
 						<reference key="parent" ref="542935395"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -265,7 +242,6 @@
 				<string key="13.CustomClassName">AniListTableView</string>
 				<string key="13.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="37.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="40.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="41.CustomClassName">CRTransitionLabel</string>
 				<string key="41.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			</dictionary>
@@ -339,10 +315,6 @@
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaTouchFramework</string>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
-		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="NS.key.0">test_background@2x.png</string>
-			<string key="NS.object.0">{640, 1136}</string>
-		</object>
 		<string key="IBCocoaTouchPluginVersion">2083</string>
 	</data>
 </archive>

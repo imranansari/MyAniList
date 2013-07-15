@@ -17,13 +17,34 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        self.navigationStyle = NavigationStyleAnime;
     }
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor clearColor];
+}
+
+- (void)setNavigationStyle:(NavigationStyle)navigationStyle {
+    _navigationStyle = navigationStyle;
+    
+    UIImage *backgroundImage = nil;
+    
+    switch (navigationStyle) {
+        case NavigationStyleAnime:
+            backgroundImage = [UIImage imageNamed:@"anime_background.png"];
+            break;
+            
+        default:
+            break;
+    }
+    
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:backgroundImage];
+    imageView.alpha = 0.75f;
+
+    [self.view insertSubview:imageView belowSubview:self.view.subviews[0]];
 }
 
 #pragma - Overridden Methods

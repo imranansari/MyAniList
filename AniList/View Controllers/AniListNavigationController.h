@@ -8,6 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+typedef enum {
+    NavigationStyleAnime = 0,
+    NavigationStyleManga,
+    NavigationStyleSearch,
+    NavigationStyleSettings
+} NavigationStyle;
+
 @interface AniListNavigationController : UINavigationController
+
+@property (nonatomic, assign) NavigationStyle navigationStyle;
 
 @end

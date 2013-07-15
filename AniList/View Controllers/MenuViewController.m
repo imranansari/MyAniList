@@ -11,6 +11,7 @@
 #import "ProfileCell.h"
 #import "AnimeListViewController.h"
 #import "AniListAppDelegate.h"
+#import "AniListNavigationController.h"
 
 #define kCellTitleKey @"kCellTitleKey"
 #define kCellViewControllerKey @"kCellViewControllerKey"
@@ -80,13 +81,13 @@ static NSString *CellIdentifier = @"Cell";
 #pragma mark - Cell Action Methods
 
 - (void)loadViewController:(UIViewController *)viewController {
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
+    AniListNavigationController *navigationController = [[AniListNavigationController alloc] initWithRootViewController:viewController];
     [self.revealViewController setFrontViewController:navigationController animated:YES];
 }
 
 - (void)loadModalViewController:(UIViewController *)viewController {
     AnimeListViewController *animeVC = [[AnimeListViewController alloc] init];
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:animeVC];
+    AniListNavigationController *navigationController = [[AniListNavigationController alloc] initWithRootViewController:animeVC];
     navigationController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     [navigationController presentViewController:viewController animated:YES completion:^{
         [self.revealViewController setFrontViewController:navigationController animated:YES];

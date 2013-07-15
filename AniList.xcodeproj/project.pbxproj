@@ -197,6 +197,7 @@
 		63894CC8176A9E37007D2D05 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63894CC5176A9E37007D2D05 /* LoginViewController.xib */; };
 		63894CC9176A9E37007D2D05 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63894CC5176A9E37007D2D05 /* LoginViewController.xib */; };
 		63922CED171D82C800D41BCE /* spacepyro.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 63922CEC171D82C800D41BCE /* spacepyro.jpg */; };
+		6392F4BC1793851F00D566BD /* anime_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6392F4BB1793851F00D566BD /* anime_background@2x.png */; };
 		639FA1DF17936ABF000AA0D1 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 639FA1DD17936ABF000AA0D1 /* back.png */; };
 		639FA1E017936ABF000AA0D1 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 639FA1DD17936ABF000AA0D1 /* back.png */; };
 		639FA1E117936ABF000AA0D1 /* back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 639FA1DE17936ABF000AA0D1 /* back@2x.png */; };
@@ -428,6 +429,7 @@
 		63894CC4176A9E37007D2D05 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		63894CC5176A9E37007D2D05 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		63922CEC171D82C800D41BCE /* spacepyro.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = spacepyro.jpg; path = Images/Placeholders/spacepyro.jpg; sourceTree = "<group>"; };
+		6392F4BB1793851F00D566BD /* anime_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "anime_background@2x.png"; sourceTree = "<group>"; };
 		639FA1DD17936ABF000AA0D1 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = back.png; path = Images/Icons/back.png; sourceTree = "<group>"; };
 		639FA1DE17936ABF000AA0D1 /* back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "back@2x.png"; path = "Images/Icons/back@2x.png"; sourceTree = "<group>"; };
 		639FA1E317936EAB000AA0D1 /* AniListNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AniListNavigationController.h; sourceTree = "<group>"; };
@@ -700,6 +702,7 @@
 		63502792171E4D430004C106 /* Background */ = {
 			isa = PBXGroup;
 			children = (
+				6392F4BB1793851F00D566BD /* anime_background@2x.png */,
 				636F86A8175BA037007E1FB6 /* header_bg.png */,
 				636F86A9175BA037007E1FB6 /* header_bg@2x.png */,
 				637CF6F21759940E0009ADF3 /* test_background@2x.png */,
@@ -1092,6 +1095,7 @@
 				63461A1B1778004D0053652C /* SettingsViewController.xib in Resources */,
 				639FA1DF17936ABF000AA0D1 /* back.png in Resources */,
 				639FA1E117936ABF000AA0D1 /* back@2x.png in Resources */,
+				6392F4BC1793851F00D566BD /* anime_background@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
