@@ -22,6 +22,7 @@
 @dynamic enable_rereading;
 @dynamic image;
 @dynamic image_url;
+@dynamic last_updated;
 @dynamic manga_id;
 @dynamic priority;
 @dynamic reread_value;

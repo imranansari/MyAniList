@@ -62,7 +62,20 @@
     else NSAssert(nil, @"Username and password must be valid!");
 }
 
-#pragma mark - Request Methods
+#pragma mark - Profile Methods
+
+- (void)getProfileForUser:(NSString *)user success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure {
+    [[UMALHTTPClient sharedClient] authenticate];
+    [[UMALHTTPClient sharedClient] getPath:[NSString stringWithFormat:@"/profile/%@", user]
+                               parameters:@{}
+                                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                      ALLog(@"Profile details fetched!");
+                                      success(operation, responseObject);
+                                  }
+                                  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                      failure(operation, error);
+                                  }];
+}
 
 #pragma mark - User Authentication Methods
 

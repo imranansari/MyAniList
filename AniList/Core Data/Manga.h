@@ -83,6 +83,7 @@ typedef enum {
 @property (nonatomic, retain) NSNumber *enable_rereading;
 @property (nonatomic, retain) NSString *image;
 @property (nonatomic, retain) NSString *image_url;
+@property (nonatomic, retain) NSNumber *last_updated;
 @property (nonatomic, retain) NSNumber *manga_id;
 @property (nonatomic, retain) NSNumber *priority;
 @property (nonatomic, retain) NSNumber *reread_value;

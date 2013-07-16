@@ -12,6 +12,7 @@
 #import "AnimeListViewController.h"
 #import "AniListAppDelegate.h"
 #import "AniListNavigationController.h"
+#import "MALHTTPClient.h"
 
 #define kCellTitleKey @"kCellTitleKey"
 #define kCellViewControllerKey @"kCellViewControllerKey"
@@ -19,6 +20,10 @@
 
 @interface MenuViewController ()
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
+@property (nonatomic, weak) IBOutlet UIImageView *profileImage;
+@property (nonatomic, weak) IBOutlet UILabel *username;
+@property (nonatomic, weak) IBOutlet UILabel *animeStats;
+@property (nonatomic, weak) IBOutlet UILabel *mangaStats;
 @end
 
 @implementation MenuViewController
@@ -40,6 +45,15 @@ static NSString *CellIdentifier = @"Cell";
     
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
     self.tableView.scrollEnabled = NO;
+    
+    self.profileImage.contentMode = UIViewContentModeScaleAspectFill;
+    self.profileImage.backgroundColor = [UIColor clearColor];
+    self.profileImage.layer.borderColor = [UIColor colorWithWhite:1.0f alpha:0.4f].CGColor;
+    
+    
+    [self.username addShadow];
+    [self.animeStats addShadow];
+    [self.mangaStats addShadow];
     
     if(!items) {
         items = @[
@@ -70,10 +84,38 @@ static NSString *CellIdentifier = @"Cell";
                       }
                   ];
     }
+    
+    // Update profile.
+    [[MALHTTPClient sharedClient] getProfileForUser:[[UserProfile profile] username] success:^(id operation, id response) {
+        ALLog(@"Got user details.");
+        NSDictionary *userProfile = (NSDictionary *)response;
+        
+        [[UserProfile profile] createAnimeStats:userProfile[@"anime_stats"]];
+        [[UserProfile profile] createMangaStats:userProfile[@"manga_stats"]];
+        
+        self.username.text = [[UserProfile profile] username];
+        
+        self.animeStats.text = [NSString stringWithFormat:@"Anime time in days: %@", [[UserProfile profile] animeStats][kStatsTotalTimeInDays]];
+        self.mangaStats.text = [NSString stringWithFormat:@"Manga time in days: %@", [[UserProfile profile] mangaStats][kStatsTotalTimeInDays]];
+        
+        
+        NSURLRequest *request = [[UserProfile profile] getUserImageURL:userProfile];
+        [self.profileImage setImageWithURLRequest:request
+                                 placeholderImage:nil
+                                          success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+                                              ALLog(@"image found");
+                                              self.profileImage.image = image;
+                                          }
+                                          failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+                                              ALLog(@"image failed.");
+                                          }];
+        
+    } failure:^(id operation, NSError *error) {
+        ALLog(@"Failed to get user details");
+    }];
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
@@ -132,6 +174,7 @@ static NSString *CellIdentifier = @"Cell";
     }
     
     cell.textLabel.text = items[indexPath.row][kCellTitleKey];
+    [cell.textLabel addShadow];
     
     return cell;
 }

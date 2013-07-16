@@ -29,6 +29,7 @@
 @dynamic anime_id;
 @dynamic image;
 @dynamic image_url;
+@dynamic last_updated;
 @dynamic popularity_rank;
 @dynamic priority;
 @dynamic rank;

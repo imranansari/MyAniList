@@ -7,6 +7,7 @@
 //
 
 #import "UserProfile.h"
+#import "MALHTTPClient.h"
 
 @implementation UserProfile
 
@@ -47,6 +48,8 @@ static UserProfile *profile = nil;
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
+#pragma mark - Public Methods
+
 - (void)logout {
     self.username = @"";
     self.password = @"";
@@ -54,6 +57,36 @@ static UserProfile *profile = nil;
 
 + (BOOL)userIsLoggedIn {
     return [[NSUserDefaults standardUserDefaults] valueForKey:kUsernameKey] && [[NSUserDefaults standardUserDefaults] valueForKey:kPasswordKey];
+}
+
+
+- (NSURLRequest *)getUserImageURL:(NSDictionary *)data {
+    NSString *profileImageURL = data[@"avatar_url"];
+    return [NSURLRequest requestWithURL:[NSURL URLWithString:profileImageURL]];
+}
+
+- (void)createAnimeStats:(NSDictionary *)data {
+    self.animeStats = @{
+                        kStatsTotalTimeInDays   : data[kStatsTotalTimeInDays],
+                        kStatsWatching          : data[kStatsWatching],
+                        kStatsCompleted         : data[kStatsCompleted],
+                        kStatsOnHold            : data[kStatsOnHold],
+                        kStatsDropped           : data[kStatsDropped],
+                        kStatsPlanToWatch       : data[kStatsPlanToWatch],
+                        kStatsTotalEntries      : data[kStatsTotalEntries]
+                        };
+}
+
+- (void)createMangaStats:(NSDictionary *)data {
+    self.mangaStats = @{
+                        kStatsTotalTimeInDays   : data[kStatsTotalTimeInDays],
+                        kStatsReading           : data[kStatsReading],
+                        kStatsCompleted         : data[kStatsCompleted],
+                        kStatsOnHold            : data[kStatsOnHold],
+                        kStatsDropped           : data[kStatsDropped],
+                        kStatsPlanToRead        : data[kStatsPlanToRead],
+                        kStatsTotalEntries      : data[kStatsTotalEntries]
+                        };
 }
 
 @end

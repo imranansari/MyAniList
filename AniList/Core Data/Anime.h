@@ -87,6 +87,7 @@ typedef enum {
 @property (nonatomic, retain) NSNumber *anime_id;
 @property (nonatomic, retain) NSString *image;
 @property (nonatomic, retain) NSString *image_url;
+@property (nonatomic, retain) NSNumber *last_updated;
 @property (nonatomic, retain) NSNumber *popularity_rank;
 @property (nonatomic, retain) NSNumber *priority;
 @property (nonatomic, retain) NSNumber *rank;

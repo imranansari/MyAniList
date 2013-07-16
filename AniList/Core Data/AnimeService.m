@@ -108,7 +108,7 @@ static NSArray *cachedAnimeList = nil;
 }
 
 + (Anime *)addAnime:(NSDictionary *)data fromList:(BOOL)fromList {
-    
+    fromList = NO;
     Anime *existingAnime = [AnimeService animeForID:data[@"id"] fromCache:fromList];
     
     if(existingAnime) {
@@ -122,6 +122,8 @@ static NSArray *cachedAnimeList = nil;
     
     anime.anime_id = [data[kID] isKindOfClass:[NSString class]] ? @([data[kID] intValue]) : data[kID];
     anime.title = data[kTitle];
+    
+    anime.last_updated = data[kUserLastUpdated];
     
 //    anime.synonyms = data[@"other_titles"];
     // english
@@ -203,7 +205,7 @@ static NSArray *cachedAnimeList = nil;
     //    anime.synonyms = data[@"other_titles"];
     // english
     // japanese
-    
+
     // rank (global)
     if(data[kRank] && ![data[kRank] isNull])
         anime.rank = data[kRank];
@@ -232,11 +234,6 @@ static NSArray *cachedAnimeList = nil;
     if(data[kAirEndDate] && ![data[kAirEndDate] isNull])
         anime.date_finish = [NSDate parseDate:data[kAirEndDate]];
     
-    if(data[kUserStartDate] && ![data[kUserStartDate] isNull])
-        anime.user_date_start = [NSDate parseDate:data[kUserStartDate]];
-    if(data[kUserEndDate] && ![data[kUserEndDate] isNull])
-        anime.user_date_finish = [NSDate parseDate:data[kUserEndDate]];
-    
     //    anime.classification = data[@"classification"];
     if(data[kMembersScore] && ![data[kMembersScore] isNull])
         anime.average_score = [data[kMembersScore] isKindOfClass:[NSString class]] ? @([data[kMembersScore] doubleValue]) : data[kMembersScore];
@@ -252,14 +249,34 @@ static NSArray *cachedAnimeList = nil;
     //    anime.tags = data[@"tags"];
     //    anime.manga_adaptations = data[@"manga_adaptations"];
     
-    if(data[kUserWatchedStatus] && ![data[kUserWatchedStatus] isNull])
-        anime.watched_status = @([Anime animeWatchedStatusForValue:data[kUserWatchedStatus]]);
     
-    if(data[kUserWatchedEpisodes] && ![data[kUserWatchedEpisodes] isNull])
-        anime.current_episode = data[kUserWatchedEpisodes];
     
-    if(data[kUserScore] && ![data[kUserScore] isNull])
-        anime.user_score = ([data[kUserScore] isNull] || [data[kUserScore] intValue] == 0) ? @(-1) : [data[kUserScore] isKindOfClass:[NSString class]] ? @([data[kUserScore] intValue]) : data[kUserScore];
+    // User details below.
+    
+    NSNumber *lastUpdated = data[kUserLastUpdated];
+    
+    // If the last time we updated (according to the server) is less than what we get from the server,
+    // don't bother updating user details.
+    if([lastUpdated intValue] <= [anime.last_updated intValue]) {
+        ALLog(@"Update times match, no need to update user data.");
+    }
+    else {
+        ALLog(@"Update times differ, updating user data...");
+        
+        if(data[kUserStartDate] && ![data[kUserStartDate] isNull])
+            anime.user_date_start = [NSDate parseDate:data[kUserStartDate]];
+        if(data[kUserEndDate] && ![data[kUserEndDate] isNull])
+            anime.user_date_finish = [NSDate parseDate:data[kUserEndDate]];
+        
+        if(data[kUserWatchedStatus] && ![data[kUserWatchedStatus] isNull])
+            anime.watched_status = @([Anime animeWatchedStatusForValue:data[kUserWatchedStatus]]);
+        
+        if(data[kUserWatchedEpisodes] && ![data[kUserWatchedEpisodes] isNull])
+            anime.current_episode = data[kUserWatchedEpisodes];
+        
+        if(data[kUserScore] && ![data[kUserScore] isNull])
+            anime.user_score = ([data[kUserScore] isNull] || [data[kUserScore] intValue] == 0) ? @(-1) : [data[kUserScore] isKindOfClass:[NSString class]] ? @([data[kUserScore] intValue]) : data[kUserScore];
+    }
     
     if(!fromList)
         [[AnimeService managedObjectContext] save:&error];
@@ -273,6 +290,7 @@ static NSArray *cachedAnimeList = nil;
 
 
 + (Anime *)editAnime:(NSDictionary *)data fromList:(BOOL)fromList {
+    fromList = NO;
     Anime *anime = [AnimeService animeForID:data[@"id"] fromCache:fromList];
     if(!anime) {
         ALLog(@"Unable to edit anime; anime does not exist!");

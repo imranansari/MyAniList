@@ -11,6 +11,17 @@
 #define kUsernameKey @"kUsernameKey"
 #define kPasswordKey @"kPasswordKey"
 
+// Stats
+#define kStatsTotalTimeInDays @"time_days"
+#define kStatsWatching @"watching"
+#define kStatsCompleted @"completed"
+#define kStatsOnHold @"on_hold"
+#define kStatsDropped @"dropped"
+#define kStatsPlanToWatch @"plan_to_watch"
+#define kStatsTotalEntries @"total_entries"
+#define kStatsReading @"reading"
+#define kStatsPlanToRead @"plan_to_read"
+
 // Notification Names
 #define kUserLoggedIn @"kUserLoggedIn"
 
@@ -18,10 +29,18 @@
 
 @property (nonatomic, copy) NSString *username;
 @property (nonatomic, copy) NSString *password;
+@property (nonatomic, strong) NSDictionary *animeStats;
+@property (nonatomic, strong) NSDictionary *mangaStats;
+@property (nonatomic, strong) UIImageView *profileImage;
 
 + (UserProfile *)profile;
 - (void)setUsername:(NSString *)username andPassword:(NSString *)password;
 - (void)logout;
 + (BOOL)userIsLoggedIn;
+
+- (NSURLRequest *)getUserImageURL:(NSDictionary *)data;
+- (void)createUserProfile:(NSDictionary *)data;
+- (void)createAnimeStats:(NSDictionary *)data;
+- (void)createMangaStats:(NSDictionary *)data;
 
 @end
