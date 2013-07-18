@@ -85,39 +85,37 @@ static NSString *CellIdentifier = @"Cell";
                   ];
     }
     
-    // Update profile.
-    [[MALHTTPClient sharedClient] getProfileForUser:[[UserProfile profile] username] success:^(id operation, id response) {
-        ALLog(@"Got user details.");
-        NSDictionary *userProfile = (NSDictionary *)response;
-        
-        [[UserProfile profile] createAnimeStats:userProfile[@"anime_stats"]];
-        [[UserProfile profile] createMangaStats:userProfile[@"manga_stats"]];
-        
-        self.username.text = [[UserProfile profile] username];
-        
-        self.animeStats.text = [NSString stringWithFormat:@"Anime time in days: %@", [[UserProfile profile] animeStats][kStatsTotalTimeInDays]];
-        self.mangaStats.text = [NSString stringWithFormat:@"Manga time in days: %@", [[UserProfile profile] mangaStats][kStatsTotalTimeInDays]];
-        
-        
-        NSURLRequest *request = [[UserProfile profile] getUserImageURL:userProfile];
-        [self.profileImage setImageWithURLRequest:request
-                                 placeholderImage:nil
-                                          success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-                                              ALLog(@"image found");
-                                              self.profileImage.image = image;
-                                          }
-                                          failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-                                              ALLog(@"image failed.");
-                                          }];
-        
-    } failure:^(id operation, NSError *error) {
-        ALLog(@"Failed to get user details");
-    }];
+    [self fetchProfile];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Data Methods
+
+- (void)fetchProfile {
+    if([UserProfile userIsLoggedIn]) {
+        [[UserProfile profile] fetchProfileWithCompletion:^{
+            self.username.text = [[UserProfile profile] username];
+            
+            self.animeStats.text = [NSString stringWithFormat:@"Anime time in days: %@", [[UserProfile profile] animeStats][kStatsTotalTimeInDays]];
+            self.mangaStats.text = [NSString stringWithFormat:@"Manga time in days: %@", [[UserProfile profile] mangaStats][kStatsTotalTimeInDays]];
+            
+            
+////            NSURLRequest *request = [[UserProfile profile] profileImage];
+//            [self.profileImage setImageWithURLRequest:request
+//                                     placeholderImage:nil
+//                                              success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+//                                                  ALLog(@"image found");
+//                                                  self.profileImage.image = image;
+//                                              }
+//                                              failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+//                                                  ALLog(@"image failed.");
+//                                              }];
+        }];
+    }
 }
 
 #pragma mark - Cell Action Methods

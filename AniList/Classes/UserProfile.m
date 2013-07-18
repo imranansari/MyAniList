@@ -59,6 +59,22 @@ static UserProfile *profile = nil;
     return [[NSUserDefaults standardUserDefaults] valueForKey:kUsernameKey] && [[NSUserDefaults standardUserDefaults] valueForKey:kPasswordKey];
 }
 
+- (void)fetchProfileWithCompletion:(void (^)(void))completionBlock {
+    [[MALHTTPClient sharedClient] getProfileForUser:[[UserProfile profile] username] success:^(id operation, id response) {
+        ALLog(@"Got user details.");
+        NSDictionary *userProfile = (NSDictionary *)response;
+        
+        [[UserProfile profile] createAnimeStats:userProfile[@"anime_stats"]];
+        [[UserProfile profile] createMangaStats:userProfile[@"manga_stats"]];
+        
+        if(completionBlock) {
+            completionBlock();
+        }
+        
+    } failure:^(id operation, NSError *error) {
+        ALLog(@"Failed to get user details");
+    }];
+}
 
 - (NSURLRequest *)getUserImageURL:(NSDictionary *)data {
     NSString *profileImageURL = data[@"avatar_url"];

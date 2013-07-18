@@ -31,12 +31,13 @@
 @property (nonatomic, copy) NSString *password;
 @property (nonatomic, strong) NSDictionary *animeStats;
 @property (nonatomic, strong) NSDictionary *mangaStats;
-@property (nonatomic, strong) UIImageView *profileImage;
+@property (nonatomic, strong) UIImage *profileImage;
 
 + (UserProfile *)profile;
 - (void)setUsername:(NSString *)username andPassword:(NSString *)password;
 - (void)logout;
 + (BOOL)userIsLoggedIn;
+- (void)fetchProfileWithCompletion:(void (^)(void))completionBlock;
 
 - (NSURLRequest *)getUserImageURL:(NSDictionary *)data;
 - (void)createUserProfile:(NSDictionary *)data;
