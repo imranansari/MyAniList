@@ -1,0 +1,6 @@
+[submodule "AniList/Libraries/SWRevealViewController"]
+	path = AniList/Libraries/SWRevealViewController
+	url = https://github.com/John-Lluch/SWRevealViewController.git
+[submodule "AniList/Libraries/AFNetworking"]
+	path = AniList/Libraries/AFNetworking
+	url = https://github.com/AFNetworking/AFNetworking.git
