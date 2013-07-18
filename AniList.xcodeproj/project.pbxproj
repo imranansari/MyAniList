@@ -1424,8 +1424,8 @@
 		635484D4171C2FA7003457CB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Corey Roberts (8E236WJF76)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Corey Roberts (8E236WJF76)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -1452,7 +1452,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Corey Roberts (QYFSMCG7FR)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Corey Roberts (QYFSMCG7FR)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -1463,8 +1463,8 @@
 				INFOPLIST_FILE = "AniList/AniList-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "F5A21E66-D4DE-458D-AE19-BFEDE5AEAA54";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F5A21E66-D4DE-458D-AE19-BFEDE5AEAA54";
+				PROVISIONING_PROFILE = "440B58D0-A1BE-4897-A253-57B8D6B42288";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "440B58D0-A1BE-4897-A253-57B8D6B42288";
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/AFNetworking/AFNetworking";
 				WRAPPER_EXTENSION = app;
 			};
