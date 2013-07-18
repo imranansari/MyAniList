@@ -1371,9 +1371,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"\"/Applications/Spark Inspector.app/Contents/Resources/Frameworks\"",
-				);
+				FRAMEWORK_SEARCH_PATHS = "\"/Applications/Spark Inspector.app/Contents/Resources/Frameworks\"";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1443,8 +1441,7 @@
 					SparkInspector,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "BAF95AFD-16BA-44D7-A727-767A9CA2FDBC";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "BAF95AFD-16BA-44D7-A727-767A9CA2FDBC";
+				PROVISIONING_PROFILE = "97911E9D-67F0-4E24-8FD2-FB53462F783F";
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/AFNetworking/AFNetworking";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1453,8 +1450,8 @@
 		635484D5171C2FA7003457CB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Corey Roberts (8E236WJF76)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Corey Roberts (8E236WJF76)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Corey Roberts (QYFSMCG7FR)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Corey Roberts (QYFSMCG7FR)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -1465,8 +1462,7 @@
 				INFOPLIST_FILE = "AniList/AniList-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "BAF95AFD-16BA-44D7-A727-767A9CA2FDBC";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "BAF95AFD-16BA-44D7-A727-767A9CA2FDBC";
+				PROVISIONING_PROFILE = "F5A21E66-D4DE-458D-AE19-BFEDE5AEAA54";
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/AFNetworking/AFNetworking";
 				WRAPPER_EXTENSION = app;
 			};
