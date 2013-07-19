@@ -12,6 +12,8 @@
 
 @interface AniListViewController ()
 @property (nonatomic, weak) IBOutlet CRTransitionLabel *topSectionLabel;
+@property (nonatomic, strong) EGORefreshTableHeaderView *refreshHeaderView;
+@property (nonatomic, assign) BOOL reloading;
 @end
 
 @implementation AniListViewController
@@ -86,6 +88,16 @@
     
     self.topSectionLabel.text = @"";
     self.topSectionLabel.alpha = 0.0f;
+    
+    // Set up Pull to Refresh view.
+    if(self.refreshHeaderView == nil) {
+        self.refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.tableView.bounds.size.height, self.view.frame.size.width, self.tableView.bounds.size.height)];
+        self.refreshHeaderView.delegate = self;
+        [self.tableView addSubview:self.refreshHeaderView];
+    }
+    
+    // Update the last update date.
+    [self.refreshHeaderView refreshLastUpdatedDate];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -104,6 +116,12 @@
 }
 
 #pragma mark - Override Methods
+
+// Must call super after fetching is done!
+- (void)fetchData {
+    self.reloading = NO;
+    [self.refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
+}
 
 // Must override.
 - (NSString *)entityName {
@@ -260,6 +278,8 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
+    [self.refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
+    
 //    ALLog(@"content offset: %f", scrollView.contentOffset.y);
     
     if(scrollView.contentOffset.y > 36) {
@@ -299,5 +319,29 @@
     }
 }
 
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+	[self.refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    if(self.reloading) {
+        [self fetchData];
+    }
+}
+
+#pragma mark - EGOTableViewPullRefreshDelegate Methods
+
+ - (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view {
+     self.reloading = YES;
+ }
+ 
+ - (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view {
+     return self.reloading; // should return if data source model is reloading
+ }
+ 
+ - (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view {
+     return [NSDate date]; // should return date data source was last changed
+ }
 
 @end

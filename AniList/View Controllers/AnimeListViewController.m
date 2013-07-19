@@ -39,8 +39,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [self loadList];
+
+    [self fetchData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -62,14 +62,18 @@
     return [NSPredicate predicateWithFormat:@"watched_status < 7"];
 }
 
-- (void)loadList {
+- (void)fetchData {
     if([UserProfile userIsLoggedIn]) {
         [[MALHTTPClient sharedClient] getAnimeListForUser:[[UserProfile profile] username]
                                                   success:^(NSURLRequest *operation, id response) {
                                                       [AnimeService addAnimeList:(NSDictionary *)response];
+                                                      
+                                                      [super fetchData];
                                                   }
                                                   failure:^(NSURLRequest *operation, NSError *error) {
                                                       // Derp.
+                                                      
+                                                      [super fetchData];
                                                   }];
     }
 }

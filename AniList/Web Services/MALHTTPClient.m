@@ -65,6 +65,9 @@
 #pragma mark - Profile Methods
 
 - (void)getProfileForUser:(NSString *)user success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure {
+    
+    ALLog(@"Getting user profile...");
+    
     [[UMALHTTPClient sharedClient] authenticate];
     [[UMALHTTPClient sharedClient] getPath:[NSString stringWithFormat:@"/profile/%@", user]
                                parameters:@{}
@@ -81,6 +84,8 @@
 
 - (void)loginWithUsername:(NSString *)username andPassword:(NSString *)password success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure {
     
+    ALLog(@"Logging in with username '%@'...,", username);
+    
     [[MALHTTPClient sharedClient] setUsername:username andPassword:password];
     [[MALHTTPClient sharedClient] getPath:@"/api/account/verify_credentials.xml"
                                parameters:@{}
@@ -96,7 +101,8 @@
 #pragma mark - Anime Request Methods
 
 - (void)getAnimeListForUser:(NSString *)user success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure {
-    //http://myanimelist.net/malappinfo.php?status=all&type=anime&u=SpacePyro
+    
+    ALLog(@"Getting anime list for user '%@'...", user);
     
     NSDictionary *parameters = @{
                                  @"status"  : @"all",
@@ -117,6 +123,9 @@
 }
 
 - (void)getAnimeDetailsForID:(NSNumber *)animeID success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure {
+    
+    ALLog(@"Getting anime details for ID %d...", [animeID intValue]);
+    
     NSString *path = [NSString stringWithFormat:@"/anime/%d", [animeID intValue]];
 
     NSDictionary *parameters = @{ @"mine" : @"1" };

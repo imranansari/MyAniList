@@ -40,7 +40,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self loadList];
+    [self fetchData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -67,10 +67,13 @@
         [[MALHTTPClient sharedClient] getMangaListForUser:[[UserProfile profile] username]
                                                   success:^(NSURLRequest *operation, id response) {
                                                       [MangaService addMangaList:(NSDictionary *)response];
-//                                                      [AnimeService addAnimeList:(NSDictionary *)response];
+                                                      
+                                                      [super fetchData];
                                                   }
                                                   failure:^(NSURLRequest *operation, NSError *error) {
                                                       // Derp.
+                                                      
+                                                      [super fetchData];
                                                   }];
     }
 }

@@ -70,7 +70,7 @@
 #define kAnimeStats             @"anime_stats"
 #define kMangaStats             @"manga_stats"
 
-static BOOL UI_DEBUG = NO;
+static const BOOL UI_DEBUG = NO;
 
 #ifdef DEBUG
 #define ALLog( s, ... ) NSLog( @"<%p %@:(%d)> %@", self, [[NSString stringWithUTF8String:__FILE__] lastPathComponent], __LINE__, [NSString stringWithFormat:(s), ##__VA_ARGS__] )
