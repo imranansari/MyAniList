@@ -26,22 +26,19 @@
 }
 
 + (NSString *)progressTextForAnime:(Anime *)anime {
-    if([anime.current_episode intValue] == [anime.total_episodes intValue]) {
+    
+    if([anime.current_episode intValue] == [anime.total_episodes intValue] ||
+       [anime.total_episodes intValue] < 1                                 ||
+       [anime.type intValue] == AnimeTypeMovie) {
         return @"";
     }
     
     // If we've yet to watch it, or the current episode we're on is 0, then list how many episodes exist.
     if([anime.watched_status intValue] == AnimeWatchedStatusPlanToWatch || [anime.current_episode intValue] == 0) {
-        return [NSString stringWithFormat:@"%d %@", [anime.total_episodes intValue], [anime.total_episodes intValue] > 1 ? @"episodes" : @"episode"];
+        return [NSString stringWithFormat:@"%d %@", [anime.total_episodes intValue], [Anime unitForAnimeType:[anime.type intValue] plural:[anime.total_episodes intValue] != 1 ? YES : NO]];
     }
-    
-    // Unsure of this format for now, will stick to this until further notice.
-//    switch([anime.type intValue]) {
-//        case AnimeTypeTV:
-    return [NSString stringWithFormat:@"Watched %d of %d episodes", [anime.current_episode intValue], [anime.total_episodes intValue]];
-            
-//    }
 
+    return [NSString stringWithFormat:@"Watched %d of %d %@", [anime.current_episode intValue], [anime.total_episodes intValue], [Anime unitForAnimeType:[anime.type intValue] plural:[anime.total_episodes intValue] != 1 ? YES : NO]];
 }
 
 - (void)addShadow {

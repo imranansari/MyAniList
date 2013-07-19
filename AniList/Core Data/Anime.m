@@ -203,19 +203,13 @@
     
     switch (animeType) {
         case AnimeTypeTV:
+        case AnimeTypeOVA:
+        case AnimeTypeONA:
+        case AnimeTypeSpecial:
             unit = plural ? @"episodes" : @"episode";
             break;
         case AnimeTypeMovie:
             unit = plural ? @"movies" : @"movie";
-            break;
-        case AnimeTypeOVA:
-            unit = plural ? @"OVAs" : @"OVA";
-            break;
-        case AnimeTypeONA:
-            unit = plural ? @"ONAs" : @"ONA";
-            break;
-        case AnimeTypeSpecial:
-            unit = plural ? @"specials" : @"special";
             break;
         case AnimeTypeMusic:
             unit = plural ? @"songs" : @"song";  // Not sure about this one

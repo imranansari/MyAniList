@@ -95,12 +95,21 @@
         text = [text stringByAppendingString:@"and is still airing"];
     }
     
+    if(self.anime.date_start && self.anime.date_finish && [self.anime.date_start timeIntervalSince1970] == [self.anime.date_finish timeIntervalSince1970]) {
+        NSString *startDate = [dateFormatter stringFromDate:self.anime.date_start];
+        
+        if([self.anime.status intValue] == AnimeAirStatusFinishedAiring)
+            text = [NSString stringWithFormat:@"Aired on %@ ", startDate];
+        if([self.anime.status intValue] == AnimeAirStatusNotYetAired)
+            text = [NSString stringWithFormat:@"Will air %@ ", startDate];
+    }
+    
     return text;
 }
 
 - (NSString *)animeTypeText {
     
-    BOOL plural = [self.anime.total_episodes intValue] > 1;
+    BOOL plural = [self.anime.total_episodes intValue] != 1;
     
     NSString *text = @"";
     
@@ -108,26 +117,32 @@
     NSString *musicText = plural ? @"songs" : @"song";
     NSString *animeType = [Anime stringForAnimeType:[self.anime.type intValue]];
     int numberOfEpisodes = [self.anime.total_episodes intValue];
+
+    NSString *episodeValue = @"";
+    NSString *episodeCount = [NSString stringWithFormat:@"%d", numberOfEpisodes];
+    NSString *unknownCount = @"?";
+    
+    episodeValue = [self.anime.total_episodes intValue] < 1 ? unknownCount : episodeCount;
     
     switch([self.anime.type intValue]) {
         case AnimeTypeTV: {
-            text = [NSString stringWithFormat:@"%@, %d %@", animeType, numberOfEpisodes, episodeText];
+            text = [NSString stringWithFormat:@"%@, %@ %@", animeType, episodeValue, episodeText];
             break;
         }
         case AnimeTypeSpecial: {
-            text = [NSString stringWithFormat:@"%@, %d %@", animeType, numberOfEpisodes, episodeText];
+            text = [NSString stringWithFormat:@"%@, %@ %@", animeType, episodeValue, episodeText];
             break;
         }
         case AnimeTypeOVA: {
-            text = [NSString stringWithFormat:@"%@, %d %@", animeType, numberOfEpisodes, episodeText];
+            text = [NSString stringWithFormat:@"%@, %@ %@", animeType, episodeValue, episodeText];
             break;
         }
         case AnimeTypeONA: {
-            text = [NSString stringWithFormat:@"%@, %d %@", animeType, numberOfEpisodes, episodeText];
+            text = [NSString stringWithFormat:@"%@, %@ %@", animeType, episodeValue, episodeText];
             break;
         }
         case AnimeTypeMusic: {
-            text = [NSString stringWithFormat:@"%@, %d %@", animeType, numberOfEpisodes, musicText];
+            text = [NSString stringWithFormat:@"%@, %@ %@", animeType, episodeValue, musicText];
             break;
         }
         case AnimeTypeMovie: {
@@ -136,7 +151,7 @@
         }
         case AnimeTypeUnknown:
         default: {
-            text = [NSString stringWithFormat:@"%@, %d %@", animeType, numberOfEpisodes, episodeText];
+            text = [NSString stringWithFormat:@"%@, %@ %@", animeType, episodeValue, episodeText];
             break;
         }
     }
