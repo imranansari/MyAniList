@@ -67,6 +67,8 @@ static UserProfile *profile = nil;
         [[UserProfile profile] createAnimeStats:userProfile[@"anime_stats"]];
         [[UserProfile profile] createMangaStats:userProfile[@"manga_stats"]];
         
+        self.profileImageURL = [self getUserImageURL:userProfile];
+        
         if(completionBlock) {
             completionBlock();
         }

@@ -42,6 +42,7 @@
     self.title = @"Search";
     
     self.searchDisplayController.searchResultsTableView.backgroundColor = [UIColor clearColor];
+    self.searchDisplayController.searchBar.tintColor = [UIColor blackColor];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -61,9 +62,7 @@
     [[MALHTTPClient sharedClient] searchForAnimeWithQuery:query success:^(id operation, NSArray *response) {
         dispatch_async(dispatch_get_main_queue(), ^{
             ALLog(@"Got anime results: %d", response.count);
-            for(NSDictionary *result in response) {
-                [AnimeService addAnime:result fromList:NO];
-            }
+            [AnimeService addAnimeListFromSearch:response];
             
             [self.searchDisplayController.searchResultsTableView reloadData];
         });
@@ -72,10 +71,10 @@
     }];
 
     [[MALHTTPClient sharedClient] searchForMangaWithQuery:query success:^(id operation, NSArray *response) {
-        ALLog(@"Got manga results: %d", response.count);
-        for(NSDictionary *result in response) {
-            [MangaService addManga:result fromList:NO];
-        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            ALLog(@"Got manga results: %d", response.count);
+            [MangaService addMangaListFromSearch:response];
+        });
     } failure:^(id operation, NSError *error) {
         ALLog(@"Manga search failure.");
     }];

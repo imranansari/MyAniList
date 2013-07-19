@@ -13,6 +13,7 @@
 
 + (Anime *)animeForID:(NSNumber *)ID;
 + (BOOL)addAnimeList:(NSDictionary *)data;
++ (BOOL)addAnimeListFromSearch:(NSArray *)data;
 + (Anime *)addAnime:(NSDictionary *)data fromList:(BOOL)fromList;
 + (Anime *)editAnime:(NSDictionary *)data fromList:(BOOL)fromList;
 + (void)deleteAnime:(Anime *)anime;

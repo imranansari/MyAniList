@@ -29,6 +29,15 @@
     else return nil;
 }
 
++ (BOOL)addMangaListFromSearch:(NSArray *)data {
+    for(NSDictionary *result in data) {
+        [MangaService addManga:result fromList:YES];
+    }
+    
+    return NO;
+}
+
+
 + (BOOL)addMangaList:(NSDictionary *)data {
     
     NSDictionary *mangaDetails = data[@"myanimelist"];

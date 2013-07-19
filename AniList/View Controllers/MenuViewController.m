@@ -103,17 +103,16 @@ static NSString *CellIdentifier = @"Cell";
             self.animeStats.text = [NSString stringWithFormat:@"Anime time in days: %@", [[UserProfile profile] animeStats][kStatsTotalTimeInDays]];
             self.mangaStats.text = [NSString stringWithFormat:@"Manga time in days: %@", [[UserProfile profile] mangaStats][kStatsTotalTimeInDays]];
             
-            
-////            NSURLRequest *request = [[UserProfile profile] profileImage];
-//            [self.profileImage setImageWithURLRequest:request
-//                                     placeholderImage:nil
-//                                              success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-//                                                  ALLog(@"image found");
-//                                                  self.profileImage.image = image;
-//                                              }
-//                                              failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-//                                                  ALLog(@"image failed.");
-//                                              }];
+            NSURLRequest *request = [[UserProfile profile] profileImageURL];
+            [self.profileImage setImageWithURLRequest:request
+                                     placeholderImage:nil
+                                              success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+                                                  ALLog(@"image found");
+                                                  self.profileImage.image = image;
+                                              }
+                                              failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+                                                  ALLog(@"image failed.");
+                                              }];
         }];
     }
 }

@@ -31,7 +31,7 @@
 @property (nonatomic, copy) NSString *password;
 @property (nonatomic, strong) NSDictionary *animeStats;
 @property (nonatomic, strong) NSDictionary *mangaStats;
-@property (nonatomic, strong) UIImage *profileImage;
+@property (nonatomic, strong) NSURLRequest *profileImageURL;
 
 + (UserProfile *)profile;
 - (void)setUsername:(NSString *)username andPassword:(NSString *)password;

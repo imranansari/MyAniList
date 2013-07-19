@@ -24,6 +24,7 @@ static NSArray *cachedAnimeList = nil;
 }
 
 + (Anime *)animeForID:(NSNumber *)ID fromCache:(BOOL)fromCache {
+    fromCache = NO;
     
     if(fromCache) {
         if(!cachedAnimeList) {
@@ -58,6 +59,14 @@ static NSArray *cachedAnimeList = nil;
         }
         else return nil;
     }
+}
+
++ (BOOL)addAnimeListFromSearch:(NSArray *)data {
+    for(NSDictionary *result in data) {
+        [AnimeService addAnime:result fromList:YES];
+    }
+    
+    return NO;
 }
 
 + (BOOL)addAnimeList:(NSDictionary *)data {
@@ -108,7 +117,6 @@ static NSArray *cachedAnimeList = nil;
 }
 
 + (Anime *)addAnime:(NSDictionary *)data fromList:(BOOL)fromList {
-    fromList = NO;
     Anime *existingAnime = [AnimeService animeForID:data[@"id"] fromCache:fromList];
     
     if(existingAnime) {
