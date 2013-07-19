@@ -15,4 +15,5 @@
     #import "Constants.h"
     #import "Categories.h"
     #import "UserProfile.h"
+    #import "AnalyticsManager.h"
 #endif

@@ -49,6 +49,7 @@
     }
     
     [Crashlytics startWithAPIKey:@"c01aa6f0d36b5000da6aa8c83dda558c23be54f8"];
+    [AnalyticsManager sharedInstance];
     
     [self setStyleAttributes];
     
