@@ -27,7 +27,7 @@
         self.sectionHeaders = @[@"Reading", @"Completed", @"On Hold",
                                 @"Dropped", @"Plan To Read"];
         
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadList) name:kUserLoggedIn object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchData) name:kUserLoggedIn object:nil];
     }
     
     return self;
@@ -62,7 +62,7 @@
     return [NSPredicate predicateWithFormat:@"read_status < 7"];
 }
 
-- (void)loadList {
+- (void)fetchData {
     if([UserProfile userIsLoggedIn]) {
         [[MALHTTPClient sharedClient] getMangaListForUser:[[UserProfile profile] username]
                                                   success:^(NSURLRequest *operation, id response) {

@@ -13,6 +13,7 @@
 #import "AniListAppDelegate.h"
 #import "AniListNavigationController.h"
 #import "MALHTTPClient.h"
+#import "LoginViewController.h"
 
 #define kCellTitleKey @"kCellTitleKey"
 #define kCellViewControllerKey @"kCellViewControllerKey"
@@ -34,10 +35,14 @@ static NSString *CellIdentifier = @"Cell";
 - (id)init {
     self = [super init];
     if(self) {
-        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchProfile) name:kUserLoggedIn object:nil];
     }
     
     return self;
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewDidLoad {
@@ -88,6 +93,8 @@ static NSString *CellIdentifier = @"Cell";
     [self fetchProfile];
 }
 
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -128,15 +135,17 @@ static NSString *CellIdentifier = @"Cell";
     AnimeListViewController *animeVC = [[AnimeListViewController alloc] init];
     AniListNavigationController *navigationController = [[AniListNavigationController alloc] initWithRootViewController:animeVC];
     navigationController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-    [navigationController presentViewController:viewController animated:YES completion:^{
+    [self.revealViewController presentViewController:viewController animated:YES completion:^{
         [self.revealViewController setFrontViewController:navigationController animated:YES];
     }];
+    
 }
 
 - (void)logout:(UIViewController *)viewController {
     // wipe all cached data.
     AniListAppDelegate *delegate = (AniListAppDelegate *)[UIApplication sharedApplication].delegate;
     [delegate clearDatabase];
+    [[UserProfile profile] logout];
     
     [self loadModalViewController:viewController];
 }

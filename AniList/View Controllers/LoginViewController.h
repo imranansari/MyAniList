@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+#define kUserLoggedIn @"kUserLoggedIn"
+#define kUserLoggedOut @"kUserLoggedOut"
+
 @interface LoginViewController : UIViewController<UITextFieldDelegate, UINavigationControllerDelegate>
 
 @end
