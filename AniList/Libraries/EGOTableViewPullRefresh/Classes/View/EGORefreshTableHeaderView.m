@@ -58,7 +58,7 @@
 		
 		label = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, frame.size.height - 48.0f, self.frame.size.width, 20.0f)];
 		label.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-		label.font = [UIFont defaultFontWithSize:16.0f];
+		label.font = [UIFont defaultFontWithSize:15.0f];
 		label.textColor = [UIColor whiteColor];
         [label addShadow];
 		label.backgroundColor = [UIColor clearColor];

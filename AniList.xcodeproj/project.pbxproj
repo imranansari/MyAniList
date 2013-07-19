@@ -79,6 +79,10 @@
 		6324CEB51799793400B308B0 /* whiteArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 6324CEA41799793400B308B0 /* whiteArrow.png */; };
 		6324CEB61799793400B308B0 /* whiteArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6324CEA51799793400B308B0 /* whiteArrow@2x.png */; };
 		6324CEB71799793400B308B0 /* whiteArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6324CEA51799793400B308B0 /* whiteArrow@2x.png */; };
+		6324CEC317997EEE00B308B0 /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6324CEC117997EEE00B308B0 /* libGoogleAnalytics.a */; };
+		6324CEC417997EEE00B308B0 /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6324CEC117997EEE00B308B0 /* libGoogleAnalytics.a */; };
+		6324CECA17997F1800B308B0 /* AnalyticsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6324CEC917997F1800B308B0 /* AnalyticsManager.m */; };
+		6324CECB17997F1800B308B0 /* AnalyticsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6324CEC917997F1800B308B0 /* AnalyticsManager.m */; };
 		632F4360171CD65D00A5B43A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 632F435F171CD65D00A5B43A /* SystemConfiguration.framework */; };
 		632F4362171CD66200A5B43A /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 632F4361171CD66200A5B43A /* MobileCoreServices.framework */; };
 		632F436C171CD6FA00A5B43A /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 632F436A171CD6FA00A5B43A /* MenuViewController.m */; };
@@ -307,6 +311,14 @@
 		6324CEA31799793400B308B0 /* grayArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grayArrow@2x.png"; sourceTree = "<group>"; };
 		6324CEA41799793400B308B0 /* whiteArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteArrow.png; sourceTree = "<group>"; };
 		6324CEA51799793400B308B0 /* whiteArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whiteArrow@2x.png"; sourceTree = "<group>"; };
+		6324CEBC17997EEE00B308B0 /* GAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAI.h; sourceTree = "<group>"; };
+		6324CEBD17997EEE00B308B0 /* GAITrackedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITrackedViewController.h; sourceTree = "<group>"; };
+		6324CEBE17997EEE00B308B0 /* GAITracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITracker.h; sourceTree = "<group>"; };
+		6324CEBF17997EEE00B308B0 /* GAITransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITransaction.h; sourceTree = "<group>"; };
+		6324CEC017997EEE00B308B0 /* GAITransactionItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITransactionItem.h; sourceTree = "<group>"; };
+		6324CEC117997EEE00B308B0 /* libGoogleAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAnalytics.a; sourceTree = "<group>"; };
+		6324CEC817997F1800B308B0 /* AnalyticsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnalyticsManager.h; sourceTree = "<group>"; };
+		6324CEC917997F1800B308B0 /* AnalyticsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnalyticsManager.m; sourceTree = "<group>"; };
 		632F435F171CD65D00A5B43A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		632F4361171CD66200A5B43A /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		632F4369171CD6FA00A5B43A /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
@@ -518,6 +530,7 @@
 				632F4360171CD65D00A5B43A /* SystemConfiguration.framework in Frameworks */,
 				6353C24A171C46930060F062 /* Social.framework in Frameworks */,
 				6353C248171C468C0060F062 /* Twitter.framework in Frameworks */,
+				6324CEC317997EEE00B308B0 /* libGoogleAnalytics.a in Frameworks */,
 				6353C246171C46780060F062 /* QuartzCore.framework in Frameworks */,
 				6353C244171C46740060F062 /* CoreText.framework in Frameworks */,
 				6354849F171C2FA7003457CB /* UIKit.framework in Frameworks */,
@@ -547,6 +560,7 @@
 				6301D92D175D62BA00163160 /* Crashlytics.framework in Frameworks */,
 				6301D92E175D62BA00163160 /* CoreGraphics.framework in Frameworks */,
 				63859E871763E8FD0029397C /* SparkInspector.framework in Frameworks */,
+				6324CEC417997EEE00B308B0 /* libGoogleAnalytics.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -601,6 +615,28 @@
 				6324CEA51799793400B308B0 /* whiteArrow@2x.png */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		6324CEBB17997EEE00B308B0 /* GoogleAnalytics */ = {
+			isa = PBXGroup;
+			children = (
+				6324CEBC17997EEE00B308B0 /* GAI.h */,
+				6324CEBD17997EEE00B308B0 /* GAITrackedViewController.h */,
+				6324CEBE17997EEE00B308B0 /* GAITracker.h */,
+				6324CEBF17997EEE00B308B0 /* GAITransaction.h */,
+				6324CEC017997EEE00B308B0 /* GAITransactionItem.h */,
+				6324CEC117997EEE00B308B0 /* libGoogleAnalytics.a */,
+			);
+			path = GoogleAnalytics;
+			sourceTree = "<group>";
+		};
+		6324CEC717997F1800B308B0 /* AnalyticsManager */ = {
+			isa = PBXGroup;
+			children = (
+				6324CEC817997F1800B308B0 /* AnalyticsManager.h */,
+				6324CEC917997F1800B308B0 /* AnalyticsManager.m */,
+			);
+			path = AnalyticsManager;
 			sourceTree = "<group>";
 		};
 		632F4368171CD6FA00A5B43A /* View Controllers */ = {
@@ -817,6 +853,8 @@
 		6353C03D171C457C0060F062 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				6324CEC717997F1800B308B0 /* AnalyticsManager */,
+				6324CEBB17997EEE00B308B0 /* GoogleAnalytics */,
 				6324CE981799793400B308B0 /* EGOTableViewPullRefresh */,
 				63BEA74A176213B600432BED /* RSSGlowLabel */,
 				636F8673175A7AB8007E1FB6 /* XMLReader */,
@@ -1271,6 +1309,7 @@
 				635027A0171E51450004C106 /* AnimeViewController.m in Sources */,
 				635027BA171ED41A0004C106 /* AnimeService.m in Sources */,
 				635027BD171ED60A0004C106 /* Anime.m in Sources */,
+				6324CECA17997F1800B308B0 /* AnalyticsManager.m in Sources */,
 				6372893B17542D110032F425 /* MALHTTPClient.m in Sources */,
 				637CF6EC175986840009ADF3 /* NSObject+AniList.m in Sources */,
 				636F864C175A5F49007E1FB6 /* SWRevealViewController.m in Sources */,
@@ -1365,6 +1404,7 @@
 				6301D935175D631000163160 /* Anime.m in Sources */,
 				6301D936175D631900163160 /* ProfileCell.m in Sources */,
 				6301D937175D631900163160 /* MenuCell.m in Sources */,
+				6324CECB17997F1800B308B0 /* AnalyticsManager.m in Sources */,
 				6301D938175D631900163160 /* AniListCell.m in Sources */,
 				6301D939175D631900163160 /* AnimeCell.m in Sources */,
 				6301D93A175D631900163160 /* MangaCell.m in Sources */,
@@ -1527,6 +1567,10 @@
 				GCC_PREFIX_HEADER = "AniList/AniList-Prefix.pch";
 				INFOPLIST_FILE = "AniList/AniList-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/AniList/Libraries/GoogleAnalytics",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-framework",
@@ -1554,6 +1598,10 @@
 				GCC_PREFIX_HEADER = "AniList/AniList-Prefix.pch";
 				INFOPLIST_FILE = "AniList/AniList-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/AniList/Libraries/GoogleAnalytics",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "440B58D0-A1BE-4897-A253-57B8D6B42288";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "440B58D0-A1BE-4897-A253-57B8D6B42288";
@@ -1575,6 +1623,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AniList/AniList-Prefix.pch";
 				INFOPLIST_FILE = "AniListTests/AniListTests-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/AniList/Libraries/GoogleAnalytics",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/AFNetworking/AFNetworking";
@@ -1595,6 +1647,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AniList/AniList-Prefix.pch";
 				INFOPLIST_FILE = "AniListTests/AniListTests-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/AniList/Libraries/GoogleAnalytics",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/AFNetworking/AFNetworking";
