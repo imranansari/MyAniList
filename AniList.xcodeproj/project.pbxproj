@@ -264,6 +264,12 @@
 		63BEA7491761A14400432BED /* AniListScoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63BEA7471761A14400432BED /* AniListScoreView.m */; };
 		63BEA74D176213B600432BED /* RRSGlowLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 63BEA74C176213B600432BED /* RRSGlowLabel.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		63BEA74E176213B600432BED /* RRSGlowLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 63BEA74C176213B600432BED /* RRSGlowLabel.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		63C8CD69179A3114003BB80C /* AniListRelatedTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C8CD68179A3114003BB80C /* AniListRelatedTableView.m */; };
+		63C8CD6A179A3114003BB80C /* AniListRelatedTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C8CD68179A3114003BB80C /* AniListRelatedTableView.m */; };
+		63C8CD6D179A441E003BB80C /* AniListMiniCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C8CD6C179A441E003BB80C /* AniListMiniCell.m */; };
+		63C8CD6E179A441E003BB80C /* AniListMiniCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C8CD6C179A441E003BB80C /* AniListMiniCell.m */; };
+		63C8CD70179A4435003BB80C /* AniListMiniCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63C8CD6F179A442C003BB80C /* AniListMiniCell.xib */; };
+		63C8CD71179A4436003BB80C /* AniListMiniCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63C8CD6F179A442C003BB80C /* AniListMiniCell.xib */; };
 		63EFEC3D176966B8009CEAB3 /* UMALHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 63EFEC3C176966B7009CEAB3 /* UMALHTTPClient.m */; };
 		63EFEC3E176966B8009CEAB3 /* UMALHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 63EFEC3C176966B7009CEAB3 /* UMALHTTPClient.m */; };
 		63FC20A717920EB000DFD544 /* CRTransitionLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FC20A617920EB000DFD544 /* CRTransitionLabel.m */; };
@@ -513,6 +519,11 @@
 		63BEA7471761A14400432BED /* AniListScoreView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AniListScoreView.m; path = Views/AniListScoreView.m; sourceTree = "<group>"; };
 		63BEA74B176213B600432BED /* RRSGlowLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RRSGlowLabel.h; sourceTree = "<group>"; };
 		63BEA74C176213B600432BED /* RRSGlowLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RRSGlowLabel.m; sourceTree = "<group>"; };
+		63C8CD67179A3114003BB80C /* AniListRelatedTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AniListRelatedTableView.h; path = AniList/Views/AniListRelatedTableView.h; sourceTree = SOURCE_ROOT; };
+		63C8CD68179A3114003BB80C /* AniListRelatedTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AniListRelatedTableView.m; path = AniList/Views/AniListRelatedTableView.m; sourceTree = SOURCE_ROOT; };
+		63C8CD6B179A441E003BB80C /* AniListMiniCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AniListMiniCell.h; path = Views/AniListMiniCell.h; sourceTree = "<group>"; };
+		63C8CD6C179A441E003BB80C /* AniListMiniCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AniListMiniCell.m; path = Views/AniListMiniCell.m; sourceTree = "<group>"; };
+		63C8CD6F179A442C003BB80C /* AniListMiniCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = AniListMiniCell.xib; path = Views/AniListMiniCell.xib; sourceTree = "<group>"; };
 		63EFEC3B176966B7009CEAB3 /* UMALHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UMALHTTPClient.h; path = "Web Services/UMALHTTPClient.h"; sourceTree = "<group>"; };
 		63EFEC3C176966B7009CEAB3 /* UMALHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UMALHTTPClient.m; path = "Web Services/UMALHTTPClient.m"; sourceTree = "<group>"; };
 		63FC20A517920EB000DFD544 /* CRTransitionLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CRTransitionLabel.h; path = Views/CRTransitionLabel.h; sourceTree = "<group>"; };
@@ -677,6 +688,8 @@
 				63461A181778004D0053652C /* SettingsViewController.xib */,
 				639FA1E317936EAB000AA0D1 /* AniListNavigationController.h */,
 				639FA1E417936EAB000AA0D1 /* AniListNavigationController.m */,
+				63C8CD67179A3114003BB80C /* AniListRelatedTableView.h */,
+				63C8CD68179A3114003BB80C /* AniListRelatedTableView.m */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -787,6 +800,9 @@
 				63B386B21777B91C001A7E31 /* MangaCell.xib */,
 				632F438B171CDA0E00A5B43A /* MangaCell.h */,
 				632F438C171CDA0E00A5B43A /* MangaCell.m */,
+				63C8CD6B179A441E003BB80C /* AniListMiniCell.h */,
+				63C8CD6C179A441E003BB80C /* AniListMiniCell.m */,
+				63C8CD6F179A442C003BB80C /* AniListMiniCell.xib */,
 			);
 			name = "Table Cells";
 			sourceTree = "<group>";
@@ -1170,6 +1186,7 @@
 				635484B3171C2FA7003457CB /* Default.png in Resources */,
 				6324CEB21799793400B308B0 /* grayArrow@2x.png in Resources */,
 				635484B5171C2FA7003457CB /* Default@2x.png in Resources */,
+				63C8CD70179A4435003BB80C /* AniListMiniCell.xib in Resources */,
 				635484B7171C2FA7003457CB /* Default-568h@2x.png in Resources */,
 				632F436D171CD6FA00A5B43A /* MenuViewController.xib in Resources */,
 				6324CEB01799793400B308B0 /* grayArrow.png in Resources */,
@@ -1224,6 +1241,7 @@
 				630E0FE51768E9980061110A /* plus.png in Resources */,
 				637CF6F41759940E0009ADF3 /* test_background@2x.png in Resources */,
 				636F868A175B1091007E1FB6 /* AniListUserInfoViewController.xib in Resources */,
+				63C8CD71179A4436003BB80C /* AniListMiniCell.xib in Resources */,
 				636F8698175B116F007E1FB6 /* AniListDetailsViewController.xib in Resources */,
 				6324CEB31799793400B308B0 /* grayArrow@2x.png in Resources */,
 				6324CEB51799793400B308B0 /* whiteArrow.png in Resources */,
@@ -1300,6 +1318,7 @@
 				632F438A171CDA0000A5B43A /* AnimeCell.m in Sources */,
 				632F438D171CDA0E00A5B43A /* MangaCell.m in Sources */,
 				632F439B171CDDED00A5B43A /* AniListViewController.m in Sources */,
+				63C8CD6D179A441E003BB80C /* AniListMiniCell.m in Sources */,
 				632F43A1171CDE2100A5B43A /* AniListTableView.m in Sources */,
 				632F43A4171CDE2F00A5B43A /* AnimeTableView.m in Sources */,
 				632F43A7171CDE3900A5B43A /* MangaTableView.m in Sources */,
@@ -1333,6 +1352,7 @@
 				636F86B0175BA1E3007E1FB6 /* UILabel+AniList.m in Sources */,
 				636F86B4175BA3B8007E1FB6 /* UIView+AniList.m in Sources */,
 				6301D94B175D66AF00163160 /* AniListSummaryViewController.m in Sources */,
+				63C8CD69179A3114003BB80C /* AniListRelatedTableView.m in Sources */,
 				6301D955175D729600163160 /* NSString+AniList.m in Sources */,
 				63892576175F7ACC00C8489A /* BaseViewController.m in Sources */,
 				631693461760C56300D526C0 /* NSDate+AniList.m in Sources */,
@@ -1381,6 +1401,7 @@
 				636F8665175A5F53007E1FB6 /* AFImageRequestOperation.m in Sources */,
 				636F8667175A5F53007E1FB6 /* AFJSONRequestOperation.m in Sources */,
 				636F8669175A5F53007E1FB6 /* AFNetworkActivityIndicatorManager.m in Sources */,
+				63C8CD6E179A441E003BB80C /* AniListMiniCell.m in Sources */,
 				636F866B175A5F53007E1FB6 /* AFPropertyListRequestOperation.m in Sources */,
 				636F866D175A5F53007E1FB6 /* AFURLConnectionOperation.m in Sources */,
 				636F866F175A5F53007E1FB6 /* AFXMLRequestOperation.m in Sources */,
@@ -1430,6 +1451,7 @@
 				63EFEC3E176966B8009CEAB3 /* UMALHTTPClient.m in Sources */,
 				63894CC2176A9C05007D2D05 /* UserProfile.m in Sources */,
 				63894CC7176A9E37007D2D05 /* LoginViewController.m in Sources */,
+				63C8CD6A179A3114003BB80C /* AniListRelatedTableView.m in Sources */,
 				6371444B1770074600E60B9F /* SearchViewController.m in Sources */,
 				637144511770157A00E60B9F /* NSDictionary+AniList.m in Sources */,
 				63B386AD1776401D001A7E31 /* MangaService.m in Sources */,

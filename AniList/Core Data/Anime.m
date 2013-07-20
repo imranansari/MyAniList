@@ -12,6 +12,7 @@
 
 @implementation Anime
 
+@dynamic anime_id;
 @dynamic average_count;
 @dynamic average_score;
 @dynamic classification;
@@ -26,7 +27,6 @@
 @dynamic english_title;
 @dynamic fansub_group;
 @dynamic favorited_count;
-@dynamic anime_id;
 @dynamic image;
 @dynamic image_url;
 @dynamic last_updated;
@@ -46,14 +46,19 @@
 @dynamic user_date_start;
 @dynamic user_score;
 @dynamic watched_status;
-@dynamic tags;
 @dynamic genres;
-@dynamic synonyms;
+@dynamic manga_adaptations;
+@dynamic parent_story;
+@dynamic prequels;
 @dynamic sequels;
 @dynamic side_stories;
-@dynamic prequels;
-@dynamic parent_story;
-@dynamic manga_adaptations;
+@dynamic synonyms;
+@dynamic tags;
+
+- (void)awakeFromInsert {
+    self.watched_status = @(AnimeWatchedStatusNotWatching);
+    self.user_score = @(-1);
+}
 
 + (AnimeType)animeTypeForValue:(NSString *)value {
     

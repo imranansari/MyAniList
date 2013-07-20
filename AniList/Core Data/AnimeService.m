@@ -8,6 +8,7 @@
 
 #import "AnimeService.h"
 #import "AniListAppDelegate.h"
+#import "MALHTTPClient.h"
 
 #define ENTITY_NAME @"Anime"
 
@@ -31,6 +32,8 @@ static NSArray *cachedAnimeList = nil;
             NSFetchRequest *request = [[NSFetchRequest alloc] init];
             NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITY_NAME inManagedObjectContext:[AnimeService managedObjectContext]];
             request.entity = entity;
+            request.relationshipKeyPathsForPrefetching = @[@"prequels", @"sequels"];
+            request.returnsObjectsAsFaults = NO;
             
             NSError *error = nil;
             cachedAnimeList = [[AnimeService managedObjectContext] executeFetchRequest:request error:&error];
@@ -116,8 +119,37 @@ static NSArray *cachedAnimeList = nil;
     return NO;
 }
 
++ (Anime *)addRelatedAnime:(NSDictionary *)data toAnime:(Anime *)anime relationType:(AnimeRelation)relationType {
+    Anime *relatedAnime = [AnimeService animeForID:data[@"anime_id"] fromCache:NO];
+    
+    if(relatedAnime) {
+        ALLog(@"Related anime exists.");
+    }
+    else {
+        ALLog(@"Related anime does not exist. Creating.");
+        relatedAnime = [NSEntityDescription insertNewObjectForEntityForName:ENTITY_NAME inManagedObjectContext:[AnimeService managedObjectContext]];
+        relatedAnime.anime_id = [data[@"anime_id"] isKindOfClass:[NSString class]] ? @([data[@"anime_id"] intValue]) : data[@"anime_id"];
+        relatedAnime.title = data[kTitle];
+    }
+    
+    switch (relationType) {
+        case AnimeRelationPrequel:
+            [relatedAnime addSequelsObject:anime];
+            [anime addPrequelsObject:relatedAnime];
+            break;
+        case AnimeRelationSequel:
+            [relatedAnime addPrequelsObject:anime];
+            [anime addSequelsObject:relatedAnime];
+            break;
+        default:
+            break;
+    }
+    
+    return relatedAnime;
+}
+
 + (Anime *)addAnime:(NSDictionary *)data fromList:(BOOL)fromList {
-    Anime *existingAnime = [AnimeService animeForID:data[@"id"] fromCache:fromList];
+    Anime *existingAnime = [AnimeService animeForID:data[kID] fromCache:fromList];
     
     if(existingAnime) {
         ALLog(@"Anime exists. Updating details.");
@@ -225,8 +257,38 @@ static NSArray *cachedAnimeList = nil;
     if(data[kPrequels] && ![data[kPrequels] isNull]) {
         NSArray *prequels = data[kPrequels];
         for(NSDictionary *prequel in prequels) {
-#warning - fix this later.
-            //            [AnimeService addAnime:prequel];
+            Anime *prequelAnime = [self addRelatedAnime:prequel toAnime:anime relationType:AnimeRelationPrequel];
+            if(prequelAnime) {
+                ALLog(@"Prequel found for %@ -> %@.", anime.title, prequelAnime.title);
+                
+                // We do a simple check; have we added anything else besides the ID and title? If so, don't bother attempting to update.
+                if([prequelAnime.type intValue] == 0) {
+                    [[MALHTTPClient sharedClient] getAnimeDetailsForID:prequelAnime.anime_id success:^(id operation, id response) {
+                        [self addAnime:response fromList:NO];
+                    } failure:^(id operation, NSError *error) {
+                        ALLog(@"Failed to get prequel.");
+                    }];
+                }
+            }
+        }
+    }
+    
+    if(data[kSequels] && ![data[kSequels] isNull]) {
+        NSArray *sequels = data[kSequels];
+        for(NSDictionary *sequel in sequels) {
+            Anime *sequelAnime = [self addRelatedAnime:sequel toAnime:anime relationType:AnimeRelationSequel];
+            if(sequelAnime) {
+                ALLog(@"Sequel found for %@ -> %@.", anime.title, sequelAnime.title);
+                
+                // We do a simple check; have we added anything else besides the ID and title? If so, don't bother attempting to update.
+                if([sequelAnime.type intValue] == 0) {
+                    [[MALHTTPClient sharedClient] getAnimeDetailsForID:sequelAnime.anime_id success:^(id operation, id response) {
+                        [self addAnime:response fromList:NO];
+                    } failure:^(id operation, NSError *error) {
+                        ALLog(@"Failed to get sequel.");
+                    }];
+                }
+            }
         }
     }
     
@@ -265,7 +327,7 @@ static NSArray *cachedAnimeList = nil;
     
     // If the last time we updated (according to the server) is less than what we get from the server,
     // don't bother updating user details.
-    if([lastUpdated intValue] <= [anime.last_updated intValue]) {
+    if(lastUpdated && [lastUpdated intValue] <= [anime.last_updated intValue]) {
         ALLog(@"Update times match, no need to update user data.");
     }
     else {

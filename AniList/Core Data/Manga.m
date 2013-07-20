@@ -12,42 +12,43 @@
 
 @implementation Manga
 
-@dynamic total_chapters;
+@dynamic average_count;
+@dynamic average_score;
 @dynamic column;
 @dynamic comments;
+@dynamic current_chapter;
+@dynamic current_volume;
 @dynamic date_finish;
 @dynamic date_start;
 @dynamic downloaded_chapters;
 @dynamic enable_discussion;
 @dynamic enable_rereading;
+@dynamic english_title;
+@dynamic favorited_count;
 @dynamic image;
 @dynamic image_url;
 @dynamic last_updated;
 @dynamic manga_id;
+@dynamic popularity_rank;
 @dynamic priority;
+@dynamic rank;
+@dynamic read_status;
 @dynamic reread_value;
 @dynamic retail_volumes;
 @dynamic scan_group;
-@dynamic user_score;
 @dynamic status;
+@dynamic synopsis;
 @dynamic times_reread;
 @dynamic title;
+@dynamic total_chapters;
 @dynamic total_volumes;
 @dynamic type;
-@dynamic average_count;
-@dynamic average_score;
-@dynamic current_volume;
-@dynamic current_chapter;
-@dynamic english_title;
-@dynamic favorited_count;
-@dynamic popularity_rank;
-@dynamic rank;
-@dynamic synopsis;
-@dynamic user_date_start;
 @dynamic user_date_finish;
-@dynamic read_status;
+@dynamic user_date_start;
+@dynamic user_score;
 @dynamic anime_adaptations;
 @dynamic tags;
+@dynamic genres;
 
 + (MangaType)mangaTypeForValue:(NSString *)value {    
     // If value is passed in as an int, convert it.

@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 #import "BaseViewController.h"
+#import "AniListRelatedTableView.h"
+#import "AnimeCell.h"
 
 @class SynopsisView;
 
@@ -16,6 +18,8 @@
 
 @property (nonatomic, strong) UILabel *synopsisLabel;
 @property (nonatomic, strong) SynopsisView *synopsisView;
+@property (nonatomic, strong) NSArray *relatedData;
+@property (nonatomic, strong) AniListRelatedTableView *relatedTableView;
 @property (nonatomic, strong) UILabel *detailsLabel;
 @property (nonatomic, weak) IBOutlet UIView *maskView;
 @property (nonatomic, weak) IBOutlet UIScrollView *scrollView;

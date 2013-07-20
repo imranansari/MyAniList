@@ -11,7 +11,7 @@
 
 @class Anime;
 
-@interface AnimeViewController : AniListSummaryViewController<AniListUserInfoViewControllerDelegate>
+@interface AnimeViewController : AniListSummaryViewController<AniListUserInfoViewControllerDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) Anime *anime;
 

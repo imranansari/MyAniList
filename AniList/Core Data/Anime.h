@@ -38,6 +38,14 @@ typedef enum {
     AnimeAirStatusNotYetAired
 } AnimeAirStatus;
 
+typedef enum {
+    AnimeRelationPrequel = 0,
+    AnimeRelationSequel,
+    AnimeRelationSideStory,
+    AnimeRelationSpinOff,
+    AnimeRelationMangaAdaptation
+} AnimeRelation;
+
 #pragma mark - Unofficial typedefs
 
 typedef enum {
@@ -66,60 +74,52 @@ typedef enum {
     UnofficialAnimeAirStatusNotYetAired
 } UnofficialAnimeAirStatus;
 
-@class Anime;
+@class Anime, Manga;
 
 @interface Anime : NSManagedObject
 
-@property (nonatomic, retain) NSNumber *average_count;
-@property (nonatomic, retain) NSNumber *average_score;
-@property (nonatomic, retain) NSString *classification;
-@property (nonatomic, retain) NSNumber *column;
-@property (nonatomic, retain) NSString *comments;
-@property (nonatomic, retain) NSNumber *current_episode;
-@property (nonatomic, retain) NSDate *date_finish;
-@property (nonatomic, retain) NSDate *date_start;
-@property (nonatomic, retain) NSNumber *downloaded_episodes;
-@property (nonatomic, retain) NSNumber *enable_discussion;
-@property (nonatomic, retain) NSNumber *enable_rewatching;
-@property (nonatomic, retain) NSString *english_title;
-@property (nonatomic, retain) NSString *fansub_group;
-@property (nonatomic, retain) NSNumber *favorited_count;
-@property (nonatomic, retain) NSNumber *anime_id;
-@property (nonatomic, retain) NSString *image;
-@property (nonatomic, retain) NSString *image_url;
-@property (nonatomic, retain) NSNumber *last_updated;
-@property (nonatomic, retain) NSNumber *popularity_rank;
-@property (nonatomic, retain) NSNumber *priority;
-@property (nonatomic, retain) NSNumber *rank;
-@property (nonatomic, retain) NSNumber *rewatch_value;
-@property (nonatomic, retain) NSNumber *status;
-@property (nonatomic, retain) NSNumber *storage_type;
-@property (nonatomic, retain) NSNumber *storage_value;
-@property (nonatomic, retain) NSString *synopsis;
-@property (nonatomic, retain) NSNumber *times_rewatched;
-@property (nonatomic, retain) NSString *title;
-@property (nonatomic, retain) NSNumber *total_episodes;
-@property (nonatomic, retain) NSNumber *type;
-@property (nonatomic, retain) NSDate *user_date_finish;
-@property (nonatomic, retain) NSDate *user_date_start;
-@property (nonatomic, retain) NSNumber *user_score;
-@property (nonatomic, retain) NSNumber *watched_status;
-@property (nonatomic, retain) NSManagedObject *tags;
-@property (nonatomic, retain) NSManagedObject *genres;
-@property (nonatomic, retain) NSSet *synonyms;
-@property (nonatomic, retain) Anime *sequels;
-@property (nonatomic, retain) Anime *side_stories;
-@property (nonatomic, retain) Anime *prequels;
+@property (nonatomic, retain) NSNumber * anime_id;
+@property (nonatomic, retain) NSNumber * average_count;
+@property (nonatomic, retain) NSNumber * average_score;
+@property (nonatomic, retain) NSString * classification;
+@property (nonatomic, retain) NSNumber * column;
+@property (nonatomic, retain) NSString * comments;
+@property (nonatomic, retain) NSNumber * current_episode;
+@property (nonatomic, retain) NSDate * date_finish;
+@property (nonatomic, retain) NSDate * date_start;
+@property (nonatomic, retain) NSNumber * downloaded_episodes;
+@property (nonatomic, retain) NSNumber * enable_discussion;
+@property (nonatomic, retain) NSNumber * enable_rewatching;
+@property (nonatomic, retain) NSString * english_title;
+@property (nonatomic, retain) NSString * fansub_group;
+@property (nonatomic, retain) NSNumber * favorited_count;
+@property (nonatomic, retain) NSString * image;
+@property (nonatomic, retain) NSString * image_url;
+@property (nonatomic, retain) NSNumber * last_updated;
+@property (nonatomic, retain) NSNumber * popularity_rank;
+@property (nonatomic, retain) NSNumber * priority;
+@property (nonatomic, retain) NSNumber * rank;
+@property (nonatomic, retain) NSNumber * rewatch_value;
+@property (nonatomic, retain) NSNumber * status;
+@property (nonatomic, retain) NSNumber * storage_type;
+@property (nonatomic, retain) NSNumber * storage_value;
+@property (nonatomic, retain) NSString * synopsis;
+@property (nonatomic, retain) NSNumber * times_rewatched;
+@property (nonatomic, retain) NSString * title;
+@property (nonatomic, retain) NSNumber * total_episodes;
+@property (nonatomic, retain) NSNumber * type;
+@property (nonatomic, retain) NSDate * user_date_finish;
+@property (nonatomic, retain) NSDate * user_date_start;
+@property (nonatomic, retain) NSNumber * user_score;
+@property (nonatomic, retain) NSNumber * watched_status;
+@property (nonatomic, retain) NSSet *genres;
+@property (nonatomic, retain) NSSet *manga_adaptations;
 @property (nonatomic, retain) Anime *parent_story;
-@property (nonatomic, retain) NSManagedObject *manga_adaptations;
-@end
-
-@interface Anime (CoreDataGeneratedAccessors)
-
-- (void)addSynonymsObject:(NSManagedObject *)value;
-- (void)removeSynonymsObject:(NSManagedObject *)value;
-- (void)addSynonyms:(NSSet *)values;
-- (void)removeSynonyms:(NSSet *)values;
+@property (nonatomic, retain) NSSet *prequels;
+@property (nonatomic, retain) NSSet *sequels;
+@property (nonatomic, retain) Anime *side_stories;
+@property (nonatomic, retain) NSSet *synonyms;
+@property (nonatomic, retain) NSSet *tags;
 
 + (AnimeType)animeTypeForValue:(NSString *)value;
 + (NSString *)stringForAnimeType:(AnimeType)animeType;
@@ -137,5 +137,39 @@ typedef enum {
 + (AnimeType)unofficialAnimeTypeForValue:(NSString *)value;
 + (AnimeAirStatus)unofficialAnimeAirStatusForValue:(NSString *)value;
 + (AnimeWatchedStatus)unofficialAnimeWatchedStatusForValue:(NSString *)value;
+
+@end
+
+@interface Anime (CoreDataGeneratedAccessors)
+
+- (void)addGenresObject:(NSManagedObject *)value;
+- (void)removeGenresObject:(NSManagedObject *)value;
+- (void)addGenres:(NSSet *)values;
+- (void)removeGenres:(NSSet *)values;
+
+- (void)addManga_adaptationsObject:(Manga *)value;
+- (void)removeManga_adaptationsObject:(Manga *)value;
+- (void)addManga_adaptations:(NSSet *)values;
+- (void)removeManga_adaptations:(NSSet *)values;
+
+- (void)addPrequelsObject:(Anime *)value;
+- (void)removePrequelsObject:(Anime *)value;
+- (void)addPrequels:(NSSet *)values;
+- (void)removePrequels:(NSSet *)values;
+
+- (void)addSequelsObject:(Anime *)value;
+- (void)removeSequelsObject:(Anime *)value;
+- (void)addSequels:(NSSet *)values;
+- (void)removeSequels:(NSSet *)values;
+
+- (void)addSynonymsObject:(NSManagedObject *)value;
+- (void)removeSynonymsObject:(NSManagedObject *)value;
+- (void)addSynonyms:(NSSet *)values;
+- (void)removeSynonyms:(NSSet *)values;
+
+- (void)addTagsObject:(NSManagedObject *)value;
+- (void)removeTagsObject:(NSManagedObject *)value;
+- (void)addTags:(NSSet *)values;
+- (void)removeTags:(NSSet *)values;
 
 @end

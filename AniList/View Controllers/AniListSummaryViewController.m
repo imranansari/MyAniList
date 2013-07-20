@@ -32,6 +32,8 @@
     self.titleLabel.alpha = 0.0f;
     self.view.backgroundColor = [UIColor clearColor];
     
+    self.relatedTableView = [[AniListRelatedTableView alloc] initWithFrame:CGRectMake(0, 400, 320, 100)];
+    
     CAGradientLayer *gradient = [CAGradientLayer layer];
     gradient.frame = self.maskView.frame;
     gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor colorWithRed:0 green:0 blue:0 alpha:0] CGColor], (id)[[UIColor colorWithRed:1 green:0 blue:0 alpha:1] CGColor], nil];
