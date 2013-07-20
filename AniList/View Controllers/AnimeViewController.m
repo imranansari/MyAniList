@@ -48,6 +48,9 @@
 {
     [super viewDidLoad];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self.relatedTableView selector:@selector(reloadData) name:kRelatedAnimeDidUpdate object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self.relatedTableView selector:@selector(reloadData) name:kRelatedMangaDidUpdate object:nil];
+    
     [self setupViews];
     
     self.titleLabel.text = self.anime.title;
@@ -86,6 +89,18 @@
 }
 
 #pragma mark - View Management Methods
+
+- (void)reloadCellWithObject:(NSManagedObject *)object {
+//    self.relatedTableView reload
+//    for(int i = 0; )
+//    for(NSDictionary *section in self.relatedData) {
+//        for(NSManagedObject *obj in [section allValues][0]) {
+//            if(obj == object) {
+    
+//            }
+//        }
+//    }
+}
 
 - (void)refreshData {
     NSDictionary *prequels = self.anime.prequels.count ? @{ @"Prequels" : [self.anime.prequels allObjects] } : nil;

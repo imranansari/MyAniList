@@ -431,6 +431,7 @@ static NSArray *cachedAnimeList = nil;
                 if([prequelAnime.type intValue] == 0) {
                     [[MALHTTPClient sharedClient] getAnimeDetailsForID:prequelAnime.anime_id success:^(id operation, id response) {
                         [self addAnime:response fromList:NO];
+                        [[NSNotificationCenter defaultCenter] postNotificationName:kRelatedAnimeDidUpdate object:prequelAnime];
                     } failure:^(id operation, NSError *error) {
                         ALLog(@"Failed to get prequel.");
                     }];
@@ -451,6 +452,7 @@ static NSArray *cachedAnimeList = nil;
                 if([sequelAnime.type intValue] == 0) {
                     [[MALHTTPClient sharedClient] getAnimeDetailsForID:sequelAnime.anime_id success:^(id operation, id response) {
                         [self addAnime:response fromList:NO];
+                        [[NSNotificationCenter defaultCenter] postNotificationName:kRelatedAnimeDidUpdate object:sequelAnime];
                     } failure:^(id operation, NSError *error) {
                         ALLog(@"Failed to get sequel.");
                     }];
@@ -471,6 +473,7 @@ static NSArray *cachedAnimeList = nil;
                 if([manga.type intValue] == 0) {
                     [[MALHTTPClient sharedClient] getMangaDetailsForID:manga.manga_id success:^(id operation, id response) {
                         [MangaService addManga:response fromList:NO];
+                        [[NSNotificationCenter defaultCenter] postNotificationName:kRelatedMangaDidUpdate object:manga];
                     } failure:^(id operation, NSError *error) {
                         ALLog(@"Failed to get manga.");
                     }];
@@ -491,6 +494,7 @@ static NSArray *cachedAnimeList = nil;
                 if([sideStoryAnime.type intValue] == 0) {
                     [[MALHTTPClient sharedClient] getAnimeDetailsForID:sideStoryAnime.anime_id success:^(id operation, id response) {
                         [self addAnime:response fromList:NO];
+                        [[NSNotificationCenter defaultCenter] postNotificationName:kRelatedAnimeDidUpdate object:sideStoryAnime];
                     } failure:^(id operation, NSError *error) {
                         ALLog(@"Failed to get side story.");
                     }];
@@ -501,7 +505,15 @@ static NSArray *cachedAnimeList = nil;
     
     // Parent Story
     if(data[kParentStory] && ![data[kParentStory] isNull]) {
-        NSArray *parentStories = data[kParentStory];
+        
+        NSArray *parentStories = nil;
+        if([data[kParentStory] isKindOfClass:[NSDictionary class]]) {
+            parentStories = @[data[kParentStory]];
+        }
+        else {
+            parentStories = data[kParentStory];
+        }
+        
         for(NSDictionary *parentStory in parentStories) {
             Anime *parentStoryAnime = [self addRelatedAnime:parentStory toAnime:anime relationType:AnimeRelationParentStory];
             if(parentStoryAnime) {
@@ -511,6 +523,7 @@ static NSArray *cachedAnimeList = nil;
                 if([parentStoryAnime.type intValue] == 0) {
                     [[MALHTTPClient sharedClient] getAnimeDetailsForID:parentStoryAnime.anime_id success:^(id operation, id response) {
                         [self addAnime:response fromList:NO];
+                        [[NSNotificationCenter defaultCenter] postNotificationName:kRelatedAnimeDidUpdate object:parentStoryAnime];
                     } failure:^(id operation, NSError *error) {
                         ALLog(@"Failed to get parent story.");
                     }];
@@ -531,6 +544,7 @@ static NSArray *cachedAnimeList = nil;
                 if([characterAnime.type intValue] == 0) {
                     [[MALHTTPClient sharedClient] getAnimeDetailsForID:characterAnime.anime_id success:^(id operation, id response) {
                         [self addAnime:response fromList:NO];
+                        [[NSNotificationCenter defaultCenter] postNotificationName:kRelatedAnimeDidUpdate object:characterAnime];
                     } failure:^(id operation, NSError *error) {
                         ALLog(@"Failed to get character anime.");
                     }];
@@ -551,6 +565,7 @@ static NSArray *cachedAnimeList = nil;
                 if([spinoffAnime.type intValue] == 0) {
                     [[MALHTTPClient sharedClient] getAnimeDetailsForID:spinoffAnime.anime_id success:^(id operation, id response) {
                         [self addAnime:response fromList:NO];
+                        [[NSNotificationCenter defaultCenter] postNotificationName:kRelatedAnimeDidUpdate object:spinoffAnime];
                     } failure:^(id operation, NSError *error) {
                         ALLog(@"Failed to get spinoff.");
                     }];
@@ -571,6 +586,7 @@ static NSArray *cachedAnimeList = nil;
                 if([summaryAnime.type intValue] == 0) {
                     [[MALHTTPClient sharedClient] getAnimeDetailsForID:summaryAnime.anime_id success:^(id operation, id response) {
                         [self addAnime:response fromList:NO];
+                        [[NSNotificationCenter defaultCenter] postNotificationName:kRelatedAnimeDidUpdate object:summaryAnime];
                     } failure:^(id operation, NSError *error) {
                         ALLog(@"Failed to get summary anime.");
                     }];
@@ -591,6 +607,7 @@ static NSArray *cachedAnimeList = nil;
                 if([alternativeVersionAnime.type intValue] == 0) {
                     [[MALHTTPClient sharedClient] getAnimeDetailsForID:alternativeVersionAnime.anime_id success:^(id operation, id response) {
                         [self addAnime:response fromList:NO];
+                        [[NSNotificationCenter defaultCenter] postNotificationName:kRelatedAnimeDidUpdate object:alternativeVersionAnime];
                     } failure:^(id operation, NSError *error) {
                         ALLog(@"Failed to get alternative version.");
                     }];
