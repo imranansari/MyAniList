@@ -42,7 +42,11 @@ typedef enum {
     AnimeRelationPrequel = 0,
     AnimeRelationSequel,
     AnimeRelationSideStory,
+    AnimeRelationParentStory,
+    AnimeRelationCharacterAnime,
     AnimeRelationSpinOff,
+    AnimeRelationSummaries,
+    AnimeRelationAlternativeVersions,
     AnimeRelationMangaAdaptation
 } AnimeRelation;
 
@@ -74,7 +78,7 @@ typedef enum {
     UnofficialAnimeAirStatusNotYetAired
 } UnofficialAnimeAirStatus;
 
-@class Anime, Manga;
+@class Anime, Manga, Synonym, Genre, Tag;
 
 @interface Anime : NSManagedObject
 
@@ -90,7 +94,6 @@ typedef enum {
 @property (nonatomic, retain) NSNumber * downloaded_episodes;
 @property (nonatomic, retain) NSNumber * enable_discussion;
 @property (nonatomic, retain) NSNumber * enable_rewatching;
-@property (nonatomic, retain) NSString * english_title;
 @property (nonatomic, retain) NSString * fansub_group;
 @property (nonatomic, retain) NSNumber * favorited_count;
 @property (nonatomic, retain) NSString * image;
@@ -112,12 +115,18 @@ typedef enum {
 @property (nonatomic, retain) NSDate * user_date_start;
 @property (nonatomic, retain) NSNumber * user_score;
 @property (nonatomic, retain) NSNumber * watched_status;
+@property (nonatomic, retain) NSSet *alternative_versions;
+@property (nonatomic, retain) NSSet *character_anime;
+@property (nonatomic, retain) NSSet *english_titles;
 @property (nonatomic, retain) NSSet *genres;
+@property (nonatomic, retain) NSSet *japanese_titles;
 @property (nonatomic, retain) NSSet *manga_adaptations;
-@property (nonatomic, retain) Anime *parent_story;
+@property (nonatomic, retain) NSSet *parent_story;
 @property (nonatomic, retain) NSSet *prequels;
 @property (nonatomic, retain) NSSet *sequels;
-@property (nonatomic, retain) Anime *side_stories;
+@property (nonatomic, retain) NSSet *side_stories;
+@property (nonatomic, retain) NSSet *spin_offs;
+@property (nonatomic, retain) NSSet *summaries;
 @property (nonatomic, retain) NSSet *synonyms;
 @property (nonatomic, retain) NSSet *tags;
 
@@ -142,15 +151,40 @@ typedef enum {
 
 @interface Anime (CoreDataGeneratedAccessors)
 
-- (void)addGenresObject:(NSManagedObject *)value;
-- (void)removeGenresObject:(NSManagedObject *)value;
+- (void)addAlternative_versionsObject:(Anime *)value;
+- (void)removeAlternative_versionsObject:(Anime *)value;
+- (void)addAlternative_versions:(NSSet *)values;
+- (void)removeAlternative_versions:(NSSet *)values;
+
+- (void)addCharacter_animeObject:(Anime *)value;
+- (void)removeCharacter_animeObject:(Anime *)value;
+- (void)addCharacter_anime:(NSSet *)values;
+- (void)removeCharacter_anime:(NSSet *)values;
+
+- (void)addEnglish_titlesObject:(Synonym *)value;
+- (void)removeEnglish_titlesObject:(Synonym *)value;
+- (void)addEnglish_titles:(NSSet *)values;
+- (void)removeEnglish_titles:(NSSet *)values;
+
+- (void)addGenresObject:(Genre *)value;
+- (void)removeGenresObject:(Genre *)value;
 - (void)addGenres:(NSSet *)values;
 - (void)removeGenres:(NSSet *)values;
+
+- (void)addJapanese_titlesObject:(Synonym *)value;
+- (void)removeJapanese_titlesObject:(Synonym *)value;
+- (void)addJapanese_titles:(NSSet *)values;
+- (void)removeJapanese_titles:(NSSet *)values;
 
 - (void)addManga_adaptationsObject:(Manga *)value;
 - (void)removeManga_adaptationsObject:(Manga *)value;
 - (void)addManga_adaptations:(NSSet *)values;
 - (void)removeManga_adaptations:(NSSet *)values;
+
+- (void)addParent_storyObject:(Anime *)value;
+- (void)removeParent_storyObject:(Anime *)value;
+- (void)addParent_story:(NSSet *)values;
+- (void)removeParent_story:(NSSet *)values;
 
 - (void)addPrequelsObject:(Anime *)value;
 - (void)removePrequelsObject:(Anime *)value;
@@ -162,13 +196,28 @@ typedef enum {
 - (void)addSequels:(NSSet *)values;
 - (void)removeSequels:(NSSet *)values;
 
-- (void)addSynonymsObject:(NSManagedObject *)value;
-- (void)removeSynonymsObject:(NSManagedObject *)value;
+- (void)addSide_storiesObject:(Anime *)value;
+- (void)removeSide_storiesObject:(Anime *)value;
+- (void)addSide_stories:(NSSet *)values;
+- (void)removeSide_stories:(NSSet *)values;
+
+- (void)addSpin_offsObject:(Anime *)value;
+- (void)removeSpin_offsObject:(Anime *)value;
+- (void)addSpin_offs:(NSSet *)values;
+- (void)removeSpin_offs:(NSSet *)values;
+
+- (void)addSummariesObject:(Anime *)value;
+- (void)removeSummariesObject:(Anime *)value;
+- (void)addSummaries:(NSSet *)values;
+- (void)removeSummaries:(NSSet *)values;
+
+- (void)addSynonymsObject:(Synonym *)value;
+- (void)removeSynonymsObject:(Synonym *)value;
 - (void)addSynonyms:(NSSet *)values;
 - (void)removeSynonyms:(NSSet *)values;
 
-- (void)addTagsObject:(NSManagedObject *)value;
-- (void)removeTagsObject:(NSManagedObject *)value;
+- (void)addTagsObject:(Tag *)value;
+- (void)removeTagsObject:(Tag *)value;
 - (void)addTags:(NSSet *)values;
 - (void)removeTags:(NSSet *)values;
 

@@ -13,7 +13,6 @@
         <attribute name="downloaded_episodes" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="enable_discussion" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="enable_rewatching" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="english_title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="fansub_group" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="favorited_count" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
@@ -35,16 +34,22 @@
         <attribute name="user_date_start" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="user_score" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="watched_status" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="alternative_versions" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Anime" syncable="YES"/>
+        <relationship name="character_anime" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Anime" syncable="YES"/>
+        <relationship name="english_titles" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Synonym" syncable="YES"/>
         <relationship name="genres" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="Genre" inverseName="anime" inverseEntity="Genre" syncable="YES"/>
+        <relationship name="japanese_titles" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Synonym" syncable="YES"/>
         <relationship name="manga_adaptations" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Manga" inverseName="anime_adaptations" inverseEntity="Manga" syncable="YES"/>
-        <relationship name="parent_story" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Anime" syncable="YES"/>
+        <relationship name="parent_story" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Anime" syncable="YES"/>
         <relationship name="prequels" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Anime" syncable="YES"/>
         <relationship name="sequels" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Anime" syncable="YES"/>
-        <relationship name="side_stories" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Anime" syncable="YES"/>
-        <relationship name="synonyms" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Synonym" inverseName="anime" inverseEntity="Synonym" syncable="YES"/>
+        <relationship name="side_stories" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Anime" syncable="YES"/>
+        <relationship name="spin_offs" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Anime" syncable="YES"/>
+        <relationship name="summaries" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Anime" syncable="YES"/>
+        <relationship name="synonyms" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Synonym" syncable="YES"/>
         <relationship name="tags" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Tag" inverseName="anime" inverseEntity="Tag" syncable="YES"/>
     </entity>
-    <entity name="Genre" syncable="YES">
+    <entity name="Genre" representedClassName="Genre" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="anime" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Anime" inverseName="genres" inverseEntity="Anime" syncable="YES"/>
         <relationship name="manga" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Manga" inverseName="genres" inverseEntity="Manga" syncable="YES"/>
@@ -61,7 +66,6 @@
         <attribute name="downloaded_chapters" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="enable_discussion" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="enable_rereading" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="english_title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="favorited_count" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="image_url" optional="YES" attributeType="String" syncable="YES"/>
@@ -84,25 +88,28 @@
         <attribute name="user_date_finish" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="user_date_start" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="user_score" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="alternative_versions" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Manga" syncable="YES"/>
         <relationship name="anime_adaptations" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Anime" inverseName="manga_adaptations" inverseEntity="Anime" syncable="YES"/>
+        <relationship name="english_titles" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Synonym" syncable="YES"/>
         <relationship name="genres" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Genre" inverseName="manga" inverseEntity="Genre" syncable="YES"/>
+        <relationship name="japanese_titles" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Synonym" syncable="YES"/>
+        <relationship name="related_manga" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Manga" syncable="YES"/>
+        <relationship name="synonyms" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Synonym" syncable="YES"/>
         <relationship name="tags" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Tag" inverseName="manga" inverseEntity="Tag" syncable="YES"/>
     </entity>
-    <entity name="Synonym" syncable="YES">
+    <entity name="Synonym" representedClassName="Synonym" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="anime" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Anime" inverseName="synonyms" inverseEntity="Anime" syncable="YES"/>
-        <relationship name="manga" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Manga" syncable="YES"/>
     </entity>
-    <entity name="Tag" syncable="YES">
+    <entity name="Tag" representedClassName="Tag" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="anime" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Anime" inverseName="tags" inverseEntity="Anime" syncable="YES"/>
         <relationship name="manga" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Manga" inverseName="tags" inverseEntity="Manga" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Anime" positionX="-603" positionY="234" width="128" height="673"/>
+        <element name="Anime" positionX="-603" positionY="234" width="128" height="750"/>
         <element name="Genre" positionX="-252" positionY="486" width="128" height="90"/>
-        <element name="Manga" positionX="115" positionY="234" width="128" height="598"/>
-        <element name="Synonym" positionX="-182" positionY="612" width="128" height="90"/>
+        <element name="Manga" positionX="115" positionY="234" width="128" height="660"/>
         <element name="Tag" positionX="-342" positionY="360" width="128" height="90"/>
+        <element name="Synonym" positionX="160" positionY="192" width="128" height="60"/>
     </elements>
 </model>

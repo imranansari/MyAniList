@@ -23,7 +23,6 @@
 @dynamic downloaded_chapters;
 @dynamic enable_discussion;
 @dynamic enable_rereading;
-@dynamic english_title;
 @dynamic favorited_count;
 @dynamic image;
 @dynamic image_url;
@@ -46,9 +45,14 @@
 @dynamic user_date_finish;
 @dynamic user_date_start;
 @dynamic user_score;
+@dynamic alternative_versions;
 @dynamic anime_adaptations;
-@dynamic tags;
+@dynamic english_titles;
 @dynamic genres;
+@dynamic japanese_titles;
+@dynamic related_manga;
+@dynamic synonyms;
+@dynamic tags;
 
 + (MangaType)mangaTypeForValue:(NSString *)value {    
     // If value is passed in as an int, convert it.

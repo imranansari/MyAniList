@@ -8,6 +8,7 @@
 
 #import "MangaService.h"
 #import "AniListAppDelegate.h"
+#import "MALHTTPClient.h"
 
 #define ENTITY_NAME @"Manga"
 
@@ -75,10 +76,50 @@
     return NO;
 }
 
++ (Manga *)addManga:(NSDictionary *)data fromRelatedAnime:(Anime *)anime {
+    Manga *relatedManga = [NSEntityDescription insertNewObjectForEntityForName:ENTITY_NAME inManagedObjectContext:[MangaService managedObjectContext]];
+    relatedManga.manga_id = [data[@"manga_id"] isKindOfClass:[NSString class]] ? @([data[@"manga_id"] intValue]) : data[@"manga_id"];
+    relatedManga.title = data[kTitle];
+    
+    [relatedManga addAnime_adaptationsObject:anime];
+    
+    return relatedManga;
+}
+
++ (Manga *)addRelatedManga:(NSDictionary *)data toManga:(Manga *)manga relationType:(MangaRelation)relationType {
+    Manga *relatedManga = [MangaService mangaForID:data[@"manga_id"]];
+    
+    if(relatedManga) {
+        ALLog(@"Related manga exists.");
+    }
+    else {
+        ALLog(@"Related manga does not exist. Creating.");
+        relatedManga = [NSEntityDescription insertNewObjectForEntityForName:ENTITY_NAME inManagedObjectContext:[MangaService managedObjectContext]];
+        relatedManga.manga_id = [data[@"manga_id"] isKindOfClass:[NSString class]] ? @([data[@"manga_id"] intValue]) : data[@"manga_id"];
+        relatedManga.title = data[kTitle];
+    }
+    
+    switch (relationType) {
+        case MangaRelationPrequel:
+//            [relatedManga addSequelsObject:manga];
+//            [manga addPrequelsObject:relatedManga];
+            break;
+        case MangaRelationSequel:
+//            [relatedManga addPrequelsObject:manga];
+//            [manga addSequelsObject:relatedManga];
+            break;
+        default:
+            break;
+    }
+    
+    return relatedManga;
+}
+
 + (Manga *)addManga:(NSDictionary *)data fromList:(BOOL)fromList {
-    if([MangaService mangaForID:data[@"id"]]) {
+    Manga *existingManga = [MangaService mangaForID:data[kID]];
+    if(existingManga) {
         ALLog(@"Manga exists. Updating details.");
-        return [MangaService editManga:data fromList:fromList];
+        return [MangaService editManga:data fromList:fromList withObject:existingManga];
     }
     
     NSError *error = nil;
@@ -88,7 +129,7 @@
     manga.manga_id = [data[kID] isKindOfClass:[NSString class]] ? @([data[kID] intValue]) : data[kID];
     manga.title = data[kTitle];
     
-    ALLog(@"manga: %@", manga.title);
+    manga.last_updated = data[kUserLastUpdated];
     
     if(data[kImageURL] && ![data[kImageURL] isNull])
         manga.image_url = data[kImageURL];
@@ -130,15 +171,13 @@
     else return nil;
 }
 
-+ (Manga *)editManga:(NSDictionary *)data fromList:(BOOL)fromList {
++ (Manga *)editManga:(NSDictionary *)data fromList:(BOOL)fromList withObject:(Manga *)manga {
     if(![MangaService mangaForID:data[kID]]) {
         ALLog(@"Manga does not exist; unable to edit!");
         return nil;
     }
     
     NSError *error = nil;
-    
-    Manga *manga = [MangaService mangaForID:data[kID]];
     
     manga.manga_id = [data[kID] isKindOfClass:[NSString class]] ? @([data[kID] intValue]) : data[kID];
     manga.title = [data[kTitle] stringByDecodingHTMLEntities];
@@ -158,8 +197,38 @@
     if(data[kPrequels] && ![data[kPrequels] isNull]) {
         NSArray *prequels = data[kPrequels];
         for(NSDictionary *prequel in prequels) {
-#warning - fix this later.
-            //            [MangaService addManga:prequel];
+            Manga *prequelManga = [self addRelatedManga:prequel toManga:manga relationType:MangaRelationPrequel];
+            if(prequelManga) {
+                ALLog(@"Prequel found for %@ -> %@.", manga.title, prequelManga.title);
+                
+                // We do a simple check; have we added anything else besides the ID and title? If so, don't bother attempting to update.
+                if([prequelManga.type intValue] == 0) {
+                    [[MALHTTPClient sharedClient] getMangaDetailsForID:prequelManga.manga_id success:^(id operation, id response) {
+                        [self addManga:response fromList:NO];
+                    } failure:^(id operation, NSError *error) {
+                        ALLog(@"Failed to get prequel.");
+                    }];
+                }
+            }
+        }
+    }
+    
+    if(data[kSequels] && ![data[kSequels] isNull]) {
+        NSArray *sequels = data[kSequels];
+        for(NSDictionary *sequel in sequels) {
+            Manga *sequelManga = [self addRelatedManga:sequel toManga:manga relationType:MangaRelationSequel];
+            if(sequelManga) {
+                ALLog(@"Sequel found for %@ -> %@.", manga.title, sequelManga.title);
+                
+                // We do a simple check; have we added anything else besides the ID and title? If so, don't bother attempting to update.
+                if([sequelManga.type intValue] == 0) {
+                    [[MALHTTPClient sharedClient] getMangaDetailsForID:sequelManga.manga_id success:^(id operation, id response) {
+                        [self addManga:response fromList:NO];
+                    } failure:^(id operation, NSError *error) {
+                        ALLog(@"Failed to get sequel.");
+                    }];
+                }
+            }
         }
     }
     
@@ -198,17 +267,30 @@
     //    anime.tags = data[@"tags"];
     //    anime.manga_adaptations = data[@"manga_adaptations"];
     
-    if(data[kUserReadStatus] && ![data[kUserReadStatus] isNull])
-        manga.read_status = @([Manga mangaReadStatusForValue:data[kUserReadStatus]]);
     
-    if(data[kUserChaptersRead] && ![data[kUserChaptersRead] isNull])
-        manga.current_chapter = data[kUserChaptersRead];
-    if(data[kUserVolumesRead] && ![data[kUserVolumesRead] isNull])
-        manga.current_volume = data[kUserVolumesRead];
+    // User details below.
+    NSNumber *lastUpdated = data[kUserLastUpdated];
     
-    if(data[kUserScore] && ![data[kUserScore] isNull])
-        manga.user_score = ([data[kUserScore] isNull] || [data[kUserScore] intValue] == 0) ? @(-1) : [data[kUserScore] isKindOfClass:[NSString class]] ? @([data[kUserScore] intValue]) : data[kUserScore];
-    
+    // If the last time we updated (according to the server) is less than what we get from the server,
+    // don't bother updating user details.
+    if(lastUpdated && [lastUpdated intValue] <= [manga.last_updated intValue]) {
+        ALLog(@"Update times match, no need to update user data.");
+    }
+    else {
+        ALLog(@"Update times differ, updating user data...");
+        
+        if(data[kUserReadStatus] && ![data[kUserReadStatus] isNull])
+            manga.read_status = @([Manga mangaReadStatusForValue:data[kUserReadStatus]]);
+        
+        if(data[kUserChaptersRead] && ![data[kUserChaptersRead] isNull])
+            manga.current_chapter = data[kUserChaptersRead];
+        if(data[kUserVolumesRead] && ![data[kUserVolumesRead] isNull])
+            manga.current_volume = data[kUserVolumesRead];
+        
+        if(data[kUserScore] && ![data[kUserScore] isNull])
+            manga.user_score = ([data[kUserScore] isNull] || [data[kUserScore] intValue] == 0) ? @(-1) : [data[kUserScore] isKindOfClass:[NSString class]] ? @([data[kUserScore] intValue]) : data[kUserScore];
+    }
+        
     if(!fromList)
         [[MangaService managedObjectContext] save:&error];
     

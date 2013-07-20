@@ -91,6 +91,7 @@
     [self.scrollView addSubview:self.userInfoView.view];
     [self.scrollView addSubview:self.detailsLabel];
     [self.scrollView addSubview:self.synopsisView];
+    [self.scrollView addSubview:self.relatedTableView];
     
     if(self.manga.synopsis)
         [self.synopsisView addSynopsis:self.manga.synopsis];
@@ -134,6 +135,69 @@
     self.navigationItem.backBarButtonItem = [UIBarButtonItem customBackButtonWithTitle:@"Summary"];
     
     [self.navigationController pushViewController:vc animated:YES];
+}
+
+#pragma mark - UITableView Data Source Methods
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    NSString *title = [self.relatedData[section] allKeys][0];
+    UILabel *label = [UILabel whiteHeaderWithFrame:CGRectMake(0, 0, 320, 60) andFontSize:18];
+    label.text = title;
+    
+    return label;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+    return [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 0)];
+}
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return [AniListMiniCell cellHeight];
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return self.relatedData.count;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [[self.relatedData[section] allValues][0] count];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    static NSString *CellIdentifier = @"Cell";
+    
+    AniListMiniCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if(!cell) {
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"AniListMiniCell" owner:self options:nil];
+        cell = (AniListMiniCell *)nib[0];
+    }
+    
+//    NSManagedObject *object = [self.relatedData[indexPath.section] allValues][0][indexPath.row];
+//    
+//    if([object isKindOfClass:[Anime class]]) {
+//        [self configureAnimeCell:cell atIndexPath:indexPath];
+//    }
+//    else if([object isKindOfClass:[Manga class]]) {
+//        [self configureMangaCell:cell atIndexPath:indexPath];
+//    }
+    
+    return cell;
+}
+
+#pragma mark - Table view delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+//    [self.relatedTableView deselectRowAtIndexPath:indexPath animated:YES];
+//    
+//    Anime *anime = [self.relatedData[indexPath.section] allValues][0][indexPath.row];
+//    AnimeViewController *avc = [[AnimeViewController alloc] init];
+//    avc.anime = anime;
+//    
+//    self.navigationItem.backBarButtonItem = [UIBarButtonItem customBackButtonWithTitle:@"Back"];
+//    
+//    [self.navigationController pushViewController:avc animated:YES];
 }
 
 @end

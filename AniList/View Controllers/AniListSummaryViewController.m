@@ -9,6 +9,7 @@
 #import "AniListSummaryViewController.h"
 #import "AniListNavigationController.h"
 
+
 @interface AniListSummaryViewController ()
 
 @end
@@ -33,6 +34,11 @@
     self.view.backgroundColor = [UIColor clearColor];
     
     self.relatedTableView = [[AniListRelatedTableView alloc] initWithFrame:CGRectMake(0, 400, 320, 100)];
+    self.relatedTableView.delegate = self;
+    self.relatedTableView.dataSource = self;
+    self.relatedTableView.rowHeight = [AniListMiniCell cellHeight];
+    self.relatedTableView.sectionHeaderHeight = 60;
+    self.relatedTableView.sectionFooterHeight = 0;
     
     CAGradientLayer *gradient = [CAGradientLayer layer];
     gradient.frame = self.maskView.frame;

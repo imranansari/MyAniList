@@ -15,6 +15,9 @@
 #import "AnimeUserInfoEditViewController.h"
 #import "MALHTTPClient.h"
 #import "AniListMiniCell.h"
+#import "Manga.h"
+#import "MangaCell.h"
+#import "MangaViewController.h"
 
 @interface AnimeViewController ()
 @property (nonatomic, strong) AnimeDetailsViewController *animeDetailsViewController;
@@ -84,23 +87,17 @@
 
 #pragma mark - View Management Methods
 
-- (void)setupViews {
-    self.animeDetailsViewController.anime = self.anime;
-    self.userInfoView.anime = self.anime;
-    self.relatedTableView.delegate = self;
-    self.relatedTableView.dataSource = self;
-    self.relatedTableView.rowHeight = [AniListMiniCell cellHeight];
-    self.relatedTableView.sectionHeaderHeight = 60;
-    self.relatedTableView.sectionFooterHeight = 0;
-    
-    [self.scrollView addSubview:self.animeDetailsViewController.view];
-    [self.scrollView addSubview:self.userInfoView.view];
-    [self.scrollView addSubview:self.detailsLabel];
-    [self.scrollView addSubview:self.synopsisView];
-    [self.scrollView addSubview:self.relatedTableView];
-    
+- (void)refreshData {
     NSDictionary *prequels = self.anime.prequels.count ? @{ @"Prequels" : [self.anime.prequels allObjects] } : nil;
     NSDictionary *sequels = self.anime.sequels.count ? @{ @"Sequels" : [self.anime.sequels allObjects] } : nil;
+    NSDictionary *mangaAdaptations = self.anime.manga_adaptations.count ? @{ @"Manga Adaptations" : [self.anime.manga_adaptations allObjects] } : nil;
+    NSDictionary *sideStories = self.anime.side_stories.count ? @{ @"Side Stories" : [self.anime.side_stories allObjects] } : nil;
+    NSDictionary *parentStory = self.anime.parent_story.count ? @{ @"Parent Story" : [self.anime.parent_story allObjects] } : nil;
+    NSDictionary *characterAnimes = self.anime.character_anime.count ? @{ @"Character Anime" : [self.anime.character_anime allObjects] } : nil;
+    NSDictionary *spinoffs = self.anime.spin_offs.count ? @{ @"Spin-offs" : [self.anime.spin_offs allObjects] } : nil;
+    NSDictionary *summaries = self.anime.summaries.count ? @{ @"Summaries" : [self.anime.summaries allObjects] } : nil;
+    NSDictionary *alternativeVersions = self.anime.alternative_versions.count ? @{ @"Alternative Versions" : [self.anime.alternative_versions allObjects] } : nil;
+    
     
     NSMutableArray *related = [NSMutableArray array];
     
@@ -110,16 +107,30 @@
     if(sequels)
         [related addObject:sequels];
     
+    if(mangaAdaptations)
+        [related addObject:mangaAdaptations];
+    
+    if(sideStories)
+        [related addObject:sideStories];
+    
+    if(parentStory)
+        [related addObject:parentStory];
+    
+    if(characterAnimes)
+        [related addObject:characterAnimes];
+    
+    if(spinoffs)
+        [related addObject:spinoffs];
+    
+    if(summaries)
+        [related addObject:summaries];
+    
+    if(alternativeVersions)
+        [related addObject:alternativeVersions];
+    
     self.relatedData = related;
     
     [self.relatedTableView reloadData];
-    
-    if(self.anime.synopsis)
-        [self.synopsisView addSynopsis:self.anime.synopsis];
-    
-    self.animeDetailsViewController.view.frame = CGRectMake(0, 30, self.animeDetailsViewController.view.frame.size.width, self.animeDetailsViewController.view.frame.size.height);
-    self.userInfoView.view.frame = CGRectMake(0, self.animeDetailsViewController.view.frame.origin.y + self.animeDetailsViewController.view.frame.size.height, self.userInfoView.view.frame.size.width, self.userInfoView.view.frame.size.height);
-    self.detailsLabel.frame = CGRectMake(self.detailsLabel.frame.origin.x, self.userInfoView.view.frame.origin.y + self.userInfoView.view.frame.size.height, self.detailsLabel.frame.size.width, self.detailsLabel.frame.size.height);
     
     self.synopsisView.frame = CGRectMake(0, self.detailsLabel.frame.origin.y + self.detailsLabel.frame.size.height, self.synopsisView.frame.size.width, self.synopsisView.frame.size.height);
     
@@ -138,6 +149,26 @@
     self.scrollView.contentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width, MAX(contentSizeWithSynopsis, defaultContentSize));
 }
 
+- (void)setupViews {
+    self.animeDetailsViewController.anime = self.anime;
+    self.userInfoView.anime = self.anime;
+    
+    [self.scrollView addSubview:self.animeDetailsViewController.view];
+    [self.scrollView addSubview:self.userInfoView.view];
+    [self.scrollView addSubview:self.detailsLabel];
+    [self.scrollView addSubview:self.synopsisView];
+    [self.scrollView addSubview:self.relatedTableView];
+    
+    if(self.anime.synopsis)
+        [self.synopsisView addSynopsis:self.anime.synopsis];
+    
+    self.animeDetailsViewController.view.frame = CGRectMake(0, 30, self.animeDetailsViewController.view.frame.size.width, self.animeDetailsViewController.view.frame.size.height);
+    self.userInfoView.view.frame = CGRectMake(0, self.animeDetailsViewController.view.frame.origin.y + self.animeDetailsViewController.view.frame.size.height, self.userInfoView.view.frame.size.width, self.userInfoView.view.frame.size.height);
+    self.detailsLabel.frame = CGRectMake(self.detailsLabel.frame.origin.x, self.userInfoView.view.frame.origin.y + self.userInfoView.view.frame.size.height, self.detailsLabel.frame.size.width, self.detailsLabel.frame.size.height);
+    
+    [self refreshData];
+}
+
 - (void)updateViewsOnFailure:(BOOL)failure {
     if(self.anime.synopsis) {
         [self.synopsisView addSynopsis:self.anime.synopsis];
@@ -146,43 +177,121 @@
         [self.synopsisView addSynopsis:kNoSynopsisString];
     }
     
-    NSDictionary *prequels = self.anime.prequels.count ? @{ @"Prequels" : [self.anime.prequels allObjects] } : nil;
-    NSDictionary *sequels = self.anime.sequels.count ? @{ @"Sequels" : [self.anime.sequels allObjects] } : nil;
+    [self refreshData];
     
-    NSMutableArray *related = [NSMutableArray array];
+//    [UIView animateWithDuration:0.5f
+//                          delay:0.0f
+//                        options:UIViewAnimationOptionCurveEaseInOut | UIViewAnimationOptionBeginFromCurrentState
+//                     animations:^{
+//                         
+//                     } completion:nil];
+}
+
+- (void)configureAnimeCell:(AniListMiniCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    Anime *anime = [self.relatedData[indexPath.section] allValues][0][indexPath.row];
     
-    if(prequels)
-        [related addObject:prequels];
+    cell.title.text = anime.title;
+    [cell.title addShadow];
+    [cell.title sizeToFit];
     
-    if(sequels)
-        [related addObject:sequels];
+    //    cell.progress.text = [AnimeCell progressTextForAnime:anime];
+    //    [cell.progress addShadow];
     
-    self.relatedData = related;
+    cell.rank.text = [anime.user_score intValue] != -1 ? [NSString stringWithFormat:@"%d", [anime.user_score intValue]] : @"";
+    [cell.rank addShadow];
     
-    [self.relatedTableView reloadData];
+    cell.type.text = [Anime stringForAnimeType:[anime.type intValue]];
+    [cell.type addShadow];
     
-    [UIView animateWithDuration:0.5f
-                          delay:0.0f
-                        options:UIViewAnimationOptionCurveEaseInOut | UIViewAnimationOptionBeginFromCurrentState
-                     animations:^{
-                         
-                         self.synopsisView.frame = CGRectMake(0, self.detailsLabel.frame.origin.y + self.detailsLabel.frame.size.height, self.synopsisView.frame.size.width, self.synopsisView.frame.size.height);
-                         
-                         int tableViewFrame = 0;
-                         
-                         for(int i = 0; i < self.relatedTableView.numberOfSections; i++) {
-                             tableViewFrame += [self.relatedTableView sectionHeaderHeight] + [self.relatedTableView numberOfRowsInSection:i] * [self.relatedTableView rowHeight];
-                         }
-                         
-                         self.relatedTableView.frame = CGRectMake(0, self.synopsisView.frame.origin.y + self.synopsisView.frame.size.height + 20, self.relatedTableView.frame.size.width, tableViewFrame);
-                         
-                         int defaultContentSize = self.animeDetailsViewController.view.frame.size.height + self.userInfoView.view.frame.size.height + self.detailsLabel.frame.size.height + [UIScreen mainScreen].bounds.size.height + self.relatedTableView.frame.size.height - 90;
-                         
-                         int contentSizeWithSynopsis = self.animeDetailsViewController.view.frame.size.height + self.userInfoView.view.frame.size.height + self.detailsLabel.frame.size.height + self.synopsisView.frame.size.height + 20 + self.relatedTableView.frame.size.height + 90;
-                         
-                         self.scrollView.contentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width, MAX(contentSizeWithSynopsis, defaultContentSize));
-                         self.relatedTableView.contentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width, self.relatedTableView.frame.size.height);
-                     } completion:nil];
+    NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:anime.image_url]];
+    UIImage *cachedImage = [anime imageForAnime];
+    
+    if(!cachedImage) {
+        [cell.image setImageWithURLRequest:imageRequest placeholderImage:cachedImage success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+            
+            cell.image.image = image;
+            
+            if(!anime.image) {
+                ALLog(@"Saving image to disk...");
+                NSArray *segmentedURL = [[request.URL absoluteString] componentsSeparatedByString:@"/"];
+                NSString *filename = [segmentedURL lastObject];
+                NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+                NSString *animeImagePath = [NSString stringWithFormat:@"%@/anime/%@", documentsDirectory, filename];
+                
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+                    [UIImageJPEGRepresentation(image, 1.0) writeToFile:animeImagePath options:NSAtomicWrite error:nil];
+                });
+                
+                // Only save relative URL since Documents URL can change on updates.
+                anime.image = [NSString stringWithFormat:@"anime/%@", filename];
+            }
+        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+            // Log failure.
+            ALLog(@"Couldn't fetch image at URL %@.", [request.URL absoluteString]);
+        }];
+    }
+    else {
+        cell.image.image = cachedImage;
+    }
+}
+
+- (void)configureMangaCell:(AniListMiniCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    Manga *manga = [self.relatedData[indexPath.section] allValues][0][indexPath.row];
+    MangaCell *mangaCell = (MangaCell *)cell;
+    mangaCell.title.text = manga.title;
+    [mangaCell.title addShadow];
+    [mangaCell.title sizeToFit];
+    
+//    mangaCell.progress.text = [MangaCell progressTextForManga:manga];
+//    [mangaCell.progress addShadow];
+    
+    mangaCell.rank.text = [manga.user_score intValue] != -1 ? [NSString stringWithFormat:@"%d", [manga.user_score intValue]] : @"";
+    [mangaCell.rank addShadow];
+    
+    mangaCell.type.text = [Manga stringForMangaType:[manga.type intValue]];
+    [mangaCell.type addShadow];
+    
+    NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    
+    NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:manga.image_url]];
+    NSString *cachedImageLocation = [NSString stringWithFormat:@"%@/%@", documentsDirectory, manga.image];
+    UIImage *cachedImage = [UIImage imageWithContentsOfFile:cachedImageLocation];
+    
+    if(cachedImage) {
+        ALLog(@"Image on disk exists for %@.", manga.title);
+    }
+    else {
+        ALLog(@"Image on disk does not exist for %@.", manga.title);
+    }
+    
+    [mangaCell.image setImageWithURLRequest:imageRequest placeholderImage:cachedImage success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+        
+        ALLog(@"Got image for manga %@.", manga.title);
+        mangaCell.image.image = image;
+        
+        // Save the image onto disk if it doesn't exist or they aren't the same.
+        if(!manga.image) {
+            ALLog(@"Saving image to disk...");
+            NSArray *segmentedURL = [[request.URL absoluteString] componentsSeparatedByString:@"/"];
+            NSString *filename = [segmentedURL lastObject];
+            
+            NSString *animeImagePath = [NSString stringWithFormat:@"%@/manga/%@", documentsDirectory, filename];
+            
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+                BOOL saved = NO;
+                saved = [UIImageJPEGRepresentation(image, 1.0) writeToFile:animeImagePath options:NSAtomicWrite error:nil];
+                ALLog(@"Image %@", saved ? @"saved." : @"did not save.");
+            });
+            
+            // Only save relative URL since Documents URL can change on updates.
+            manga.image = [NSString stringWithFormat:@"manga/%@", filename];
+        }
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+        // Log failure.
+        ALLog(@"Couldn't fetch image at URL %@.", [request.URL absoluteString]);
+    }];
+    
+    
 }
 
 #pragma mark - AniListUserInfoViewControllerDelegate Methods
@@ -227,74 +336,19 @@
     
     static NSString *CellIdentifier = @"Cell";
     
-    Anime *anime = [self.relatedData[indexPath.section] allValues][0][indexPath.row];
-    
     AniListMiniCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if(!cell) {
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"AniListMiniCell" owner:self options:nil];
         cell = (AniListMiniCell *)nib[0];
     }
     
-    cell.title.text = anime.title;
-    [cell.title addShadow];
-    [cell.title sizeToFit];
+    NSManagedObject *object = [self.relatedData[indexPath.section] allValues][0][indexPath.row];
     
-//    cell.progress.text = [AnimeCell progressTextForAnime:anime];
-//    [cell.progress addShadow];
-    
-    cell.rank.text = [anime.user_score intValue] != -1 ? [NSString stringWithFormat:@"%d", [anime.user_score intValue]] : @"";
-    [cell.rank addShadow];
-    
-    cell.type.text = [Anime stringForAnimeType:[anime.type intValue]];
-    [cell.type addShadow];
-    
-//    cell.backgroundColor = [UIColor darkGrayColor];
-    
-    NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:anime.image_url]];
-    
-    UIImage *cachedImage = [anime imageForAnime];
-    
-    if(cachedImage) {
-        //        ALLog(@"Image on disk exists for %@.", anime.title);
+    if([object isKindOfClass:[Anime class]]) {
+        [self configureAnimeCell:cell atIndexPath:indexPath];
     }
-    else {
-        //        ALLog(@"Image on disk does not exist for %@.", anime.title);
-    }
-    
-    //    ALLog(@"location: %@", cachedImageLocation);
-    
-    if(!cachedImage) {
-        [cell.image setImageWithURLRequest:imageRequest placeholderImage:cachedImage success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-            
-            //        ALLog(@"Got image for anime %@.", anime.title);
-            cell.image.image = image;
-            
-            // Save the image onto disk if it doesn't exist or they aren't the same.
-#warning - need to compare cached image to this new image, and replace if necessary.
-#warning - will need to be fast and efficient! Alternatively, we can recycle the cache if need be.
-            if(!anime.image) {
-                //            ALLog(@"Saving image to disk...");
-                NSArray *segmentedURL = [[request.URL absoluteString] componentsSeparatedByString:@"/"];
-                NSString *filename = [segmentedURL lastObject];
-                NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-                NSString *animeImagePath = [NSString stringWithFormat:@"%@/anime/%@", documentsDirectory, filename];
-                
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-                    BOOL saved = NO;
-                    saved = [UIImageJPEGRepresentation(image, 1.0) writeToFile:animeImagePath options:NSAtomicWrite error:nil];
-                    //                ALLog(@"Image %@", saved ? @"saved." : @"did not save.");
-                });
-                
-                // Only save relative URL since Documents URL can change on updates.
-                anime.image = [NSString stringWithFormat:@"anime/%@", filename];
-            }
-        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-            // Log failure.
-            //        ALLog(@"Couldn't fetch image at URL %@.", [request.URL absoluteString]);
-        }];
-    }
-    else {
-        cell.image.image = cachedImage;
+    else if([object isKindOfClass:[Manga class]]) {
+        [self configureMangaCell:cell atIndexPath:indexPath];
     }
     
     return cell;
@@ -305,13 +359,25 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.relatedTableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    Anime *anime = [self.relatedData[indexPath.section] allValues][0][indexPath.row];
-    AnimeViewController *avc = [[AnimeViewController alloc] init];
-    avc.anime = anime;
+    NSManagedObject *object = [self.relatedData[indexPath.section] allValues][0][indexPath.row];
+    
+    UIViewController *vc;
+    
+    if([object isKindOfClass:[Anime class]]) {
+        Anime *anime = (Anime *)object;
+        vc = [[AnimeViewController alloc] init];
+        ((AnimeViewController *)vc).anime = anime;
+    }
+    else if([object isKindOfClass:[Manga class]]) {
+        Manga *manga = (Manga *)object;
+        vc = [[MangaViewController alloc] init];
+        ((MangaViewController *)vc).manga = manga;
+    }
+    else return;
     
     self.navigationItem.backBarButtonItem = [UIBarButtonItem customBackButtonWithTitle:@"Back"];
 
-    [self.navigationController pushViewController:avc animated:YES];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 @end

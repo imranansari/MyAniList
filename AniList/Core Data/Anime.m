@@ -24,7 +24,6 @@
 @dynamic downloaded_episodes;
 @dynamic enable_discussion;
 @dynamic enable_rewatching;
-@dynamic english_title;
 @dynamic fansub_group;
 @dynamic favorited_count;
 @dynamic image;
@@ -46,12 +45,18 @@
 @dynamic user_date_start;
 @dynamic user_score;
 @dynamic watched_status;
+@dynamic alternative_versions;
+@dynamic character_anime;
+@dynamic english_titles;
 @dynamic genres;
+@dynamic japanese_titles;
 @dynamic manga_adaptations;
 @dynamic parent_story;
 @dynamic prequels;
 @dynamic sequels;
 @dynamic side_stories;
+@dynamic spin_offs;
+@dynamic summaries;
 @dynamic synonyms;
 @dynamic tags;
 
@@ -310,6 +315,13 @@
     NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     NSString *cachedImageLocation = [NSString stringWithFormat:@"%@/%@", documentsDirectory, self.image];
     UIImage *cachedImage = [UIImage imageWithContentsOfFile:cachedImageLocation];
+    
+    if(cachedImage) {
+        ALLog(@"Image on disk exists for %@.", self.title);
+    }
+    else {
+        ALLog(@"Image on disk does not exist for %@.", self.title);
+    }
     
     return cachedImage;
 }

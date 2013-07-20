@@ -9,6 +9,10 @@
 #import "AnimeService.h"
 #import "AniListAppDelegate.h"
 #import "MALHTTPClient.h"
+#import "SynonymService.h"
+#import "TagService.h"
+#import "GenreService.h"
+#import "MangaService.h"
 
 #define ENTITY_NAME @"Anime"
 
@@ -32,8 +36,6 @@ static NSArray *cachedAnimeList = nil;
             NSFetchRequest *request = [[NSFetchRequest alloc] init];
             NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITY_NAME inManagedObjectContext:[AnimeService managedObjectContext]];
             request.entity = entity;
-            request.relationshipKeyPathsForPrefetching = @[@"prequels", @"sequels"];
-            request.returnsObjectsAsFaults = NO;
             
             NSError *error = nil;
             cachedAnimeList = [[AnimeService managedObjectContext] executeFetchRequest:request error:&error];
@@ -105,7 +107,22 @@ static NSArray *cachedAnimeList = nil;
             [anime addEntriesFromDictionary:@{ kAirStatus : animeItem[@"series_status"][@"text"] }];
             
             // no synonym support...yet.
-            //        [anime addEntriesFromDictionary:@{ @"series_synonyms" : animeItem[@"series_synonyms"][@"text"] }];
+            
+            NSString *synonyms = animeItem[@"series_synonyms"][@"text"];
+            NSArray *synonymsArray = [synonyms componentsSeparatedByString:@";"];
+            NSMutableArray *result = [NSMutableArray array];
+            
+            for(int i = 0; i < synonymsArray.count; i++) {
+                NSString *synonym = synonymsArray[i];
+                synonym = [synonym stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+                if(synonym.length > 0)
+                    [result addObject:synonym];
+            }
+            
+            if(result.count > 0) {
+                NSDictionary *otherTitles = @{ kOtherTitles : @{ kSynonyms : result }};
+                [anime addEntriesFromDictionary:otherTitles];
+            }
             
             [anime addEntriesFromDictionary:@{ kTitle : animeItem[@"series_title"][@"text"] }];
             [anime addEntriesFromDictionary:@{ kType : animeItem[@"series_type"][@"text"] }];
@@ -117,6 +134,23 @@ static NSArray *cachedAnimeList = nil;
     });
     
     return NO;
+}
+
++ (Manga *)addMangaAdaptation:(NSDictionary *)data toAnime:(Anime *)anime {
+    Manga *mangaAdaptation = [MangaService mangaForID:data[@"manga_id"]];
+    
+    if(mangaAdaptation) {
+        ALLog(@"Manga adaptation '%@' exists for '%@'.", mangaAdaptation.title, anime.title);
+    }
+    else {
+        // Add Manga here.
+        ALLog(@"Manga adaptation '%@' does not exist for '%@'. Adding to the database.", mangaAdaptation.title, anime.title);
+        mangaAdaptation = [MangaService addManga:data fromRelatedAnime:anime];
+    }
+    
+    [anime addManga_adaptationsObject:mangaAdaptation];
+    
+    return mangaAdaptation;
 }
 
 + (Anime *)addRelatedAnime:(NSDictionary *)data toAnime:(Anime *)anime relationType:(AnimeRelation)relationType {
@@ -140,6 +174,24 @@ static NSArray *cachedAnimeList = nil;
         case AnimeRelationSequel:
             [relatedAnime addPrequelsObject:anime];
             [anime addSequelsObject:relatedAnime];
+            break;
+        case AnimeRelationSideStory:
+            [anime addSide_storiesObject:relatedAnime];
+            break;
+        case AnimeRelationCharacterAnime:
+            [anime addCharacter_animeObject:relatedAnime];
+            break;
+        case AnimeRelationSpinOff:
+            [anime addSpin_offsObject:relatedAnime];
+            break;
+        case AnimeRelationParentStory:
+            [anime addParent_storyObject:relatedAnime];
+            break;
+        case AnimeRelationAlternativeVersions:
+            [anime addAlternative_versionsObject:relatedAnime];
+            break;
+        case AnimeRelationSummaries:
+            [anime addSummariesObject:relatedAnime];
             break;
         default:
             break;
@@ -165,12 +217,24 @@ static NSArray *cachedAnimeList = nil;
     
     anime.last_updated = data[kUserLastUpdated];
     
-//    anime.synonyms = data[@"other_titles"];
-    // english
-    // japanese
+    NSDictionary *otherTitles = data[kOtherTitles];
+    if(otherTitles[kSynonyms] && ![otherTitles[kSynonyms] isNull]) {
+        for(NSString *synonym in otherTitles[kSynonyms]) {
+            [SynonymService addSynonym:synonym toAnime:anime];
+        }
+    }
     
-    // rank (global)
-    // popularity_rank
+    if(otherTitles[kEnglishTitles] && ![otherTitles[kEnglishTitles] isNull]) {
+        for(NSString *englishTitle in otherTitles[kEnglishTitles]) {
+            [SynonymService addEnglishTitle:englishTitle toAnime:anime];
+        }
+    }
+    
+    if(otherTitles[kJapaneseTitles] && ![otherTitles[kJapaneseTitles] isNull]) {
+        for(NSString *japaneseTitle in otherTitles[kJapaneseTitles]) {
+            [SynonymService addJapaneseTitle:japaneseTitle toAnime:anime];
+        }
+    }
     
     if(data[kImageURL] && ![data[kImageURL] isNull])
         anime.image_url = data[kImageURL];
@@ -242,9 +306,25 @@ static NSArray *cachedAnimeList = nil;
     
     anime.anime_id = [data[kID] isKindOfClass:[NSString class]] ? @([data[kID] intValue]) : data[kID];
     anime.title = [data[kTitle] stringByDecodingHTMLEntities];
-    //    anime.synonyms = data[@"other_titles"];
-    // english
-    // japanese
+    
+    NSDictionary *otherTitles = data[kOtherTitles];
+    if(otherTitles[kSynonyms] && ![otherTitles[kSynonyms] isNull]) {
+        for(NSString *synonym in otherTitles[kSynonyms]) {
+            [SynonymService addSynonym:synonym toAnime:anime];
+        }
+    }
+    
+    if(otherTitles[kEnglishTitles] && ![otherTitles[kEnglishTitles] isNull]) {
+        for(NSString *englishTitle in otherTitles[kEnglishTitles]) {
+            [SynonymService addEnglishTitle:englishTitle toAnime:anime];
+        }
+    }
+    
+    if(otherTitles[kJapaneseTitles] && ![otherTitles[kJapaneseTitles] isNull]) {
+        for(NSString *japaneseTitle in otherTitles[kJapaneseTitles]) {
+            [SynonymService addJapaneseTitle:japaneseTitle toAnime:anime];
+        }
+    }
 
     // rank (global)
     if(data[kRank] && ![data[kRank] isNull])
@@ -253,44 +333,7 @@ static NSArray *cachedAnimeList = nil;
     if(data[kPopularityRank] && ![data[kPopularityRank] isNull])
         anime.popularity_rank = data[kPopularityRank];
     
-    // Prequels/sequels
-    if(data[kPrequels] && ![data[kPrequels] isNull]) {
-        NSArray *prequels = data[kPrequels];
-        for(NSDictionary *prequel in prequels) {
-            Anime *prequelAnime = [self addRelatedAnime:prequel toAnime:anime relationType:AnimeRelationPrequel];
-            if(prequelAnime) {
-                ALLog(@"Prequel found for %@ -> %@.", anime.title, prequelAnime.title);
-                
-                // We do a simple check; have we added anything else besides the ID and title? If so, don't bother attempting to update.
-                if([prequelAnime.type intValue] == 0) {
-                    [[MALHTTPClient sharedClient] getAnimeDetailsForID:prequelAnime.anime_id success:^(id operation, id response) {
-                        [self addAnime:response fromList:NO];
-                    } failure:^(id operation, NSError *error) {
-                        ALLog(@"Failed to get prequel.");
-                    }];
-                }
-            }
-        }
-    }
-    
-    if(data[kSequels] && ![data[kSequels] isNull]) {
-        NSArray *sequels = data[kSequels];
-        for(NSDictionary *sequel in sequels) {
-            Anime *sequelAnime = [self addRelatedAnime:sequel toAnime:anime relationType:AnimeRelationSequel];
-            if(sequelAnime) {
-                ALLog(@"Sequel found for %@ -> %@.", anime.title, sequelAnime.title);
-                
-                // We do a simple check; have we added anything else besides the ID and title? If so, don't bother attempting to update.
-                if([sequelAnime.type intValue] == 0) {
-                    [[MALHTTPClient sharedClient] getAnimeDetailsForID:sequelAnime.anime_id success:^(id operation, id response) {
-                        [self addAnime:response fromList:NO];
-                    } failure:^(id operation, NSError *error) {
-                        ALLog(@"Failed to get sequel.");
-                    }];
-                }
-            }
-        }
-    }
+    [AnimeService parseRelatedInformation:data forAnime:anime];
     
     if(data[kImageURL] && ![data[kImageURL] isNull])
         anime.image_url = data[kImageURL];
@@ -322,7 +365,6 @@ static NSArray *cachedAnimeList = nil;
     
     
     // User details below.
-    
     NSNumber *lastUpdated = data[kUserLastUpdated];
     
     // If the last time we updated (according to the server) is less than what we get from the server,
@@ -358,18 +400,6 @@ static NSArray *cachedAnimeList = nil;
 
 }
 
-
-+ (Anime *)editAnime:(NSDictionary *)data fromList:(BOOL)fromList {
-    fromList = NO;
-    Anime *anime = [AnimeService animeForID:data[@"id"] fromCache:fromList];
-    if(!anime) {
-        ALLog(@"Unable to edit anime; anime does not exist!");
-        return nil;
-    }
-    
-    return [self editAnime:data fromList:fromList withObject:anime];
-}
-
 + (void)deleteAnime:(Anime *)anime {
     NSError *error = nil;
     
@@ -387,6 +417,188 @@ static NSArray *cachedAnimeList = nil;
 }
 
 #pragma mark - Data Conversion Methods
+
++ (void)parseRelatedInformation:(NSDictionary *)data forAnime:(Anime *)anime {
+    // Prequels
+    if(data[kPrequels] && ![data[kPrequels] isNull]) {
+        NSArray *prequels = data[kPrequels];
+        for(NSDictionary *prequel in prequels) {
+            Anime *prequelAnime = [self addRelatedAnime:prequel toAnime:anime relationType:AnimeRelationPrequel];
+            if(prequelAnime) {
+                ALLog(@"Prequel found for %@ -> %@.", anime.title, prequelAnime.title);
+                
+                // We do a simple check; have we added anything else besides the ID and title? If so, don't bother attempting to update.
+                if([prequelAnime.type intValue] == 0) {
+                    [[MALHTTPClient sharedClient] getAnimeDetailsForID:prequelAnime.anime_id success:^(id operation, id response) {
+                        [self addAnime:response fromList:NO];
+                    } failure:^(id operation, NSError *error) {
+                        ALLog(@"Failed to get prequel.");
+                    }];
+                }
+            }
+        }
+    }
+    
+    // Sequels
+    if(data[kSequels] && ![data[kSequels] isNull]) {
+        NSArray *sequels = data[kSequels];
+        for(NSDictionary *sequel in sequels) {
+            Anime *sequelAnime = [self addRelatedAnime:sequel toAnime:anime relationType:AnimeRelationSequel];
+            if(sequelAnime) {
+                ALLog(@"Sequel found for %@ -> %@.", anime.title, sequelAnime.title);
+                
+                // We do a simple check; have we added anything else besides the ID and title? If so, don't bother attempting to update.
+                if([sequelAnime.type intValue] == 0) {
+                    [[MALHTTPClient sharedClient] getAnimeDetailsForID:sequelAnime.anime_id success:^(id operation, id response) {
+                        [self addAnime:response fromList:NO];
+                    } failure:^(id operation, NSError *error) {
+                        ALLog(@"Failed to get sequel.");
+                    }];
+                }
+            }
+        }
+    }
+    
+    // Manga Adaptations
+    if(data[kMangaAdaptations] && ![data[kMangaAdaptations] isNull]) {
+        NSArray *mangaAdaptations = data[kMangaAdaptations];
+        for(NSDictionary *mangaAdaptation in mangaAdaptations) {
+            Manga *manga = [self addMangaAdaptation:mangaAdaptation toAnime:anime];
+            if(manga) {
+                ALLog(@"Manga adaptation found for %@ -> %@.", anime.title, manga.title);
+                
+                // We do a simple check; have we added anything else besides the ID and title? If so, don't bother attempting to update.
+                if([manga.type intValue] == 0) {
+                    [[MALHTTPClient sharedClient] getMangaDetailsForID:manga.manga_id success:^(id operation, id response) {
+                        [MangaService addManga:response fromList:NO];
+                    } failure:^(id operation, NSError *error) {
+                        ALLog(@"Failed to get manga.");
+                    }];
+                }
+            }
+        }
+    }
+    
+    // Side Stories
+    if(data[kSideStores] && ![data[kSideStores] isNull]) {
+        NSArray *sideStories = data[kSideStores];
+        for(NSDictionary *sideStory in sideStories) {
+            Anime *sideStoryAnime = [self addRelatedAnime:sideStory toAnime:anime relationType:AnimeRelationSideStory];
+            if(sideStoryAnime) {
+                ALLog(@"Side story found for %@ -> %@.", anime.title, sideStoryAnime.title);
+                
+                // We do a simple check; have we added anything else besides the ID and title? If so, don't bother attempting to update.
+                if([sideStoryAnime.type intValue] == 0) {
+                    [[MALHTTPClient sharedClient] getAnimeDetailsForID:sideStoryAnime.anime_id success:^(id operation, id response) {
+                        [self addAnime:response fromList:NO];
+                    } failure:^(id operation, NSError *error) {
+                        ALLog(@"Failed to get side story.");
+                    }];
+                }
+            }
+        }
+    }
+    
+    // Parent Story
+    if(data[kParentStory] && ![data[kParentStory] isNull]) {
+        NSArray *parentStories = data[kParentStory];
+        for(NSDictionary *parentStory in parentStories) {
+            Anime *parentStoryAnime = [self addRelatedAnime:parentStory toAnime:anime relationType:AnimeRelationParentStory];
+            if(parentStoryAnime) {
+                ALLog(@"Parent story found for %@ -> %@.", anime.title, parentStoryAnime.title);
+                
+                // We do a simple check; have we added anything else besides the ID and title? If so, don't bother attempting to update.
+                if([parentStoryAnime.type intValue] == 0) {
+                    [[MALHTTPClient sharedClient] getAnimeDetailsForID:parentStoryAnime.anime_id success:^(id operation, id response) {
+                        [self addAnime:response fromList:NO];
+                    } failure:^(id operation, NSError *error) {
+                        ALLog(@"Failed to get parent story.");
+                    }];
+                }
+            }
+        }
+    }
+    
+    // Character Anime
+    if(data[kCharacterAnime] && ![data[kCharacterAnime] isNull]) {
+        NSArray *characters = data[kCharacterAnime];
+        for(NSDictionary *character in characters) {
+            Anime *characterAnime = [self addRelatedAnime:character toAnime:anime relationType:AnimeRelationCharacterAnime];
+            if(character) {
+                ALLog(@"Character anime found for %@ -> %@.", anime.title, characterAnime.title);
+                
+                // We do a simple check; have we added anything else besides the ID and title? If so, don't bother attempting to update.
+                if([characterAnime.type intValue] == 0) {
+                    [[MALHTTPClient sharedClient] getAnimeDetailsForID:characterAnime.anime_id success:^(id operation, id response) {
+                        [self addAnime:response fromList:NO];
+                    } failure:^(id operation, NSError *error) {
+                        ALLog(@"Failed to get character anime.");
+                    }];
+                }
+            }
+        }
+    }
+    
+    // Spin Offs
+    if(data[kSpinOffs] && ![data[kSpinOffs] isNull]) {
+        NSArray *spinoffs = data[kSpinOffs];
+        for(NSDictionary *spinoff in spinoffs) {
+            Anime *spinoffAnime = [self addRelatedAnime:spinoff toAnime:anime relationType:AnimeRelationSpinOff];
+            if(spinoffAnime) {
+                ALLog(@"Spinoff anime found for %@ -> %@.", anime.title, spinoffAnime.title);
+                
+                // We do a simple check; have we added anything else besides the ID and title? If so, don't bother attempting to update.
+                if([spinoffAnime.type intValue] == 0) {
+                    [[MALHTTPClient sharedClient] getAnimeDetailsForID:spinoffAnime.anime_id success:^(id operation, id response) {
+                        [self addAnime:response fromList:NO];
+                    } failure:^(id operation, NSError *error) {
+                        ALLog(@"Failed to get spinoff.");
+                    }];
+                }
+            }
+        }
+    }
+    
+    // Summaries
+    if(data[kSummaries] && ![data[kSummaries] isNull]) {
+        NSArray *summaries = data[kSummaries];
+        for(NSDictionary *summary in summaries) {
+            Anime *summaryAnime = [self addRelatedAnime:summary toAnime:anime relationType:AnimeRelationSummaries];
+            if(summaryAnime) {
+                ALLog(@"Summary anime found for %@ -> %@.", anime.title, summaryAnime.title);
+                
+                // We do a simple check; have we added anything else besides the ID and title? If so, don't bother attempting to update.
+                if([summaryAnime.type intValue] == 0) {
+                    [[MALHTTPClient sharedClient] getAnimeDetailsForID:summaryAnime.anime_id success:^(id operation, id response) {
+                        [self addAnime:response fromList:NO];
+                    } failure:^(id operation, NSError *error) {
+                        ALLog(@"Failed to get summary anime.");
+                    }];
+                }
+            }
+        }
+    }
+    
+    // Alternative Versions
+    if(data[kAlternativeVersions] && ![data[kAlternativeVersions] isNull]) {
+        NSArray *alternativeVersions = data[kAlternativeVersions];
+        for(NSDictionary *alternativeVersion in alternativeVersions) {
+            Anime *alternativeVersionAnime = [self addRelatedAnime:alternativeVersion toAnime:anime relationType:AnimeRelationAlternativeVersions];
+            if(alternativeVersionAnime) {
+                ALLog(@"Alternative Version anime found for %@ -> %@.", anime.title, alternativeVersionAnime.title);
+                
+                // We do a simple check; have we added anything else besides the ID and title? If so, don't bother attempting to update.
+                if([alternativeVersionAnime.type intValue] == 0) {
+                    [[MALHTTPClient sharedClient] getAnimeDetailsForID:alternativeVersionAnime.anime_id success:^(id operation, id response) {
+                        [self addAnime:response fromList:NO];
+                    } failure:^(id operation, NSError *error) {
+                        ALLog(@"Failed to get alternative version.");
+                    }];
+                }
+            }
+        }
+    }
+}
 
 + (NSString *)animeToXML:(NSNumber *)animeID {
     

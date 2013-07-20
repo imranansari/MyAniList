@@ -82,11 +82,6 @@ static NSArray *animeStatusOrder;
         }
     }
     
-    // If we're coming into this screen after we've done a search (i.e. status is 'not watching' and user tapped
-    // to add this to their list), then automatically set the start date to today.
-    if([self.anime.watched_status intValue] == AnimeWatchedStatusNotWatching)
-        self.anime.user_date_start = [NSDate date];
-    
     [self updateLabels];
 }
 

@@ -206,6 +206,12 @@
 		637CF6ED175986840009ADF3 /* NSObject+AniList.m in Sources */ = {isa = PBXBuildFile; fileRef = 637CF6EB175986840009ADF3 /* NSObject+AniList.m */; };
 		637CF6F31759940E0009ADF3 /* test_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 637CF6F21759940E0009ADF3 /* test_background@2x.png */; };
 		637CF6F41759940E0009ADF3 /* test_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 637CF6F21759940E0009ADF3 /* test_background@2x.png */; };
+		6380F98F179ADAC60090B66C /* SynonymService.m in Sources */ = {isa = PBXBuildFile; fileRef = 6380F98E179ADAC60090B66C /* SynonymService.m */; };
+		6380F990179ADAC60090B66C /* SynonymService.m in Sources */ = {isa = PBXBuildFile; fileRef = 6380F98E179ADAC60090B66C /* SynonymService.m */; };
+		6380F993179ADAD10090B66C /* GenreService.m in Sources */ = {isa = PBXBuildFile; fileRef = 6380F992179ADAD10090B66C /* GenreService.m */; };
+		6380F994179ADAD10090B66C /* GenreService.m in Sources */ = {isa = PBXBuildFile; fileRef = 6380F992179ADAD10090B66C /* GenreService.m */; };
+		6380F997179ADADF0090B66C /* TagService.m in Sources */ = {isa = PBXBuildFile; fileRef = 6380F996179ADADF0090B66C /* TagService.m */; };
+		6380F998179ADADF0090B66C /* TagService.m in Sources */ = {isa = PBXBuildFile; fileRef = 6380F996179ADADF0090B66C /* TagService.m */; };
 		63859E871763E8FD0029397C /* SparkInspector.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = THBDITSPYVFDWQYYBDCIDIXG /* SparkInspector.framework */; };
 		63859E881763E9DA0029397C /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = HYXIFWTDXJPPRRMDCEPMDTJH /* libz.dylib */; };
 		63859E8B1763F28C0029397C /* AnimeUserInfoEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63859E8A1763F28C0029397C /* AnimeUserInfoEditViewController.m */; };
@@ -270,6 +276,12 @@
 		63C8CD6E179A441E003BB80C /* AniListMiniCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C8CD6C179A441E003BB80C /* AniListMiniCell.m */; };
 		63C8CD70179A4435003BB80C /* AniListMiniCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63C8CD6F179A442C003BB80C /* AniListMiniCell.xib */; };
 		63C8CD71179A4436003BB80C /* AniListMiniCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63C8CD6F179A442C003BB80C /* AniListMiniCell.xib */; };
+		63DB4E4F179AD7B800C20ECC /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = 63DB4E4E179AD7B800C20ECC /* Tag.m */; };
+		63DB4E50179AD7B800C20ECC /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = 63DB4E4E179AD7B800C20ECC /* Tag.m */; };
+		63DB4E53179AD7CE00C20ECC /* Synonym.m in Sources */ = {isa = PBXBuildFile; fileRef = 63DB4E52179AD7CE00C20ECC /* Synonym.m */; };
+		63DB4E54179AD7CE00C20ECC /* Synonym.m in Sources */ = {isa = PBXBuildFile; fileRef = 63DB4E52179AD7CE00C20ECC /* Synonym.m */; };
+		63DB4E57179AD7D800C20ECC /* Genre.m in Sources */ = {isa = PBXBuildFile; fileRef = 63DB4E56179AD7D800C20ECC /* Genre.m */; };
+		63DB4E58179AD7D800C20ECC /* Genre.m in Sources */ = {isa = PBXBuildFile; fileRef = 63DB4E56179AD7D800C20ECC /* Genre.m */; };
 		63EFEC3D176966B8009CEAB3 /* UMALHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 63EFEC3C176966B7009CEAB3 /* UMALHTTPClient.m */; };
 		63EFEC3E176966B8009CEAB3 /* UMALHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 63EFEC3C176966B7009CEAB3 /* UMALHTTPClient.m */; };
 		63FC20A717920EB000DFD544 /* CRTransitionLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FC20A617920EB000DFD544 /* CRTransitionLabel.m */; };
@@ -465,6 +477,12 @@
 		637CF6EB175986840009ADF3 /* NSObject+AniList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+AniList.m"; path = "Categories/NSObject+AniList.m"; sourceTree = "<group>"; };
 		637CF6EE175986B20009ADF3 /* Categories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Categories.h; path = Categories/Categories.h; sourceTree = "<group>"; };
 		637CF6F21759940E0009ADF3 /* test_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "test_background@2x.png"; sourceTree = "<group>"; };
+		6380F98D179ADAC60090B66C /* SynonymService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SynonymService.h; path = "Core Data/SynonymService.h"; sourceTree = "<group>"; };
+		6380F98E179ADAC60090B66C /* SynonymService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SynonymService.m; path = "Core Data/SynonymService.m"; sourceTree = "<group>"; };
+		6380F991179ADAD10090B66C /* GenreService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GenreService.h; path = "Core Data/GenreService.h"; sourceTree = "<group>"; };
+		6380F992179ADAD10090B66C /* GenreService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GenreService.m; path = "Core Data/GenreService.m"; sourceTree = "<group>"; };
+		6380F995179ADADE0090B66C /* TagService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TagService.h; path = "Core Data/TagService.h"; sourceTree = "<group>"; };
+		6380F996179ADADF0090B66C /* TagService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TagService.m; path = "Core Data/TagService.m"; sourceTree = "<group>"; };
 		63859E891763F28C0029397C /* AnimeUserInfoEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimeUserInfoEditViewController.h; sourceTree = "<group>"; };
 		63859E8A1763F28C0029397C /* AnimeUserInfoEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimeUserInfoEditViewController.m; sourceTree = "<group>"; };
 		63892574175F7ACC00C8489A /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
@@ -524,6 +542,12 @@
 		63C8CD6B179A441E003BB80C /* AniListMiniCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AniListMiniCell.h; path = Views/AniListMiniCell.h; sourceTree = "<group>"; };
 		63C8CD6C179A441E003BB80C /* AniListMiniCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AniListMiniCell.m; path = Views/AniListMiniCell.m; sourceTree = "<group>"; };
 		63C8CD6F179A442C003BB80C /* AniListMiniCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = AniListMiniCell.xib; path = Views/AniListMiniCell.xib; sourceTree = "<group>"; };
+		63DB4E4D179AD7B800C20ECC /* Tag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Tag.h; path = "Core Data/Tag.h"; sourceTree = "<group>"; };
+		63DB4E4E179AD7B800C20ECC /* Tag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Tag.m; path = "Core Data/Tag.m"; sourceTree = "<group>"; };
+		63DB4E51179AD7CE00C20ECC /* Synonym.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Synonym.h; path = "Core Data/Synonym.h"; sourceTree = "<group>"; };
+		63DB4E52179AD7CE00C20ECC /* Synonym.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Synonym.m; path = "Core Data/Synonym.m"; sourceTree = "<group>"; };
+		63DB4E55179AD7D800C20ECC /* Genre.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Genre.h; path = "Core Data/Genre.h"; sourceTree = "<group>"; };
+		63DB4E56179AD7D800C20ECC /* Genre.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Genre.m; path = "Core Data/Genre.m"; sourceTree = "<group>"; };
 		63EFEC3B176966B7009CEAB3 /* UMALHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UMALHTTPClient.h; path = "Web Services/UMALHTTPClient.h"; sourceTree = "<group>"; };
 		63EFEC3C176966B7009CEAB3 /* UMALHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UMALHTTPClient.m; path = "Web Services/UMALHTTPClient.m"; sourceTree = "<group>"; };
 		63FC20A517920EB000DFD544 /* CRTransitionLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CRTransitionLabel.h; path = Views/CRTransitionLabel.h; sourceTree = "<group>"; };
@@ -734,15 +758,27 @@
 		632F438F171CDA2C00A5B43A /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
+				635484B8171C2FA7003457CB /* AniList_1.0.xcdatamodeld */,
+				63DB4E55179AD7D800C20ECC /* Genre.h */,
+				63DB4E56179AD7D800C20ECC /* Genre.m */,
+				63DB4E51179AD7CE00C20ECC /* Synonym.h */,
+				63DB4E52179AD7CE00C20ECC /* Synonym.m */,
+				63DB4E4D179AD7B800C20ECC /* Tag.h */,
+				63DB4E4E179AD7B800C20ECC /* Tag.m */,
 				635027BB171ED60A0004C106 /* Anime.h */,
 				635027BC171ED60A0004C106 /* Anime.m */,
-				635484B8171C2FA7003457CB /* AniList_1.0.xcdatamodeld */,
 				63B386AE17764720001A7E31 /* Manga.h */,
 				63B386AF17764720001A7E31 /* Manga.m */,
 				635027B8171ED41A0004C106 /* AnimeService.h */,
 				635027B9171ED41A0004C106 /* AnimeService.m */,
 				63B386AA1776401D001A7E31 /* MangaService.h */,
 				63B386AB1776401D001A7E31 /* MangaService.m */,
+				6380F98D179ADAC60090B66C /* SynonymService.h */,
+				6380F98E179ADAC60090B66C /* SynonymService.m */,
+				6380F991179ADAD10090B66C /* GenreService.h */,
+				6380F992179ADAD10090B66C /* GenreService.m */,
+				6380F995179ADADE0090B66C /* TagService.h */,
+				6380F996179ADADF0090B66C /* TagService.m */,
 			);
 			name = "Core Data";
 			sourceTree = "<group>";
@@ -1359,6 +1395,7 @@
 				63BEA7371761859300432BED /* AniListPickerView.m in Sources */,
 				63BEA73E17619E0800432BED /* AniListUserInfoEditViewController.m in Sources */,
 				63BEA7441761A13400432BED /* AniListStepperView.m in Sources */,
+				6380F993179ADAD10090B66C /* GenreService.m in Sources */,
 				63BEA7481761A14400432BED /* AniListScoreView.m in Sources */,
 				63BEA74D176213B600432BED /* RRSGlowLabel.m in Sources */,
 				63859E8B1763F28C0029397C /* AnimeUserInfoEditViewController.m in Sources */,
@@ -1376,6 +1413,7 @@
 				63461A0C1777F4700053652C /* MangaDetailsViewController.m in Sources */,
 				63461A101777F8A20053652C /* MangaUserInfoViewController.m in Sources */,
 				63461A141777FA620053652C /* MangaUserInfoEditViewController.m in Sources */,
+				6380F98F179ADAC60090B66C /* SynonymService.m in Sources */,
 				63461A191778004D0053652C /* SettingsViewController.m in Sources */,
 				63B0DFA31789C3F7006F0868 /* NSString+HTML.m in Sources */,
 				63B0DFA71789C529006F0868 /* GTMNSString+HTML.m in Sources */,
@@ -1385,6 +1423,10 @@
 				639FA1E517936EAB000AA0D1 /* AniListNavigationController.m in Sources */,
 				639FA1E917937006000AA0D1 /* UINavigationController+AniList.m in Sources */,
 				639FA1F317937896000AA0D1 /* UIBarButtonItem+AniList.m in Sources */,
+				6380F997179ADADF0090B66C /* TagService.m in Sources */,
+				63DB4E4F179AD7B800C20ECC /* Tag.m in Sources */,
+				63DB4E53179AD7CE00C20ECC /* Synonym.m in Sources */,
+				63DB4E57179AD7D800C20ECC /* Genre.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1396,11 +1438,13 @@
 				6353C230171C457D0060F062 /* TTTAttributedLabel.m in Sources */,
 				6372893C17542D110032F425 /* MALHTTPClient.m in Sources */,
 				637CF6ED175986840009ADF3 /* NSObject+AniList.m in Sources */,
+				6380F998179ADADF0090B66C /* TagService.m in Sources */,
 				636F8661175A5F53007E1FB6 /* AFHTTPClient.m in Sources */,
 				636F8663175A5F53007E1FB6 /* AFHTTPRequestOperation.m in Sources */,
 				636F8665175A5F53007E1FB6 /* AFImageRequestOperation.m in Sources */,
 				636F8667175A5F53007E1FB6 /* AFJSONRequestOperation.m in Sources */,
 				636F8669175A5F53007E1FB6 /* AFNetworkActivityIndicatorManager.m in Sources */,
+				6380F994179ADAD10090B66C /* GenreService.m in Sources */,
 				63C8CD6E179A441E003BB80C /* AniListMiniCell.m in Sources */,
 				636F866B175A5F53007E1FB6 /* AFPropertyListRequestOperation.m in Sources */,
 				636F866D175A5F53007E1FB6 /* AFURLConnectionOperation.m in Sources */,
@@ -1459,6 +1503,7 @@
 				63B386B81777BA39001A7E31 /* MangaViewController.m in Sources */,
 				63B386BF1777E29D001A7E31 /* AniListSearchDisplayController.m in Sources */,
 				63461A0D1777F4700053652C /* MangaDetailsViewController.m in Sources */,
+				6380F990179ADAC60090B66C /* SynonymService.m in Sources */,
 				63461A111777F8A20053652C /* MangaUserInfoViewController.m in Sources */,
 				63461A151777FA620053652C /* MangaUserInfoEditViewController.m in Sources */,
 				63461A1A1778004D0053652C /* SettingsViewController.m in Sources */,
@@ -1474,6 +1519,9 @@
 				639FA1E617936EAB000AA0D1 /* AniListNavigationController.m in Sources */,
 				639FA1EA17937006000AA0D1 /* UINavigationController+AniList.m in Sources */,
 				639FA1F417937896000AA0D1 /* UIBarButtonItem+AniList.m in Sources */,
+				63DB4E50179AD7B800C20ECC /* Tag.m in Sources */,
+				63DB4E54179AD7CE00C20ECC /* Synonym.m in Sources */,
+				63DB4E58179AD7D800C20ECC /* Genre.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

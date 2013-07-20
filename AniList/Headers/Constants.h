@@ -69,6 +69,9 @@
 #define kUserLastUpdated        @"user_last_updated"
 #define kAnimeStats             @"anime_stats"
 #define kMangaStats             @"manga_stats"
+#define kSynonyms               @"synonyms"
+#define kEnglishTitles          @"english"
+#define kJapaneseTitles         @"japanese"
 
 static const BOOL UI_DEBUG = NO;
 

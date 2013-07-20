@@ -10,11 +10,11 @@
 #import <QuartzCore/QuartzCore.h>
 #import "BaseViewController.h"
 #import "AniListRelatedTableView.h"
-#import "AnimeCell.h"
+#import "AniListMiniCell.h"
 
 @class SynopsisView;
 
-@interface AniListSummaryViewController : BaseViewController<UIScrollViewDelegate>
+@interface AniListSummaryViewController : BaseViewController<UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UILabel *synopsisLabel;
 @property (nonatomic, strong) SynopsisView *synopsisView;
