@@ -166,7 +166,7 @@
     cell.title.text = anime.title;
     [cell.title sizeToFit];
     
-    //    cell.progress.text = [AnimeCell progressTextForAnime:anime];
+    cell.progress.text = [Anime stringForAnimeWatchedStatus:[anime.watched_status intValue]];
     
     cell.rank.text = [anime.user_score intValue] != -1 ? [NSString stringWithFormat:@"%d", [anime.user_score intValue]] : @"";
     cell.type.text = [Anime stringForAnimeType:[anime.type intValue]];
@@ -205,8 +205,8 @@
     cell.title.text = manga.title;
     [cell.title sizeToFit];
     
-    //    mangaCell.progress.text = [MangaCell progressTextForManga:manga withSpacing:NO];
-    
+    cell.progress.text = [Manga stringForMangaReadStatus:[manga.read_status intValue]];
+
     cell.rank.text = [manga.user_score intValue] != -1 ? [NSString stringWithFormat:@"%d", [manga.user_score intValue]] : @"";
     cell.type.text = [Manga stringForMangaType:[manga.type intValue]];
     

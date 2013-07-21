@@ -32,6 +32,7 @@
 }
 
 - (void)dealloc {
+    self.refreshHeaderView.delegate = nil;
     self.fetchedResultsController.delegate = nil;
     [NSFetchedResultsController deleteCacheWithName:[self entityName]];
     self.fetchedResultsController = nil;

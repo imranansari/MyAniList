@@ -272,6 +272,9 @@
         cachedImageLocation = [NSString stringWithFormat:@"%@/%@", documentsDirectory, manga.image];
     }
     
+//    anilistCell.progress.font = [UIFont mediumFontWithSize:anilistCell.progress.font.pointSize-1];
+//    anilistCell.type.font = [UIFont defaultFontWithSize:anilistCell.type.font.pointSize-1];
+    
     [anilistCell.title sizeToFit];
     
     UIImage *cachedImage = [UIImage imageWithContentsOfFile:cachedImageLocation];
