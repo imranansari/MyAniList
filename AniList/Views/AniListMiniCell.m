@@ -41,7 +41,6 @@
     select.backgroundColor = [UIColor colorWithWhite:1.0f alpha:0.1f];
     self.selectedBackgroundView = select;
     
-    
     self.image.clipsToBounds = YES;
     
     [self addShadow];

@@ -69,11 +69,9 @@ typedef enum {
 } UnofficialMangaPublishStatus;
 
 typedef enum {
-    MangaRelationPrequel = 0,
-    MangaRelationSequel,
-    MangaRelationSideStory,
-    MangaRelationSpinOff,
-    MangaRelationAnimeAdaptation
+    MangaRelationAnimeAdaptation = 0,
+    MangaRelationRelatedManga,
+    MangaRelationAlternativeVersions
 } MangaRelation;
 
 
@@ -134,6 +132,9 @@ typedef enum {
 + (MangaType)unofficialMangaTypeForValue:(NSString *)value;
 + (MangaPublishStatus)unofficialMangaPublishStatusForValue:(NSString *)value;
 + (MangaReadStatus)unofficialMangaReadStatusForValue:(NSString *)value;
+
+- (UIImage *)imageForManga;
+- (void)saveImage:(UIImage *)image fromRequest:(NSURLRequest *)request;
 
 - (BOOL)hasAdditionalDetails;
 

@@ -291,4 +291,38 @@
     return [self.average_count intValue] > 0;
 }
 
+- (UIImage *)imageForManga {
+    NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *cachedImageLocation = [NSString stringWithFormat:@"%@/%@", documentsDirectory, self.image];
+    UIImage *cachedImage = [UIImage imageWithContentsOfFile:cachedImageLocation];
+    
+    if(cachedImage) {
+        ALLog(@"Image on disk exists for %@.", self.title);
+    }
+    else {
+        ALLog(@"Image on disk does not exist for %@.", self.title);
+    }
+    
+    return cachedImage;
+}
+
+
+- (void)saveImage:(UIImage *)image fromRequest:(NSURLRequest *)request {
+    ALLog(@"Saving image to disk...");
+    NSArray *segmentedURL = [[request.URL absoluteString] componentsSeparatedByString:@"/"];
+    NSString *filename = [segmentedURL lastObject];
+    NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *animeImagePath = [NSString stringWithFormat:@"%@/manga/%@", documentsDirectory, filename];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        BOOL saved = NO;
+        saved = [UIImageJPEGRepresentation(image, 1.0) writeToFile:animeImagePath options:NSAtomicWrite error:nil];
+        ALLog(@"Image %@", saved ? @"saved." : @"did not save.");
+    });
+    
+    // Only save relative URL since Documents URL can change on updates.
+    self.image = [NSString stringWithFormat:@"manga/%@", filename];
+
+}
+
 @end

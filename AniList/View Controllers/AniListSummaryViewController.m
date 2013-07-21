@@ -8,7 +8,9 @@
 
 #import "AniListSummaryViewController.h"
 #import "AniListNavigationController.h"
-
+#import "MALHTTPClient.h"
+#import "AnimeViewController.h"
+#import "MangaViewController.h"
 
 @interface AniListSummaryViewController ()
 
@@ -29,6 +31,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
     
     self.titleLabel.alpha = 0.0f;
     self.view.backgroundColor = [UIColor clearColor];
@@ -39,6 +42,9 @@
     self.relatedTableView.rowHeight = [AniListMiniCell cellHeight];
     self.relatedTableView.sectionHeaderHeight = 60;
     self.relatedTableView.sectionFooterHeight = 0;
+
+    [[NSNotificationCenter defaultCenter] addObserver:self.relatedTableView selector:@selector(reloadData) name:kRelatedAnimeDidUpdate object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self.relatedTableView selector:@selector(reloadData) name:kRelatedMangaDidUpdate object:nil];
     
     CAGradientLayer *gradient = [CAGradientLayer layer];
     gradient.frame = self.maskView.frame;
@@ -136,6 +142,168 @@
     [UIView animateWithDuration:0.3f animations:^{
         self.titleLabel.alpha = 0.0f;
     }];
+}
+
+#pragma mark - Related Content View Methods
+
+- (void)configureAnimeCell:(AniListMiniCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    Anime *anime = [self.relatedData[indexPath.section] allValues][0][indexPath.row];
+    
+    cell.title.text = anime.title;
+    [cell.title addShadow];
+    [cell.title sizeToFit];
+    
+    //    cell.progress.text = [AnimeCell progressTextForAnime:anime];
+    //    [cell.progress addShadow];
+    
+    cell.rank.text = [anime.user_score intValue] != -1 ? [NSString stringWithFormat:@"%d", [anime.user_score intValue]] : @"";
+    [cell.rank addShadow];
+    
+    cell.type.text = [Anime stringForAnimeType:[anime.type intValue]];
+    [cell.type addShadow];
+    
+    NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:anime.image_url]];
+    UIImage *cachedImage = [anime imageForAnime];
+    
+    if(!cachedImage) {
+        [cell.image setImageWithURLRequest:imageRequest placeholderImage:cachedImage success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+            
+            cell.image.image = image;
+            
+            if(!anime.image) {
+                // Save the image onto disk if it doesn't exist or they aren't the same.
+                [anime saveImage:image fromRequest:request];
+            }
+            
+        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+            // Log failure.
+            ALLog(@"Couldn't fetch image at URL %@.", [request.URL absoluteString]);
+        }];
+    }
+    else {
+        cell.image.image = cachedImage;
+    }
+}
+
+- (void)configureMangaCell:(AniListMiniCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    Manga *manga = [self.relatedData[indexPath.section] allValues][0][indexPath.row];
+    
+    cell.title.text = manga.title;
+    [cell.title addShadow];
+    [cell.title sizeToFit];
+    
+    //    mangaCell.progress.text = [MangaCell progressTextForManga:manga];
+    //    [mangaCell.progress addShadow];
+    
+    cell.rank.text = [manga.user_score intValue] != -1 ? [NSString stringWithFormat:@"%d", [manga.user_score intValue]] : @"";
+    [cell.rank addShadow];
+    
+    cell.type.text = [Manga stringForMangaType:[manga.type intValue]];
+    [cell.type addShadow];
+    
+    NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:manga.image_url]];
+    UIImage *cachedImage = [manga imageForManga];
+    
+    if(!cachedImage) {
+        [cell.image setImageWithURLRequest:imageRequest placeholderImage:cachedImage success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+            
+            cell.image.image = image;
+            
+            if(!manga.image) {
+                // Save the image onto disk if it doesn't exist or they aren't the same.
+                [manga saveImage:image fromRequest:request];
+            }
+            
+        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+            // Log failure.
+            ALLog(@"Couldn't fetch image at URL %@.", [request.URL absoluteString]);
+        }];
+    }
+    else {
+        cell.image.image = cachedImage;
+    }
+}
+
+
+#pragma mark - AniListUserInfoViewControllerDelegate Methods
+
+- (void)userInfoPressed {
+    self.navigationItem.backBarButtonItem = [UIBarButtonItem customBackButtonWithTitle:@"Summary"];
+}
+
+#pragma mark - UITableView Data Source Methods
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    NSString *title = [self.relatedData[section] allKeys][0];
+    UILabel *label = [UILabel whiteHeaderWithFrame:CGRectMake(0, 0, 320, 60) andFontSize:18];
+    label.text = title;
+    
+    return label;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+    return [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 0)];
+}
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return [AniListMiniCell cellHeight];
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return self.relatedData.count;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [[self.relatedData[section] allValues][0] count];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    static NSString *CellIdentifier = @"Cell";
+    
+    AniListMiniCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if(!cell) {
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"AniListMiniCell" owner:self options:nil];
+        cell = (AniListMiniCell *)nib[0];
+    }
+    
+    NSManagedObject *object = [self.relatedData[indexPath.section] allValues][0][indexPath.row];
+    
+    if([object isKindOfClass:[Anime class]]) {
+        [self configureAnimeCell:cell atIndexPath:indexPath];
+    }
+    else if([object isKindOfClass:[Manga class]]) {
+        [self configureMangaCell:cell atIndexPath:indexPath];
+    }
+    
+    return cell;
+}
+
+#pragma mark - Table view delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self.relatedTableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    NSManagedObject *object = [self.relatedData[indexPath.section] allValues][0][indexPath.row];
+    
+    UIViewController *vc;
+    
+    if([object isKindOfClass:[Anime class]]) {
+        Anime *anime = (Anime *)object;
+        vc = [[AnimeViewController alloc] init];
+        ((AnimeViewController *)vc).anime = anime;
+    }
+    else if([object isKindOfClass:[Manga class]]) {
+        Manga *manga = (Manga *)object;
+        vc = [[MangaViewController alloc] init];
+        ((MangaViewController *)vc).manga = manga;
+    }
+    else return;
+    
+    self.navigationItem.backBarButtonItem = [UIBarButtonItem customBackButtonWithTitle:@"Back"];
+    
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - UIScrollViewDelegate Methods

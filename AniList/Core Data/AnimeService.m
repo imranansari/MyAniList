@@ -24,6 +24,28 @@ static NSArray *cachedAnimeList = nil;
 
 @implementation AnimeService
 
+/* Need to cover:
+ other_titles -> english, japanese
+ rank
+ popularity_rank
+ classification
+ members_score
+ members_count
+ favorited_count
+ synopsis
+ genres
+ tags
+ manga_adaptations
+ prequels
+ sequels
+ side_stories
+ parent_story
+ character_anime
+ spin_offs
+ summaries
+ altenative_versions
+ */
+
 + (Anime *)animeForID:(NSNumber *)ID {
     return [self animeForID:ID fromCache:NO];
 }
@@ -134,6 +156,16 @@ static NSArray *cachedAnimeList = nil;
     });
     
     return NO;
+}
+
++ (Anime *)addAnime:(NSDictionary *)data fromRelatedManga:(Manga *)manga {
+    Anime *relatedAnime = [NSEntityDescription insertNewObjectForEntityForName:ENTITY_NAME inManagedObjectContext:[AnimeService managedObjectContext]];
+    relatedAnime.anime_id = [data[@"anime_id"] isKindOfClass:[NSString class]] ? @([data[@"anime_id"] intValue]) : data[@"anime_id"];
+    relatedAnime.title = data[kTitle];
+    
+    [relatedAnime addManga_adaptationsObject:manga];
+    
+    return relatedAnime;
 }
 
 + (Manga *)addMangaAdaptation:(NSDictionary *)data toAnime:(Anime *)anime {
@@ -274,28 +306,6 @@ static NSArray *cachedAnimeList = nil;
     else return nil;
 }
 
-/* Need to cover:
- other_titles -> english, japanese
- rank
- popularity_rank
- classification
- members_score
- members_count
- favorited_count
- synopsis
- genres
- tags
- manga_adaptations
- prequels
- sequels
- side_stories
- parent_story
- character_anime
- spin_offs
- summaries
- altenative_versions
- */
-
 + (Anime *)editAnime:(NSDictionary *)data fromList:(BOOL)fromList withObject:(Anime *)anime {
     if(!anime) {
         ALLog(@"Anime does not exist; unable to edit!");
@@ -326,7 +336,6 @@ static NSArray *cachedAnimeList = nil;
         }
     }
 
-    // rank (global)
     if(data[kRank] && ![data[kRank] isNull])
         anime.rank = data[kRank];
     
@@ -360,7 +369,6 @@ static NSArray *cachedAnimeList = nil;
     }
     //    anime.genres = data[@"genres"];
     //    anime.tags = data[@"tags"];
-    //    anime.manga_adaptations = data[@"manga_adaptations"];
     
     
     
@@ -400,17 +408,6 @@ static NSArray *cachedAnimeList = nil;
 
 }
 
-+ (void)deleteAnime:(Anime *)anime {
-    NSError *error = nil;
-    
-    [[AnimeService managedObjectContext] deleteObject:anime];
-    [[AnimeService managedObjectContext] save:&error];
-    
-    if(!error) {
-        ALLog(@"There was an error trying to delete this anime with ID (%d).", [anime.anime_id intValue]);
-    }
-}
-
 + (NSManagedObjectContext *)managedObjectContext {
     AniListAppDelegate *delegate = (AniListAppDelegate *)[UIApplication sharedApplication].delegate;
     return delegate.managedObjectContext;
@@ -419,6 +416,7 @@ static NSArray *cachedAnimeList = nil;
 #pragma mark - Data Conversion Methods
 
 + (void)parseRelatedInformation:(NSDictionary *)data forAnime:(Anime *)anime {
+    
     // Prequels
     if(data[kPrequels] && ![data[kPrequels] isNull]) {
         NSArray *prequels = data[kPrequels];

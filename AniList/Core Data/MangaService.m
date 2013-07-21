@@ -9,6 +9,11 @@
 #import "MangaService.h"
 #import "AniListAppDelegate.h"
 #import "MALHTTPClient.h"
+#import "SynonymService.h"
+#import "TagService.h"
+#import "GenreService.h"
+#import "AnimeService.h"
+#import "Anime.h"
 
 #define ENTITY_NAME @"Manga"
 
@@ -37,7 +42,6 @@
     
     return NO;
 }
-
 
 + (BOOL)addMangaList:(NSDictionary *)data {
     
@@ -86,6 +90,22 @@
     return relatedManga;
 }
 
++ (Anime *)addAnimeAdaptation:(NSDictionary *)data toManga:(Manga *)manga {
+    Anime *animeAdaptation = [AnimeService animeForID:data[@"anime_id"]];
+    
+    if(animeAdaptation) {
+        ALLog(@"Anime adaptation '%@' exists for '%@'.", animeAdaptation.title, manga.title);
+    }
+    else {
+        ALLog(@"Anime adaptation '%@' does not exist for '%@'. Addint to the databaes.", animeAdaptation.title, manga.title);
+        animeAdaptation = [AnimeService addAnime:data fromRelatedManga:manga];
+    }
+    
+    [manga addAnime_adaptationsObject:animeAdaptation];
+    
+    return animeAdaptation;
+}
+
 + (Manga *)addRelatedManga:(NSDictionary *)data toManga:(Manga *)manga relationType:(MangaRelation)relationType {
     Manga *relatedManga = [MangaService mangaForID:data[@"manga_id"]];
     
@@ -100,13 +120,13 @@
     }
     
     switch (relationType) {
-        case MangaRelationPrequel:
-//            [relatedManga addSequelsObject:manga];
-//            [manga addPrequelsObject:relatedManga];
+        case MangaRelationRelatedManga:
+            [relatedManga addRelated_mangaObject:manga];
+            [manga addRelated_mangaObject:relatedManga];
             break;
-        case MangaRelationSequel:
-//            [relatedManga addPrequelsObject:manga];
-//            [manga addSequelsObject:relatedManga];
+        case MangaRelationAlternativeVersions:
+            [relatedManga addAlternative_versionsObject:manga];
+            [manga addAlternative_versionsObject:relatedManga];
             break;
         default:
             break;
@@ -117,6 +137,7 @@
 
 + (Manga *)addManga:(NSDictionary *)data fromList:(BOOL)fromList {
     Manga *existingManga = [MangaService mangaForID:data[kID]];
+    
     if(existingManga) {
         ALLog(@"Manga exists. Updating details.");
         return [MangaService editManga:data fromList:fromList withObject:existingManga];
@@ -130,6 +151,25 @@
     manga.title = data[kTitle];
     
     manga.last_updated = data[kUserLastUpdated];
+    
+    NSDictionary *otherTitles = data[kOtherTitles];
+    if(otherTitles[kSynonyms] && ![otherTitles[kSynonyms] isNull]) {
+        for(NSString *synonym in otherTitles[kSynonyms]) {
+            [SynonymService addSynonym:synonym toManga:manga];
+        }
+    }
+    
+    if(otherTitles[kEnglishTitles] && ![otherTitles[kEnglishTitles] isNull]) {
+        for(NSString *englishTitle in otherTitles[kEnglishTitles]) {
+            [SynonymService addEnglishTitle:englishTitle toManga:manga];
+        }
+    }
+    
+    if(otherTitles[kJapaneseTitles] && ![otherTitles[kJapaneseTitles] isNull]) {
+        for(NSString *japaneseTitle in otherTitles[kJapaneseTitles]) {
+            [SynonymService addJapaneseTitle:japaneseTitle toManga:manga];
+        }
+    }
     
     if(data[kImageURL] && ![data[kImageURL] isNull])
         manga.image_url = data[kImageURL];
@@ -181,56 +221,33 @@
     
     manga.manga_id = [data[kID] isKindOfClass:[NSString class]] ? @([data[kID] intValue]) : data[kID];
     manga.title = [data[kTitle] stringByDecodingHTMLEntities];
+
+    NSDictionary *otherTitles = data[kOtherTitles];
+    if(otherTitles[kSynonyms] && ![otherTitles[kSynonyms] isNull]) {
+        for(NSString *synonym in otherTitles[kSynonyms]) {
+            [SynonymService addSynonym:synonym toManga:manga];
+        }
+    }
     
-    //    anime.synonyms = data[@"other_titles"];
-    // english
-    // japanese
+    if(otherTitles[kEnglishTitles] && ![otherTitles[kEnglishTitles] isNull]) {
+        for(NSString *englishTitle in otherTitles[kEnglishTitles]) {
+            [SynonymService addEnglishTitle:englishTitle toManga:manga];
+        }
+    }
     
-    // rank (global)
+    if(otherTitles[kJapaneseTitles] && ![otherTitles[kJapaneseTitles] isNull]) {
+        for(NSString *japaneseTitle in otherTitles[kJapaneseTitles]) {
+            [SynonymService addJapaneseTitle:japaneseTitle toManga:manga];
+        }
+    }
+    
     if(data[kRank] && ![data[kRank] isNull])
         manga.rank = data[kRank];
     
     if(data[kPopularityRank] && ![data[kPopularityRank] isNull])
         manga.popularity_rank = data[kPopularityRank];
     
-    // Prequels/sequels
-    if(data[kPrequels] && ![data[kPrequels] isNull]) {
-        NSArray *prequels = data[kPrequels];
-        for(NSDictionary *prequel in prequels) {
-            Manga *prequelManga = [self addRelatedManga:prequel toManga:manga relationType:MangaRelationPrequel];
-            if(prequelManga) {
-                ALLog(@"Prequel found for %@ -> %@.", manga.title, prequelManga.title);
-                
-                // We do a simple check; have we added anything else besides the ID and title? If so, don't bother attempting to update.
-                if([prequelManga.type intValue] == 0) {
-                    [[MALHTTPClient sharedClient] getMangaDetailsForID:prequelManga.manga_id success:^(id operation, id response) {
-                        [self addManga:response fromList:NO];
-                    } failure:^(id operation, NSError *error) {
-                        ALLog(@"Failed to get prequel.");
-                    }];
-                }
-            }
-        }
-    }
-    
-    if(data[kSequels] && ![data[kSequels] isNull]) {
-        NSArray *sequels = data[kSequels];
-        for(NSDictionary *sequel in sequels) {
-            Manga *sequelManga = [self addRelatedManga:sequel toManga:manga relationType:MangaRelationSequel];
-            if(sequelManga) {
-                ALLog(@"Sequel found for %@ -> %@.", manga.title, sequelManga.title);
-                
-                // We do a simple check; have we added anything else besides the ID and title? If so, don't bother attempting to update.
-                if([sequelManga.type intValue] == 0) {
-                    [[MALHTTPClient sharedClient] getMangaDetailsForID:sequelManga.manga_id success:^(id operation, id response) {
-                        [self addManga:response fromList:NO];
-                    } failure:^(id operation, NSError *error) {
-                        ALLog(@"Failed to get sequel.");
-                    }];
-                }
-            }
-        }
-    }
+    [MangaService parseRelatedInformation:data forManga:manga];
     
     if(data[kImageURL] && ![data[kImageURL] isNull])
         manga.image_url = data[kImageURL];
@@ -265,7 +282,6 @@
     }
     //    anime.genres = data[@"genres"];
     //    anime.tags = data[@"tags"];
-    //    anime.manga_adaptations = data[@"manga_adaptations"];
     
     
     // User details below.
@@ -307,6 +323,71 @@
 }
 
 #pragma mark - Data Conversion Methods
+
++ (void)parseRelatedInformation:(NSDictionary *)data forManga:(Manga *)manga {
+    
+    // Anime Adaptations
+    if(data[kAnimeAdaptations] && ![data[kAnimeAdaptations] isNull]) {
+        NSArray *animeAdaptations = data[kAnimeAdaptations];
+        for(NSDictionary *animeAdaptation in animeAdaptations) {
+            Anime *anime = [self addAnimeAdaptation:animeAdaptation toManga:manga];
+            if(animeAdaptation) {
+                ALLog(@"Anime adaptation found for %@ -> %@.", manga.title, anime.title);
+                
+                // We do a simple check; have we added anything else besides the ID and title? If so, don't bother attempting to update.
+                if([anime.type intValue] == 0) {
+                    [[MALHTTPClient sharedClient] getAnimeDetailsForID:anime.anime_id success:^(id operation, id response) {
+                        [AnimeService addAnime:response fromList:NO];
+                        [[NSNotificationCenter defaultCenter] postNotificationName:kRelatedAnimeDidUpdate object:anime];
+                    } failure:^(id operation, NSError *error) {
+                        ALLog(@"Failed to get prequel.");
+                    }];
+                }
+            }
+        }
+    }
+    
+    if(data[kRelatedManga] && ![data[kRelatedManga] isNull]) {
+        NSArray *relatedMangas = data[kRelatedManga];
+        for(NSDictionary *relatedManga in relatedMangas) {
+            Manga *related = [self addRelatedManga:relatedManga toManga:manga relationType:MangaRelationRelatedManga];
+            if(related) {
+                ALLog(@"Related manga found for %@ -> %@.", manga.title, related.title);
+                
+                // We do a simple check; have we added anything else besides the ID and title? If so, don't bother attempting to update.
+                if([related.type intValue] == 0) {
+                    [[MALHTTPClient sharedClient] getMangaDetailsForID:related.manga_id success:^(id operation, id response) {
+                        [self addManga:response fromList:NO];
+                        [[NSNotificationCenter defaultCenter] postNotificationName:kRelatedMangaDidUpdate object:related];
+                    } failure:^(id operation, NSError *error) {
+                        ALLog(@"Failed to get related manga.");
+                    }];
+                }
+            }
+        }
+    }
+    
+    // Alternative Versions
+    if(data[kAlternativeVersions] && ![data[kAlternativeVersions] isNull]) {
+        NSArray *alternativeVersions = data[kAlternativeVersions];
+        for(NSDictionary *alternativeVersion in alternativeVersions) {
+            Manga *alternativeVersionManga = [self addRelatedManga:alternativeVersion toManga:manga relationType:MangaRelationAlternativeVersions];
+            if(alternativeVersionManga) {
+                ALLog(@"Alternative Version manga found for %@ -> %@.", manga.title, alternativeVersionManga.title);
+                
+                // We do a simple check; have we added anything else besides the ID and title? If so, don't bother attempting to update.
+                if([alternativeVersionManga.type intValue] == 0) {
+                    [[MALHTTPClient sharedClient] getMangaDetailsForID:alternativeVersionManga.manga_id success:^(id operation, id response) {
+                        [self addManga:response fromList:NO];
+                        [[NSNotificationCenter defaultCenter] postNotificationName:kRelatedMangaDidUpdate object:alternativeVersionManga];
+                    } failure:^(id operation, NSError *error) {
+                        ALLog(@"Failed to get alternative version.");
+                    }];
+                }
+            }
+        }
+    }
+}
 
 + (NSString *)mangaToXML:(NSNumber *)mangaID {
     

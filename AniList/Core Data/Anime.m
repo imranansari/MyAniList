@@ -326,4 +326,18 @@
     return cachedImage;
 }
 
+- (void)saveImage:(UIImage *)image fromRequest:(NSURLRequest *)request {
+    NSArray *segmentedURL = [[request.URL absoluteString] componentsSeparatedByString:@"/"];
+    NSString *filename = [segmentedURL lastObject];
+    NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *animeImagePath = [NSString stringWithFormat:@"%@/anime/%@", documentsDirectory, filename];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        [UIImageJPEGRepresentation(image, 1.0) writeToFile:animeImagePath options:NSAtomicWrite error:nil];
+    });
+    
+    // Only save relative URL since Documents URL can change on updates.
+    self.image = [NSString stringWithFormat:@"anime/%@", filename];
+}
+
 @end

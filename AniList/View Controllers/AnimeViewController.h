@@ -8,6 +8,7 @@
 
 #import "AniListSummaryViewController.h"
 #import "AnimeUserInfoViewController.h"
+#import "AniListUserInfoViewController.h"
 
 @class Anime;
 

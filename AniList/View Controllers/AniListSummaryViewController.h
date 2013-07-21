@@ -9,12 +9,15 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 #import "BaseViewController.h"
+#import "AniListUserInfoViewController.h"
 #import "AniListRelatedTableView.h"
 #import "AniListMiniCell.h"
+#import "Anime.h"
+#import "Manga.h"
 
 @class SynopsisView;
 
-@interface AniListSummaryViewController : BaseViewController<UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource>
+@interface AniListSummaryViewController : BaseViewController<AniListUserInfoViewControllerDelegate, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UILabel *synopsisLabel;
 @property (nonatomic, strong) SynopsisView *synopsisView;
@@ -26,6 +29,10 @@
 @property (nonatomic, weak) IBOutlet UILabel *titleLabel;
 @property (nonatomic, assign) float currentYBackgroundPosition;
 
+//protected
 - (void)adjustTitle;
+- (void)configureAnimeCell:(AniListMiniCell *)cell atIndexPath:(NSIndexPath *)indexPath;
+- (void)configureMangaCell:(AniListMiniCell *)cell atIndexPath:(NSIndexPath *)indexPath;
+- (void)userInfoPressed;
 
 @end

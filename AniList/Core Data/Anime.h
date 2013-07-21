@@ -141,6 +141,7 @@ typedef enum {
 
 - (BOOL)hasAdditionalDetails;
 - (UIImage *)imageForAnime;
+- (void)saveImage:(UIImage *)image fromRequest:(NSURLRequest *)request;
 
 // Methods for Unofficial API
 + (AnimeType)unofficialAnimeTypeForValue:(NSString *)value;
