@@ -54,6 +54,11 @@
 @dynamic synonyms;
 @dynamic tags;
 
+- (void)awakeFromInsert {
+    self.read_status = @(MangaReadStatusNotReading);
+    self.user_score = @(-1);
+}
+
 + (MangaType)mangaTypeForValue:(NSString *)value {    
     // If value is passed in as an int, convert it.
     int type = [value intValue];
