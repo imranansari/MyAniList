@@ -192,7 +192,7 @@
     [cell.title addShadow];
     [cell.title sizeToFit];
     
-    //    mangaCell.progress.text = [MangaCell progressTextForManga:manga];
+    //    mangaCell.progress.text = [MangaCell progressTextForManga:manga withSpacing:NO];
     //    [mangaCell.progress addShadow];
     
     cell.rank.text = [manga.user_score intValue] != -1 ? [NSString stringWithFormat:@"%d", [manga.user_score intValue]] : @"";

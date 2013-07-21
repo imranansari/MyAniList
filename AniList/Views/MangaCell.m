@@ -33,7 +33,7 @@
     return 90;
 }
 
-+ (NSString *)progressTextForManga:(Manga *)manga {
++ (NSString *)progressTextForManga:(Manga *)manga withSpacing:(BOOL)spacing {
     if([manga.current_chapter intValue] == [manga.total_chapters intValue] &&
        [manga.current_volume intValue] == [manga.total_volumes intValue]) {
         return @"";
@@ -48,35 +48,67 @@
         }
         
         if(progressString.length > 0 && [manga.total_chapters intValue] > 0) {
-            progressString = [NSString stringWithFormat:@"%@,", progressString];
+            if(spacing)
+                progressString = [NSString stringWithFormat:@"%@\n", progressString];
+            else
+                progressString = [NSString stringWithFormat:@"%@,", progressString];
         }
         
         if([manga.total_chapters intValue] > 0) {
-            progressString = [NSString stringWithFormat:@"%d %@", [manga.total_chapters intValue], [manga.total_chapters intValue] > 1 ? @"chapters" : @"chapter"];
+            if(progressString.length == 0)
+                progressString = [NSString stringWithFormat:@"%d %@", [manga.total_chapters intValue], [manga.total_chapters intValue] > 1 ? @"chapters" : @"chapter"];
+            else {
+                progressString = [NSString stringWithFormat:@"%@ %d %@", progressString, [manga.total_chapters intValue], [manga.total_chapters intValue] > 1 ? @"chapters" : @"chapter"];
+            }
         }
         
         return progressString;
     }
     else {
         if([manga.current_volume intValue] > 0) {
-            progressString = [NSString stringWithFormat:@"On volume %d", [manga.current_volume intValue]];
+            if(spacing) {
+                if([manga.total_volumes intValue] < 1) {
+                    progressString = [NSString stringWithFormat:@"Volume %d", [manga.current_volume intValue]];
+                }
+                else {
+                    progressString = [NSString stringWithFormat:@"Volume %d of %d", [manga.current_volume intValue], [manga.total_volumes intValue]];
+                }
+            }
+            else {
+                progressString = [NSString stringWithFormat:@"Volume %d", [manga.current_volume intValue]];
+            }
         }
         
         if(progressString.length > 0 && [manga.current_chapter intValue] > 0) {
-            progressString = [NSString stringWithFormat:@"%@,", progressString];
+            if(spacing)
+                progressString = [NSString stringWithFormat:@"%@\n", progressString];
+            else
+                progressString = [NSString stringWithFormat:@"%@,", progressString];
         }
         
         if([manga.current_chapter intValue] > 0) {
+            
+            NSString *chapter = spacing ? @"Chapter" : @"chapter";
             
             if(progressString.length == 0) {
                 progressString = @"On";
             }
             
             if([manga.total_chapters intValue] > 0) {
-                progressString = [NSString stringWithFormat:@"%@ chapter %d of %d", progressString, [manga.current_chapter intValue], [manga.total_chapters intValue]];
+                if(progressString.length == 0) {
+                    progressString = [NSString stringWithFormat:@"Chapter %d of %d", [manga.current_chapter intValue], [manga.total_chapters intValue]];
+                }
+                else {
+                    progressString = [NSString stringWithFormat:@"%@ %@ %d of %d", progressString, chapter, [manga.current_chapter intValue], [manga.total_chapters intValue]];
+                }
             }
             else {
-                progressString = [NSString stringWithFormat:@"%@ chapter %d", progressString, [manga.current_chapter intValue]];
+                if(progressString.length == 0) {
+                    progressString = [NSString stringWithFormat:@"Chapter %d", [manga.current_chapter intValue]];
+                }
+                else {
+                    progressString = [NSString stringWithFormat:@"%@ %@ %d", progressString, chapter, [manga.current_chapter intValue]];
+                }
             }
         }
         
@@ -87,7 +119,7 @@
     // Unsure of this format for now, will stick to this until further notice.
     //    switch([anime.type intValue]) {
     //        case AnimeTypeTV:
-    return [NSString stringWithFormat:@"On volume %d, chapter %d of %d", [manga.current_volume intValue], [manga.current_chapter intValue], [manga.total_chapters intValue]];
+    return [NSString stringWithFormat:@"Volume %d, chapter %d of %d", [manga.current_volume intValue], [manga.current_chapter intValue], [manga.total_chapters intValue]];
     
     //    }
     

@@ -11,8 +11,7 @@
 
 @implementation AnimeUserInfoViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
@@ -83,14 +82,29 @@
             
             if([self.anime.current_episode intValue] == [self.anime.total_episodes intValue]) {
                 if([self.anime.total_episodes intValue] < 1) {
-                    progressLabel.text = [NSString stringWithFormat:@"? %@", [Anime unitForAnimeType:[self.anime.type intValue] plural:YES]];
+                    progressLabel.text = [NSString stringWithFormat:@"Watched %d %@", [self.anime.current_episode intValue], [Anime unitForAnimeType:[self.anime.type intValue] plural:([self.anime.current_episode intValue] != 1)]];
                 }
                 else {
                     progressLabel.text = [NSString stringWithFormat:@"Finished all %@", [Anime unitForAnimeType:[self.anime.type intValue] plural:YES]];
                 }
             }
             else {
-                progressLabel.text = [NSString stringWithFormat:@"On %@ %d of %d", [Anime unitForAnimeType:[self.anime.type intValue] plural:NO], [self.anime.current_episode intValue], [self.anime.total_episodes intValue]];
+                if([self.anime.total_episodes intValue] <= 0) {
+                    progressLabel.text = [NSString stringWithFormat:@"Watched %d %@", [self.anime.current_episode intValue], [Anime unitForAnimeType:[self.anime.type intValue] plural:([self.anime.current_episode intValue] != 1)]];
+                }
+                else {
+                    progressLabel.text = [NSString stringWithFormat:@"Progress: %d of %d", [self.anime.current_episode intValue], [self.anime.total_episodes intValue]];
+                }
+            }
+            
+            // Special case for movie.
+            if([self.anime.type intValue] == AnimeTypeMovie && [self.anime.total_episodes intValue] == 1) {
+                if([self.anime.current_episode intValue] < 1) {
+                    progressLabel.text = @"Haven't watched yet";
+                }
+                else {
+                    progressLabel.text = @"Finished";
+                }
             }
         }
     }

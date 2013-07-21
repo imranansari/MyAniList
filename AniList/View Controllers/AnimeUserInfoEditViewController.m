@@ -132,16 +132,27 @@ static NSArray *animeStatusOrder;
     
     NSString *unit = [Anime unitForAnimeType:[self.anime.type intValue] plural:plural];
     
-    if([self.anime.current_episode intValue] > 0) {
-        if([self.anime.current_episode intValue] == [self.anime.total_episodes intValue]) {
-            self.progressLabel.text = [NSString stringWithFormat:@"Finished all %d %@", [self.anime.total_episodes intValue], unit];
+    // Special case for movie.
+    if([self.anime.type intValue] == AnimeTypeMovie && [self.anime.total_episodes intValue] == 1) {
+        if([self.anime.current_episode intValue] < 1) {
+            self.progressLabel.text = @"Haven't watched yet";
         }
         else {
-            self.progressLabel.text = [NSString stringWithFormat:@"Watched %d of %d %@", [self.anime.current_episode intValue], [self.anime.total_episodes intValue], [Anime unitForAnimeType:[self.anime.type intValue] plural:YES]];
+            self.progressLabel.text = @"Finished";
         }
     }
     else {
-        self.progressLabel.text = [NSString stringWithFormat:@"On the first %@", [Anime unitForAnimeType:[self.anime.type intValue] plural:NO]];
+        if([self.anime.current_episode intValue] > 0) {
+            if([self.anime.current_episode intValue] == [self.anime.total_episodes intValue]) {
+                self.progressLabel.text = [NSString stringWithFormat:@"Finished all %d %@", [self.anime.total_episodes intValue], unit];
+            }
+            else {
+                self.progressLabel.text = [NSString stringWithFormat:@"Watched %d of %d %@", [self.anime.current_episode intValue], [self.anime.total_episodes intValue], [Anime unitForAnimeType:[self.anime.type intValue] plural:YES]];
+            }
+        }
+        else {
+            self.progressLabel.text = [NSString stringWithFormat:@"On the first %@", [Anime unitForAnimeType:[self.anime.type intValue] plural:NO]];
+        }
     }
 }
 

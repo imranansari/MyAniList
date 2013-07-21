@@ -8,6 +8,7 @@
 
 #import "MangaUserInfoViewController.h"
 #import "Manga.h"
+#import "MangaCell.h"
 
 @interface MangaUserInfoViewController ()
 
@@ -15,8 +16,7 @@
 
 @implementation MangaUserInfoViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
@@ -24,16 +24,8 @@
     return self;
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -93,7 +85,36 @@
                 scoreLabel.text = @"Not scored yet";
             }
             
-            progressLabel.text = [NSString stringWithFormat:@"On chapter %d of %d", [self.manga.current_chapter intValue], [self.manga.total_chapters intValue]];
+            if([self.manga.current_chapter intValue] == [self.manga.total_chapters intValue] && [self.manga.current_volume intValue] == [self.manga.total_volumes intValue]) {
+                
+                if([self.manga.total_chapters intValue] == 1 && [self.manga.type intValue] == MangaTypeOneShot) {
+                    progressLabel.text = @"Finished";
+                }
+                else {
+                    if([self.manga.total_volumes intValue] > 0) {
+                        if([self.manga.total_volumes intValue] != 1) {
+                            progressLabel.text = @"Finished all volumes";
+                        }
+                        else {
+                            progressLabel.text = @"Finished volume";
+                        }
+                    }
+                    else if([self.manga.total_chapters intValue] > 0) {
+                        if([self.manga.total_chapters intValue] != 1) {
+                            progressLabel.text = @"Finished all chapters";
+                        }
+                        else {
+                            progressLabel.text = @"Finished";
+                        }
+                    }
+                    else {
+                        progressLabel.text = @"Haven't started yet";
+                    }
+                }
+            }
+            else {
+                progressLabel.text = [MangaCell progressTextForManga:self.manga withSpacing:YES];
+            }
         }
     }
 }
