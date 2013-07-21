@@ -31,9 +31,10 @@
     if(self.manga) {
         self.titleLabel.text = self.manga.title;
         
-        self.type.text = [self animeTypeText];
+        self.type.text = [self mangaTypeText];
         
-        self.seriesStatus.text = [self airText];
+        self.seriesStatus.text = [self publishText];
+        [self.seriesStatus sizeToFit];
         
         // This block of text requires data.
         if([self.manga hasAdditionalDetails]) {
@@ -71,7 +72,7 @@
 
 #pragma mark - UILabel Management Methods
 
-- (NSString *)airText {
+- (NSString *)publishText {
     NSString *text = @"";
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -107,50 +108,8 @@
     return text;
 }
 
-- (NSString *)animeTypeText {
-    return @"Manga";
-//    BOOL plural = [self.anime.total_episodes intValue] > 1;
-//    
-//    NSString *text = @"";
-//    
-//    NSString *episodeText = plural ? @"episodes" : @"episode";
-//    NSString *musicText = plural ? @"songs" : @"song";
-//    NSString *animeType = [Anime stringForAnimeType:[self.anime.type intValue]];
-//    int numberOfEpisodes = [self.anime.total_episodes intValue];
-//    
-//    switch([self.anime.type intValue]) {
-//        case AnimeTypeTV: {
-//            text = [NSString stringWithFormat:@"%@, %d %@", animeType, numberOfEpisodes, episodeText];
-//            break;
-//        }
-//        case AnimeTypeSpecial: {
-//            text = [NSString stringWithFormat:@"%@, %d %@", animeType, numberOfEpisodes, episodeText];
-//            break;
-//        }
-//        case AnimeTypeOVA: {
-//            text = [NSString stringWithFormat:@"%@, %d %@", animeType, numberOfEpisodes, episodeText];
-//            break;
-//        }
-//        case AnimeTypeONA: {
-//            text = [NSString stringWithFormat:@"%@, %d %@", animeType, numberOfEpisodes, episodeText];
-//            break;
-//        }
-//        case AnimeTypeMusic: {
-//            text = [NSString stringWithFormat:@"%@, %d %@", animeType, numberOfEpisodes, musicText];
-//            break;
-//        }
-//        case AnimeTypeMovie: {
-//            text = [NSString stringWithFormat:@"%@", animeType];
-//            break;
-//        }
-//        case AnimeTypeUnknown:
-//        default: {
-//            text = [NSString stringWithFormat:@"%@, %d %@", animeType, numberOfEpisodes, episodeText];
-//            break;
-//        }
-//    }
-//    
-//    return text;
+- (NSString *)mangaTypeText {
+    return [Manga stringForMangaType:[self.manga.type intValue]];
 }
 
 #pragma mark - NSNotification Methods

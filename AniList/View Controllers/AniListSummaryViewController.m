@@ -150,17 +150,12 @@
     Anime *anime = [self.relatedData[indexPath.section] allValues][0][indexPath.row];
     
     cell.title.text = anime.title;
-    [cell.title addShadow];
     [cell.title sizeToFit];
     
     //    cell.progress.text = [AnimeCell progressTextForAnime:anime];
-    //    [cell.progress addShadow];
     
     cell.rank.text = [anime.user_score intValue] != -1 ? [NSString stringWithFormat:@"%d", [anime.user_score intValue]] : @"";
-    [cell.rank addShadow];
-    
     cell.type.text = [Anime stringForAnimeType:[anime.type intValue]];
-    [cell.type addShadow];
     
     NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:anime.image_url]];
     UIImage *cachedImage = [anime imageForAnime];
@@ -189,17 +184,12 @@
     Manga *manga = [self.relatedData[indexPath.section] allValues][0][indexPath.row];
     
     cell.title.text = manga.title;
-    [cell.title addShadow];
     [cell.title sizeToFit];
     
     //    mangaCell.progress.text = [MangaCell progressTextForManga:manga withSpacing:NO];
-    //    [mangaCell.progress addShadow];
     
     cell.rank.text = [manga.user_score intValue] != -1 ? [NSString stringWithFormat:@"%d", [manga.user_score intValue]] : @"";
-    [cell.rank addShadow];
-    
     cell.type.text = [Manga stringForMangaType:[manga.type intValue]];
-    [cell.type addShadow];
     
     NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:manga.image_url]];
     UIImage *cachedImage = [manga imageForManga];
@@ -266,6 +256,7 @@
     if(!cell) {
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"AniListMiniCell" owner:self options:nil];
         cell = (AniListMiniCell *)nib[0];
+        [(AniListMiniCell *)cell setup];
     }
     
     NSManagedObject *object = [self.relatedData[indexPath.section] allValues][0][indexPath.row];

@@ -30,6 +30,7 @@
         self.type.text = [self animeTypeText];
         
         self.seriesStatus.text = [self airText];
+        [self.seriesStatus sizeToFit];
         
         // This block of text requires data.
         if([self.anime hasAdditionalDetails]) {

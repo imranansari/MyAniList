@@ -19,12 +19,17 @@
     return self;
 }
 
-- (id)initWithCoder:(NSCoder *)aDecoder {
-    self = [super initWithCoder:aDecoder];
-    if(self) {
+- (id)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    if (self) {
         [self setup];
     }
     return self;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    return [self initWithFrame:self.frame];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
@@ -53,11 +58,10 @@
 #pragma mark - Text Methods
 
 - (void)addShadow {
-    for(UIView *view in self.subviews) {
-        if([view isMemberOfClass:[UILabel class]]) {
-            [((UILabel *)view) addShadow];
-        }
-    }
+    [self.title addShadow];
+    [self.progress addShadow];
+    [self.type addShadow];
+    [self.rank addShadow];
 }
 
 @end
