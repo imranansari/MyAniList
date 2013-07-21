@@ -14,6 +14,8 @@
 #import "MALHTTPClient.h"
 #import "AniListAppDelegate.h"
 
+static BOOL alreadyFetched = NO;
+
 @interface AnimeListViewController ()
 
 @end
@@ -40,7 +42,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    [self fetchData];
+    if(!alreadyFetched) {
+        [self fetchData];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -67,7 +71,7 @@
         [[MALHTTPClient sharedClient] getAnimeListForUser:[[UserProfile profile] username]
                                                   success:^(NSURLRequest *operation, id response) {
                                                       [AnimeService addAnimeList:(NSDictionary *)response];
-                                                      
+                                                      alreadyFetched = YES;
                                                       [super fetchData];
                                                   }
                                                   failure:^(NSURLRequest *operation, NSError *error) {

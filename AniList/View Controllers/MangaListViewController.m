@@ -14,6 +14,8 @@
 #import "MALHTTPClient.h"
 #import "AniListAppDelegate.h"
 
+static BOOL alreadyFetched = NO;
+
 @interface MangaListViewController ()
 
 @end
@@ -40,7 +42,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self fetchData];
+    if(!alreadyFetched)
+        [self fetchData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -67,7 +70,7 @@
         [[MALHTTPClient sharedClient] getMangaListForUser:[[UserProfile profile] username]
                                                   success:^(NSURLRequest *operation, id response) {
                                                       [MangaService addMangaList:(NSDictionary *)response];
-                                                      
+                                                      alreadyFetched = YES;
                                                       [super fetchData];
                                                   }
                                                   failure:^(NSURLRequest *operation, NSError *error) {
