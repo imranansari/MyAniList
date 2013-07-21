@@ -139,47 +139,32 @@
     mangaCell.type.text = [Manga stringForMangaType:[manga.type intValue]];
     [mangaCell.type addShadow];
     
-    NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    
     NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:manga.image_url]];
-    NSString *cachedImageLocation = [NSString stringWithFormat:@"%@/%@", documentsDirectory, manga.image];
-    UIImage *cachedImage = [UIImage imageWithContentsOfFile:cachedImageLocation];
+    UIImage *cachedImage = [manga imageForManga];
     
-    if(cachedImage) {
-        ALLog(@"Image on disk exists for %@.", manga.title);
+    if(!cachedImage) {
+        [mangaCell.image setImageWithURLRequest:imageRequest placeholderImage:cachedImage success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+            
+            mangaCell.image.alpha = 0.0f;
+            mangaCell.image.image = image;
+            
+            [UIView animateWithDuration:0.3f animations:^{
+                mangaCell.image.alpha = 1.0f;
+            }];
+            
+            if(!manga.image) {
+                // Save the image onto disk if it doesn't exist or they aren't the same.
+                [manga saveImage:image fromRequest:request];
+            }
+            
+        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+            // Log failure.
+            ALLog(@"Couldn't fetch image at URL %@.", [request.URL absoluteString]);
+        }];
     }
     else {
-        ALLog(@"Image on disk does not exist for %@.", manga.title);
+        mangaCell.image.image = cachedImage;
     }
-    
-    [mangaCell.image setImageWithURLRequest:imageRequest placeholderImage:cachedImage success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-        
-        ALLog(@"Got image for manga %@.", manga.title);
-        mangaCell.image.image = image;
-        
-        // Save the image onto disk if it doesn't exist or they aren't the same.
-#warning - need to compare cached image to this new image, and replace if necessary.
-#warning - will need to be fast and efficient! Alternatively, we can recycle the cache if need be.
-        if(!manga.image) {
-            ALLog(@"Saving image to disk...");
-            NSArray *segmentedURL = [[request.URL absoluteString] componentsSeparatedByString:@"/"];
-            NSString *filename = [segmentedURL lastObject];
-            
-            NSString *animeImagePath = [NSString stringWithFormat:@"%@/manga/%@", documentsDirectory, filename];
-            
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-                BOOL saved = NO;
-                saved = [UIImageJPEGRepresentation(image, 1.0) writeToFile:animeImagePath options:NSAtomicWrite error:nil];
-                ALLog(@"Image %@", saved ? @"saved." : @"did not save.");
-            });
-            
-            // Only save relative URL since Documents URL can change on updates.
-            manga.image = [NSString stringWithFormat:@"manga/%@", filename];
-        }
-    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-        // Log failure.
-        ALLog(@"Couldn't fetch image at URL %@.", [request.URL absoluteString]);
-    }];
 
     
 }

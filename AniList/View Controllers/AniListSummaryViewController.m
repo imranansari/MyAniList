@@ -163,7 +163,12 @@
     if(!cachedImage) {
         [cell.image setImageWithURLRequest:imageRequest placeholderImage:cachedImage success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
             
+            cell.image.alpha = 0.0f;
             cell.image.image = image;
+            
+            [UIView animateWithDuration:0.3f animations:^{
+                cell.image.alpha = 1.0f;
+            }];
             
             if(!anime.image) {
                 // Save the image onto disk if it doesn't exist or they aren't the same.
@@ -197,7 +202,12 @@
     if(!cachedImage) {
         [cell.image setImageWithURLRequest:imageRequest placeholderImage:cachedImage success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
             
+            cell.image.alpha = 0.0f;
             cell.image.image = image;
+            
+            [UIView animateWithDuration:0.3f animations:^{
+                cell.image.alpha = 1.0f;
+            }];
             
             if(!manga.image) {
                 // Save the image onto disk if it doesn't exist or they aren't the same.

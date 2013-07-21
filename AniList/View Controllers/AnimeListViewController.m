@@ -138,47 +138,27 @@
     [animeCell.type addShadow];
     
     NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:anime.image_url]];
-
     UIImage *cachedImage = [anime imageForAnime];
-
-    if(cachedImage) {
-//        ALLog(@"Image on disk exists for %@.", anime.title);
-    }
-    else {
-//        ALLog(@"Image on disk does not exist for %@.", anime.title);
-    }
-
-//    ALLog(@"location: %@", cachedImageLocation);
     
     if(!cachedImage) {
-    [animeCell.image setImageWithURLRequest:imageRequest placeholderImage:cachedImage success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-        
-//        ALLog(@"Got image for anime %@.", anime.title);
-        animeCell.image.image = image;
-        
-        // Save the image onto disk if it doesn't exist or they aren't the same.
-#warning - need to compare cached image to this new image, and replace if necessary.
-#warning - will need to be fast and efficient! Alternatively, we can recycle the cache if need be.
-        if(!anime.image) {
-//            ALLog(@"Saving image to disk...");
-            NSArray *segmentedURL = [[request.URL absoluteString] componentsSeparatedByString:@"/"];
-            NSString *filename = [segmentedURL lastObject];
-            NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-            NSString *animeImagePath = [NSString stringWithFormat:@"%@/anime/%@", documentsDirectory, filename];
+        [animeCell.image setImageWithURLRequest:imageRequest placeholderImage:cachedImage success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
             
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-                BOOL saved = NO;
-                saved = [UIImageJPEGRepresentation(image, 1.0) writeToFile:animeImagePath options:NSAtomicWrite error:nil];
-//                ALLog(@"Image %@", saved ? @"saved." : @"did not save.");
-            });
+            animeCell.image.alpha = 0.0f;
+            animeCell.image.image = image;
             
-            // Only save relative URL since Documents URL can change on updates.
-            anime.image = [NSString stringWithFormat:@"anime/%@", filename];
-        }
-    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-        // Log failure.
-//        ALLog(@"Couldn't fetch image at URL %@.", [request.URL absoluteString]);
-    }];
+            [UIView animateWithDuration:0.3f animations:^{
+                animeCell.image.alpha = 1.0f;
+            }];
+            
+            if(!anime.image) {
+                // Save the image onto disk if it doesn't exist or they aren't the same.
+                [anime saveImage:image fromRequest:request];
+            }
+            
+        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+            // Log failure.
+            ALLog(@"Couldn't fetch image at URL %@.", [request.URL absoluteString]);
+        }];
     }
     else {
         animeCell.image.image = cachedImage;
