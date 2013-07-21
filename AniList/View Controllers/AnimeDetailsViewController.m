@@ -82,13 +82,14 @@
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     dateFormatter.dateFormat = @"MMM dd, yyyy";
 
+    NSString *startDate = [dateFormatter stringFromDate:self.anime.date_start];
+    NSString *finishDate = [dateFormatter stringFromDate:self.anime.date_finish];
+    
     if(self.anime.date_start) {
-        NSString *startDate = [dateFormatter stringFromDate:self.anime.date_start];
         text = [text stringByAppendingFormat:@"Started airing on %@ ", startDate];
     }
     
     if(self.anime.date_finish) {
-        NSString *finishDate = [dateFormatter stringFromDate:self.anime.date_finish];
         text = [text stringByAppendingFormat:@"and finished on %@", finishDate];
     }
     else if([self.anime.status intValue] == AnimeAirStatusCurrentlyAiring) {
@@ -96,12 +97,14 @@
     }
     
     if(self.anime.date_start && self.anime.date_finish && [self.anime.date_start timeIntervalSince1970] == [self.anime.date_finish timeIntervalSince1970]) {
-        NSString *startDate = [dateFormatter stringFromDate:self.anime.date_start];
         
         if([self.anime.status intValue] == AnimeAirStatusFinishedAiring)
             text = [NSString stringWithFormat:@"Aired on %@ ", startDate];
         if([self.anime.status intValue] == AnimeAirStatusNotYetAired)
-            text = [NSString stringWithFormat:@"Will air %@ ", startDate];
+            text = [NSString stringWithFormat:@"Will air on %@ ", startDate];
+    }
+    else if(!self.anime.date_start && !self.anime.date_finish) {
+        text = @"Airing date unknown";
     }
     
     return text;
@@ -151,7 +154,7 @@
         }
         case AnimeTypeUnknown:
         default: {
-            text = [NSString stringWithFormat:@"%@, %@ %@", animeType, episodeValue, episodeText];
+            text = [NSString stringWithFormat:@"%@ %@", episodeValue, episodeText];
             break;
         }
     }

@@ -77,17 +77,31 @@
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     dateFormatter.dateFormat = @"MMM dd, yyyy";
     
+    NSString *startDate = [dateFormatter stringFromDate:self.manga.date_start];
+    NSString *finishDate = [dateFormatter stringFromDate:self.manga.date_finish];
+    
     if(self.manga.date_start) {
-        NSString *startDate = [dateFormatter stringFromDate:self.manga.date_start];
         text = [text stringByAppendingFormat:@"Started publishing on %@ ", startDate];
     }
     
     if(self.manga.date_finish) {
-        NSString *finishDate = [dateFormatter stringFromDate:self.manga.date_finish];
         text = [text stringByAppendingFormat:@"and finished on %@", finishDate];
     }
     else if([self.manga.status intValue] == MangaPublishStatusCurrentlyPublishing) {
         text = [text stringByAppendingString:@"and is still in publication"];
+    }
+    
+    if(self.manga.date_start && self.manga.date_finish && [self.manga.date_start timeIntervalSince1970] == [self.manga.date_finish timeIntervalSince1970]) {
+        if([self.manga.status intValue] == MangaPublishStatusFinishedPublishing) {
+            text = [NSString stringWithFormat:@"Published on %@", startDate];
+        }
+        else if([self.manga.status intValue] == MangaPublishStatusNotYetPublished) {
+            text = [NSString stringWithFormat:@"Will be published on %@", startDate];
+        }
+    }
+    
+    if(!self.manga.date_start && !self.manga.date_finish) {
+        text = @"Date of publication unknown";
     }
     
     return text;
