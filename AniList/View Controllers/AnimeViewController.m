@@ -85,18 +85,6 @@
 
 #pragma mark - View Management Methods
 
-- (void)reloadCellWithObject:(NSManagedObject *)object {
-//    self.relatedTableView reload
-//    for(int i = 0; )
-//    for(NSDictionary *section in self.relatedData) {
-//        for(NSManagedObject *obj in [section allValues][0]) {
-//            if(obj == object) {
-    
-//            }
-//        }
-//    }
-}
-
 - (void)refreshData {
     NSDictionary *prequels = self.anime.prequels.count ? @{ @"Prequels" : [self.anime.prequels allObjects] } : nil;
     NSDictionary *sequels = self.anime.sequels.count ? @{ @"Sequels" : [self.anime.sequels allObjects] } : nil;

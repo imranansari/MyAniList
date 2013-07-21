@@ -51,8 +51,6 @@ static NSArray *cachedAnimeList = nil;
 }
 
 + (Anime *)animeForID:(NSNumber *)ID fromCache:(BOOL)fromCache {
-    fromCache = NO;
-    
     if(fromCache) {
         if(!cachedAnimeList) {
             NSFetchRequest *request = [[NSFetchRequest alloc] init];
@@ -127,8 +125,6 @@ static NSArray *cachedAnimeList = nil;
             [anime addEntriesFromDictionary:@{ kImageURL : animeItem[@"series_image"][@"text"] }];
             [anime addEntriesFromDictionary:@{ kAirStartDate : animeItem[@"series_start"][@"text"] }];
             [anime addEntriesFromDictionary:@{ kAirStatus : animeItem[@"series_status"][@"text"] }];
-            
-            // no synonym support...yet.
             
             NSString *synonyms = animeItem[@"series_synonyms"][@"text"];
             NSArray *synonymsArray = [synonyms componentsSeparatedByString:@";"];

@@ -33,8 +33,6 @@
     
     [anime addSynonymsObject:synonym];
     
-    [[SynonymService managedObjectContext] save:nil];
-    
     return synonym;
 }
 
@@ -56,8 +54,6 @@
     
     [manga addSynonymsObject:synonym];
     
-    [[SynonymService managedObjectContext] save:nil];
-    
     return synonym;
 }
 
@@ -76,8 +72,6 @@
     synonym.name = englishTitle;
     
     [anime addEnglish_titlesObject:synonym];
-    
-    [[SynonymService managedObjectContext] save:nil];
     
     return synonym;
 }
@@ -98,8 +92,6 @@
     
     [manga addEnglish_titlesObject:synonym];
     
-    [[SynonymService managedObjectContext] save:nil];
-    
     return synonym;
 }
 
@@ -119,8 +111,6 @@
     
     [anime addJapanese_titlesObject:synonym];
     
-    [[SynonymService managedObjectContext] save:nil];
-    
     return synonym;
 }
 
@@ -139,8 +129,6 @@
     synonym.name = japaneseTitle;
     
     [manga addJapanese_titlesObject:synonym];
-    
-    [[SynonymService managedObjectContext] save:nil];
     
     return synonym;
 }

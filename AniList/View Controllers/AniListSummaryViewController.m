@@ -43,8 +43,8 @@
     self.relatedTableView.sectionHeaderHeight = 60;
     self.relatedTableView.sectionFooterHeight = 0;
 
-    [[NSNotificationCenter defaultCenter] addObserver:self.relatedTableView selector:@selector(reloadData) name:kRelatedAnimeDidUpdate object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self.relatedTableView selector:@selector(reloadData) name:kRelatedMangaDidUpdate object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadCellWithObject:) name:kRelatedAnimeDidUpdate object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadCellWithObject:) name:kRelatedMangaDidUpdate object:nil];
     
     CAGradientLayer *gradient = [CAGradientLayer layer];
     gradient.frame = self.maskView.frame;
@@ -145,6 +145,20 @@
 }
 
 #pragma mark - Related Content View Methods
+
+- (void)reloadCellWithObject:(NSNotification *)notification {
+    NSManagedObject *object = notification.object;
+    for(int i = 0; i < self.relatedData.count; i++) {
+        NSDictionary *section = self.relatedData[i];
+        for(NSManagedObject *obj in [section allValues][0]) {
+            if(obj == object) {
+                [self.relatedTableView beginUpdates];
+                [self.relatedTableView reloadSections:[NSIndexSet indexSetWithIndex:i] withRowAnimation:UITableViewRowAnimationFade];
+                [self.relatedTableView endUpdates];
+            }
+        }
+    }
+}
 
 - (void)configureAnimeCell:(AniListMiniCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     Anime *anime = [self.relatedData[indexPath.section] allValues][0][indexPath.row];
