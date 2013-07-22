@@ -9,10 +9,11 @@
 #import "AniListSummaryViewController.h"
 #import "AnimeUserInfoViewController.h"
 #import "AniListUserInfoViewController.h"
+#import "TagView.h"
 
 @class Anime;
 
-@interface AnimeViewController : AniListSummaryViewController<AniListUserInfoViewControllerDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface AnimeViewController : AniListSummaryViewController<AniListUserInfoViewControllerDelegate, UITableViewDataSource, UITableViewDelegate, TagViewDelegate>
 
 @property (nonatomic, strong) Anime *anime;
 

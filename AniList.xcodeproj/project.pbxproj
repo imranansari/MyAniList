@@ -202,6 +202,8 @@
 		637144511770157A00E60B9F /* NSDictionary+AniList.m in Sources */ = {isa = PBXBuildFile; fileRef = 6371444F1770157A00E60B9F /* NSDictionary+AniList.m */; };
 		6372893B17542D110032F425 /* MALHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 6372893A17542D110032F425 /* MALHTTPClient.m */; };
 		6372893C17542D110032F425 /* MALHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 6372893A17542D110032F425 /* MALHTTPClient.m */; };
+		6374DB4C179CF016003D7264 /* TagListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6374DB4B179CF016003D7264 /* TagListViewController.m */; };
+		6374DB4D179CF016003D7264 /* TagListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6374DB4B179CF016003D7264 /* TagListViewController.m */; };
 		637CF6EC175986840009ADF3 /* NSObject+AniList.m in Sources */ = {isa = PBXBuildFile; fileRef = 637CF6EB175986840009ADF3 /* NSObject+AniList.m */; };
 		637CF6ED175986840009ADF3 /* NSObject+AniList.m in Sources */ = {isa = PBXBuildFile; fileRef = 637CF6EB175986840009ADF3 /* NSObject+AniList.m */; };
 		637CF6F31759940E0009ADF3 /* test_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 637CF6F21759940E0009ADF3 /* test_background@2x.png */; };
@@ -280,6 +282,10 @@
 		63D045A8179CDA5D006507D3 /* TagView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D045A6179CDA5D006507D3 /* TagView.m */; };
 		63D045AB179CE87A006507D3 /* UIButton+AniList.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D045AA179CE87A006507D3 /* UIButton+AniList.m */; };
 		63D045AC179CE87A006507D3 /* UIButton+AniList.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D045AA179CE87A006507D3 /* UIButton+AniList.m */; };
+		63D045B0179CEDFD006507D3 /* AniListTagViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D045AE179CEDFD006507D3 /* AniListTagViewController.m */; };
+		63D045B1179CEDFD006507D3 /* AniListTagViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D045AE179CEDFD006507D3 /* AniListTagViewController.m */; };
+		63D045B2179CEDFD006507D3 /* TagListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63D045AF179CEDFD006507D3 /* TagListViewController.xib */; };
+		63D045B3179CEDFD006507D3 /* TagListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63D045AF179CEDFD006507D3 /* TagListViewController.xib */; };
 		63DB4E4F179AD7B800C20ECC /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = 63DB4E4E179AD7B800C20ECC /* Tag.m */; };
 		63DB4E50179AD7B800C20ECC /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = 63DB4E4E179AD7B800C20ECC /* Tag.m */; };
 		63DB4E53179AD7CE00C20ECC /* Synonym.m in Sources */ = {isa = PBXBuildFile; fileRef = 63DB4E52179AD7CE00C20ECC /* Synonym.m */; };
@@ -477,6 +483,8 @@
 		6371444F1770157A00E60B9F /* NSDictionary+AniList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+AniList.m"; path = "Categories/NSDictionary+AniList.m"; sourceTree = "<group>"; };
 		6372893917542D110032F425 /* MALHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MALHTTPClient.h; path = "Web Services/MALHTTPClient.h"; sourceTree = "<group>"; };
 		6372893A17542D110032F425 /* MALHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MALHTTPClient.m; path = "Web Services/MALHTTPClient.m"; sourceTree = "<group>"; };
+		6374DB4A179CF016003D7264 /* TagListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagListViewController.h; sourceTree = "<group>"; };
+		6374DB4B179CF016003D7264 /* TagListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagListViewController.m; sourceTree = "<group>"; };
 		637CF6EA175986840009ADF3 /* NSObject+AniList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+AniList.h"; path = "Categories/NSObject+AniList.h"; sourceTree = "<group>"; };
 		637CF6EB175986840009ADF3 /* NSObject+AniList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+AniList.m"; path = "Categories/NSObject+AniList.m"; sourceTree = "<group>"; };
 		637CF6EE175986B20009ADF3 /* Categories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Categories.h; path = Categories/Categories.h; sourceTree = "<group>"; };
@@ -550,6 +558,9 @@
 		63D045A6179CDA5D006507D3 /* TagView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TagView.m; path = Views/TagView.m; sourceTree = "<group>"; };
 		63D045A9179CE87A006507D3 /* UIButton+AniList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIButton+AniList.h"; path = "Categories/UIButton+AniList.h"; sourceTree = "<group>"; };
 		63D045AA179CE87A006507D3 /* UIButton+AniList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIButton+AniList.m"; path = "Categories/UIButton+AniList.m"; sourceTree = "<group>"; };
+		63D045AD179CEDFD006507D3 /* AniListTagViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AniListTagViewController.h; sourceTree = "<group>"; };
+		63D045AE179CEDFD006507D3 /* AniListTagViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AniListTagViewController.m; sourceTree = "<group>"; };
+		63D045AF179CEDFD006507D3 /* TagListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TagListViewController.xib; sourceTree = "<group>"; };
 		63DB4E4D179AD7B800C20ECC /* Tag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Tag.h; path = "Core Data/Tag.h"; sourceTree = "<group>"; };
 		63DB4E4E179AD7B800C20ECC /* Tag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Tag.m; path = "Core Data/Tag.m"; sourceTree = "<group>"; };
 		63DB4E51179AD7CE00C20ECC /* Synonym.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Synonym.h; path = "Core Data/Synonym.h"; sourceTree = "<group>"; };
@@ -722,6 +733,11 @@
 				639FA1E417936EAB000AA0D1 /* AniListNavigationController.m */,
 				63C8CD67179A3114003BB80C /* AniListRelatedTableView.h */,
 				63C8CD68179A3114003BB80C /* AniListRelatedTableView.m */,
+				63D045AD179CEDFD006507D3 /* AniListTagViewController.h */,
+				63D045AE179CEDFD006507D3 /* AniListTagViewController.m */,
+				63D045AF179CEDFD006507D3 /* TagListViewController.xib */,
+				6374DB4A179CF016003D7264 /* TagListViewController.h */,
+				6374DB4B179CF016003D7264 /* TagListViewController.m */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -1276,6 +1292,7 @@
 				639FA1DF17936ABF000AA0D1 /* back.png in Resources */,
 				6324CEAC1799793400B308B0 /* blueArrow.png in Resources */,
 				639FA1E117936ABF000AA0D1 /* back@2x.png in Resources */,
+				63D045B2179CEDFD006507D3 /* TagListViewController.xib in Resources */,
 				6392F4BC1793851F00D566BD /* anime_background@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1309,6 +1326,7 @@
 				6324CEAB1799793400B308B0 /* blackArrow@2x.png in Resources */,
 				6371444D1770074600E60B9F /* SearchViewController.xib in Resources */,
 				6324CEB71799793400B308B0 /* whiteArrow@2x.png in Resources */,
+				63D045B3179CEDFD006507D3 /* TagListViewController.xib in Resources */,
 				63B386B41777B91C001A7E31 /* MangaCell.xib in Resources */,
 				63B386BB1777DCAB001A7E31 /* AniListCell.xib in Resources */,
 				63461A1C1778004D0053652C /* SettingsViewController.xib in Resources */,
@@ -1425,6 +1443,7 @@
 				63B386B71777BA39001A7E31 /* MangaViewController.m in Sources */,
 				63B386BE1777E29D001A7E31 /* AniListSearchDisplayController.m in Sources */,
 				63461A0C1777F4700053652C /* MangaDetailsViewController.m in Sources */,
+				63D045B0179CEDFD006507D3 /* AniListTagViewController.m in Sources */,
 				63461A101777F8A20053652C /* MangaUserInfoViewController.m in Sources */,
 				63461A141777FA620053652C /* MangaUserInfoEditViewController.m in Sources */,
 				6380F98F179ADAC60090B66C /* SynonymService.m in Sources */,
@@ -1435,6 +1454,7 @@
 				630CC0941792532D0029D021 /* TVDBHTTPClient.m in Sources */,
 				63B551141792F0B1001D74A3 /* Settings.m in Sources */,
 				639FA1E517936EAB000AA0D1 /* AniListNavigationController.m in Sources */,
+				6374DB4C179CF016003D7264 /* TagListViewController.m in Sources */,
 				639FA1E917937006000AA0D1 /* UINavigationController+AniList.m in Sources */,
 				639FA1F317937896000AA0D1 /* UIBarButtonItem+AniList.m in Sources */,
 				6380F997179ADADF0090B66C /* TagService.m in Sources */,
@@ -1501,6 +1521,7 @@
 				631693471760C56300D526C0 /* NSDate+AniList.m in Sources */,
 				63BEA7381761859300432BED /* AniListPickerView.m in Sources */,
 				63BEA73F17619E0800432BED /* AniListUserInfoEditViewController.m in Sources */,
+				63D045B1179CEDFD006507D3 /* AniListTagViewController.m in Sources */,
 				63BEA7451761A13400432BED /* AniListStepperView.m in Sources */,
 				63BEA7491761A14400432BED /* AniListScoreView.m in Sources */,
 				63BEA74E176213B600432BED /* RRSGlowLabel.m in Sources */,
@@ -1536,6 +1557,7 @@
 				639FA1EA17937006000AA0D1 /* UINavigationController+AniList.m in Sources */,
 				639FA1F417937896000AA0D1 /* UIBarButtonItem+AniList.m in Sources */,
 				63DB4E50179AD7B800C20ECC /* Tag.m in Sources */,
+				6374DB4D179CF016003D7264 /* TagListViewController.m in Sources */,
 				63DB4E54179AD7CE00C20ECC /* Synonym.m in Sources */,
 				63DB4E58179AD7D800C20ECC /* Genre.m in Sources */,
 			);

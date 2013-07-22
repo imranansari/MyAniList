@@ -116,7 +116,7 @@
 
 - (void)tagTapped:(id)sender {
     UIButton *button = (UIButton *)sender;
-    
+    ALLog(@"Tag '%@' tapped!", button.titleLabel.text);
     if(self.delegate && [self.delegate respondsToSelector:@selector(tagTappedWithTitle:)]) {
         [self.delegate tagTappedWithTitle:button.titleLabel.text];
     }

@@ -19,6 +19,7 @@
 #import "MangaCell.h"
 #import "MangaViewController.h"
 #import "TagView.h"
+#import "TagListViewController.h"
 
 @interface AnimeViewController ()
 @property (nonatomic, strong) AnimeDetailsViewController *animeDetailsViewController;
@@ -35,7 +36,9 @@
         self.userInfoView.delegate = self;
         self.synopsisView = [[SynopsisView alloc] init];
         self.tagView = [[TagView alloc] init];
+        self.tagView.delegate = self;
         self.genreTagView = [[TagView alloc] init];
+        self.genreTagView.delegate = self;
         
         self.detailsLabel = [UILabel whiteHeaderWithFrame:CGRectMake(0, 0, 320, 60) andFontSize:18];
         self.detailsLabel.text = @"Synopsis";
@@ -79,6 +82,8 @@
 }
 
 - (void)dealloc {
+    self.genreTagView.delegate = nil;
+    self.tagView.delegate = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -203,6 +208,15 @@
     
     AnimeUserInfoEditViewController *vc = [[AnimeUserInfoEditViewController alloc] init];
     vc.anime = self.anime;
+    
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+#pragma mark - TagViewDelegate Methods
+
+- (void)tagTappedWithTitle:(NSString *)title {
+    TagListViewController *vc = [[TagListViewController alloc] init];
+    vc.tag = title;
     
     [self.navigationController pushViewController:vc animated:YES];
 }

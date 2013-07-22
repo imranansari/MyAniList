@@ -25,6 +25,6 @@
 - (void)fetchData;
 - (NSString *)entityName;
 - (NSArray *)sortDescriptors;
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
+- (void)configureCell:(UITableViewCell *)cell withObject:(NSManagedObject *)object;
 
 @end
