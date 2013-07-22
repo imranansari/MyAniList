@@ -278,6 +278,8 @@
 		63C8CD71179A4436003BB80C /* AniListMiniCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63C8CD6F179A442C003BB80C /* AniListMiniCell.xib */; };
 		63D045A7179CDA5D006507D3 /* TagView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D045A6179CDA5D006507D3 /* TagView.m */; };
 		63D045A8179CDA5D006507D3 /* TagView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D045A6179CDA5D006507D3 /* TagView.m */; };
+		63D045AB179CE87A006507D3 /* UIButton+AniList.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D045AA179CE87A006507D3 /* UIButton+AniList.m */; };
+		63D045AC179CE87A006507D3 /* UIButton+AniList.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D045AA179CE87A006507D3 /* UIButton+AniList.m */; };
 		63DB4E4F179AD7B800C20ECC /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = 63DB4E4E179AD7B800C20ECC /* Tag.m */; };
 		63DB4E50179AD7B800C20ECC /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = 63DB4E4E179AD7B800C20ECC /* Tag.m */; };
 		63DB4E53179AD7CE00C20ECC /* Synonym.m in Sources */ = {isa = PBXBuildFile; fileRef = 63DB4E52179AD7CE00C20ECC /* Synonym.m */; };
@@ -546,6 +548,8 @@
 		63C8CD6F179A442C003BB80C /* AniListMiniCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = AniListMiniCell.xib; path = Views/AniListMiniCell.xib; sourceTree = "<group>"; };
 		63D045A5179CDA5D006507D3 /* TagView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TagView.h; path = Views/TagView.h; sourceTree = "<group>"; };
 		63D045A6179CDA5D006507D3 /* TagView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TagView.m; path = Views/TagView.m; sourceTree = "<group>"; };
+		63D045A9179CE87A006507D3 /* UIButton+AniList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIButton+AniList.h"; path = "Categories/UIButton+AniList.h"; sourceTree = "<group>"; };
+		63D045AA179CE87A006507D3 /* UIButton+AniList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIButton+AniList.m"; path = "Categories/UIButton+AniList.m"; sourceTree = "<group>"; };
 		63DB4E4D179AD7B800C20ECC /* Tag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Tag.h; path = "Core Data/Tag.h"; sourceTree = "<group>"; };
 		63DB4E4E179AD7B800C20ECC /* Tag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Tag.m; path = "Core Data/Tag.m"; sourceTree = "<group>"; };
 		63DB4E51179AD7CE00C20ECC /* Synonym.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Synonym.h; path = "Core Data/Synonym.h"; sourceTree = "<group>"; };
@@ -904,6 +908,8 @@
 				639FA1E817937006000AA0D1 /* UINavigationController+AniList.m */,
 				639FA1F117937896000AA0D1 /* UIBarButtonItem+AniList.h */,
 				639FA1F217937896000AA0D1 /* UIBarButtonItem+AniList.m */,
+				63D045A9179CE87A006507D3 /* UIButton+AniList.h */,
+				63D045AA179CE87A006507D3 /* UIButton+AniList.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -1397,6 +1403,7 @@
 				63C8CD69179A3114003BB80C /* AniListRelatedTableView.m in Sources */,
 				6301D955175D729600163160 /* NSString+AniList.m in Sources */,
 				63892576175F7ACC00C8489A /* BaseViewController.m in Sources */,
+				63D045AB179CE87A006507D3 /* UIButton+AniList.m in Sources */,
 				631693461760C56300D526C0 /* NSDate+AniList.m in Sources */,
 				63BEA7371761859300432BED /* AniListPickerView.m in Sources */,
 				63BEA73E17619E0800432BED /* AniListUserInfoEditViewController.m in Sources */,
@@ -1503,6 +1510,7 @@
 				63EFEC3E176966B8009CEAB3 /* UMALHTTPClient.m in Sources */,
 				63894CC2176A9C05007D2D05 /* UserProfile.m in Sources */,
 				63894CC7176A9E37007D2D05 /* LoginViewController.m in Sources */,
+				63D045AC179CE87A006507D3 /* UIButton+AniList.m in Sources */,
 				63C8CD6A179A3114003BB80C /* AniListRelatedTableView.m in Sources */,
 				6371444B1770074600E60B9F /* SearchViewController.m in Sources */,
 				637144511770157A00E60B9F /* NSDictionary+AniList.m in Sources */,

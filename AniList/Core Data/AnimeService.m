@@ -348,6 +348,13 @@ static NSArray *cachedAnimeList = nil;
         }
     }
     
+    // Genres
+    if(data[kGenres] && ![data[kGenres] isNull]) {
+        for(NSString *genre in data[kGenres]) {
+            [GenreService addGenre:genre toAnime:anime];
+        }
+    }
+    
     // Tags
     if(data[kTag] && ![data[kTag] isNull]) {
         for(NSString *tag in data[kTag]) {

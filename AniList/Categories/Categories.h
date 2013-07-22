@@ -20,5 +20,6 @@
 #import "NSString+HTML.h"
 #import "UINavigationController+AniList.h"
 #import "UIBarButtonItem+AniList.h"
+#import "UIButton+AniList.h"
 
 #endif

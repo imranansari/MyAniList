@@ -8,8 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol TagViewDelegate <NSObject>
+- (void)tagTappedWithTitle:(NSString *)title;
+@end
+
 @interface TagView : UIView
 
+@property (nonatomic, assign) id<TagViewDelegate> delegate;
+
+- (void)createGenreTags:(NSSet *)genreTags;
 - (void)createTags:(NSSet *)tags;
 
 @end

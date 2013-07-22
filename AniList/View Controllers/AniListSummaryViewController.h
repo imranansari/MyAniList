@@ -22,6 +22,7 @@
 @property (nonatomic, strong) UILabel *synopsisLabel;
 @property (nonatomic, strong) SynopsisView *synopsisView;
 @property (nonatomic, strong) TagView *tagView;
+@property (nonatomic, strong) TagView *genreTagView;
 @property (nonatomic, strong) NSArray *relatedData;
 @property (nonatomic, strong) AniListRelatedTableView *relatedTableView;
 @property (nonatomic, strong) UILabel *detailsLabel;

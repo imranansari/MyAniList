@@ -35,6 +35,7 @@
         self.userInfoView.delegate = self;
         self.synopsisView = [[SynopsisView alloc] init];
         self.tagView = [[TagView alloc] init];
+        self.genreTagView = [[TagView alloc] init];
         
         self.detailsLabel = [UILabel whiteHeaderWithFrame:CGRectMake(0, 0, 320, 60) andFontSize:18];
         self.detailsLabel.text = @"Synopsis";
@@ -99,6 +100,7 @@
     NSDictionary *alternativeVersions = self.anime.alternative_versions.count ? @{ @"Alternative Versions" : [self.anime.alternative_versions allObjects] } : nil;
     
     [self.tagView createTags:self.anime.tags];
+    [self.genreTagView createGenreTags:self.anime.genres];
     
     NSMutableArray *related = [NSMutableArray array];
     
@@ -145,9 +147,11 @@
     
     self.tagView.frame = CGRectMake(0, self.relatedTableView.frame.origin.y + self.relatedTableView.frame.size.height, self.tagView.frame.size.width, self.tagView.frame.size.height);
     
-    int defaultContentSize = self.animeDetailsViewController.view.frame.size.height + self.userInfoView.view.frame.size.height + self.detailsLabel.frame.size.height + self.relatedTableView.frame.size.height + self.tagView.frame.size.height + [UIScreen mainScreen].bounds.size.height - 90;
+    self.genreTagView.frame = CGRectMake(0, self.tagView.frame.origin.y + self.tagView.frame.size.height, self.genreTagView.frame.size.width, self.genreTagView.frame.size.height);
     
-    int contentSizeWithSynopsis = self.animeDetailsViewController.view.frame.size.height + self.userInfoView.view.frame.size.height + self.detailsLabel.frame.size.height + self.synopsisView.frame.size.height + self.relatedTableView.frame.size.height + self.tagView.frame.size.height + 90;
+    int defaultContentSize = self.animeDetailsViewController.view.frame.size.height + self.userInfoView.view.frame.size.height + self.detailsLabel.frame.size.height + self.relatedTableView.frame.size.height + self.tagView.frame.size.height + self.genreTagView.frame.size.height + [UIScreen mainScreen].bounds.size.height - 90;
+    
+    int contentSizeWithSynopsis = self.animeDetailsViewController.view.frame.size.height + self.userInfoView.view.frame.size.height + self.detailsLabel.frame.size.height + self.synopsisView.frame.size.height + self.relatedTableView.frame.size.height + self.tagView.frame.size.height + self.genreTagView.frame.size.height + 90;
     
     self.scrollView.contentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width, MAX(contentSizeWithSynopsis, defaultContentSize));
 }
@@ -162,6 +166,7 @@
     [self.scrollView addSubview:self.synopsisView];
     [self.scrollView addSubview:self.relatedTableView];
     [self.scrollView addSubview:self.tagView];
+    [self.scrollView addSubview:self.genreTagView];
     
     if(self.anime.synopsis)
         [self.synopsisView addSynopsis:self.anime.synopsis];

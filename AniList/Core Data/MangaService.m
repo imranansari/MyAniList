@@ -274,6 +274,13 @@
         }
     }
     
+    // Genres
+    if(data[kGenres] && ![data[kGenres] isNull]) {
+        for(NSString *genre in data[kGenres]) {
+            [GenreService addGenre:genre toManga:manga];
+        }
+    }
+    
     // Tags
     if(data[kTag] && ![data[kTag] isNull]) {
         for(NSString *tag in data[kTag]) {

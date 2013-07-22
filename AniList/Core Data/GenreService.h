@@ -8,6 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
+@class Genre, Anime, Manga;
+
 @interface GenreService : NSObject
+
++ (Genre *)addGenre:(NSString *)title toAnime:(Anime *)anime;
++ (Genre *)addGenre:(NSString *)title toManga:(Manga *)manga;
 
 @end
