@@ -15,12 +15,13 @@
 #import "Anime.h"
 #import "Manga.h"
 
-@class SynopsisView;
+@class SynopsisView, TagView;
 
 @interface AniListSummaryViewController : BaseViewController<AniListUserInfoViewControllerDelegate, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UILabel *synopsisLabel;
 @property (nonatomic, strong) SynopsisView *synopsisView;
+@property (nonatomic, strong) TagView *tagView;
 @property (nonatomic, strong) NSArray *relatedData;
 @property (nonatomic, strong) AniListRelatedTableView *relatedTableView;
 @property (nonatomic, strong) UILabel *detailsLabel;

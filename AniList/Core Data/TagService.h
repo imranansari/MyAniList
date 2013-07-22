@@ -8,6 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
+@class Tag, Anime, Manga;
+
 @interface TagService : NSObject
+
++ (Tag *)addTag:(NSString *)title toAnime:(Anime *)anime;
++ (Tag *)addTag:(NSString *)title toManga:(Manga *)manga;
 
 @end

@@ -276,6 +276,8 @@
 		63C8CD6E179A441E003BB80C /* AniListMiniCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C8CD6C179A441E003BB80C /* AniListMiniCell.m */; };
 		63C8CD70179A4435003BB80C /* AniListMiniCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63C8CD6F179A442C003BB80C /* AniListMiniCell.xib */; };
 		63C8CD71179A4436003BB80C /* AniListMiniCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63C8CD6F179A442C003BB80C /* AniListMiniCell.xib */; };
+		63D045A7179CDA5D006507D3 /* TagView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D045A6179CDA5D006507D3 /* TagView.m */; };
+		63D045A8179CDA5D006507D3 /* TagView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D045A6179CDA5D006507D3 /* TagView.m */; };
 		63DB4E4F179AD7B800C20ECC /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = 63DB4E4E179AD7B800C20ECC /* Tag.m */; };
 		63DB4E50179AD7B800C20ECC /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = 63DB4E4E179AD7B800C20ECC /* Tag.m */; };
 		63DB4E53179AD7CE00C20ECC /* Synonym.m in Sources */ = {isa = PBXBuildFile; fileRef = 63DB4E52179AD7CE00C20ECC /* Synonym.m */; };
@@ -542,6 +544,8 @@
 		63C8CD6B179A441E003BB80C /* AniListMiniCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AniListMiniCell.h; path = Views/AniListMiniCell.h; sourceTree = "<group>"; };
 		63C8CD6C179A441E003BB80C /* AniListMiniCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AniListMiniCell.m; path = Views/AniListMiniCell.m; sourceTree = "<group>"; };
 		63C8CD6F179A442C003BB80C /* AniListMiniCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = AniListMiniCell.xib; path = Views/AniListMiniCell.xib; sourceTree = "<group>"; };
+		63D045A5179CDA5D006507D3 /* TagView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TagView.h; path = Views/TagView.h; sourceTree = "<group>"; };
+		63D045A6179CDA5D006507D3 /* TagView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TagView.m; path = Views/TagView.m; sourceTree = "<group>"; };
 		63DB4E4D179AD7B800C20ECC /* Tag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Tag.h; path = "Core Data/Tag.h"; sourceTree = "<group>"; };
 		63DB4E4E179AD7B800C20ECC /* Tag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Tag.m; path = "Core Data/Tag.m"; sourceTree = "<group>"; };
 		63DB4E51179AD7CE00C20ECC /* Synonym.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Synonym.h; path = "Core Data/Synonym.h"; sourceTree = "<group>"; };
@@ -735,6 +739,8 @@
 				63047A4117656CE10039D795 /* AniListDatePickerView.m */,
 				63FC20A517920EB000DFD544 /* CRTransitionLabel.h */,
 				63FC20A617920EB000DFD544 /* CRTransitionLabel.m */,
+				63D045A5179CDA5D006507D3 /* TagView.h */,
+				63D045A6179CDA5D006507D3 /* TagView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1394,6 +1400,7 @@
 				631693461760C56300D526C0 /* NSDate+AniList.m in Sources */,
 				63BEA7371761859300432BED /* AniListPickerView.m in Sources */,
 				63BEA73E17619E0800432BED /* AniListUserInfoEditViewController.m in Sources */,
+				63D045A7179CDA5D006507D3 /* TagView.m in Sources */,
 				63BEA7441761A13400432BED /* AniListStepperView.m in Sources */,
 				6380F993179ADAD10090B66C /* GenreService.m in Sources */,
 				63BEA7481761A14400432BED /* AniListScoreView.m in Sources */,
@@ -1435,6 +1442,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				635484D0171C2FA7003457CB /* AniListTests.m in Sources */,
+				63D045A8179CDA5D006507D3 /* TagView.m in Sources */,
 				6353C230171C457D0060F062 /* TTTAttributedLabel.m in Sources */,
 				6372893C17542D110032F425 /* MALHTTPClient.m in Sources */,
 				637CF6ED175986840009ADF3 /* NSObject+AniList.m in Sources */,

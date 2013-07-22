@@ -118,7 +118,6 @@ static NSArray *cachedAnimeList = nil;
             
             // no tag support...yet.
             //        [anime addEntriesFromDictionary:@{ @"user_tags" : animeItem[@"my_tags"][@"text"] }];
-            
             [anime addEntriesFromDictionary:@{ kUserWatchedEpisodes : @([animeItem[@"my_watched_episodes"][@"text"] intValue]) }];
             [anime addEntriesFromDictionary:@{ kAirEndDate : animeItem[@"series_end"][@"text"] }];
             [anime addEntriesFromDictionary:@{ kEpisodes : @([animeItem[@"series_episodes"][@"text"] intValue]) }];
@@ -141,6 +140,23 @@ static NSArray *cachedAnimeList = nil;
                 NSDictionary *otherTitles = @{ kOtherTitles : @{ kSynonyms : result }};
                 [anime addEntriesFromDictionary:otherTitles];
             }
+
+#warning - no support for user generated tags so far.
+//            NSString *tags = animeItem[@"my_tags"][@"text"];
+//            NSArray *tagsArray = [tags componentsSeparatedByString:@","];
+//            NSMutableArray *tagResults = [NSMutableArray array];
+//            
+//            for(int i = 0; i < tagsArray.count; i++) {
+//                NSString *tag = tagsArray[i];
+//                tag = [tag stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+//                if(tag.length > 0)
+//                    [tagResults addObject:tag];
+//            }
+//            
+//            if(tagResults.count > 0) {
+//                NSDictionary *animeTags = @{ kTag : tagResults };
+//                [anime addEntriesFromDictionary:animeTags];
+//            }
             
             [anime addEntriesFromDictionary:@{ kTitle : animeItem[@"series_title"][@"text"] }];
             [anime addEntriesFromDictionary:@{ kType : animeItem[@"series_type"][@"text"] }];
@@ -329,6 +345,13 @@ static NSArray *cachedAnimeList = nil;
     if(otherTitles[kJapaneseTitles] && ![otherTitles[kJapaneseTitles] isNull]) {
         for(NSString *japaneseTitle in otherTitles[kJapaneseTitles]) {
             [SynonymService addJapaneseTitle:japaneseTitle toAnime:anime];
+        }
+    }
+    
+    // Tags
+    if(data[kTag] && ![data[kTag] isNull]) {
+        for(NSString *tag in data[kTag]) {
+            [TagService addTag:tag toAnime:anime];
         }
     }
 

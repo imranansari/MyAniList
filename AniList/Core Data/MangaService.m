@@ -71,6 +71,39 @@
         [manga addEntriesFromDictionary:@{ kTitle : mangaItem[@"series_title"][@"text"] }];
         [manga addEntriesFromDictionary:@{ kType : mangaItem[@"series_type"][@"text"] }];
         
+        NSString *synonyms = mangaItem[@"series_synonyms"][@"text"];
+        NSArray *synonymsArray = [synonyms componentsSeparatedByString:@";"];
+        NSMutableArray *result = [NSMutableArray array];
+        
+        for(int i = 0; i < synonymsArray.count; i++) {
+            NSString *synonym = synonymsArray[i];
+            synonym = [synonym stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            if(synonym.length > 0)
+                [result addObject:synonym];
+        }
+        
+        if(result.count > 0) {
+            NSDictionary *otherTitles = @{ kOtherTitles : @{ kSynonyms : result }};
+            [manga addEntriesFromDictionary:otherTitles];
+        }
+        
+        NSString *tags = mangaItem[@"my_tags"][@"text"];
+        NSArray *tagsArray = [tags componentsSeparatedByString:@","];
+        NSMutableArray *tagResults = [NSMutableArray array];
+        
+        for(int i = 0; i < tagsArray.count; i++) {
+            NSString *tag = tagsArray[i];
+            tag = [tag stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            if(tag.length > 0)
+                [tagResults addObject:tag];
+        }
+        
+        if(tagResults.count > 0) {
+            NSDictionary *mangaTags = @{ kTag : tagResults };
+            [manga addEntriesFromDictionary:mangaTags];
+        }
+
+        
         [MangaService addManga:manga fromList:YES];
     }
     
@@ -238,6 +271,13 @@
     if(otherTitles[kJapaneseTitles] && ![otherTitles[kJapaneseTitles] isNull]) {
         for(NSString *japaneseTitle in otherTitles[kJapaneseTitles]) {
             [SynonymService addJapaneseTitle:japaneseTitle toManga:manga];
+        }
+    }
+    
+    // Tags
+    if(data[kTag] && ![data[kTag] isNull]) {
+        for(NSString *tag in data[kTag]) {
+            [TagService addTag:tag toManga:manga];
         }
     }
     

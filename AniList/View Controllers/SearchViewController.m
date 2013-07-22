@@ -64,8 +64,6 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             ALLog(@"Got anime results: %d", response.count);
             [AnimeService addAnimeListFromSearch:response];
-            
-            [self.searchDisplayController.searchResultsTableView reloadData];
         });
     } failure:^(id operation, NSError *error) {
         ALLog(@"Anime search failure.");
@@ -272,73 +270,38 @@
         cachedImageLocation = [NSString stringWithFormat:@"%@/%@", documentsDirectory, manga.image];
     }
     
-//    anilistCell.progress.font = [UIFont mediumFontWithSize:anilistCell.progress.font.pointSize-1];
-//    anilistCell.type.font = [UIFont defaultFontWithSize:anilistCell.type.font.pointSize-1];
-    
     [anilistCell.title sizeToFit];
     
     UIImage *cachedImage = [UIImage imageWithContentsOfFile:cachedImageLocation];
     
-    if(cachedImage) {
-        ALLog(@"Image on disk exists.");// for %@.", anime.title);
-    }
-    else {
-        ALLog(@"Image on disk does not exist.");// for %@.", anime.title);
-    }
-    
-    [anilistCell.image setImageWithURLRequest:imageRequest placeholderImage:cachedImage success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-        
-        NSString *directory = @"";
-        BOOL imageSaved = NO;
-        
-        if([object isKindOfClass:[Anime class]]) {
-            directory = @"anime";
-            Anime *anime = (Anime *)object;
-            ALLog(@"Got image for anime %@.", anime.title);
-            imageSaved = anime.image != nil;
-        }
-        else if([object isKindOfClass:[Manga class]]) {
-            directory = @"manga";
-            Manga *manga = (Manga *)object;
-            ALLog(@"Got image for manga %@.", manga.title);
-            imageSaved = manga.image != nil;
-        }
-
-        anilistCell.image.image = image;
-        
-        
-        
-        // Save the image onto disk if it doesn't exist or they aren't the same.
-#warning - need to compare cached image to this new image, and replace if necessary.
-#warning - will need to be fast and efficient! Alternatively, we can recycle the cache if need be.
-        if(!imageSaved) {
-            ALLog(@"Saving image to disk...");
-            NSArray *segmentedURL = [[request.URL absoluteString] componentsSeparatedByString:@"/"];
-            NSString *filename = [segmentedURL lastObject];
+    if(!cachedImage) {
+        [anilistCell.image setImageWithURLRequest:imageRequest placeholderImage:cachedImage success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
             
-            NSString *imagePath = [NSString stringWithFormat:@"%@/%@/%@", documentsDirectory, directory, filename];
+            anilistCell.image.alpha = 0.0f;
+            anilistCell.image.image = image;
             
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-                BOOL saved = NO;
-                saved = [UIImageJPEGRepresentation(image, 1.0) writeToFile:imagePath options:NSAtomicWrite error:nil];
-                ALLog(@"Image %@", saved ? @"saved." : @"did not save.");
-            });
+            [UIView animateWithDuration:0.3f animations:^{
+                anilistCell.image.alpha = 1.0f;
+            }];
             
-            
+            // Save the image onto disk if it doesn't exist or they aren't the same.
             if([object isKindOfClass:[Anime class]]) {
                 Anime *anime = (Anime *)object;
-                anime.image = [NSString stringWithFormat:@"anime/%@", filename];
+                [anime saveImage:image fromRequest:imageRequest];
             }
             else if([object isKindOfClass:[Manga class]]) {
                 Manga *manga = (Manga *)object;
-                manga.image = [NSString stringWithFormat:@"manga/%@", filename];
+                [manga saveImage:image fromRequest:imageRequest];
             }
-        }
-    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-        // Log failure.
-        ALLog(@"Couldn't fetch image at URL %@.", [request.URL absoluteString]);
-    }];
-    
+            
+        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+            // Log failure.
+            ALLog(@"Couldn't fetch image at URL %@.", [request.URL absoluteString]);
+        }];
+    }
+    else {
+        anilistCell.image.image = cachedImage;
+    }
 //    AFImageRequestOperation *operation = [AFImageRequestOperation imageRequestOperationWithRequest:request success:^(UIImage *image) {
 //        anilistCell.image.image = image;
 //    }];
@@ -361,11 +324,15 @@
     [self filterContentForSearchText:[self.searchDisplayController.searchBar text]
                                scope:[self.searchDisplayController.searchBar selectedScopeButtonIndex]];
     
-    if(searchString.length > 2) {
-        [self searchWithQuery:searchString];
-    }
+//    if(searchString.length > 2) {
+//        [self searchWithQuery:searchString];
+//    }
     
     return YES;
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    [self searchWithQuery:searchBar.text];
 }
 
 #pragma mark -

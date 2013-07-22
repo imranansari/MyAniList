@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
 
-@interface SearchViewController : BaseViewController<UISearchDisplayDelegate, NSFetchedResultsControllerDelegate>
+@interface SearchViewController : BaseViewController<UISearchDisplayDelegate, NSFetchedResultsControllerDelegate, UISearchBarDelegate>
 
 @end
