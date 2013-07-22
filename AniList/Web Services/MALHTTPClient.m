@@ -100,15 +100,15 @@
 
 #pragma mark - Anime Request Methods
 
-- (void)getAnimeListForUser:(NSString *)user success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure {
+- (void)getAnimeListForUser:(NSString *)user initialFetch:(BOOL)initialFetch success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure {
     
     ALLog(@"Getting anime list for user '%@'...", user);
     
-    NSDictionary *parameters = @{
-                                 @"status"  : @"all",
-                                 @"type"    : @"anime",
-                                 @"u"       : user
-                                 };
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithDictionary:@{ @"type" : @"anime", @"u" : user }];
+    
+    if(initialFetch) {
+        [parameters addEntriesFromDictionary:@{ @"status"  : @"all" }];
+    }
     
     [[MALUserClient sharedClient] getPath:@"/malappinfo.php"
                                parameters:parameters
@@ -289,13 +289,13 @@
 
 #pragma mark - Manga Request Methods
 
-- (void)getMangaListForUser:(NSString *)user success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure {
+- (void)getMangaListForUser:(NSString *)user initialFetch:(BOOL)initialFetch success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure {
     
-    NSDictionary *parameters = @{
-                                 @"status"  : @"all",
-                                 @"type"    : @"manga",
-                                 @"u"       : [[UserProfile profile] username]
-                                 };
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithDictionary:@{ @"type" : @"manga", @"u" : user }];
+    
+//    if(initialFetch) {
+        [parameters addEntriesFromDictionary:@{ @"status"  : @"all" }];
+//    }
     
     [[MALUserClient sharedClient] getPath:@"/malappinfo.php"
                                parameters:parameters

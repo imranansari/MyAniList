@@ -259,7 +259,7 @@
             break;
             
         case NSFetchedResultsChangeUpdate:
-            [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+            [self configureCell:[tableView cellForRowAtIndexPath:indexPath] withObject:anObject];
             break;
                 
         case NSFetchedResultsChangeMove:
@@ -273,8 +273,8 @@
     [self.tableView endUpdates];
 }
 
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-
+- (void)configureCell:(UITableViewCell *)cell withObject:(NSManagedObject *)object {
+    // MUST OVERRIDE
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {

@@ -36,6 +36,7 @@ static BOOL alreadyFetched = NO;
 }
 
 - (void)dealloc {
+    [NSFetchedResultsController deleteCacheWithName:[self entityName]];
     ALLog(@"MangaList deallocating.");
 }
 
@@ -68,6 +69,7 @@ static BOOL alreadyFetched = NO;
 - (void)fetchData {
     if([UserProfile userIsLoggedIn]) {
         [[MALHTTPClient sharedClient] getMangaListForUser:[[UserProfile profile] username]
+                                             initialFetch:!alreadyFetched
                                                   success:^(NSURLRequest *operation, id response) {
                                                       [MangaService addMangaList:(NSDictionary *)response];
                                                       alreadyFetched = YES;
@@ -106,7 +108,8 @@ static BOOL alreadyFetched = NO;
         cell = (MangaCell *)nib[0];
     }
     
-    [self configureCell:cell atIndexPath:indexPath];
+    Manga *manga = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    [self configureCell:cell withObject:manga];
     
     return cell;
 }
@@ -125,9 +128,9 @@ static BOOL alreadyFetched = NO;
     [self.navigationController pushViewController:mvc animated:YES];
 }
 
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath  {
+- (void)configureCell:(UITableViewCell *)cell withObject:(NSManagedObject *)object {
     
-    Manga *manga = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    Manga *manga = (Manga *)object;
     MangaCell *mangaCell = (MangaCell *)cell;
     mangaCell.title.text = manga.title;
     [mangaCell.title addShadow];

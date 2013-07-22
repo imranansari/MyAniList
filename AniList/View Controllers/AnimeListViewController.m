@@ -69,6 +69,7 @@ static BOOL alreadyFetched = NO;
 - (void)fetchData {
     if([UserProfile userIsLoggedIn]) {
         [[MALHTTPClient sharedClient] getAnimeListForUser:[[UserProfile profile] username]
+                                             initialFetch:!alreadyFetched
                                                   success:^(NSURLRequest *operation, id response) {
                                                       [AnimeService addAnimeList:(NSDictionary *)response];
                                                       alreadyFetched = YES;
@@ -106,7 +107,8 @@ static BOOL alreadyFetched = NO;
         cell = (AnimeCell *)nib[0];
     }
     
-    [self configureCell:cell atIndexPath:indexPath];
+    Anime *anime = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    [self configureCell:cell withObject:anime];
 
     return cell;
 }
@@ -125,8 +127,8 @@ static BOOL alreadyFetched = NO;
     [self.navigationController pushViewController:animeVC animated:YES];
 }
 
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-    Anime *anime = [self.fetchedResultsController objectAtIndexPath:indexPath];
+- (void)configureCell:(UITableViewCell *)cell withObject:(NSManagedObject *)object {
+    Anime *anime = (Anime *)object;
     AnimeCell *animeCell = (AnimeCell *)cell;
     animeCell.title.text = anime.title;
     [animeCell.title addShadow];
