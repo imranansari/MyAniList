@@ -220,6 +220,7 @@
 - (void)tagTappedWithTitle:(NSString *)title {
     TagListViewController *vc = [[TagListViewController alloc] init];
     vc.tag = title;
+    vc.isAnime = YES;
     
     [self.navigationController pushViewController:vc animated:YES];
 }
@@ -227,6 +228,7 @@
 - (void)genreTappedWithTitle:(NSString *)title {
     TagListViewController *vc = [[TagListViewController alloc] init];
     vc.genre = title;
+    vc.isAnime = YES;
     
     [self.navigationController pushViewController:vc animated:YES];
 }

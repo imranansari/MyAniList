@@ -24,6 +24,15 @@
     else return nil;
 }
 
++ (NSArray *)mangaWithGenre:(NSString *)genreName {
+    Genre *genre = [GenreService genreWithName:genreName];
+    if(genre) {
+        return [genre.manga allObjects];
+    }
+    else return nil;
+}
+
+
 + (Genre *)genreWithName:(NSString *)name {
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITY_NAME inManagedObjectContext:[GenreService managedObjectContext]];

@@ -88,7 +88,7 @@ static NSArray *cachedAnimeList = nil;
 
 + (BOOL)addAnimeListFromSearch:(NSArray *)data {
     for(NSDictionary *result in data) {
-        [AnimeService addAnime:result fromList:YES];
+        [AnimeService addAnime:result fromList:NO];
     }
     
     return NO;

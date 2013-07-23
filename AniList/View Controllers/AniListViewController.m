@@ -58,7 +58,8 @@
     nvc.navigationBar.translucent = YES; // Setting this slides the view up, underneath the nav bar (otherwise it'll appear black)
 
     if([[UIDevice currentDevice].systemVersion compare:@"7.0" options:NSNumericSearch] != NSOrderedAscending) {
-//        nvc.navigationBar.barTintColor = [UIColor clearColor];
+//        nvc.navigationBar.barTintColor = [UIColor blueColor];
+//        nvc.navigationBar.tintColor = [UIColor whiteColor];
     }
     else {
         const float colorMask[6] = {222, 255, 222, 255, 222, 255};

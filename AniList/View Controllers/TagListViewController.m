@@ -8,23 +8,24 @@
 
 #import "TagListViewController.h"
 #import "CRTransitionLabel.h"
-#import "AniListAppDelegate.h"
 #import "Anime.h"
+#import "AnimeViewController.h"
 #import "Manga.h"
+#import "MangaViewController.h"
+#import "Tag.h"
 #import "TagService.h"
+#import "Genre.h"
 #import "GenreService.h"
 #import "AniListCell.h"
 #import "MALHTTPClient.h"
-#import "AnimeCell.h"
-#import "Tag.h"
-#import "Genre.h"
+
 
 @interface TagListViewController ()
 @property (nonatomic, copy) NSArray *sectionHeaders;
 @property (nonatomic, weak) IBOutlet UIView *maskView;
 @property (nonatomic, weak) IBOutlet AniListTableView *tableView;
 @property (nonatomic, weak) IBOutlet CRTransitionLabel *topSectionLabel;
-@property (nonatomic, strong) NSArray *taggedAnime;
+@property (nonatomic, strong) NSArray *taggedItems;
 @end
 
 @implementation TagListViewController
@@ -92,16 +93,28 @@
     self.topSectionLabel.text = @"";
     self.topSectionLabel.alpha = 0.0f;
     
-    // Fetch anime.
-    if(self.tag) {
-        self.taggedAnime = [TagService animeWithTag:self.tag];
-        self.title = self.tag;
+    // Fetch.
+    if(self.isAnime) {
+        if(self.tag) {
+            self.taggedItems = [TagService animeWithTag:self.tag];
+            self.title = self.tag;
+        }
+        else if(self.genre) {
+            self.taggedItems = [GenreService animeWithGenre:self.genre];
+            self.title = [NSString stringWithFormat:@"%@ Anime", self.genre];
+        }
     }
-    else if(self.genre) {
-        self.taggedAnime = [GenreService animeWithGenre:self.genre];
-        self.title = [NSString stringWithFormat:@"%@ Anime", self.genre];
+    else {
+        if(self.tag) {
+            self.taggedItems = [TagService mangaWithTag:self.tag];
+            self.title = self.tag;
+        }
+        else if(self.genre) {
+            self.taggedItems = [GenreService mangaWithGenre:self.genre];
+            self.title = [NSString stringWithFormat:@"%@ Manga", self.genre];
+        }
     }
-    
+        
     [self.tableView reloadData];
 }
 
@@ -145,7 +158,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 //    id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
 //    return [sectionInfo numberOfObjects];
-    return [self.taggedAnime count];
+    return [self.taggedItems count];
 }
 
 //- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -158,14 +171,14 @@
     
     static NSString *CellIdentifier = @"Cell";
     
-    AnimeCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    AniListCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if(!cell) {
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"AnimeCell" owner:self options:nil];
-        cell = (AnimeCell *)nib[0];
+        cell = (AniListCell *)nib[0];
     }
     
-    Anime *anime = self.taggedAnime[indexPath.row];
-    [self configureCell:cell withObject:anime];
+    NSManagedObject *item = self.taggedItems[indexPath.row];
+    [self configureCell:cell withObject:item];
     
     return cell;
 }
@@ -173,6 +186,22 @@
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSManagedObject *object = self.taggedItems[indexPath.row];
+    
+//    self.navigationItem.backBarButtonItem = [UIBarButtonItem customBackButtonWithTitle:@"Back"];
+    
+    if([object isMemberOfClass:[Anime class]]) {
+        AnimeViewController *vc = [[AnimeViewController alloc] init];
+        vc.anime = (Anime *)object;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    else if([object isMemberOfClass:[Manga class]]) {
+        MangaViewController *vc = [[MangaViewController alloc] init];
+        vc.manga = (Manga *)object;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (void)configureCell:(UITableViewCell *)cell withObject:(NSManagedObject *)object {
@@ -181,15 +210,24 @@
     NSURLRequest *imageRequest;
     NSString *cachedImageLocation = @"";
     
-#warning - all of this code is gross. Will need to add a core data parent entity here with common traits.
-    
-    Anime *anime = (Anime *)object;
-    anilistCell.title.text = anime.title;
-    anilistCell.progress.text = [Anime stringForAnimeWatchedStatus:[anime.watched_status intValue]];
-    anilistCell.rank.text = [anime.user_score intValue] != -1 ? [NSString stringWithFormat:@"%d", [anime.user_score intValue]] : @"";
-    anilistCell.type.text = [Anime stringForAnimeType:[anime.type intValue]];
-    imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:anime.image_url]];
-    cachedImageLocation = [NSString stringWithFormat:@"%@/%@", documentsDirectory, anime.image];
+    if([object isMemberOfClass:[Anime class]]) {
+        Anime *anime = (Anime *)object;
+        anilistCell.title.text = anime.title;
+        anilistCell.progress.text = [Anime stringForAnimeWatchedStatus:[anime.watched_status intValue]];
+        anilistCell.rank.text = [anime.user_score intValue] != -1 ? [NSString stringWithFormat:@"%d", [anime.user_score intValue]] : @"";
+        anilistCell.type.text = [Anime stringForAnimeType:[anime.type intValue]];
+        imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:anime.image_url]];
+        cachedImageLocation = [NSString stringWithFormat:@"%@/%@", documentsDirectory, anime.image];
+    }
+    else if([object isKindOfClass:[Manga class]]) {
+        Manga *manga = (Manga *)object;
+        anilistCell.title.text = manga.title;
+        anilistCell.progress.text = [Manga stringForMangaReadStatus:[manga.read_status intValue]];
+        anilistCell.rank.text = [manga.user_score intValue] != -1 ? [NSString stringWithFormat:@"%d", [manga.user_score intValue]] : @"";
+        anilistCell.type.text = [Manga stringForMangaType:[manga.type intValue]];
+        imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:manga.image_url]];
+        cachedImageLocation = [NSString stringWithFormat:@"%@/%@", documentsDirectory, manga.image];
+    }
     
     [anilistCell.title sizeToFit];
     

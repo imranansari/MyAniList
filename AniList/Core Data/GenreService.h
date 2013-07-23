@@ -13,6 +13,7 @@
 @interface GenreService : NSObject
 
 + (NSArray *)animeWithGenre:(NSString *)genreName;
++ (NSArray *)mangaWithGenre:(NSString *)genreName;
 + (Genre *)addGenre:(NSString *)title toAnime:(Anime *)anime;
 + (Genre *)addGenre:(NSString *)title toManga:(Manga *)manga;
 
