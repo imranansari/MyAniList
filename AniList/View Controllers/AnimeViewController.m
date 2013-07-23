@@ -21,6 +21,9 @@
 #import "TagView.h"
 #import "TagListViewController.h"
 
+#import "TagService.h"
+#import "GenreService.h"
+
 @interface AnimeViewController ()
 @property (nonatomic, strong) AnimeDetailsViewController *animeDetailsViewController;
 @property (nonatomic, strong) AnimeUserInfoViewController *userInfoView;
@@ -217,6 +220,13 @@
 - (void)tagTappedWithTitle:(NSString *)title {
     TagListViewController *vc = [[TagListViewController alloc] init];
     vc.tag = title;
+    
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (void)genreTappedWithTitle:(NSString *)title {
+    TagListViewController *vc = [[TagListViewController alloc] init];
+    vc.genre = title;
     
     [self.navigationController pushViewController:vc animated:YES];
 }

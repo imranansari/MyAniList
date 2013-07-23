@@ -282,8 +282,6 @@
 		63D045A8179CDA5D006507D3 /* TagView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D045A6179CDA5D006507D3 /* TagView.m */; };
 		63D045AB179CE87A006507D3 /* UIButton+AniList.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D045AA179CE87A006507D3 /* UIButton+AniList.m */; };
 		63D045AC179CE87A006507D3 /* UIButton+AniList.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D045AA179CE87A006507D3 /* UIButton+AniList.m */; };
-		63D045B0179CEDFD006507D3 /* AniListTagViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D045AE179CEDFD006507D3 /* AniListTagViewController.m */; };
-		63D045B1179CEDFD006507D3 /* AniListTagViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D045AE179CEDFD006507D3 /* AniListTagViewController.m */; };
 		63D045B2179CEDFD006507D3 /* TagListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63D045AF179CEDFD006507D3 /* TagListViewController.xib */; };
 		63D045B3179CEDFD006507D3 /* TagListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63D045AF179CEDFD006507D3 /* TagListViewController.xib */; };
 		63DB4E4F179AD7B800C20ECC /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = 63DB4E4E179AD7B800C20ECC /* Tag.m */; };
@@ -558,8 +556,6 @@
 		63D045A6179CDA5D006507D3 /* TagView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TagView.m; path = Views/TagView.m; sourceTree = "<group>"; };
 		63D045A9179CE87A006507D3 /* UIButton+AniList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIButton+AniList.h"; path = "Categories/UIButton+AniList.h"; sourceTree = "<group>"; };
 		63D045AA179CE87A006507D3 /* UIButton+AniList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIButton+AniList.m"; path = "Categories/UIButton+AniList.m"; sourceTree = "<group>"; };
-		63D045AD179CEDFD006507D3 /* AniListTagViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AniListTagViewController.h; sourceTree = "<group>"; };
-		63D045AE179CEDFD006507D3 /* AniListTagViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AniListTagViewController.m; sourceTree = "<group>"; };
 		63D045AF179CEDFD006507D3 /* TagListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TagListViewController.xib; sourceTree = "<group>"; };
 		63DB4E4D179AD7B800C20ECC /* Tag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Tag.h; path = "Core Data/Tag.h"; sourceTree = "<group>"; };
 		63DB4E4E179AD7B800C20ECC /* Tag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Tag.m; path = "Core Data/Tag.m"; sourceTree = "<group>"; };
@@ -733,8 +729,6 @@
 				639FA1E417936EAB000AA0D1 /* AniListNavigationController.m */,
 				63C8CD67179A3114003BB80C /* AniListRelatedTableView.h */,
 				63C8CD68179A3114003BB80C /* AniListRelatedTableView.m */,
-				63D045AD179CEDFD006507D3 /* AniListTagViewController.h */,
-				63D045AE179CEDFD006507D3 /* AniListTagViewController.m */,
 				63D045AF179CEDFD006507D3 /* TagListViewController.xib */,
 				6374DB4A179CF016003D7264 /* TagListViewController.h */,
 				6374DB4B179CF016003D7264 /* TagListViewController.m */,
@@ -1443,7 +1437,6 @@
 				63B386B71777BA39001A7E31 /* MangaViewController.m in Sources */,
 				63B386BE1777E29D001A7E31 /* AniListSearchDisplayController.m in Sources */,
 				63461A0C1777F4700053652C /* MangaDetailsViewController.m in Sources */,
-				63D045B0179CEDFD006507D3 /* AniListTagViewController.m in Sources */,
 				63461A101777F8A20053652C /* MangaUserInfoViewController.m in Sources */,
 				63461A141777FA620053652C /* MangaUserInfoEditViewController.m in Sources */,
 				6380F98F179ADAC60090B66C /* SynonymService.m in Sources */,
@@ -1521,7 +1514,6 @@
 				631693471760C56300D526C0 /* NSDate+AniList.m in Sources */,
 				63BEA7381761859300432BED /* AniListPickerView.m in Sources */,
 				63BEA73F17619E0800432BED /* AniListUserInfoEditViewController.m in Sources */,
-				63D045B1179CEDFD006507D3 /* AniListTagViewController.m in Sources */,
 				63BEA7451761A13400432BED /* AniListStepperView.m in Sources */,
 				63BEA7491761A14400432BED /* AniListScoreView.m in Sources */,
 				63BEA74E176213B600432BED /* RRSGlowLabel.m in Sources */,

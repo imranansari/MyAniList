@@ -43,7 +43,7 @@
     
     for(Genre *genre in genreTags) {
         UIButton *button = [UIButton tagButtonWithTitle:genre.name];
-        [button addTarget:self action:@selector(tagTapped:) forControlEvents:UIControlEventTouchUpInside];
+        [button addTarget:self action:@selector(genreTapped:) forControlEvents:UIControlEventTouchUpInside];
         //        ALLog(@"Frame: %f, %f, %f, %f", button.frame.origin.x, button.frame.origin.y, button.frame.size.width, button.frame.size.height);
         [tagViews addObject:button];
         
@@ -119,6 +119,14 @@
     ALLog(@"Tag '%@' tapped!", button.titleLabel.text);
     if(self.delegate && [self.delegate respondsToSelector:@selector(tagTappedWithTitle:)]) {
         [self.delegate tagTappedWithTitle:button.titleLabel.text];
+    }
+}
+
+- (void)genreTapped:(id)sender {
+    UIButton *button = (UIButton *)sender;
+    ALLog(@"Genre '%@' tapped!", button.titleLabel.text);
+    if(self.delegate && [self.delegate respondsToSelector:@selector(genreTappedWithTitle:)]) {
+        [self.delegate genreTappedWithTitle:button.titleLabel.text];
     }
 }
 

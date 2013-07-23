@@ -145,32 +145,38 @@ static BOOL alreadyFetched = NO;
     mangaCell.type.text = [Manga stringForMangaType:[manga.type intValue]];
     [mangaCell.type addShadow];
     
-    NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:manga.image_url]];
-    UIImage *cachedImage = [manga imageForManga];
-    
-    if(!cachedImage) {
-        [mangaCell.image setImageWithURLRequest:imageRequest placeholderImage:cachedImage success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-            
-            mangaCell.image.alpha = 0.0f;
-            mangaCell.image.image = image;
-            
-            [UIView animateWithDuration:0.3f animations:^{
-                mangaCell.image.alpha = 1.0f;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:manga.image_url]];
+        UIImage *cachedImage = [manga imageForManga];
+        
+        if(!cachedImage) {
+            [mangaCell.image setImageWithURLRequest:imageRequest placeholderImage:cachedImage success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+                
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                    mangaCell.image.alpha = 0.0f;
+                    mangaCell.image.image = image;
+                    
+                    [UIView animateWithDuration:0.3f animations:^{
+                        mangaCell.image.alpha = 1.0f;
+                    }];
+                });
+        
+                if(!manga.image) {
+                    // Save the image onto disk if it doesn't exist or they aren't the same.
+                    [manga saveImage:image fromRequest:request];
+                }
+                
+            } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+                // Log failure.
+                ALLog(@"Couldn't fetch image at URL %@.", [request.URL absoluteString]);
             }];
-            
-            if(!manga.image) {
-                // Save the image onto disk if it doesn't exist or they aren't the same.
-                [manga saveImage:image fromRequest:request];
-            }
-            
-        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-            // Log failure.
-            ALLog(@"Couldn't fetch image at URL %@.", [request.URL absoluteString]);
-        }];
-    }
-    else {
-        mangaCell.image.image = cachedImage;
-    }
+        }
+        else {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                mangaCell.image.image = cachedImage;
+            });
+        }
+    });
 
     
 }

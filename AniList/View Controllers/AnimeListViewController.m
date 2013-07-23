@@ -143,32 +143,38 @@ static BOOL alreadyFetched = NO;
     animeCell.type.text = [Anime stringForAnimeType:[anime.type intValue]];
     [animeCell.type addShadow];
     
-    NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:anime.image_url]];
-    UIImage *cachedImage = [anime imageForAnime];
-    
-    if(!cachedImage) {
-        [animeCell.image setImageWithURLRequest:imageRequest placeholderImage:cachedImage success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-            
-            animeCell.image.alpha = 0.0f;
-            animeCell.image.image = image;
-            
-            [UIView animateWithDuration:0.3f animations:^{
-                animeCell.image.alpha = 1.0f;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:anime.image_url]];
+        UIImage *cachedImage = [anime imageForAnime];
+        
+        if(!cachedImage) {
+            [animeCell.image setImageWithURLRequest:imageRequest placeholderImage:cachedImage success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    animeCell.image.alpha = 0.0f;
+                    animeCell.image.image = image;
+                    
+                    [UIView animateWithDuration:0.3f animations:^{
+                        animeCell.image.alpha = 1.0f;
+                    }];
+                });
+                
+                if(!anime.image) {
+                    // Save the image onto disk if it doesn't exist or they aren't the same.
+                    [anime saveImage:image fromRequest:request];
+                }
+                
+            } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+                // Log failure.
+                ALLog(@"Couldn't fetch image at URL %@.", [request.URL absoluteString]);
             }];
-            
-            if(!anime.image) {
-                // Save the image onto disk if it doesn't exist or they aren't the same.
-                [anime saveImage:image fromRequest:request];
-            }
-            
-        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-            // Log failure.
-            ALLog(@"Couldn't fetch image at URL %@.", [request.URL absoluteString]);
-        }];
-    }
-    else {
-        animeCell.image.image = cachedImage;
-    }
+        }
+        else {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                animeCell.image.image = cachedImage;
+            });
+        }
+    });
 }
 
 @end

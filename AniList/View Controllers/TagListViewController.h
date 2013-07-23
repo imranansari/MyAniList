@@ -12,5 +12,6 @@
 @interface TagListViewController : BaseViewController<UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, copy) NSString *tag;
+@property (nonatomic, copy) NSString *genre;
 
 @end

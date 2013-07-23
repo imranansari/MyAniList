@@ -10,6 +10,7 @@
 
 @protocol TagViewDelegate <NSObject>
 - (void)tagTappedWithTitle:(NSString *)title;
+- (void)genreTappedWithTitle:(NSString *)title;
 @end
 
 @interface TagView : UIView

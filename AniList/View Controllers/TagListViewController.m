@@ -12,6 +12,12 @@
 #import "Anime.h"
 #import "Manga.h"
 #import "TagService.h"
+#import "GenreService.h"
+#import "AniListCell.h"
+#import "MALHTTPClient.h"
+#import "AnimeCell.h"
+#import "Tag.h"
+#import "Genre.h"
 
 @interface TagListViewController ()
 @property (nonatomic, copy) NSArray *sectionHeaders;
@@ -31,7 +37,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-
+        self.hidesBackButton = NO;
     }
     return self;
 }
@@ -43,7 +49,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     
@@ -88,7 +93,14 @@
     self.topSectionLabel.alpha = 0.0f;
     
     // Fetch anime.
-    self.taggedAnime = [TagService animeWithTag:self.tag];
+    if(self.tag) {
+        self.taggedAnime = [TagService animeWithTag:self.tag];
+        self.title = self.tag;
+    }
+    else if(self.genre) {
+        self.taggedAnime = [GenreService animeWithGenre:self.genre];
+        self.title = [NSString stringWithFormat:@"%@ Anime", self.genre];
+    }
     
     [self.tableView reloadData];
 }
@@ -123,7 +135,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 44;
+    return [AniListCell cellHeight];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -146,14 +158,14 @@
     
     static NSString *CellIdentifier = @"Cell";
     
-    UITableViewCell *cell;
-    cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    AnimeCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if(!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"AnimeCell" owner:self options:nil];
+        cell = (AnimeCell *)nib[0];
     }
     
     Anime *anime = self.taggedAnime[indexPath.row];
-    cell.textLabel.text = anime.title;
+    [self configureCell:cell withObject:anime];
     
     return cell;
 }
@@ -161,7 +173,62 @@
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+}
+
+- (void)configureCell:(UITableViewCell *)cell withObject:(NSManagedObject *)object {
+    AniListCell *anilistCell = (AniListCell *)cell;
+    NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSURLRequest *imageRequest;
+    NSString *cachedImageLocation = @"";
     
+#warning - all of this code is gross. Will need to add a core data parent entity here with common traits.
+    
+    Anime *anime = (Anime *)object;
+    anilistCell.title.text = anime.title;
+    anilistCell.progress.text = [Anime stringForAnimeWatchedStatus:[anime.watched_status intValue]];
+    anilistCell.rank.text = [anime.user_score intValue] != -1 ? [NSString stringWithFormat:@"%d", [anime.user_score intValue]] : @"";
+    anilistCell.type.text = [Anime stringForAnimeType:[anime.type intValue]];
+    imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:anime.image_url]];
+    cachedImageLocation = [NSString stringWithFormat:@"%@/%@", documentsDirectory, anime.image];
+    
+    [anilistCell.title sizeToFit];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        UIImage *cachedImage = [UIImage imageWithContentsOfFile:cachedImageLocation];
+        
+        if(!cachedImage) {
+            [anilistCell.image setImageWithURLRequest:imageRequest placeholderImage:cachedImage success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    anilistCell.image.alpha = 0.0f;
+                    anilistCell.image.image = image;
+                    
+                    [UIView animateWithDuration:0.3f animations:^{
+                        anilistCell.image.alpha = 1.0f;
+                    }];
+                });
+                
+                // Save the image onto disk if it doesn't exist or they aren't the same.
+                if([object isKindOfClass:[Anime class]]) {
+                    Anime *anime = (Anime *)object;
+                    [anime saveImage:image fromRequest:imageRequest];
+                }
+                else if([object isKindOfClass:[Manga class]]) {
+                    Manga *manga = (Manga *)object;
+                    [manga saveImage:image fromRequest:imageRequest];
+                }
+                
+            } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+                // Log failure.
+                ALLog(@"Couldn't fetch image at URL %@.", [request.URL absoluteString]);
+            }];
+        }
+        else {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                anilistCell.image.image = cachedImage;
+            });
+        }
+    });
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -189,19 +256,6 @@
         [UIView animateWithDuration:0.2f animations:^{
             self.topSectionLabel.alpha = 0.0f;
         }];
-    }
-    
-    AniListNavigationController *navigationController = (AniListNavigationController *)self.navigationController;
-    
-    // Since we know this background will fit the screen height, we can use this value.
-    float height = [UIScreen mainScreen].bounds.size.height;
-    
-    if(scrollView.contentOffset.y <= 0) {
-        navigationController.imageView.frame = CGRectMake(navigationController.imageView.frame.origin.x, 0, navigationController.imageView.frame.size.width, navigationController.imageView.frame.size.height);
-    }
-    else {
-        float yOrigin = -((navigationController.imageView.frame.size.height - height) * (scrollView.contentOffset.y / scrollView.contentSize.height));
-        navigationController.imageView.frame = CGRectMake(navigationController.imageView.frame.origin.x, yOrigin, navigationController.imageView.frame.size.width, navigationController.imageView.frame.size.height);
     }
 }
 

@@ -317,10 +317,10 @@
     UIImage *cachedImage = [UIImage imageWithContentsOfFile:cachedImageLocation];
     
     if(cachedImage) {
-        ALLog(@"Image on disk exists for %@.", self.title);
+//        ALLog(@"Image on disk exists for %@.", self.title);
     }
     else {
-        ALLog(@"Image on disk does not exist for %@.", self.title);
+//        ALLog(@"Image on disk does not exist for %@.", self.title);
     }
     
     return cachedImage;
@@ -337,7 +337,9 @@
     });
     
     // Only save relative URL since Documents URL can change on updates.
-    self.image = [NSString stringWithFormat:@"anime/%@", filename];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.image = [NSString stringWithFormat:@"anime/%@", filename];
+    });
 }
 
 @end

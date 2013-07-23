@@ -302,11 +302,6 @@
     else {
         anilistCell.image.image = cachedImage;
     }
-//    AFImageRequestOperation *operation = [AFImageRequestOperation imageRequestOperationWithRequest:request success:^(UIImage *image) {
-//        anilistCell.image.image = image;
-//    }];
-//    
-//    [operation start];
 }
 
 #pragma mark - UISearchDisplayDelegate Methods

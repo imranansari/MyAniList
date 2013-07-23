@@ -326,7 +326,9 @@
     });
     
     // Only save relative URL since Documents URL can change on updates.
-    self.image = [NSString stringWithFormat:@"manga/%@", filename];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.image = [NSString stringWithFormat:@"manga/%@", filename];
+    });
 
 }
 
