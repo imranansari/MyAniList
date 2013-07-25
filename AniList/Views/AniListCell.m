@@ -40,6 +40,9 @@
     UIView *select = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 340, 90)];
     select.backgroundColor = [UIColor colorWithWhite:1.0f alpha:0.1f];
     self.selectedBackgroundView = select;
+
+    self.editView.hidden = YES;
+    self.editView.alpha = 0.0f;
     
     [self addShadow];
 }
@@ -56,6 +59,36 @@
             [((UILabel *)view) addShadow];
         }
     }
+}
+
+#pragma mark - UIGestureRecognizer Callback
+
+- (void)showEditScreen {
+    self.editView.alpha = 0.0f;
+    self.editView.hidden = NO;
+    
+    [UIView animateWithDuration:0.3f
+                          delay:0.0f
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         self.editView.alpha = 1.0f;
+                     }
+                     completion:^(BOOL finished) {
+        
+    }];
+}
+
+- (void)revokeEditScreen {
+    self.editView.alpha = 1.0f;
+    [UIView animateWithDuration:0.3f
+                          delay:0.0f
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         self.editView.alpha = 0.0f;
+                     }
+                     completion:^(BOOL finished) {
+                         self.editView.hidden = YES;
+                     }];
 }
 
 @end

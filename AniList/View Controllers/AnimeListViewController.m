@@ -46,6 +46,10 @@ static BOOL alreadyFetched = NO;
 //    if(!alreadyFetched) {
         [self fetchData];
 //    }
+    
+    UISwipeGestureRecognizer* swipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(didSwipe:)];
+    [swipeGestureRecognizer setDirection:UISwipeGestureRecognizerDirectionLeft];
+    [self.tableView addGestureRecognizer:swipeGestureRecognizer];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -121,6 +125,31 @@ static BOOL alreadyFetched = NO;
     }
 }
 
+- (void)didSwipe:(UIGestureRecognizer *)gestureRecognizer {
+    if (gestureRecognizer.state == UIGestureRecognizerStateEnded) {
+        CGPoint swipeLocation = [gestureRecognizer locationInView:self.tableView];
+        NSIndexPath *swipedIndexPath = [self.tableView indexPathForRowAtPoint:swipeLocation];
+        AniListCell* swipedCell = (AniListCell *)[self.tableView cellForRowAtIndexPath:swipedIndexPath];
+        
+        [swipedCell showEditScreen];
+        
+        UITapGestureRecognizer* tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didCancel:)];
+        [tapGestureRecognizer setNumberOfTapsRequired:1];
+        [swipedCell addGestureRecognizer:tapGestureRecognizer];
+    }
+}
+
+- (void)didCancel:(UIGestureRecognizer *)gestureRecognizer {
+    if (gestureRecognizer.state == UIGestureRecognizerStateEnded) {
+        CGPoint tapLocation = [gestureRecognizer locationInView:self.tableView];
+        NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:tapLocation];
+        AniListCell *cell = (AniListCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+        
+        if(cell.editView.hidden == NO)
+            [cell revokeEditScreen];
+    }
+}
+
 #pragma mark - Table view data source
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
@@ -184,6 +213,8 @@ static BOOL alreadyFetched = NO;
 - (void)configureCell:(UITableViewCell *)cell withObject:(NSManagedObject *)object {
     Anime *anime = (Anime *)object;
     AnimeCell *animeCell = (AnimeCell *)cell;
+    animeCell.editView.alpha = 0.0f;
+    animeCell.editView.hidden = YES;
     animeCell.title.text = anime.title;
     [animeCell.title addShadow];
     [animeCell.title sizeToFit];

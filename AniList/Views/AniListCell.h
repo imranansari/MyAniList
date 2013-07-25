@@ -16,8 +16,11 @@
 @property (nonatomic, weak) IBOutlet UILabel *type;
 @property (nonatomic, weak) IBOutlet UILabel *rank;
 @property (nonatomic, weak) IBOutlet UIView *loadingView;
+@property (nonatomic, weak) IBOutlet UIView *editView;
 
 + (CGFloat)cellHeight;
 - (void)addShadow;
+- (void)showEditScreen;
+- (void)revokeEditScreen;
 
 @end

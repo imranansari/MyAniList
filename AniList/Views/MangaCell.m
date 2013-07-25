@@ -17,6 +17,8 @@
     if (self) {
         self.backgroundColor = [UIColor clearColor];
         self.backgroundView = [[UIView alloc] initWithFrame:CGRectZero];
+        self.editView.hidden = YES;
+        self.editView.alpha = 0.0f;
     }
     return self;
 }

@@ -13,8 +13,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="322" height="89"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" id="eHw-hV-SUZ">
-                        <rect key="frame" x="0.0" y="0.0" width="58" height="91"/>
+                    <view contentMode="scaleToFill" id="eHw-hV-SUZ" userLabel="Loading view">
+                        <rect key="frame" x="0.0" y="0.0" width="58" height="90"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="white" id="uXQ-MU-JOu">
