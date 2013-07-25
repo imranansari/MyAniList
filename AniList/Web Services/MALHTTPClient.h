@@ -10,6 +10,8 @@
 #import "MALUserClient.h"
 #import "UMALHTTPClient.h"
 
+#import "Anime.h"
+
 typedef void (^HTTPSuccessBlock)(id operation, id response);
 typedef void (^HTTPFailureBlock)(id operation, NSError *error);
 
@@ -20,15 +22,21 @@ typedef void (^HTTPFailureBlock)(id operation, NSError *error);
 - (void)loginWithUsername:(NSString *)username andPassword:(NSString *)password success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure;
 
 - (void)getAnimeListForUser:(NSString *)user initialFetch:(BOOL)initialFetch success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure;
+- (void)getTopAnimeForType:(AnimeType)animeType atPage:(NSNumber *)page success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure;
+- (void)getPopularAnimeForType:(AnimeType)animeType atPage:(NSNumber *)page success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure;
+- (void)getUpcomingAnimeFromDate:(NSDate *)date atPage:(NSNumber *)page success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure;
+- (void)getJustAddedAnimeAtPage:(NSNumber *)page success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure;
 - (void)getAnimeDetailsForID:(NSNumber *)animeID success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure;
 - (void)addAnimeToListWithID:(NSNumber *)animeID success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure;
 - (void)updateDetailsForAnimeWithID:(NSNumber *)animeID success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure;
+- (void)deleteAnimeWithID:(NSNumber *)animeID success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure;
 - (void)searchForAnimeWithQuery:(NSString *)query success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure;
 
 - (void)getMangaListForUser:(NSString *)user initialFetch:(BOOL)initialFetch success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure;
 - (void)getMangaDetailsForID:(NSNumber *)mangaID success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure;
 - (void)addMangaToListWithID:(NSNumber *)mangaID success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure;
 - (void)updateDetailsForMangaWithID:(NSNumber *)mangaID success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure;
+- (void)deleteMangaWithID:(NSNumber *)mangaID success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure;
 - (void)searchForMangaWithQuery:(NSString *)query success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure;
 
 - (void)getProfileForUser:(NSString *)user success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure;
@@ -38,7 +46,6 @@ typedef void (^HTTPFailureBlock)(id operation, NSError *error);
 + (void)getUserHistoryForUserID:(NSNumber *)userID success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure;
 + (void)getUserAnimeHistoryForUserID:(NSNumber *)userID success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure;
 + (void)getUserMangaHistoryForUserID:(NSNumber *)userID success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure;
-
 
 + (void)getTopRankingAnimeWithParams:(NSDictionary *)params success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure;
 + (void)getPopularRankingAnimeWithParams:(NSDictionary *)params success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure;

@@ -153,9 +153,17 @@
 //        for(int j = 0; j < [[section allValues][0] count]; i++) {
 //            NSManagedObject *obj = [section allValues][0][i];
 //            if(obj == object) {
-//                [self.relatedTableView beginUpdates];
-//                [self.relatedTableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:j inSection:i]] withRowAnimation:UITableViewRowAnimationFade];
-//                [self.relatedTableView endUpdates];
+//                // We've found the object; now find it in the table view.
+//                for(int k = 0; k < [self.relatedTableView numberOfRowsInSection:i]; k++) {
+//                    AniListMiniCell *cell = (AniListMiniCell *)[self.relatedTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:k inSection:i]];
+//                    if(([obj isMemberOfClass:[Anime class]] && [cell.title.text isEqualToString:((Anime *)obj).title]) ||
+//                       ([obj isMemberOfClass:[Manga class]] && [cell.title.text isEqualToString:((Manga *)obj).title])) {
+//                        [self.relatedTableView beginUpdates];
+//                        [self.relatedTableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:k inSection:i]] withRowAnimation:UITableViewRowAnimationFade];
+//                        [self.relatedTableView endUpdates];
+//                        break;
+//                    }
+//                }
 //            }
 //        }
         for(NSManagedObject *obj in [section allValues][0]) {
@@ -179,8 +187,9 @@
     cell.rank.text = [anime.user_score intValue] != -1 ? [NSString stringWithFormat:@"%d", [anime.user_score intValue]] : @"";
     cell.type.text = [Anime stringForAnimeType:[anime.type intValue]];
     
+    NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:anime.image_url]];
+    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:anime.image_url]];
         UIImage *cachedImage = [anime imageForAnime];
         
         if(!cachedImage) {

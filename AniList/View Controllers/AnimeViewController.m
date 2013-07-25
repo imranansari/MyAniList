@@ -66,6 +66,7 @@
         [AnimeService addAnime:response fromList:NO];
         [[NSNotificationCenter defaultCenter] postNotificationName:kAnimeDidUpdate object:@(YES)];
     } failure:^(NSURLRequest *operation, NSError *error) {
+        ALLog(@"Couldn't get anime details. Error: %@", error.localizedDescription);
         [[NSNotificationCenter defaultCenter] postNotificationName:kAnimeDidUpdate object:@(NO)];
         [self updateViewsOnFailure:YES];
     }];

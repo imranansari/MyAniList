@@ -27,6 +27,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.managedObjectContext = [(AniListAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
+        self.sectionHeaderViews = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -47,7 +48,6 @@
     SWRevealViewController *revealController = self.revealViewController;
     
     AniListNavigationController *nvc = ((AniListNavigationController *)self.revealViewController.frontViewController);
-    
     
     self.topSectionLabel.backgroundColor = [UIColor clearColor];
     self.topSectionLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
@@ -70,11 +70,7 @@
         [nvc.navigationBar setBackgroundImage:maskedImage forBarMetrics:UIBarMetricsDefault];
     }
     
-#warning - Why does this break for unit testing?
-    if(revealController) {
-        [self.view addGestureRecognizer:revealController.panGestureRecognizer];
-        [self.menuButton addTarget:revealController action:@selector(revealToggle:) forControlEvents:UIControlEventTouchUpInside];
-    }
+    [self.view addGestureRecognizer:revealController.panGestureRecognizer];
 
     self.view.backgroundColor = [UIColor clearColor];
     
@@ -138,7 +134,31 @@
     return nil;
 }
 
+- (NSString *)sectionKeyPathName {
+    return @"column";
+}
+
+- (void)updateHeaderForSections:(NSArray *)sections {
+//    for(int i = 0; i < sections.count; i++) {
+//        NSIndexPath *indexPath = sections[i];
+//        NSNumber *headerSection = [self.fetchedResultsController sectionIndexTitles][indexPath.section];
+//        NSString *count = [NSString stringWithFormat:@"%d", [self.tableView numberOfRowsInSection:indexPath.section]];
+//        UIView *headerView = [UIView tableHeaderWithPrimaryText:self.sectionHeaders[[headerSection intValue]] andSecondaryText:count];
+//    }
+//    return;
+}
+
 #pragma mark - Table view data source
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    if(self.viewTop || self.viewPopular) return nil;
+    
+    NSNumber *headerSection = [self.fetchedResultsController sectionIndexTitles][section];
+    NSString *count = [NSString stringWithFormat:@"%d", [self.tableView numberOfRowsInSection:section]];
+    UIView *headerView = [UIView tableHeaderWithPrimaryText:self.sectionHeaders[[headerSection intValue]] andSecondaryText:count];
+    self.sectionHeaderViews[[headerSection intValue]] = headerView;
+    return headerView;
+}
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     return [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 0)];
@@ -165,11 +185,6 @@
     return [sectionInfo numberOfObjects];
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    NSNumber *headerSection = [self.fetchedResultsController sectionIndexTitles][section];
-    NSString *count = [NSString stringWithFormat:@"%d", [self.tableView numberOfRowsInSection:section]];
-    return [UIView tableHeaderWithPrimaryText:self.sectionHeaders[[headerSection intValue]] andSecondaryText:count];
-}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -182,6 +197,17 @@
     }
     
     return cell;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Return YES if you want the specified item to be editable.
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if(editingStyle == UITableViewCellEditingStyleDelete) {
+        
+    }
 }
 
 #pragma mark - Table view delegate
@@ -211,7 +237,7 @@
     
     // Edit the section name key path and cache name if appropriate.
     // nil for section name key path means "no sections".
-    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"column" cacheName:[self entityName]];
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:[self sectionKeyPathName] cacheName:[self entityName]];
     aFetchedResultsController.delegate = self;
     self.fetchedResultsController = aFetchedResultsController;
     
@@ -253,10 +279,12 @@
     switch(type) {
         case NSFetchedResultsChangeInsert:
             [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [[self.tableView headerViewForSection:newIndexPath.section] setNeedsDisplay];
             break;
             
         case NSFetchedResultsChangeDelete:
             [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [[self.tableView headerViewForSection:indexPath.section] setNeedsDisplay];
             break;
             
         case NSFetchedResultsChangeUpdate:
@@ -266,6 +294,8 @@
         case NSFetchedResultsChangeMove:
             [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
             [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [[self.tableView headerViewForSection:indexPath.section] setNeedsDisplay];
+            [[self.tableView headerViewForSection:newIndexPath.section] setNeedsDisplay];
             break;
     }
 }
@@ -289,7 +319,7 @@
 //        ALLog(@"indices: %@", [self.tableView indexPathsForVisibleRows]);
 //        ALLog(@"visible sections: %@", visibleSections);
         
-        if(visibleSections.count > 0) {
+        if(visibleSections.count > 0 && [self.fetchedResultsController sectionIndexTitles].count) {
             int topSection = [visibleSections[0] intValue];
             
             NSNumber *headerSection = [self.fetchedResultsController sectionIndexTitles][topSection];

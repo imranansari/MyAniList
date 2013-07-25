@@ -65,12 +65,22 @@ static NSString *CellIdentifier = @"Cell";
                   @{
                       kCellTitleKey : @"Anime",
                       kCellViewControllerKey : @"AnimeListViewController",
-                      kCellActionKey : @"loadViewController:"
+                      kCellActionKey : @"loadViewController:",
+                      },
+                  @{
+                      kCellTitleKey : @"Top Anime",
+                      kCellViewControllerKey : @"AnimeListViewController",
+                      kCellActionKey : @"loadTopViewController:"
                       },
                   @{
                       kCellTitleKey : @"Manga",
                       kCellViewControllerKey : @"MangaListViewController",
                       kCellActionKey : @"loadViewController:"
+                      },
+                  @{
+                      kCellTitleKey : @"Top Manga",
+                      kCellViewControllerKey : @"AnimeListViewController",
+                      kCellActionKey : @"loadTopViewController:"
                       },
                   @{
                       kCellTitleKey : @"Search",
@@ -128,6 +138,20 @@ static NSString *CellIdentifier = @"Cell";
 
 - (void)loadViewController:(UIViewController *)viewController {
     AniListNavigationController *navigationController = [[AniListNavigationController alloc] initWithRootViewController:viewController];
+    [self.revealViewController setFrontViewController:navigationController animated:YES];
+}
+
+- (void)loadTopViewController:(UIViewController *)viewController {
+    AniListViewController *anilistViewController = (AniListViewController *)viewController;
+    anilistViewController.viewTop = YES;
+    AniListNavigationController *navigationController = [[AniListNavigationController alloc] initWithRootViewController:anilistViewController];
+    [self.revealViewController setFrontViewController:navigationController animated:YES];
+}
+
+- (void)loadPopularViewController:(UIViewController *)viewController {
+    AniListViewController *anilistViewController = (AniListViewController *)viewController;
+    anilistViewController.viewPopular = YES;
+    AniListNavigationController *navigationController = [[AniListNavigationController alloc] initWithRootViewController:anilistViewController];
     [self.revealViewController setFrontViewController:navigationController animated:YES];
 }
 

@@ -287,14 +287,20 @@ static NSArray *cachedAnimeList = nil;
     
     anime.type = @([Anime animeTypeForValue:data[kType]]);
     anime.total_episodes = [data[kEpisodes] isNull] ? @(-1) : [data[kEpisodes] isKindOfClass:[NSString class]] ? @([data[kEpisodes] intValue]) : data[kEpisodes];
-    anime.status = @([Anime animeAirStatusForValue:data[kAirStatus]]);
+    
+    if(data[kAirStartDate] && ![data[kAirStatus] isNull])
+        anime.status = @([Anime animeAirStatusForValue:data[kAirStatus]]);
     
     // note: not the user start/end date
-    anime.date_start = [NSDate parseDate:data[kAirStartDate]];
-    anime.date_finish = [NSDate parseDate:data[kAirEndDate]];
+    if(data[kAirStartDate] && ![data[kAirStartDate] isNull])
+        anime.date_start = [NSDate parseDate:data[kAirStartDate]];
+    if(data[kAirEndDate] && ![data[kAirEndDate] isNull])
+        anime.date_finish = [NSDate parseDate:data[kAirEndDate]];
     
-    anime.user_date_start = [NSDate parseDate:data[kUserStartDate]];
-    anime.user_date_finish = [NSDate parseDate:data[kUserEndDate]];
+    if(data[kUserStartDate] && ![data[kUserStartDate] isNull])
+        anime.user_date_start = [NSDate parseDate:data[kUserStartDate]];
+    if(data[kUserEndDate] && ![data[kUserEndDate] isNull])
+        anime.user_date_finish = [NSDate parseDate:data[kUserEndDate]];
     
 //    anime.classification = data[@"classification"];
 //    anime.average_score = data[@"members_score"];
@@ -305,9 +311,14 @@ static NSArray *cachedAnimeList = nil;
 //    anime.tags = data[@"tags"];
 //    anime.manga_adaptations = data[@"manga_adaptations"];
     
-    anime.watched_status = @([Anime animeWatchedStatusForValue:data[kUserWatchedStatus]]);
-    anime.current_episode = data[kUserWatchedEpisodes];
-    anime.user_score = [data[kUserScore] intValue] == 0 ? @(-1) : [data[kUserScore] isKindOfClass:[NSString class]] ? @([data[kUserScore] intValue]) : data[kUserScore];
+    if(data[kUserWatchedStatus] && ![data[kUserWatchedStatus] isNull])
+        anime.watched_status = @([Anime animeWatchedStatusForValue:data[kUserWatchedStatus]]);
+    
+    if(data[kUserWatchedEpisodes] && ![data[kUserWatchedEpisodes] isNull])
+        anime.current_episode = data[kUserWatchedEpisodes];
+    
+    if(data[kUserScore] && ![data[kUserScore] isNull])
+        anime.user_score = [data[kUserScore] intValue] == 0 ? @(-1) : [data[kUserScore] isKindOfClass:[NSString class]] ? @([data[kUserScore] intValue]) : data[kUserScore];
     
     if(!fromList)
         [[AnimeService managedObjectContext] save:&error];
@@ -375,7 +386,9 @@ static NSArray *cachedAnimeList = nil;
     
     anime.type = @([Anime animeTypeForValue:data[kType]]);
     anime.total_episodes = [data[kEpisodes] isNull] ? @(-1) : [data[kEpisodes] isKindOfClass:[NSString class]] ? @([data[kEpisodes] intValue]) : data[kEpisodes];
-    anime.status = @([Anime animeAirStatusForValue:data[kAirStatus]]);
+    
+    if(data[kAirStartDate] && ![data[kAirStatus] isNull])
+        anime.status = @([Anime animeAirStatusForValue:data[kAirStatus]]);
     
     if(data[kAirStartDate] && ![data[kAirStartDate] isNull])
         anime.date_start = [NSDate parseDate:data[kAirStartDate]];

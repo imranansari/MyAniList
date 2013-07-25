@@ -29,6 +29,10 @@ static BOOL alreadyFetched = NO;
         self.sectionHeaders = @[@"Reading", @"Completed", @"On Hold",
                                 @"Dropped", @"Plan To Read"];
         
+        for(int i = 0; i < self.sectionHeaders.count; i++) {
+            [self.sectionHeaderViews addObject:[[UIView alloc] init]];
+        }
+        
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchData) name:kUserLoggedIn object:nil];
     }
     
@@ -112,6 +116,21 @@ static BOOL alreadyFetched = NO;
     [self configureCell:cell withObject:manga];
     
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if(editingStyle == UITableViewCellEditingStyleDelete) {
+        Manga *manga = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        [[MALHTTPClient sharedClient] deleteMangaWithID:manga.manga_id success:^(id operation, id response) {
+            ALLog(@"'%@' successfully deleted.", manga.title);
+        } failure:^(id operation, NSError *error) {
+            ALLog(@"'%@' was not successfully deleted.", manga.title);
+        }];
+        
+        AniListAppDelegate *delegate = (AniListAppDelegate *)[UIApplication sharedApplication].delegate;
+        [delegate.managedObjectContext deleteObject:manga];
+        
+    }
 }
 
 #pragma mark - Table view delegate

@@ -104,6 +104,10 @@
                                  forLeftSegmentState:UIControlStateNormal
                                    rightSegmentState:UIControlStateSelected
                                           barMetrics:UIBarMetricsDefault];
+    // Toolbar
+    [[UIToolbar appearance] setBackgroundImage:[[UIImage new] resizableImageWithCapInsets:UIEdgeInsetsMake(22, 5, 22, 5)] forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
+    
+    [[UISegmentedControl appearance] setBackgroundImage:[UIImage imageNamed:@"image_placeholder.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
 }
 
 - (void)createDirectories {

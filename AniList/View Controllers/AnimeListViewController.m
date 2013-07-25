@@ -28,6 +28,7 @@ static BOOL alreadyFetched = NO;
         self.title = @"Anime";
         self.sectionHeaders = @[@"Watching", @"Completed", @"On Hold", @"Dropped", @"Plan To Watch"];
         
+        
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchData) name:kUserLoggedIn object:nil];
     }
     
@@ -42,9 +43,9 @@ static BOOL alreadyFetched = NO;
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    if(!alreadyFetched) {
+//    if(!alreadyFetched) {
         [self fetchData];
-    }
+//    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -57,29 +58,66 @@ static BOOL alreadyFetched = NO;
 }
 
 - (NSArray *)sortDescriptors {
-    NSSortDescriptor *statusDescriptor = [[NSSortDescriptor alloc] initWithKey:@"watched_status" ascending:YES];
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:YES];
-    return @[statusDescriptor, sortDescriptor];
+
+    if(self.viewTop) {
+        return @[[[NSSortDescriptor alloc] initWithKey:@"average_score" ascending:NO]];
+    }
+    else if(self.viewPopular) {
+        return @[[[NSSortDescriptor alloc] initWithKey:@"popularity_rank" ascending:YES]];
+    }
+    else {
+        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:YES];
+        NSSortDescriptor *primaryDescriptor = [[NSSortDescriptor alloc] initWithKey:@"watched_status" ascending:YES];
+        return @[primaryDescriptor, sortDescriptor];
+    }
 }
 
 - (NSPredicate *)predicate {
+    if(self.viewTop || self.viewPopular) {
+        return nil;
+    }
+    
     return [NSPredicate predicateWithFormat:@"watched_status < 7"];
+}
+
+- (NSString *)sectionKeyPathName {
+    if(self.viewTop || self.viewPopular) {
+        return nil;
+    }
+    
+    return [super sectionKeyPathName];
 }
 
 - (void)fetchData {
     if([UserProfile userIsLoggedIn]) {
-        [[MALHTTPClient sharedClient] getAnimeListForUser:[[UserProfile profile] username]
-                                             initialFetch:!alreadyFetched
-                                                  success:^(NSURLRequest *operation, id response) {
-                                                      [AnimeService addAnimeList:(NSDictionary *)response];
-                                                      alreadyFetched = YES;
-                                                      [super fetchData];
-                                                  }
-                                                  failure:^(NSURLRequest *operation, NSError *error) {
-                                                      // Derp.
-                                                      
-                                                      [super fetchData];
-                                                  }];
+        
+        if(self.viewTop) {
+            [[MALHTTPClient sharedClient] getTopAnimeForType:AnimeTypeTV atPage:@(1) success:^(id operation, id response) {
+                ALLog(@"Anime list found: %@", response);
+                for(NSDictionary *anime in response) {
+                    [AnimeService addAnime:anime fromList:NO];
+                }
+            } failure:^(id operation, NSError *error) {
+                ALLog(@"Could not fetch top.");
+            }];
+        }
+        else if(self.viewPopular) {
+            
+        }
+        else {
+            [[MALHTTPClient sharedClient] getAnimeListForUser:[[UserProfile profile] username]
+                                                 initialFetch:!alreadyFetched
+                                                      success:^(NSURLRequest *operation, id response) {
+                                                          [AnimeService addAnimeList:(NSDictionary *)response];
+                                                          alreadyFetched = YES;
+                                                          [super fetchData];
+                                                      }
+                                                      failure:^(NSURLRequest *operation, NSError *error) {
+                                                          // Derp.
+                                                          
+                                                          [super fetchData];
+                                                      }];
+        }
     }
 }
 
@@ -113,6 +151,22 @@ static BOOL alreadyFetched = NO;
     return cell;
 }
 
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if(editingStyle == UITableViewCellEditingStyleDelete) {
+        Anime *anime = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        [[MALHTTPClient sharedClient] deleteAnimeWithID:anime.anime_id success:^(id operation, id response) {
+            ALLog(@"'%@' successfully deleted.", anime.title);
+        } failure:^(id operation, NSError *error) {
+            ALLog(@"'%@' was not successfully deleted.", anime.title);
+        }];
+        
+        AniListAppDelegate *delegate = (AniListAppDelegate *)[UIApplication sharedApplication].delegate;
+        [delegate.managedObjectContext deleteObject:anime];
+        
+    }
+}
+
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -137,7 +191,13 @@ static BOOL alreadyFetched = NO;
     animeCell.progress.text = [AnimeCell progressTextForAnime:anime];
     [animeCell.progress addShadow];
     
-    animeCell.rank.text = [anime.user_score intValue] != -1 ? [NSString stringWithFormat:@"%d", [anime.user_score intValue]] : @"";
+    if(self.viewTop) {
+        animeCell.rank.text = [NSString stringWithFormat:@"#%d (%0.02f)", [self.tableView indexPathForCell:cell].row+1, [anime.average_score doubleValue]];
+    }
+    else {
+        animeCell.rank.text = [anime.user_score intValue] != -1 ? [NSString stringWithFormat:@"%d", [anime.user_score intValue]] : @"";
+    }
+    
     [animeCell.rank addShadow];
     
     animeCell.type.text = [Anime stringForAnimeType:[anime.type intValue]];

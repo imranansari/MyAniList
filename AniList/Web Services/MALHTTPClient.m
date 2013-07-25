@@ -122,6 +122,96 @@
                                   }];
 }
 
+- (void)getTopAnimeForType:(AnimeType)animeType atPage:(NSNumber *)page success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure {
+    
+    ALLog(@"Getting top list for anime type %@...", [Anime stringForAnimeType:animeType]);
+    
+    NSString *path = @"/anime/top";
+    
+    NSDictionary *parameters = @{
+//                                 @"type" : [Anime stringForAnimeType:animeType], // not working at the moment.
+                                 @"page" : page
+                                 };
+    
+    [[UMALHTTPClient sharedClient] authenticate];
+    [[UMALHTTPClient sharedClient] getPath:path
+                                parameters:parameters
+                                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                       success(operation, responseObject);
+                                   }
+                                   failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                       failure(operation, error);
+                                   }];
+}
+
+- (void)getPopularAnimeForType:(AnimeType)animeType atPage:(NSNumber *)page success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure {
+    
+    ALLog(@"Getting popular list for anime type %@...", [Anime stringForAnimeType:animeType]);
+    
+    NSString *path = @"/anime/popular";
+    
+    NSDictionary *parameters = @{
+                                 //                                 @"type" : [Anime stringForAnimeType:animeType], // not working at the moment.
+                                 @"page" : page
+                                 };
+    
+    [[UMALHTTPClient sharedClient] authenticate];
+    [[UMALHTTPClient sharedClient] getPath:path
+                                parameters:parameters
+                                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                       success(operation, responseObject);
+                                   }
+                                   failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                       failure(operation, error);
+                                   }];
+}
+
+- (void)getUpcomingAnimeFromDate:(NSDate *)date atPage:(NSNumber *)page success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure {
+    
+    ALLog(@"Getting upcoming anime from date %@...", date);
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat = @"yyyyMMdd";
+    NSString *dateString = [dateFormatter stringFromDate:date];
+    
+    NSString *path = @"/anime/upcoming";
+    
+    NSDictionary *parameters = @{
+                                 @"start_date" : dateString
+                                 };
+    
+    [[UMALHTTPClient sharedClient] authenticate];
+    [[UMALHTTPClient sharedClient] getPath:path
+                                parameters:parameters
+                                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                       success(operation, responseObject);
+                                   }
+                                   failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                       failure(operation, error);
+                                   }];
+}
+
+- (void)getJustAddedAnimeAtPage:(NSNumber *)page success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure {
+    
+    ALLog(@"Getting just added anime at page %d.", [page intValue]);
+
+    NSString *path = @"/anime/just_added";
+    
+    NSDictionary *parameters = @{
+                                 @"page" : page
+                                 };
+    
+    [[UMALHTTPClient sharedClient] authenticate];
+    [[UMALHTTPClient sharedClient] getPath:path
+                                parameters:parameters
+                                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                       success(operation, responseObject);
+                                   }
+                                   failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                       failure(operation, error);
+                                   }];
+}
+
 - (void)getAnimeDetailsForID:(NSNumber *)animeID success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure {
     
     ALLog(@"Getting anime details for ID %d...", [animeID intValue]);
@@ -178,6 +268,22 @@
                                        failure(operation, error);
                                    }];
     
+}
+
+- (void)deleteAnimeWithID:(NSNumber *)animeID success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure {
+    NSString *path = [NSString stringWithFormat:@"/api/animelist/delete/%d.xml", [animeID intValue]];
+    
+    [[MALHTTPClient sharedClient] authenticate];
+    [[MALHTTPClient sharedClient] deletePath:path
+                                  parameters:nil
+                                     success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                         ALLog(@"Anime deleted: %@", operation.responseString);
+                                         success(operation, responseObject);
+                                     }
+                                     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                         ALLog(@"Anime failed to delete. Please try again later.");
+                                         failure(operation, error);
+                                     }];
 }
 
 - (void)searchForAnimeWithQuery:(NSString *)query success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure {
@@ -362,6 +468,22 @@
                                         failure(operation, error);
                                     }];
     
+}
+
+- (void)deleteMangaWithID:(NSNumber *)mangaID success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure {
+    NSString *path = [NSString stringWithFormat:@"/api/mangalist/delete/%d.xml", [mangaID intValue]];
+    
+    [[MALHTTPClient sharedClient] authenticate];
+    [[MALHTTPClient sharedClient] deletePath:path
+                                  parameters:nil
+                                     success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                         ALLog(@"Manga deleted: %@", operation.responseString);
+                                         success(operation, responseObject);
+                                     }
+                                     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                         ALLog(@"Manga failed to delete. Please try again later.");
+                                         failure(operation, error);
+                                     }];
 }
 
 @end

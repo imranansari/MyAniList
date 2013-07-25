@@ -36,6 +36,10 @@
     return self;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -44,6 +48,9 @@
     self.searchDisplayController.searchResultsTableView.backgroundColor = [UIColor clearColor];
     self.searchDisplayController.searchResultsTableView.separatorColor = [UIColor clearColor];
     self.searchDisplayController.searchBar.tintColor = [UIColor blackColor];
+    
+    self.searchDisplayController.searchBar.backgroundImage = [UIImage new];
+    self.searchDisplayController.searchBar.translucent = YES;
 }
 
 - (void)viewDidAppear:(BOOL)animated {

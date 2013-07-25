@@ -15,6 +15,7 @@
 @property (nonatomic, weak) IBOutlet UILabel *progress;
 @property (nonatomic, weak) IBOutlet UILabel *type;
 @property (nonatomic, weak) IBOutlet UILabel *rank;
+@property (nonatomic, weak) IBOutlet UIView *loadingView;
 
 - (void)setup;
 + (CGFloat)cellHeight;
