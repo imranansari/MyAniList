@@ -52,7 +52,7 @@
                     </label>
                 </subviews>
             </tableViewCellContentView>
-            <color key="backgroundColor" red="0.085406397300000006" green="0.10355921780000001" blue="0.21910873719999999" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <connections>
                 <outlet property="image" destination="Evv-Tf-e7y" id="6Mh-wq-fGJ"/>
                 <outlet property="progress" destination="Vvv-jJ-aji" id="p5m-uD-aev"/>
