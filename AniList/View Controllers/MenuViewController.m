@@ -14,6 +14,7 @@
 #import "AniListNavigationController.h"
 #import "MALHTTPClient.h"
 #import "LoginViewController.h"
+#import "TopListViewController.h"
 
 #define kCellTitleKey @"kCellTitleKey"
 #define kCellViewControllerKey @"kCellViewControllerKey"
@@ -69,7 +70,7 @@ static NSString *CellIdentifier = @"Cell";
                       },
                   @{
                       kCellTitleKey : @"Top Anime",
-                      kCellViewControllerKey : @"AnimeListViewController",
+                      kCellViewControllerKey : @"TopListViewController",
                       kCellActionKey : @"loadTopViewController:"
                       },
                   @{
@@ -79,12 +80,17 @@ static NSString *CellIdentifier = @"Cell";
                       },
                   @{
                       kCellTitleKey : @"Top Manga",
-                      kCellViewControllerKey : @"AnimeListViewController",
+                      kCellViewControllerKey : @"TopListViewController",
                       kCellActionKey : @"loadTopViewController:"
                       },
                   @{
                       kCellTitleKey : @"Search",
                       kCellViewControllerKey : @"SearchViewController",
+                      kCellActionKey : @"loadViewController:"
+                      },
+                  @{
+                      kCellTitleKey : @"Friends",
+                      kCellViewControllerKey : @"FriendsViewController",
                       kCellActionKey : @"loadViewController:"
                       },
                   @{
@@ -142,9 +148,9 @@ static NSString *CellIdentifier = @"Cell";
 }
 
 - (void)loadTopViewController:(UIViewController *)viewController {
-    AniListViewController *anilistViewController = (AniListViewController *)viewController;
-    anilistViewController.viewTop = YES;
-    AniListNavigationController *navigationController = [[AniListNavigationController alloc] initWithRootViewController:anilistViewController];
+    TopListViewController *topListViewController = (TopListViewController *)viewController;
+    topListViewController.entityName = @"Anime";
+    AniListNavigationController *navigationController = [[AniListNavigationController alloc] initWithRootViewController:topListViewController];
     [self.revealViewController setFrontViewController:navigationController animated:YES];
 }
 

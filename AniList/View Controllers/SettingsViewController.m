@@ -24,10 +24,24 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-//        self.options = @[
-//                         @{<#key#>: <#object, ...#>}
-//                         
-//                         ];
+        self.options = @[
+                         @{
+                             kOptionName    : @"Enable Genre/Tag Support",
+                             kAction        : @"enableGenreSupport"
+                             },
+                         @{
+                             kOptionName    : @"Clear Local Images",
+                             kAction        : @"clearLocalImages"
+                             },
+                         @{
+                             kOptionName    : @"Reset Anime Cache",
+                             kAction        : @"resetAnimeCache"
+                             },
+                         @{
+                             kOptionName    : @"Reset Manga Cache",
+                             kAction        : @"resetMangaCache"
+                             },
+                         ];
     }
     return self;
 }
@@ -45,7 +59,7 @@
     nvc.navigationBar.translucent = YES; // Setting this slides the view up, underneath the nav bar (otherwise it'll appear black)
     
     if([[UIDevice currentDevice].systemVersion compare:@"7.0" options:NSNumericSearch] != NSOrderedAscending) {
-        //        nvc.navigationBar.barTintColor = [UIColor clearColor];
+        nvc.navigationBar.barTintColor = [UIColor clearColor];
     }
     else {
         const float colorMask[6] = {222, 255, 222, 255, 222, 255};
@@ -56,10 +70,7 @@
         [nvc.navigationBar setBackgroundImage:maskedImage forBarMetrics:UIBarMetricsDefault];
     }
     
-#warning - Why does this break for unit testing?
-    if(revealController) {
-        [self.view addGestureRecognizer:revealController.panGestureRecognizer];
-    }
+    [self.view addGestureRecognizer:revealController.panGestureRecognizer];
     
     self.view.backgroundColor = [UIColor clearColor];
     
@@ -94,7 +105,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
+    return self.options.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -107,7 +118,8 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
-    cell.textLabel.text = @"Hey";
+    NSDictionary *item = self.options[indexPath.row];
+    cell.textLabel.text = item[kOptionName];
     
     return cell;
 }

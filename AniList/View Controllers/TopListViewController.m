@@ -1,37 +1,35 @@
 //
-//  TagListViewController.m
+//  TopListViewController.m
 //  AniList
 //
 //  Created by Corey Roberts on 7/21/13.
 //  Copyright (c) 2013 SpacePyro Inc. All rights reserved.
 //
 
-#import "TagListViewController.h"
-#import "CRTransitionLabel.h"
+#import "TopListViewController.h"
+#import "AniListTableView.h"
 #import "Anime.h"
 #import "AnimeViewController.h"
 #import "Manga.h"
 #import "MangaViewController.h"
-#import "Tag.h"
-#import "TagService.h"
-#import "Genre.h"
-#import "GenreService.h"
 #import "AniListCell.h"
 #import "MALHTTPClient.h"
 
+#import "AnimeService.h"
+#import "MangaService.h"
 
-@interface TagListViewController ()
+@interface TopListViewController ()
 @property (nonatomic, copy) NSArray *sectionHeaders;
+@property (nonatomic, strong) NSMutableArray *topItems;
 @property (nonatomic, weak) IBOutlet UIView *maskView;
 @property (nonatomic, weak) IBOutlet AniListTableView *tableView;
-@property (nonatomic, weak) IBOutlet CRTransitionLabel *topSectionLabel;
-@property (nonatomic, strong) NSArray *taggedItems;
+@property (nonatomic, assign) int currentPage;
 @end
 
-@implementation TagListViewController
+@implementation TopListViewController
 
 - (id)init {
-    return [self initWithNibName:@"TagListViewController" bundle:[NSBundle mainBundle]];
+    return [self initWithNibName:@"TopListViewController" bundle:[NSBundle mainBundle]];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -52,38 +50,40 @@
     
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.topItems = [[NSMutableArray alloc] init];
+    self.currentPage = 1;
     
-    self.topSectionLabel.backgroundColor = [UIColor clearColor];
-    self.topSectionLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
-    self.topSectionLabel.textColor = [UIColor lightGrayColor];
-    self.topSectionLabel.textAlignment = NSTextAlignmentCenter;
-    
-    self.topSectionLabel.text = @"";
-    self.topSectionLabel.alpha = 0.0f;
-    
-    // Fetch.
-    if(self.isAnime) {
-        if(self.tag) {
-            self.taggedItems = [TagService animeWithTag:self.tag];
-            self.title = self.tag;
-        }
-        else if(self.genre) {
-            self.taggedItems = [GenreService animeWithGenre:self.genre];
-            self.title = [NSString stringWithFormat:@"%@ Anime", self.genre];
-        }
-    }
-    else {
-        if(self.tag) {
-            self.taggedItems = [TagService mangaWithTag:self.tag];
-            self.title = self.tag;
-        }
-        else if(self.genre) {
-            self.taggedItems = [GenreService mangaWithGenre:self.genre];
-            self.title = [NSString stringWithFormat:@"%@ Manga", self.genre];
-        }
-    }
+    [self fetchTopItemsAtPage:@(self.currentPage)];
+}
+
+static BOOL fetching = NO;
+
+- (void)fetchTopItemsAtPage:(NSNumber *)page {
+    if(!fetching) {
+        ALLog(@"Fetching anime at page: %d", [page intValue]);
+        fetching = YES;
         
-    [self.tableView reloadData];
+        if([self.entityName isEqualToString:@"Anime"]) {
+            [[MALHTTPClient sharedClient] getTopAnimeForType:AnimeTypeTV atPage:page success:^(id operation, id response) {
+                ALLog(@"Items fetched: %d", ((NSArray *)response).count);
+                
+                for(NSDictionary *topAnime in response) {
+                    Anime *anime = [AnimeService addAnime:topAnime fromList:NO];
+                    [self.topItems addObject:anime];
+                }
+                
+                [self.tableView reloadData];
+                self.currentPage++;
+                fetching = NO;
+            } failure:^(id operation, NSError *error) {
+                ALLog(@"Unable to get items. Trying again. Error: %@", error.localizedDescription);
+                fetching = NO;
+            }];
+        }
+        else {
+            
+        }
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -123,16 +123,8 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//    id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
-//    return [sectionInfo numberOfObjects];
-    return [self.taggedItems count];
+    return [self.topItems count];
 }
-
-//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-//    NSNumber *headerSection = @(0);//[self.fetchedResultsController sectionIndexTitles][section];
-//    NSString *count = [NSString stringWithFormat:@"%d", [self.tableView numberOfRowsInSection:section]];
-//    return [UIView tableHeaderWithPrimaryText:self.sectionHeaders[[headerSection intValue]] andSecondaryText:count];
-//}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -144,7 +136,7 @@
         cell = (AniListCell *)nib[0];
     }
     
-    NSManagedObject *item = self.taggedItems[indexPath.row];
+    NSManagedObject *item = self.topItems[indexPath.row];
     [self configureCell:cell withObject:item];
     
     return cell;
@@ -153,7 +145,7 @@
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSManagedObject *object = self.taggedItems[indexPath.row];
+    NSManagedObject *object = self.topItems[indexPath.row];
     
 #warning - back button can get pretty long here. Best solution?
     
@@ -237,30 +229,8 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    
-    //    ALLog(@"content offset: %f", scrollView.contentOffset.y);
-    
-    if(scrollView.contentOffset.y > 36) {
-        NSArray *visibleSections = [[[NSSet setWithArray:[[self.tableView indexPathsForVisibleRows] valueForKey:@"section"]] allObjects] sortedArrayUsingSelector:@selector(compare:)];
-        //        ALLog(@"indices: %@", [self.tableView indexPathsForVisibleRows]);
-        //        ALLog(@"visible sections: %@", visibleSections);
-        
-        if(visibleSections.count > 0) {
-            int topSection = [visibleSections[0] intValue];
-            
-            NSNumber *headerSection = @(0);//[self.fetchedResultsController sectionIndexTitles][topSection];
-            
-            self.topSectionLabel.text = self.sectionHeaders[[headerSection intValue]];
-            
-            [UIView animateWithDuration:0.2f animations:^{
-                self.topSectionLabel.alpha = 1.0f;
-            }];
-        }
-    }
-    else {
-        [UIView animateWithDuration:0.2f animations:^{
-            self.topSectionLabel.alpha = 0.0f;
-        }];
+    if(scrollView.contentOffset.y + scrollView.frame.size.height + 100 > scrollView.contentSize.height) {
+        [self fetchTopItemsAtPage:@(self.currentPage)];
     }
 }
 

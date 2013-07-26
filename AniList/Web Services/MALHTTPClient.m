@@ -151,7 +151,7 @@
     NSString *path = @"/anime/popular";
     
     NSDictionary *parameters = @{
-                                 //                                 @"type" : [Anime stringForAnimeType:animeType], // not working at the moment.
+                                 // @"type" : [Anime stringForAnimeType:animeType], // not working at the moment.
                                  @"page" : page
                                  };
     
@@ -159,7 +159,11 @@
     [[UMALHTTPClient sharedClient] getPath:path
                                 parameters:parameters
                                    success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                       success(operation, responseObject);
+                                       // If no objects come back, consider the response as failed.
+                                       if(((NSArray *)responseObject).count == 0)
+                                           failure(operation, nil);
+                                       else
+                                           success(operation, responseObject);
                                    }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        failure(operation, error);
