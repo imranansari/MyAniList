@@ -97,14 +97,19 @@ static NSArray *cachedAnimeList = nil;
 + (BOOL)addAnimeList:(NSDictionary *)data {
     
     NSDictionary *animeDetails = data[@"myanimelist"];
-    NSDictionary *animeDictionary = animeDetails[@"anime"];
+    NSArray *animes = animeDetails[@"anime"];
     NSDictionary *animeUserInfo = animeDetails[@"myinfo"];
+    
+    // This is just one anime.
+    if([animes isKindOfClass:[NSDictionary class]]) {
+        NSDictionary *soloAnime = (NSDictionary *)animes;
+        animes = @[soloAnime];
+    }
     
     cachedAnimeList = nil;
     
     MVComputeTimeWithNameAndBlock((const char *)"animelist", ^{
-        
-        for(NSDictionary *animeItem in animeDictionary) {
+        for(NSDictionary *animeItem in animes) {
             NSMutableDictionary *anime = [[NSMutableDictionary alloc] init];
             
             [anime addEntriesFromDictionary:@{ kID : @([animeItem[@"series_animedb_id"][@"text"] intValue]) } ];
@@ -116,8 +121,6 @@ static NSArray *cachedAnimeList = nil;
             [anime addEntriesFromDictionary:@{ kUserScore : @([animeItem[@"my_score"][@"text"] intValue]) }];
             [anime addEntriesFromDictionary:@{ kUserWatchedStatus : animeItem[@"my_status"][@"text"] }];
             
-            // no tag support...yet.
-            //        [anime addEntriesFromDictionary:@{ @"user_tags" : animeItem[@"my_tags"][@"text"] }];
             [anime addEntriesFromDictionary:@{ kUserWatchedEpisodes : @([animeItem[@"my_watched_episodes"][@"text"] intValue]) }];
             [anime addEntriesFromDictionary:@{ kAirEndDate : animeItem[@"series_end"][@"text"] }];
             [anime addEntriesFromDictionary:@{ kEpisodes : @([animeItem[@"series_episodes"][@"text"] intValue]) }];
