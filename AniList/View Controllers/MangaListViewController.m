@@ -13,11 +13,12 @@
 #import "Manga.h"
 #import "MALHTTPClient.h"
 #import "AniListAppDelegate.h"
+#import "MangaUserInfoEditViewController.h"
 
 static BOOL alreadyFetched = NO;
 
 @interface MangaListViewController ()
-
+@property (nonatomic, strong) Manga *editedManga;
 @end
 
 @implementation MangaListViewController
@@ -49,6 +50,10 @@ static BOOL alreadyFetched = NO;
     
     if(!alreadyFetched)
         [self fetchData];
+    
+    UISwipeGestureRecognizer* swipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(didSwipe:)];
+    [swipeGestureRecognizer setDirection:UISwipeGestureRecognizerDirectionLeft];
+    [self.tableView addGestureRecognizer:swipeGestureRecognizer];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -87,6 +92,89 @@ static BOOL alreadyFetched = NO;
     }
 }
 
+
+- (void)saveManga:(Manga *)manga {
+    [[MALHTTPClient sharedClient] updateDetailsForMangaWithID:manga.manga_id success:^(id operation, id response) {
+        ALLog(@"Updated '%@'.", manga.title);
+    } failure:^(id operation, NSError *error) {
+        ALLog(@"Failed to update '%@'.", manga.title);
+    }];
+    
+    self.tableView.editing = NO;
+    self.editedIndexPath = nil;
+    self.editedManga = nil;
+}
+
+
+#pragma mark - Gesture Management Methods
+
+- (void)didSwipe:(UIGestureRecognizer *)gestureRecognizer {
+    if (gestureRecognizer.state == UIGestureRecognizerStateEnded) {
+        CGPoint swipeLocation = [gestureRecognizer locationInView:self.tableView];
+        NSIndexPath *swipedIndexPath = [self.tableView indexPathForRowAtPoint:swipeLocation];
+        AniListCell *swipedCell = (AniListCell *)[self.tableView cellForRowAtIndexPath:swipedIndexPath];
+        
+        if(self.editedIndexPath && (self.editedIndexPath.section != swipedIndexPath.section || self.editedIndexPath.row != swipedIndexPath.row)) {
+            AniListCell *currentlySwipedCell = (AniListCell *)[self.tableView cellForRowAtIndexPath:self.editedIndexPath];
+            if(currentlySwipedCell)
+                [currentlySwipedCell revokeEditScreen];
+        }
+        
+        self.editedManga = [self.fetchedResultsController objectAtIndexPath:swipedIndexPath];
+        
+        [swipedCell showEditScreenForManga:self.editedManga];
+        
+        UITapGestureRecognizer* tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didCancel:)];
+        [tapGestureRecognizer setNumberOfTapsRequired:1];
+        [swipedCell addGestureRecognizer:tapGestureRecognizer];
+        
+        self.tableView.editing = YES;
+        self.editedIndexPath = swipedIndexPath;
+    }
+}
+
+- (void)didCancel:(UIGestureRecognizer *)gestureRecognizer {
+    if (gestureRecognizer.state == UIGestureRecognizerStateEnded) {
+        CGPoint tapLocation = [gestureRecognizer locationInView:self.tableView];
+        NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:tapLocation];
+        AniListCell *cell = (AniListCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+        
+        [cell revokeEditScreen];
+        
+//        if(([self.editedAnime.current_episode intValue] > 0 && [self.editedAnime.watched_status intValue] != AnimeWatchedStatusWatching)  &&
+//           ([self.editedAnime.current_episode intValue] > 0 && [self.editedAnime.watched_status intValue] != AnimeWatchedStatusCompleted)) {
+//            [self promptForBeginning:self.editedManga];
+//        }
+//        else {
+//            [self saveManga:self.editedManga];
+//        }
+    }
+}
+
+#pragma mark - Action Sheet Methods
+
+- (void)promptForBeginning:(Manga *)manga {
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:[NSString stringWithFormat:@"Do you want mark '%@' as watching?", manga.title]
+                                                             delegate:self
+                                                    cancelButtonTitle:@"No"
+                                               destructiveButtonTitle:nil
+                                                    otherButtonTitles:@"Yes", nil];
+    actionSheet.tag = ActionSheetPromptBeginning;
+    
+    [actionSheet showInView:self.view];
+}
+
+- (void)promptForFinishing:(Manga *)manga {
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:[NSString stringWithFormat:@"Do you want mark '%@' as completed?", manga.title]
+                                                             delegate:self
+                                                    cancelButtonTitle:@"No"
+                                               destructiveButtonTitle:@"Yes"
+                                                    otherButtonTitles:nil, nil];
+    actionSheet.tag = ActionSheetPromptFinishing;
+    
+    [actionSheet showInView:self.view];
+}
+
 #pragma mark - Table view data source
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
@@ -115,25 +203,45 @@ static BOOL alreadyFetched = NO;
     Manga *manga = [self.fetchedResultsController objectAtIndexPath:indexPath];
     [self configureCell:cell withObject:manga];
     
+    if(self.editedIndexPath && self.editedIndexPath.section == indexPath.section && self.editedIndexPath.row == indexPath.row) {
+        [cell showEditScreenForManga:manga];
+        
+        UITapGestureRecognizer* tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didCancel:)];
+        [tapGestureRecognizer setNumberOfTapsRequired:1];
+        [cell addGestureRecognizer:tapGestureRecognizer];
+    }
+    
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if(editingStyle == UITableViewCellEditingStyleDelete) {
-        Manga *manga = [self.fetchedResultsController objectAtIndexPath:indexPath];
-        [[MALHTTPClient sharedClient] deleteMangaWithID:manga.manga_id success:^(id operation, id response) {
-            ALLog(@"'%@' successfully deleted.", manga.title);
-        } failure:^(id operation, NSError *error) {
-            ALLog(@"'%@' was not successfully deleted.", manga.title);
-        }];
-        
-        AniListAppDelegate *delegate = (AniListAppDelegate *)[UIApplication sharedApplication].delegate;
-        [delegate.managedObjectContext deleteObject:manga];
-        
+#pragma mark - Table view delegate
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
+       atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
+      newIndexPath:(NSIndexPath *)newIndexPath {
+    
+    [super controller:controller didChangeObject:anObject atIndexPath:indexPath forChangeType:type newIndexPath:newIndexPath];
+    
+    switch(type) {
+        case NSFetchedResultsChangeInsert:
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            break;
+            
+        case NSFetchedResultsChangeUpdate:
+            if(self.tableView.editing) {
+                if([self.editedManga.current_chapter intValue] == [self.editedManga.total_chapters intValue] && [self.editedManga.current_volume intValue] == [self.editedManga.total_volumes intValue] &&
+                   [self.editedManga.read_status intValue] != MangaReadStatusCompleted) {
+                    [self promptForFinishing:self.editedManga];
+                }
+            }
+            break;
+            
+        case NSFetchedResultsChangeMove:
+            break;
     }
 }
-
-#pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     Manga *manga = [self.fetchedResultsController objectAtIndexPath:indexPath];
@@ -145,6 +253,10 @@ static BOOL alreadyFetched = NO;
     mvc.currentYBackgroundPosition = navigationController.imageView.frame.origin.y;
     
     [self.navigationController pushViewController:mvc animated:YES];
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    return ![self.tableView isEditing];
 }
 
 - (void)configureCell:(UITableViewCell *)cell withObject:(NSManagedObject *)object {
@@ -171,7 +283,7 @@ static BOOL alreadyFetched = NO;
         if(!cachedImage) {
             [mangaCell.image setImageWithURLRequest:imageRequest placeholderImage:cachedImage success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
                 
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                dispatch_async(dispatch_get_main_queue(), ^{
                     mangaCell.image.alpha = 0.0f;
                     mangaCell.image.image = image;
                     
@@ -196,8 +308,40 @@ static BOOL alreadyFetched = NO;
             });
         }
     });
+}
 
-    
+#pragma mark - UIActionSheetDelegate Methods
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    switch (actionSheet.tag) {
+        case ActionSheetPromptBeginning:
+            if(buttonIndex == 0) {
+                self.editedManga.read_status = @(MangaReadStatusReading);
+                if(!self.editedManga.user_date_start)
+                    self.editedManga.user_date_start = [NSDate date];
+                [self.editedManga.managedObjectContext save:nil];
+                
+                [self saveManga:self.editedManga];
+            }
+            break;
+        case ActionSheetPromptFinishing:
+            if(buttonIndex == 0) {
+                self.editedManga.read_status = @(MangaReadStatusCompleted);
+                if(!self.editedManga.user_date_finish)
+                    self.editedManga.user_date_finish = [NSDate date];
+                MangaUserInfoEditViewController *vc = [[MangaUserInfoEditViewController alloc] init];
+                vc.manga = self.editedManga;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+            break;
+        case ActionSheetPromptDeletion:
+            if(buttonIndex == actionSheet.destructiveButtonIndex) {
+                // Delete
+            }
+            break;
+        default:
+            break;
+    }
 }
 
 @end

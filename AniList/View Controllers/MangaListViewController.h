@@ -8,6 +8,6 @@
 
 #import "AniListViewController.h"
 
-@interface MangaListViewController : AniListViewController
+@interface MangaListViewController : AniListViewController<UIActionSheetDelegate>
 
 @end

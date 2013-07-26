@@ -8,8 +8,6 @@
 
 #import "AnimeCell.h"
 #import "Anime.h"
-#import "AnimeListViewController.h"
-#import "AnimeUserInfoEditViewController.h"
 
 @implementation AnimeCell
 
@@ -57,9 +55,8 @@
 
 #pragma mark - Edit UIButton Methods
 
-
 - (IBAction)plusButtonPressed:(id)sender {
-    if(self.editedAnime) {
+    if(self.editedAnime && [self.editedAnime.current_episode intValue] > 0) {
         self.editedAnime.current_episode = @([self.editedAnime.current_episode intValue] + 1);
         if([self.editedAnime.current_episode intValue] == [self.editedAnime.total_episodes intValue]) {
             // Mark as completed?
@@ -79,7 +76,7 @@
 }
 
 - (IBAction)minusButtonPressed:(id)sender {
-    if(self.editedAnime) {
+    if(self.editedAnime && [self.editedAnime.current_episode intValue] < [self.editedAnime.total_episodes intValue]) {
         self.editedAnime.current_episode = @([self.editedAnime.current_episode intValue] - 1);
         if([self.editedAnime.current_episode intValue] == 0) {
             self.minusButton.userInteractionEnabled = NO;

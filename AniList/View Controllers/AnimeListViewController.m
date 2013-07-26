@@ -44,9 +44,9 @@ static BOOL alreadyFetched = NO;
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-//    if(!alreadyFetched) {
+    if(!alreadyFetched) {
         [self fetchData];
-//    }
+    }
     
     UISwipeGestureRecognizer* swipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(didSwipe:)];
     [swipeGestureRecognizer setDirection:UISwipeGestureRecognizerDirectionLeft];
@@ -126,6 +126,20 @@ static BOOL alreadyFetched = NO;
     }
 }
 
+- (void)saveAnime:(Anime *)anime {
+    [[MALHTTPClient sharedClient] updateDetailsForAnimeWithID:anime.anime_id success:^(id operation, id response) {
+        ALLog(@"Updated '%@'.", anime.title);
+    } failure:^(id operation, NSError *error) {
+        ALLog(@"Failed to update '%@'.", anime.title);
+    }];
+    
+    self.tableView.editing = NO;
+    self.editedIndexPath = nil;
+    self.editedAnime = nil;
+}
+
+#pragma mark - Gesture Management Methods
+
 - (void)didSwipe:(UIGestureRecognizer *)gestureRecognizer {
     if (gestureRecognizer.state == UIGestureRecognizerStateEnded) {
         CGPoint swipeLocation = [gestureRecognizer locationInView:self.tableView];
@@ -169,20 +183,28 @@ static BOOL alreadyFetched = NO;
     }
 }
 
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
-    return ![self.tableView isEditing];
+#pragma mark - Action Sheet Methods
+
+- (void)promptForBeginning:(Anime *)anime {
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:[NSString stringWithFormat:@"Do you want mark '%@' as watching?", anime.title]
+                                                             delegate:self
+                                                    cancelButtonTitle:@"No"
+                                               destructiveButtonTitle:nil
+                                                    otherButtonTitles:@"Yes", nil];
+    actionSheet.tag = ActionSheetPromptBeginning;
+    
+    [actionSheet showInView:self.view];
 }
 
-- (void)saveAnime:(Anime *)anime {
-    [[MALHTTPClient sharedClient] updateDetailsForAnimeWithID:anime.anime_id success:^(id operation, id response) {
-        ALLog(@"Updated '%@'.", anime.title);
-    } failure:^(id operation, NSError *error) {
-        ALLog(@"Failed to update '%@'.", anime.title);
-    }];
+- (void)promptForFinishing:(Anime *)anime {
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:[NSString stringWithFormat:@"Do you want mark '%@' as completed?", anime.title]
+                                                             delegate:self
+                                                    cancelButtonTitle:@"No"
+                                               destructiveButtonTitle:@"Yes"
+                                                    otherButtonTitles:nil, nil];
+    actionSheet.tag = ActionSheetPromptFinishing;
     
-    self.tableView.editing = NO;
-    self.editedIndexPath = nil;
-    self.editedAnime = nil;
+    [actionSheet showInView:self.view];
 }
 
 #pragma mark - Table view data source
@@ -223,22 +245,6 @@ static BOOL alreadyFetched = NO;
     return cell;
 }
 
-
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if(editingStyle == UITableViewCellEditingStyleDelete) {
-        Anime *anime = [self.fetchedResultsController objectAtIndexPath:indexPath];
-        [[MALHTTPClient sharedClient] deleteAnimeWithID:anime.anime_id success:^(id operation, id response) {
-            ALLog(@"'%@' successfully deleted.", anime.title);
-        } failure:^(id operation, NSError *error) {
-            ALLog(@"'%@' was not successfully deleted.", anime.title);
-        }];
-        
-        AniListAppDelegate *delegate = (AniListAppDelegate *)[UIApplication sharedApplication].delegate;
-        [delegate.managedObjectContext deleteObject:anime];
-        
-    }
-}
-
 #pragma mark - Table view delegate
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
@@ -268,29 +274,6 @@ static BOOL alreadyFetched = NO;
     }
 }
 
-- (void)promptForBeginning:(Anime *)anime {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:[NSString stringWithFormat:@"Do you want mark '%@' as watching?", anime.title]
-                                                             delegate:self
-                                                    cancelButtonTitle:@"No"
-                                               destructiveButtonTitle:nil
-                                                    otherButtonTitles:@"Yes", nil];
-    actionSheet.tag = ActionSheetPromptBeginning;
-    
-    [actionSheet showInView:self.view];
-}
-
-- (void)promptForFinishing:(Anime *)anime {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:[NSString stringWithFormat:@"Do you want mark '%@' as completed?", anime.title]
-                                                             delegate:self
-                                                    cancelButtonTitle:@"No"
-                                               destructiveButtonTitle:@"Yes"
-                                                    otherButtonTitles:nil, nil];
-    actionSheet.tag = ActionSheetPromptFinishing;
-    
-    [actionSheet showInView:self.view];
-}
-
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     Anime *anime = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
@@ -301,6 +284,10 @@ static BOOL alreadyFetched = NO;
     animeVC.currentYBackgroundPosition = navigationController.imageView.frame.origin.y;
     
     [self.navigationController pushViewController:animeVC animated:YES];
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    return ![self.tableView isEditing];
 }
 
 - (void)configureCell:(UITableViewCell *)cell withObject:(NSManagedObject *)object {
