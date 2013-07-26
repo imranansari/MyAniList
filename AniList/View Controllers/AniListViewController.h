@@ -13,7 +13,7 @@
 #import "AniListNavigationController.h"
 #import "EGORefreshTableHeaderView.h"
 
-@interface AniListViewController : BaseViewController<UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, EGORefreshTableHeaderDelegate>
+@interface AniListViewController : BaseViewController<UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, EGORefreshTableHeaderDelegate, UIActionSheetDelegate>
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
@@ -24,6 +24,7 @@
 @property (nonatomic, weak) IBOutlet UIButton *menuButton;
 @property (nonatomic, assign) BOOL viewTop;
 @property (nonatomic, assign) BOOL viewPopular;
+@property (nonatomic, strong) NSIndexPath *editedIndexPath;
 
 - (void)fetchData;
 - (NSString *)entityName;

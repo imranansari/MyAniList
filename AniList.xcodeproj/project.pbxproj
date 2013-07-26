@@ -284,6 +284,10 @@
 		63D045AC179CE87A006507D3 /* UIButton+AniList.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D045AA179CE87A006507D3 /* UIButton+AniList.m */; };
 		63D045B2179CEDFD006507D3 /* TagListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63D045AF179CEDFD006507D3 /* TagListViewController.xib */; };
 		63D045B3179CEDFD006507D3 /* TagListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63D045AF179CEDFD006507D3 /* TagListViewController.xib */; };
+		63D8791C17A20C89002ACA13 /* red_bg_pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 63D8791B17A20C89002ACA13 /* red_bg_pressed.png */; };
+		63D8791D17A20C89002ACA13 /* red_bg_pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 63D8791B17A20C89002ACA13 /* red_bg_pressed.png */; };
+		63D8791F17A20D8E002ACA13 /* white_bg_pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 63D8791E17A20D8E002ACA13 /* white_bg_pressed.png */; };
+		63D8792017A20D8E002ACA13 /* white_bg_pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 63D8791E17A20D8E002ACA13 /* white_bg_pressed.png */; };
 		63DB4E4F179AD7B800C20ECC /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = 63DB4E4E179AD7B800C20ECC /* Tag.m */; };
 		63DB4E50179AD7B800C20ECC /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = 63DB4E4E179AD7B800C20ECC /* Tag.m */; };
 		63DB4E53179AD7CE00C20ECC /* Synonym.m in Sources */ = {isa = PBXBuildFile; fileRef = 63DB4E52179AD7CE00C20ECC /* Synonym.m */; };
@@ -557,6 +561,8 @@
 		63D045A9179CE87A006507D3 /* UIButton+AniList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIButton+AniList.h"; path = "Categories/UIButton+AniList.h"; sourceTree = "<group>"; };
 		63D045AA179CE87A006507D3 /* UIButton+AniList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIButton+AniList.m"; path = "Categories/UIButton+AniList.m"; sourceTree = "<group>"; };
 		63D045AF179CEDFD006507D3 /* TagListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TagListViewController.xib; sourceTree = "<group>"; };
+		63D8791B17A20C89002ACA13 /* red_bg_pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = red_bg_pressed.png; sourceTree = "<group>"; };
+		63D8791E17A20D8E002ACA13 /* white_bg_pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = white_bg_pressed.png; sourceTree = "<group>"; };
 		63DB4E4D179AD7B800C20ECC /* Tag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Tag.h; path = "Core Data/Tag.h"; sourceTree = "<group>"; };
 		63DB4E4E179AD7B800C20ECC /* Tag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Tag.m; path = "Core Data/Tag.m"; sourceTree = "<group>"; };
 		63DB4E51179AD7CE00C20ECC /* Synonym.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Synonym.h; path = "Core Data/Synonym.h"; sourceTree = "<group>"; };
@@ -879,6 +885,8 @@
 		63502792171E4D430004C106 /* Background */ = {
 			isa = PBXGroup;
 			children = (
+				63D8791E17A20D8E002ACA13 /* white_bg_pressed.png */,
+				63D8791B17A20C89002ACA13 /* red_bg_pressed.png */,
 				6392F4BB1793851F00D566BD /* anime_background@2x.png */,
 				636F86A8175BA037007E1FB6 /* header_bg.png */,
 				636F86A9175BA037007E1FB6 /* header_bg@2x.png */,
@@ -1240,6 +1248,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				635484AB171C2FA7003457CB /* InfoPlist.strings in Resources */,
+				63D8791C17A20C89002ACA13 /* red_bg_pressed.png in Resources */,
 				630E0FE41768E9980061110A /* plus.png in Resources */,
 				635484B3171C2FA7003457CB /* Default.png in Resources */,
 				6324CEB21799793400B308B0 /* grayArrow@2x.png in Resources */,
@@ -1254,6 +1263,7 @@
 				630E0FE01768E9980061110A /* minus.png in Resources */,
 				630E0FE21768E9980061110A /* minus@2x.png in Resources */,
 				6324CEB41799793400B308B0 /* whiteArrow.png in Resources */,
+				63D8791F17A20D8E002ACA13 /* white_bg_pressed.png in Resources */,
 				632F439C171CDDED00A5B43A /* AniListViewController.xib in Resources */,
 				63922CED171D82C800D41BCE /* spacepyro.jpg in Resources */,
 				63502795171E4D430004C106 /* bg.png in Resources */,
@@ -1315,11 +1325,13 @@
 				6301D951175D6F1D00163160 /* ProfileCell.xib in Resources */,
 				6324CEAF1799793400B308B0 /* blueArrow@2x.png in Resources */,
 				6301D952175D6F1D00163160 /* AnimeCell.xib in Resources */,
+				63D8792017A20D8E002ACA13 /* white_bg_pressed.png in Resources */,
 				63BEA74117619E0800432BED /* AniListUserInfoEditViewController.xib in Resources */,
 				63894CC9176A9E37007D2D05 /* LoginViewController.xib in Resources */,
 				6324CEAB1799793400B308B0 /* blackArrow@2x.png in Resources */,
 				6371444D1770074600E60B9F /* SearchViewController.xib in Resources */,
 				6324CEB71799793400B308B0 /* whiteArrow@2x.png in Resources */,
+				63D8791D17A20C89002ACA13 /* red_bg_pressed.png in Resources */,
 				63D045B3179CEDFD006507D3 /* TagListViewController.xib in Resources */,
 				63B386B41777B91C001A7E31 /* MangaCell.xib in Resources */,
 				63B386BB1777DCAB001A7E31 /* AniListCell.xib in Resources */,

@@ -58,8 +58,8 @@
     nvc.navigationBar.translucent = YES; // Setting this slides the view up, underneath the nav bar (otherwise it'll appear black)
 
     if([[UIDevice currentDevice].systemVersion compare:@"7.0" options:NSNumericSearch] != NSOrderedAscending) {
-//        nvc.navigationBar.barTintColor = [UIColor blueColor];
-//        nvc.navigationBar.tintColor = [UIColor whiteColor];
+        nvc.navigationBar.barTintColor = [UIColor blueColor];
+        nvc.navigationBar.tintColor = [UIColor whiteColor];
     }
     else {
         const float colorMask[6] = {222, 255, 222, 255, 222, 255};
@@ -70,7 +70,7 @@
         [nvc.navigationBar setBackgroundImage:maskedImage forBarMetrics:UIBarMetricsDefault];
     }
     
-    [self.view addGestureRecognizer:revealController.panGestureRecognizer];
+    [self.navigationController.navigationBar addGestureRecognizer:revealController.panGestureRecognizer];
 
     self.view.backgroundColor = [UIColor clearColor];
     
@@ -364,16 +364,16 @@
 
 #pragma mark - EGOTableViewPullRefreshDelegate Methods
 
- - (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view {
-     self.reloading = YES;
- }
- 
- - (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view {
-     return self.reloading; // should return if data source model is reloading
- }
- 
- - (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view {
-     return [NSDate date]; // should return date data source was last changed
- }
+- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view {
+    self.reloading = YES;
+}
+
+- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view {
+    return self.reloading; // should return if data source model is reloading
+}
+
+- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view {
+    return [NSDate date]; // should return date data source was last changed
+}
 
 @end

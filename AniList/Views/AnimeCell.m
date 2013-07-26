@@ -8,6 +8,8 @@
 
 #import "AnimeCell.h"
 #import "Anime.h"
+#import "AnimeListViewController.h"
+#import "AnimeUserInfoEditViewController.h"
 
 @implementation AnimeCell
 
@@ -47,6 +49,60 @@
             [((UILabel *)view) addShadow];
         }
     }
+}
+
+- (void)updateProgress {
+    self.editProgress.text = [NSString stringWithFormat:@"%d / %d", [self.editedAnime.current_episode intValue], [self.editedAnime.total_episodes intValue]];
+}
+
+#pragma mark - Edit UIButton Methods
+
+
+- (IBAction)plusButtonPressed:(id)sender {
+    if(self.editedAnime) {
+        self.editedAnime.current_episode = @([self.editedAnime.current_episode intValue] + 1);
+        if([self.editedAnime.current_episode intValue] == [self.editedAnime.total_episodes intValue]) {
+            // Mark as completed?
+            self.plusButton.userInteractionEnabled = NO;
+            self.plusButton.alpha = 0.5f;
+
+//            [self promptForFinishing];
+        }
+
+        [self updateProgress];
+    }
+    
+    if(!self.minusButton.userInteractionEnabled) {
+        self.minusButton.userInteractionEnabled = YES;
+        self.minusButton.alpha = 1.0f;
+    }
+}
+
+- (IBAction)minusButtonPressed:(id)sender {
+    if(self.editedAnime) {
+        self.editedAnime.current_episode = @([self.editedAnime.current_episode intValue] - 1);
+        if([self.editedAnime.current_episode intValue] == 0) {
+            self.minusButton.userInteractionEnabled = NO;
+            self.minusButton.alpha = 0.5f;
+        }
+        [self updateProgress];
+    }
+    
+    if(!self.plusButton.userInteractionEnabled) {
+        self.plusButton.userInteractionEnabled = YES;
+        self.plusButton.alpha = 1.0f;
+    }
+}
+
+- (IBAction)deleteButtonPressed:(id)sender {
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:[NSString stringWithFormat:@"Do you really want to delete '%@'?", self.editedAnime.title]
+                                                             delegate:self
+                                                    cancelButtonTitle:@"No"
+                                               destructiveButtonTitle:nil
+                                                    otherButtonTitles:@"Yes", nil];
+    actionSheet.tag = ActionSheetPromptDeletion;
+    
+    [actionSheet showInView:self.superview];
 }
 
 @end

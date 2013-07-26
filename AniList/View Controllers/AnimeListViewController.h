@@ -8,8 +8,6 @@
 
 #import "AniListViewController.h"
 
-@interface AnimeListViewController : AniListViewController
-
-
+@interface AnimeListViewController : AniListViewController<UIActionSheetDelegate>
 
 @end

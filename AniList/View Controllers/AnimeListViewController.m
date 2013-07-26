@@ -13,11 +13,12 @@
 #import "Anime.h"
 #import "MALHTTPClient.h"
 #import "AniListAppDelegate.h"
+#import "AnimeUserInfoEditViewController.h"
 
 static BOOL alreadyFetched = NO;
 
 @interface AnimeListViewController ()
-
+@property (nonatomic, strong) Anime *editedAnime;
 @end
 
 @implementation AnimeListViewController
@@ -129,13 +130,24 @@ static BOOL alreadyFetched = NO;
     if (gestureRecognizer.state == UIGestureRecognizerStateEnded) {
         CGPoint swipeLocation = [gestureRecognizer locationInView:self.tableView];
         NSIndexPath *swipedIndexPath = [self.tableView indexPathForRowAtPoint:swipeLocation];
-        AniListCell* swipedCell = (AniListCell *)[self.tableView cellForRowAtIndexPath:swipedIndexPath];
+        AniListCell *swipedCell = (AniListCell *)[self.tableView cellForRowAtIndexPath:swipedIndexPath];
         
-        [swipedCell showEditScreen];
+        if(self.editedIndexPath && (self.editedIndexPath.section != swipedIndexPath.section || self.editedIndexPath.row != swipedIndexPath.row)) {
+            AniListCell *currentlySwipedCell = (AniListCell *)[self.tableView cellForRowAtIndexPath:self.editedIndexPath];
+            if(currentlySwipedCell)
+                [currentlySwipedCell revokeEditScreen];
+        }
+        
+        self.editedAnime = [self.fetchedResultsController objectAtIndexPath:swipedIndexPath];
+        
+        [swipedCell showEditScreenForAnime:self.editedAnime];
         
         UITapGestureRecognizer* tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didCancel:)];
         [tapGestureRecognizer setNumberOfTapsRequired:1];
         [swipedCell addGestureRecognizer:tapGestureRecognizer];
+        
+        self.tableView.editing = YES;
+        self.editedIndexPath = swipedIndexPath;
     }
 }
 
@@ -145,9 +157,32 @@ static BOOL alreadyFetched = NO;
         NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:tapLocation];
         AniListCell *cell = (AniListCell *)[self.tableView cellForRowAtIndexPath:indexPath];
         
-        if(cell.editView.hidden == NO)
-            [cell revokeEditScreen];
+        [cell revokeEditScreen];
+        
+        if(([self.editedAnime.current_episode intValue] > 0 && [self.editedAnime.watched_status intValue] != AnimeWatchedStatusWatching)  &&
+           ([self.editedAnime.current_episode intValue] > 0 && [self.editedAnime.watched_status intValue] != AnimeWatchedStatusCompleted)) {
+            [self promptForBeginning:self.editedAnime];
+        }
+        else {
+            [self saveAnime:self.editedAnime];
+        }
     }
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    return ![self.tableView isEditing];
+}
+
+- (void)saveAnime:(Anime *)anime {
+    [[MALHTTPClient sharedClient] updateDetailsForAnimeWithID:anime.anime_id success:^(id operation, id response) {
+        ALLog(@"Updated '%@'.", anime.title);
+    } failure:^(id operation, NSError *error) {
+        ALLog(@"Failed to update '%@'.", anime.title);
+    }];
+    
+    self.tableView.editing = NO;
+    self.editedIndexPath = nil;
+    self.editedAnime = nil;
 }
 
 #pragma mark - Table view data source
@@ -176,6 +211,14 @@ static BOOL alreadyFetched = NO;
     
     Anime *anime = [self.fetchedResultsController objectAtIndexPath:indexPath];
     [self configureCell:cell withObject:anime];
+    
+    if(self.editedIndexPath && self.editedIndexPath.section == indexPath.section && self.editedIndexPath.row == indexPath.row) {
+        [cell showEditScreenForAnime:anime];
+        
+        UITapGestureRecognizer* tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didCancel:)];
+        [tapGestureRecognizer setNumberOfTapsRequired:1];
+        [cell addGestureRecognizer:tapGestureRecognizer];
+    }
 
     return cell;
 }
@@ -198,6 +241,56 @@ static BOOL alreadyFetched = NO;
 
 #pragma mark - Table view delegate
 
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
+       atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
+      newIndexPath:(NSIndexPath *)newIndexPath {
+    
+    [super controller:controller didChangeObject:anObject atIndexPath:indexPath forChangeType:type newIndexPath:newIndexPath];
+    
+    switch(type) {
+        case NSFetchedResultsChangeInsert:
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            break;
+            
+        case NSFetchedResultsChangeUpdate:
+            if(self.tableView.editing) {
+                if([self.editedAnime.current_episode intValue] == [self.editedAnime.total_episodes intValue] &&
+                   [self.editedAnime.watched_status intValue] != AnimeWatchedStatusCompleted) {
+                    [self promptForFinishing:self.editedAnime];
+                }
+            }
+            break;
+            
+        case NSFetchedResultsChangeMove:
+            break;
+    }
+}
+
+- (void)promptForBeginning:(Anime *)anime {
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:[NSString stringWithFormat:@"Do you want mark '%@' as watching?", anime.title]
+                                                             delegate:self
+                                                    cancelButtonTitle:@"No"
+                                               destructiveButtonTitle:nil
+                                                    otherButtonTitles:@"Yes", nil];
+    actionSheet.tag = ActionSheetPromptBeginning;
+    
+    [actionSheet showInView:self.view];
+}
+
+- (void)promptForFinishing:(Anime *)anime {
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:[NSString stringWithFormat:@"Do you want mark '%@' as completed?", anime.title]
+                                                             delegate:self
+                                                    cancelButtonTitle:@"No"
+                                               destructiveButtonTitle:@"Yes"
+                                                    otherButtonTitles:nil, nil];
+    actionSheet.tag = ActionSheetPromptFinishing;
+    
+    [actionSheet showInView:self.view];
+}
+
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     Anime *anime = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
@@ -213,8 +306,6 @@ static BOOL alreadyFetched = NO;
 - (void)configureCell:(UITableViewCell *)cell withObject:(NSManagedObject *)object {
     Anime *anime = (Anime *)object;
     AnimeCell *animeCell = (AnimeCell *)cell;
-    animeCell.editView.alpha = 0.0f;
-    animeCell.editView.hidden = YES;
     animeCell.title.text = anime.title;
     [animeCell.title addShadow];
     [animeCell.title sizeToFit];
@@ -266,6 +357,40 @@ static BOOL alreadyFetched = NO;
             });
         }
     });
+}
+
+#pragma mark - UIActionSheetDelegate Methods
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    switch (actionSheet.tag) {
+        case ActionSheetPromptBeginning:
+            if(buttonIndex == 0) {
+                self.editedAnime.watched_status = @(AnimeWatchedStatusWatching);
+                if(!self.editedAnime.user_date_start)
+                    self.editedAnime.user_date_start = [NSDate date];
+                [self.editedAnime.managedObjectContext save:nil];
+                
+                [self saveAnime:self.editedAnime];
+            }
+            break;
+        case ActionSheetPromptFinishing:
+            if(buttonIndex == 0) {
+                self.editedAnime.watched_status = @(AnimeWatchedStatusCompleted);
+                if(!self.editedAnime.user_date_finish)
+                    self.editedAnime.user_date_finish = [NSDate date];
+                AnimeUserInfoEditViewController *vc = [[AnimeUserInfoEditViewController alloc] init];
+                vc.anime = self.editedAnime;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+            break;
+        case ActionSheetPromptDeletion:
+            if(buttonIndex == actionSheet.destructiveButtonIndex) {
+                // Delete
+            }
+            break;
+        default:
+            break;
+    }
 }
 
 @end
