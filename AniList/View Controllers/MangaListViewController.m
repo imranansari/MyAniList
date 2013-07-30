@@ -35,6 +35,8 @@ static BOOL alreadyFetched = NO;
         }
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchData) name:kUserLoggedIn object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deleteManga) name:kDeleteManga object:nil];
     }
     
     return self;
@@ -94,11 +96,25 @@ static BOOL alreadyFetched = NO;
 
 
 - (void)saveManga:(Manga *)manga {
-    [[MALHTTPClient sharedClient] updateDetailsForMangaWithID:manga.manga_id success:^(id operation, id response) {
-        ALLog(@"Updated '%@'.", manga.title);
-    } failure:^(id operation, NSError *error) {
-        ALLog(@"Failed to update '%@'.", manga.title);
-    }];
+    if(manga) {
+        [[MALHTTPClient sharedClient] updateDetailsForMangaWithID:manga.manga_id success:^(id operation, id response) {
+            ALLog(@"Updated '%@'.", manga.title);
+        } failure:^(id operation, NSError *error) {
+            ALLog(@"Failed to update '%@'.", manga.title);
+        }];
+    }
+    
+    self.tableView.editing = NO;
+    self.editedIndexPath = nil;
+    self.editedManga = nil;
+}
+
+- (void)deleteManga {
+    Manga *manga = [self.fetchedResultsController objectAtIndexPath:self.editedIndexPath];
+    
+    if(manga) {
+        manga.read_status = @(MangaReadStatusNotReading);
+    }
     
     self.tableView.editing = NO;
     self.editedIndexPath = nil;
@@ -109,37 +125,23 @@ static BOOL alreadyFetched = NO;
 #pragma mark - Gesture Management Methods
 
 - (void)didSwipe:(UIGestureRecognizer *)gestureRecognizer {
-    if (gestureRecognizer.state == UIGestureRecognizerStateEnded) {
+    [super didSwipe:gestureRecognizer];
+    
+    if (([gestureRecognizer isMemberOfClass:[UISwipeGestureRecognizer class]] && gestureRecognizer.state == UIGestureRecognizerStateEnded) ||
+        ([gestureRecognizer isMemberOfClass:[UILongPressGestureRecognizer class]] && gestureRecognizer.state == UIGestureRecognizerStateBegan)) {
+        
         CGPoint swipeLocation = [gestureRecognizer locationInView:self.tableView];
         NSIndexPath *swipedIndexPath = [self.tableView indexPathForRowAtPoint:swipeLocation];
         AniListCell *swipedCell = (AniListCell *)[self.tableView cellForRowAtIndexPath:swipedIndexPath];
         
-        if(self.editedIndexPath && (self.editedIndexPath.section != swipedIndexPath.section || self.editedIndexPath.row != swipedIndexPath.row)) {
-            AniListCell *currentlySwipedCell = (AniListCell *)[self.tableView cellForRowAtIndexPath:self.editedIndexPath];
-            if(currentlySwipedCell)
-                [currentlySwipedCell revokeEditScreen];
-        }
-        
         self.editedManga = [self.fetchedResultsController objectAtIndexPath:swipedIndexPath];
         
         [swipedCell showEditScreenForManga:self.editedManga];
-        
-        UITapGestureRecognizer* tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didCancel:)];
-        [tapGestureRecognizer setNumberOfTapsRequired:1];
-        [swipedCell addGestureRecognizer:tapGestureRecognizer];
-        
-        self.tableView.editing = YES;
-        self.editedIndexPath = swipedIndexPath;
     }
 }
 
 - (void)didCancel:(UIGestureRecognizer *)gestureRecognizer {
-    if (gestureRecognizer.state == UIGestureRecognizerStateEnded) {
-        CGPoint tapLocation = [gestureRecognizer locationInView:self.tableView];
-        NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:tapLocation];
-        AniListCell *cell = (AniListCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-        
-        [cell revokeEditScreen];
+    [super didCancel:gestureRecognizer];
         
 //        if(([self.editedAnime.current_episode intValue] > 0 && [self.editedAnime.watched_status intValue] != AnimeWatchedStatusWatching)  &&
 //           ([self.editedAnime.current_episode intValue] > 0 && [self.editedAnime.watched_status intValue] != AnimeWatchedStatusCompleted)) {
@@ -148,13 +150,15 @@ static BOOL alreadyFetched = NO;
 //        else {
 //            [self saveManga:self.editedManga];
 //        }
-    }
+    
+    [self saveManga:self.editedManga];
+
 }
 
 #pragma mark - Action Sheet Methods
 
 - (void)promptForBeginning:(Manga *)manga {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:[NSString stringWithFormat:@"Do you want mark '%@' as watching?", manga.title]
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:[NSString stringWithFormat:@"Do you want to mark '%@' as reading?", manga.title]
                                                              delegate:self
                                                     cancelButtonTitle:@"No"
                                                destructiveButtonTitle:nil
@@ -165,11 +169,11 @@ static BOOL alreadyFetched = NO;
 }
 
 - (void)promptForFinishing:(Manga *)manga {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:[NSString stringWithFormat:@"Do you want mark '%@' as completed?", manga.title]
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:[NSString stringWithFormat:@"Do you want to mark '%@' as completed?", manga.title]
                                                              delegate:self
                                                     cancelButtonTitle:@"No"
-                                               destructiveButtonTitle:@"Yes"
-                                                    otherButtonTitles:nil, nil];
+                                               destructiveButtonTitle:nil
+                                                    otherButtonTitles:@"Yes", nil];
     actionSheet.tag = ActionSheetPromptFinishing;
     
     [actionSheet showInView:self.view];
@@ -231,8 +235,10 @@ static BOOL alreadyFetched = NO;
             
         case NSFetchedResultsChangeUpdate:
             if(self.tableView.editing) {
-                if([self.editedManga.current_chapter intValue] == [self.editedManga.total_chapters intValue] && [self.editedManga.current_volume intValue] == [self.editedManga.total_volumes intValue] &&
-                   [self.editedManga.read_status intValue] != MangaReadStatusCompleted) {
+                if([self.editedManga.current_chapter intValue] == [self.editedManga.total_chapters intValue] &&
+                   [self.editedManga.current_volume intValue] == [self.editedManga.total_volumes intValue] &&
+                   [self.editedManga.read_status intValue] != MangaReadStatusCompleted &&
+                   ([self.editedManga.total_chapters intValue] != 0 || [self.editedManga.total_volumes intValue] != 0) ) {
                     [self promptForFinishing:self.editedManga];
                 }
             }
@@ -310,6 +316,13 @@ static BOOL alreadyFetched = NO;
     });
 }
 
+#pragma mark - UIScrollViewDelegate Methods
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [super scrollViewDidScroll:scrollView];
+    [self didCancel:nil];
+}
+
 #pragma mark - UIActionSheetDelegate Methods
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -335,9 +348,6 @@ static BOOL alreadyFetched = NO;
             }
             break;
         case ActionSheetPromptDeletion:
-            if(buttonIndex == actionSheet.destructiveButtonIndex) {
-                // Delete
-            }
             break;
         default:
             break;

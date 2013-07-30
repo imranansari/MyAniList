@@ -118,7 +118,6 @@
 
 - (void)showEditScreenForManga:(Manga *)manga {
     self.editedManga = manga;
-//    self.progress.text = [NSString stringWithFormat:@"%d / %d", [anime.current_episode intValue], [anime.total_episodes intValue]];
     
     [self showEditScreen];
 }

@@ -9,6 +9,7 @@
 #import "AniListViewController.h"
 #import "AniListAppDelegate.h"
 #import "CRTransitionLabel.h"
+#import "AniListCell.h"
 
 @interface AniListViewController ()
 @property (nonatomic, weak) IBOutlet CRTransitionLabel *topSectionLabel;
@@ -58,7 +59,7 @@
     nvc.navigationBar.translucent = YES; // Setting this slides the view up, underneath the nav bar (otherwise it'll appear black)
 
     if([[UIDevice currentDevice].systemVersion compare:@"7.0" options:NSNumericSearch] != NSOrderedAscending) {
-        nvc.navigationBar.barTintColor = [UIColor blueColor];
+//        nvc.navigationBar.barTintColor = [UIColor blueColor];
         nvc.navigationBar.tintColor = [UIColor whiteColor];
     }
     else {
@@ -96,6 +97,14 @@
     
     // Update the last update date.
     [self.refreshHeaderView refreshLastUpdatedDate];
+    
+    UISwipeGestureRecognizer *swipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(didSwipe:)];
+    [swipeGestureRecognizer setDirection:UISwipeGestureRecognizerDirectionLeft];
+    [self.tableView addGestureRecognizer:swipeGestureRecognizer];
+    
+    UILongPressGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(didSwipe:)];
+    [longPressGestureRecognizer setMinimumPressDuration:0.4f];
+    [self.tableView addGestureRecognizer:longPressGestureRecognizer];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -111,6 +120,42 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Gesture Management Methods
+
+- (void)didSwipe:(UIGestureRecognizer *)gestureRecognizer {
+    if (([gestureRecognizer isMemberOfClass:[UISwipeGestureRecognizer class]] && gestureRecognizer.state == UIGestureRecognizerStateEnded) ||
+        ([gestureRecognizer isMemberOfClass:[UILongPressGestureRecognizer class]] && gestureRecognizer.state == UIGestureRecognizerStateBegan)) {
+        CGPoint swipeLocation = [gestureRecognizer locationInView:self.tableView];
+        NSIndexPath *swipedIndexPath = [self.tableView indexPathForRowAtPoint:swipeLocation];
+        AniListCell *swipedCell = (AniListCell *)[self.tableView cellForRowAtIndexPath:swipedIndexPath];
+        
+        if(self.editedIndexPath && (self.editedIndexPath.section != swipedIndexPath.section || self.editedIndexPath.row != swipedIndexPath.row)) {
+            AniListCell *currentlySwipedCell = (AniListCell *)[self.tableView cellForRowAtIndexPath:self.editedIndexPath];
+            if(currentlySwipedCell)
+                [currentlySwipedCell revokeEditScreen];
+        }
+        
+        UITapGestureRecognizer* tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didCancel:)];
+        [tapGestureRecognizer setNumberOfTapsRequired:1];
+        [swipedCell addGestureRecognizer:tapGestureRecognizer];
+        
+        self.tableView.editing = YES;
+        self.editedIndexPath = swipedIndexPath;
+    }
+}
+
+- (void)didCancel:(UIGestureRecognizer *)gestureRecognizer {
+    CGPoint tapLocation = [gestureRecognizer locationInView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:tapLocation];
+    AniListCell *cell = (AniListCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+    [cell revokeEditScreen];
+    
+    AniListCell *editedCell = (AniListCell *)[self.tableView cellForRowAtIndexPath:self.editedIndexPath];
+    
+    if(editedCell != cell)
+        [editedCell revokeEditScreen];
 }
 
 #pragma mark - Override Methods

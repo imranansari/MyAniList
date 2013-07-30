@@ -49,14 +49,6 @@ static BOOL alreadyFetched = NO;
     if(!alreadyFetched) {
         [self fetchData];
     }
-    
-    UISwipeGestureRecognizer *swipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(didSwipe:)];
-    [swipeGestureRecognizer setDirection:UISwipeGestureRecognizerDirectionLeft];
-    [self.tableView addGestureRecognizer:swipeGestureRecognizer];
-    
-    UILongPressGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(didSwipe:)];
-    [longPressGestureRecognizer setMinimumPressDuration:0.20f];
-    [self.tableView addGestureRecognizer:longPressGestureRecognizer];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -161,41 +153,24 @@ static BOOL alreadyFetched = NO;
 #pragma mark - Gesture Management Methods
 
 - (void)didSwipe:(UIGestureRecognizer *)gestureRecognizer {
+    [super didSwipe:gestureRecognizer];
+    
     if (([gestureRecognizer isMemberOfClass:[UISwipeGestureRecognizer class]] && gestureRecognizer.state == UIGestureRecognizerStateEnded) ||
         ([gestureRecognizer isMemberOfClass:[UILongPressGestureRecognizer class]] && gestureRecognizer.state == UIGestureRecognizerStateBegan)) {
+        
         CGPoint swipeLocation = [gestureRecognizer locationInView:self.tableView];
         NSIndexPath *swipedIndexPath = [self.tableView indexPathForRowAtPoint:swipeLocation];
         AniListCell *swipedCell = (AniListCell *)[self.tableView cellForRowAtIndexPath:swipedIndexPath];
         
-        if(self.editedIndexPath && (self.editedIndexPath.section != swipedIndexPath.section || self.editedIndexPath.row != swipedIndexPath.row)) {
-            AniListCell *currentlySwipedCell = (AniListCell *)[self.tableView cellForRowAtIndexPath:self.editedIndexPath];
-            if(currentlySwipedCell)
-                [currentlySwipedCell revokeEditScreen];
-        }
-        
         self.editedAnime = [self.fetchedResultsController objectAtIndexPath:swipedIndexPath];
         
         [swipedCell showEditScreenForAnime:self.editedAnime];
-        
-        UITapGestureRecognizer* tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didCancel:)];
-        [tapGestureRecognizer setNumberOfTapsRequired:1];
-        [swipedCell addGestureRecognizer:tapGestureRecognizer];
-        
-        self.tableView.editing = YES;
-        self.editedIndexPath = swipedIndexPath;
     }
 }
 
 - (void)didCancel:(UIGestureRecognizer *)gestureRecognizer {
-    CGPoint tapLocation = [gestureRecognizer locationInView:self.tableView];
-    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:tapLocation];
-    AniListCell *cell = (AniListCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-    [cell revokeEditScreen];
-    
-    AniListCell *editedCell = (AniListCell *)[self.tableView cellForRowAtIndexPath:self.editedIndexPath];
-    
-    if(editedCell != cell)
-        [editedCell revokeEditScreen];
+
+    [super didCancel:gestureRecognizer];
     
     if(([self.editedAnime.current_episode intValue] > 0 && [self.editedAnime.watched_status intValue] != AnimeWatchedStatusWatching)  &&
        ([self.editedAnime.current_episode intValue] > 0 && [self.editedAnime.watched_status intValue] != AnimeWatchedStatusCompleted)) {
@@ -226,8 +201,8 @@ static BOOL alreadyFetched = NO;
         UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:[NSString stringWithFormat:@"Do you want mark '%@' as completed?", anime.title]
                                                                  delegate:self
                                                         cancelButtonTitle:@"No"
-                                                   destructiveButtonTitle:@"Yes"
-                                                        otherButtonTitles:nil, nil];
+                                                   destructiveButtonTitle:nil
+                                                        otherButtonTitles:@"Yes", nil];
         actionSheet.tag = ActionSheetPromptFinishing;
         
         [actionSheet showInView:self.view];
@@ -405,9 +380,6 @@ static BOOL alreadyFetched = NO;
             }
             break;
         case ActionSheetPromptDeletion:
-            if(buttonIndex == actionSheet.destructiveButtonIndex) {
-                // Delete
-            }
             break;
         default:
             break;

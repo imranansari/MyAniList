@@ -33,4 +33,7 @@
 - (void)configureCell:(UITableViewCell *)cell withObject:(NSManagedObject *)object;
 - (void)updateHeaders;
 
+- (void)didSwipe:(UIGestureRecognizer *)gestureRecognizer;
+- (void)didCancel:(UIGestureRecognizer *)gestureRecognizer;
+
 @end
