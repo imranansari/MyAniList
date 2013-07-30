@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+#define kDeleteAnime @"kDeleteAnime"
+#define kDeleteManga @"kDeleteManga"
+
 @class Anime, Manga;
 
 typedef enum {
@@ -16,7 +19,7 @@ typedef enum {
     ActionSheetPromptDeletion
 } ActionSheetPrompts;
 
-@interface AniListCell : UITableViewCell
+@interface AniListCell : UITableViewCell<UIActionSheetDelegate>
 
 @property (nonatomic, weak) IBOutlet UIImageView *image;
 @property (nonatomic, weak) IBOutlet UILabel *title;

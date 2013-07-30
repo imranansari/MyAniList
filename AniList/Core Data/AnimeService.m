@@ -288,6 +288,11 @@ static NSArray *cachedAnimeList = nil;
     else if(data[kImage] && ![data[kImage] isNull])
         anime.image_url = data[kImage];
     
+    // Strip out any letters in the filename.
+    if(anime.image_url) {
+        
+    }
+    
     anime.type = @([Anime animeTypeForValue:data[kType]]);
     anime.total_episodes = [data[kEpisodes] isNull] ? @(-1) : [data[kEpisodes] isKindOfClass:[NSString class]] ? @([data[kEpisodes] intValue]) : data[kEpisodes];
     

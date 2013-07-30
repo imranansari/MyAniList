@@ -181,11 +181,19 @@
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:[NSString stringWithFormat:@"Do you really want to delete '%@'?", self.editedManga.title]
                                                              delegate:self
                                                     cancelButtonTitle:@"No"
-                                               destructiveButtonTitle:nil
-                                                    otherButtonTitles:@"Yes", nil];
+                                               destructiveButtonTitle:@"Yes"
+                                                    otherButtonTitles:nil];
     actionSheet.tag = ActionSheetPromptDeletion;
     
     [actionSheet showInView:self.superview];
 }
+
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if(buttonIndex == actionSheet.destructiveButtonIndex) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kDeleteManga object:nil];
+    }
+}
+
 
 @end

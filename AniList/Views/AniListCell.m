@@ -76,6 +76,12 @@
     [self.deleteButton setBackgroundImage:[UIImage imageNamed:@"red_bg_pressed.png"] forState:UIControlStateHighlighted];
     [self.plusButton setBackgroundImage:[UIImage imageNamed:@"white_bg_pressed.png"] forState:UIControlStateHighlighted];
     [self.minusButton setBackgroundImage:[UIImage imageNamed:@"white_bg_pressed.png"] forState:UIControlStateHighlighted];
+    
+    self.plusButton.userInteractionEnabled = YES;
+    self.minusButton.userInteractionEnabled = YES;
+    self.deleteButton.userInteractionEnabled = YES;
+    
+    self.plusButton.alpha = self.minusButton.alpha = self.deleteButton.alpha = 1.0f;
 }
 
 #pragma mark - UIGestureRecognizer Callback
@@ -132,8 +138,8 @@
                      completion:^(BOOL finished) {
                          self.editView.hidden = YES;
 
-                         for(UIGestureRecognizer *gestures in self.gestureRecognizers) {
-                             [self removeGestureRecognizer:gestures];
+                         for(UIGestureRecognizer *gesture in self.gestureRecognizers) {
+                             [self removeGestureRecognizer:gesture];
                          }
                      }];
 }

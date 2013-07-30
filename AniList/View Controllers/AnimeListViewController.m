@@ -31,6 +31,8 @@ static BOOL alreadyFetched = NO;
         
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchData) name:kUserLoggedIn object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deleteAnime) name:kDeleteAnime object:nil];
     }
     
     return self;
@@ -48,9 +50,13 @@ static BOOL alreadyFetched = NO;
         [self fetchData];
     }
     
-    UISwipeGestureRecognizer* swipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(didSwipe:)];
+    UISwipeGestureRecognizer *swipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(didSwipe:)];
     [swipeGestureRecognizer setDirection:UISwipeGestureRecognizerDirectionLeft];
     [self.tableView addGestureRecognizer:swipeGestureRecognizer];
+    
+    UILongPressGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(didSwipe:)];
+    [longPressGestureRecognizer setMinimumPressDuration:0.20f];
+    [self.tableView addGestureRecognizer:longPressGestureRecognizer];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -127,11 +133,25 @@ static BOOL alreadyFetched = NO;
 }
 
 - (void)saveAnime:(Anime *)anime {
-    [[MALHTTPClient sharedClient] updateDetailsForAnimeWithID:anime.anime_id success:^(id operation, id response) {
-        ALLog(@"Updated '%@'.", anime.title);
-    } failure:^(id operation, NSError *error) {
-        ALLog(@"Failed to update '%@'.", anime.title);
-    }];
+    if(anime) {
+        [[MALHTTPClient sharedClient] updateDetailsForAnimeWithID:anime.anime_id success:^(id operation, id response) {
+            ALLog(@"Updated '%@'.", anime.title);
+        } failure:^(id operation, NSError *error) {
+            ALLog(@"Failed to update '%@'.", anime.title);
+        }];
+    }
+    
+    self.tableView.editing = NO;
+    self.editedIndexPath = nil;
+    self.editedAnime = nil;
+}
+
+- (void)deleteAnime {
+    Anime *anime = [self.fetchedResultsController objectAtIndexPath:self.editedIndexPath];
+    
+    if(anime) {
+        anime.watched_status = @(AnimeWatchedStatusNotWatching);
+    }
     
     self.tableView.editing = NO;
     self.editedIndexPath = nil;
@@ -141,7 +161,8 @@ static BOOL alreadyFetched = NO;
 #pragma mark - Gesture Management Methods
 
 - (void)didSwipe:(UIGestureRecognizer *)gestureRecognizer {
-    if (gestureRecognizer.state == UIGestureRecognizerStateEnded) {
+    if (([gestureRecognizer isMemberOfClass:[UISwipeGestureRecognizer class]] && gestureRecognizer.state == UIGestureRecognizerStateEnded) ||
+        ([gestureRecognizer isMemberOfClass:[UILongPressGestureRecognizer class]] && gestureRecognizer.state == UIGestureRecognizerStateBegan)) {
         CGPoint swipeLocation = [gestureRecognizer locationInView:self.tableView];
         NSIndexPath *swipedIndexPath = [self.tableView indexPathForRowAtPoint:swipeLocation];
         AniListCell *swipedCell = (AniListCell *)[self.tableView cellForRowAtIndexPath:swipedIndexPath];
@@ -166,45 +187,51 @@ static BOOL alreadyFetched = NO;
 }
 
 - (void)didCancel:(UIGestureRecognizer *)gestureRecognizer {
-    if (gestureRecognizer.state == UIGestureRecognizerStateEnded) {
-        CGPoint tapLocation = [gestureRecognizer locationInView:self.tableView];
-        NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:tapLocation];
-        AniListCell *cell = (AniListCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-        
-        [cell revokeEditScreen];
-        
-        if(([self.editedAnime.current_episode intValue] > 0 && [self.editedAnime.watched_status intValue] != AnimeWatchedStatusWatching)  &&
-           ([self.editedAnime.current_episode intValue] > 0 && [self.editedAnime.watched_status intValue] != AnimeWatchedStatusCompleted)) {
-            [self promptForBeginning:self.editedAnime];
-        }
-        else {
-            [self saveAnime:self.editedAnime];
-        }
+    CGPoint tapLocation = [gestureRecognizer locationInView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:tapLocation];
+    AniListCell *cell = (AniListCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+    [cell revokeEditScreen];
+    
+    AniListCell *editedCell = (AniListCell *)[self.tableView cellForRowAtIndexPath:self.editedIndexPath];
+    
+    if(editedCell != cell)
+        [editedCell revokeEditScreen];
+    
+    if(([self.editedAnime.current_episode intValue] > 0 && [self.editedAnime.watched_status intValue] != AnimeWatchedStatusWatching)  &&
+       ([self.editedAnime.current_episode intValue] > 0 && [self.editedAnime.watched_status intValue] != AnimeWatchedStatusCompleted)) {
+        [self promptForBeginning:self.editedAnime];
+    }
+    else {
+        [self saveAnime:self.editedAnime];
     }
 }
 
 #pragma mark - Action Sheet Methods
 
 - (void)promptForBeginning:(Anime *)anime {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:[NSString stringWithFormat:@"Do you want mark '%@' as watching?", anime.title]
-                                                             delegate:self
-                                                    cancelButtonTitle:@"No"
-                                               destructiveButtonTitle:nil
-                                                    otherButtonTitles:@"Yes", nil];
-    actionSheet.tag = ActionSheetPromptBeginning;
-    
-    [actionSheet showInView:self.view];
+    if(anime) {
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:[NSString stringWithFormat:@"Do you want mark '%@' as watching?", anime.title]
+                                                                 delegate:self
+                                                        cancelButtonTitle:@"No"
+                                                   destructiveButtonTitle:nil
+                                                        otherButtonTitles:@"Yes", nil];
+        actionSheet.tag = ActionSheetPromptBeginning;
+        
+        [actionSheet showInView:self.view];
+    }
 }
 
 - (void)promptForFinishing:(Anime *)anime {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:[NSString stringWithFormat:@"Do you want mark '%@' as completed?", anime.title]
-                                                             delegate:self
-                                                    cancelButtonTitle:@"No"
-                                               destructiveButtonTitle:@"Yes"
-                                                    otherButtonTitles:nil, nil];
-    actionSheet.tag = ActionSheetPromptFinishing;
-    
-    [actionSheet showInView:self.view];
+    if(anime) {
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:[NSString stringWithFormat:@"Do you want mark '%@' as completed?", anime.title]
+                                                                 delegate:self
+                                                        cancelButtonTitle:@"No"
+                                                   destructiveButtonTitle:@"Yes"
+                                                        otherButtonTitles:nil, nil];
+        actionSheet.tag = ActionSheetPromptFinishing;
+        
+        [actionSheet showInView:self.view];
+    }
 }
 
 #pragma mark - Table view data source
@@ -344,6 +371,13 @@ static BOOL alreadyFetched = NO;
             });
         }
     });
+}
+
+#pragma mark - UIScrollViewDelegate Methods
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [super scrollViewDidScroll:scrollView];
+    [self didCancel:nil];
 }
 
 #pragma mark - UIActionSheetDelegate Methods

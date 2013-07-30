@@ -53,17 +53,33 @@
     self.editProgress.text = [NSString stringWithFormat:@"%d / %d", [self.editedAnime.current_episode intValue], [self.editedAnime.total_episodes intValue]];
 }
 
+- (void)showEditScreen {
+    
+    [super showEditScreen];
+    
+    if([self.editedAnime.current_episode intValue] >= [self.editedAnime.total_episodes intValue]) {
+        self.editedAnime.current_episode = @([self.editedAnime.total_episodes intValue]);
+        self.plusButton.userInteractionEnabled = NO;
+        self.plusButton.alpha = 0.5f;
+    }
+    
+    if([self.editedAnime.current_episode intValue] <= 0) {
+        self.editedAnime.current_episode = @(0);
+        self.minusButton.userInteractionEnabled = NO;
+        self.minusButton.alpha = 0.5f;
+    }
+}
+
 #pragma mark - Edit UIButton Methods
 
 - (IBAction)plusButtonPressed:(id)sender {
-    if(self.editedAnime && [self.editedAnime.current_episode intValue] > 0) {
+    if(self.editedAnime && [self.editedAnime.current_episode intValue] >= 0) {
         self.editedAnime.current_episode = @([self.editedAnime.current_episode intValue] + 1);
-        if([self.editedAnime.current_episode intValue] == [self.editedAnime.total_episodes intValue]) {
+        if([self.editedAnime.current_episode intValue] >= [self.editedAnime.total_episodes intValue]) {
+            self.editedAnime.current_episode = @([self.editedAnime.total_episodes intValue]);
             // Mark as completed?
             self.plusButton.userInteractionEnabled = NO;
             self.plusButton.alpha = 0.5f;
-
-//            [self promptForFinishing];
         }
 
         [self updateProgress];
@@ -76,12 +92,14 @@
 }
 
 - (IBAction)minusButtonPressed:(id)sender {
-    if(self.editedAnime && [self.editedAnime.current_episode intValue] < [self.editedAnime.total_episodes intValue]) {
+    if(self.editedAnime && [self.editedAnime.current_episode intValue] <= [self.editedAnime.total_episodes intValue]) {
         self.editedAnime.current_episode = @([self.editedAnime.current_episode intValue] - 1);
-        if([self.editedAnime.current_episode intValue] == 0) {
+        if([self.editedAnime.current_episode intValue] <= 0) {
+            self.editedAnime.current_episode = @(0);
             self.minusButton.userInteractionEnabled = NO;
             self.minusButton.alpha = 0.5f;
         }
+        
         [self updateProgress];
     }
     
@@ -95,11 +113,19 @@
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:[NSString stringWithFormat:@"Do you really want to delete '%@'?", self.editedAnime.title]
                                                              delegate:self
                                                     cancelButtonTitle:@"No"
-                                               destructiveButtonTitle:nil
-                                                    otherButtonTitles:@"Yes", nil];
+                                               destructiveButtonTitle:@"Yes"
+                                                    otherButtonTitles:nil];
     actionSheet.tag = ActionSheetPromptDeletion;
     
     [actionSheet showInView:self.superview];
+}
+
+#pragma mark - UIActionSheetDelegate Methods
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if(buttonIndex == actionSheet.destructiveButtonIndex) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kDeleteAnime object:nil];
+    }
 }
 
 @end
