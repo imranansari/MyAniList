@@ -19,6 +19,15 @@
 
 @implementation MangaService
 
++ (NSArray *)allManga {
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITY_NAME inManagedObjectContext:[MangaService managedObjectContext]];
+    request.entity = entity;
+    
+    NSError *error = nil;
+    return [[MangaService managedObjectContext] executeFetchRequest:request error:&error];
+}
+
 + (Manga *)mangaForID:(NSNumber *)ID {
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITY_NAME inManagedObjectContext:[MangaService managedObjectContext]];

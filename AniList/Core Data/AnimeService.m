@@ -46,6 +46,15 @@ static NSArray *cachedAnimeList = nil;
  altenative_versions
  */
 
++ (NSArray *)allAnime {
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITY_NAME inManagedObjectContext:[AnimeService managedObjectContext]];
+    request.entity = entity;
+    
+    NSError *error = nil;
+    return [[AnimeService managedObjectContext] executeFetchRequest:request error:&error];
+}
+
 + (Anime *)animeForID:(NSNumber *)ID {
     return [self animeForID:ID fromCache:NO];
 }

@@ -11,6 +11,7 @@
 
 @interface MangaService : NSObject
 
++ (NSArray *)allManga;
 + (Manga *)mangaForID:(NSNumber *)ID;
 + (BOOL)addMangaList:(NSDictionary *)data;
 + (Manga *)addManga:(NSDictionary *)data fromRelatedAnime:(Anime *)anime;

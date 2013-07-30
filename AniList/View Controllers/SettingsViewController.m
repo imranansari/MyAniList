@@ -8,6 +8,11 @@
 
 #import "SettingsViewController.h"
 #import "AniListTableView.h"
+#import "AnimeService.h"
+#import "MangaService.h"
+#import "MALHTTPClient.h"
+#import "CRTransitionLabel.h"
+#import "SettingsCell.h"
 
 #define kOptionName @"kOptionName"
 #define kAction     @"kAction"
@@ -16,6 +21,8 @@
 @property (nonatomic, weak) IBOutlet UIView *maskView;
 @property (nonatomic, weak) IBOutlet AniListTableView *tableView;
 @property (nonatomic, strong) NSArray *options;
+@property (nonatomic, weak) IBOutlet CRTransitionLabel *status;
+@property (nonatomic, weak) IBOutlet UIProgressView *progressView;
 @end
 
 @implementation SettingsViewController
@@ -27,7 +34,7 @@
         self.options = @[
                          @{
                              kOptionName    : @"Enable Genre/Tag Support",
-                             kAction        : @"enableGenreSupport"
+                             kAction        : @"enableGenreTagSupport"
                              },
                          @{
                              kOptionName    : @"Clear Local Images",
@@ -48,6 +55,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.status.transitionRate = 0.2f;
+    self.status.alpha = 0.0f;
+    self.progressView.alpha = 0.0f;
     
     self.title = @"Settings";
     
@@ -112,14 +123,17 @@
     
     static NSString *CellIdentifier = @"Cell";
     
-    UITableViewCell *cell;
+    SettingsCell *cell;
     cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if(!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SettingsCell" owner:self options:nil];
+        cell = (SettingsCell *)nib[0];
+        [(SettingsCell *)cell setup];
     }
     
     NSDictionary *item = self.options[indexPath.row];
-    cell.textLabel.text = item[kOptionName];
+    
+    cell.option.text = item[kOptionName];
     
     return cell;
 }
@@ -127,7 +141,96 @@
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self enableGenreTagSupport];
+}
+
+#pragma mark - Action Methods
+
+- (void)enableGenreTagSupport {
+    // Confirm to the user that this will take a while.
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"This will download additional information for your anime and manga lists. This may take a while. Do you wish to continue?"
+                                                             delegate:self
+                                                    cancelButtonTitle:@"No"
+                                               destructiveButtonTitle:nil
+                                                    otherButtonTitles:@"Yes", nil];
     
+    [actionSheet showInView:self.view];
+}
+
+- (void)downloadInfo {
+    
+    self.status.text = @"Progress: 0%";
+    self.progressView.progress = 0.0f;
+    
+    [UIView animateWithDuration:0.3f animations:^{
+        self.status.alpha = 1.0f;
+        self.progressView.alpha = 1.0f;
+    }];
+    
+    NSArray *animeArray = [AnimeService allAnime];
+    NSArray *mangaArray = [MangaService allManga];
+    float total = animeArray.count + mangaArray.count;
+    float __block counter = 0;
+    
+    for(Anime *anime in animeArray) {
+        double delayInSeconds = 1.0f;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [[MALHTTPClient sharedClient] getAnimeDetailsForID:anime.anime_id success:^(id operation, id response) {
+                counter++;
+                [AnimeService addAnime:response fromList:NO];
+                
+                ALLog(@"Recieved extra details for '%@.'", anime.title);
+                ALLog(@"Progress: %0.0f completed", (counter / total) * 100);
+                
+                self.status.text = [NSString stringWithFormat:@"Progress: %0.0f%%", (counter / total) * 100];
+                self.progressView.progress = counter / total;
+                
+            } failure:^(id operation, NSError *error) {
+                counter++;
+                
+                ALLog(@"Failed to get extra details for '%@.'", anime.title);
+                ALLog(@"Progress: %0.0f completed", (counter / total) * 100);
+                
+                self.status.text = [NSString stringWithFormat:@"Progress: %0.0f%%", (counter / total) * 100];
+                self.progressView.progress = counter / total;
+            }];
+        });
+    }
+    
+    for(Manga *manga in mangaArray) {
+        double delayInSeconds = 2.0;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [[MALHTTPClient sharedClient] getMangaDetailsForID:manga.manga_id success:^(id operation, id response) {
+                counter++;
+                [MangaService addManga:response fromList:NO];
+                
+                ALLog(@"Recieved extra details for '%@.'", manga.title);
+                ALLog(@"Progress: %0.0f completed", (counter / total) * 100);
+                
+                self.status.text = [NSString stringWithFormat:@"Progress: %0.0f%%", (counter / total) * 100];
+                self.progressView.progress = counter / total;
+                
+            } failure:^(id operation, NSError *error) {
+                counter++;
+                
+                ALLog(@"Failed to get extra details for '%@.'", manga.title);
+                ALLog(@"Progress: %0.0f completed", (counter / total) * 100);
+                
+                self.status.text = [NSString stringWithFormat:@"Progress: %0.0f%%", (counter / total) * 100];
+                self.progressView.progress = counter / total;
+            }];
+        });
+    }
+}
+
+#pragma mark - UIActionSheetDelegate Methods
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if(buttonIndex == 0) {
+        [self downloadInfo];
+    }
 }
 
 @end

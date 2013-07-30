@@ -8,6 +8,6 @@
 
 #import "BaseViewController.h"
 
-@interface SettingsViewController : BaseViewController<UITableViewDataSource, UITableViewDelegate>
+@interface SettingsViewController : BaseViewController<UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate>
 
 @end

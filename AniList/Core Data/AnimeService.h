@@ -20,5 +20,6 @@
 + (void)deleteAnime:(Anime *)anime;
 
 + (NSString *)animeToXML:(NSNumber *)animeID;
++ (NSArray *)allAnime;
 
 @end

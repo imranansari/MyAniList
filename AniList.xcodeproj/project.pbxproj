@@ -230,6 +230,10 @@
 		63894CC7176A9E37007D2D05 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63894CC4176A9E37007D2D05 /* LoginViewController.m */; };
 		63894CC8176A9E37007D2D05 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63894CC5176A9E37007D2D05 /* LoginViewController.xib */; };
 		63894CC9176A9E37007D2D05 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63894CC5176A9E37007D2D05 /* LoginViewController.xib */; };
+		638E6B1717A7F54D00A35FDB /* SettingsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 638E6B1617A7F54D00A35FDB /* SettingsCell.m */; };
+		638E6B1817A7F54D00A35FDB /* SettingsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 638E6B1617A7F54D00A35FDB /* SettingsCell.m */; };
+		638E6B1A17A7F9B900A35FDB /* SettingsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 638E6B1917A7F9B900A35FDB /* SettingsCell.xib */; };
+		638E6B1B17A7F9B900A35FDB /* SettingsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 638E6B1917A7F9B900A35FDB /* SettingsCell.xib */; };
 		63922CED171D82C800D41BCE /* spacepyro.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 63922CEC171D82C800D41BCE /* spacepyro.jpg */; };
 		6392F4BC1793851F00D566BD /* anime_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6392F4BB1793851F00D566BD /* anime_background@2x.png */; };
 		639FA1DF17936ABF000AA0D1 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 639FA1DD17936ABF000AA0D1 /* back.png */; };
@@ -513,6 +517,9 @@
 		63894CC3176A9E37007D2D05 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		63894CC4176A9E37007D2D05 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		63894CC5176A9E37007D2D05 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
+		638E6B1517A7F54D00A35FDB /* SettingsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsCell.h; path = Views/SettingsCell.h; sourceTree = "<group>"; };
+		638E6B1617A7F54D00A35FDB /* SettingsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsCell.m; path = Views/SettingsCell.m; sourceTree = "<group>"; };
+		638E6B1917A7F9B900A35FDB /* SettingsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SettingsCell.xib; path = Views/SettingsCell.xib; sourceTree = "<group>"; };
 		63922CEC171D82C800D41BCE /* spacepyro.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = spacepyro.jpg; path = Images/Placeholders/spacepyro.jpg; sourceTree = "<group>"; };
 		6392F4BB1793851F00D566BD /* anime_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "anime_background@2x.png"; sourceTree = "<group>"; };
 		639FA1DD17936ABF000AA0D1 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = back.png; path = Images/Icons/back.png; sourceTree = "<group>"; };
@@ -875,6 +882,9 @@
 				63C8CD6B179A441E003BB80C /* AniListMiniCell.h */,
 				63C8CD6C179A441E003BB80C /* AniListMiniCell.m */,
 				63C8CD6F179A442C003BB80C /* AniListMiniCell.xib */,
+				638E6B1517A7F54D00A35FDB /* SettingsCell.h */,
+				638E6B1617A7F54D00A35FDB /* SettingsCell.m */,
+				638E6B1917A7F9B900A35FDB /* SettingsCell.xib */,
 			);
 			name = "Table Cells";
 			sourceTree = "<group>";
@@ -1262,6 +1272,7 @@
 				630E0FE41768E9980061110A /* plus.png in Resources */,
 				635484B3171C2FA7003457CB /* Default.png in Resources */,
 				6324CEB21799793400B308B0 /* grayArrow@2x.png in Resources */,
+				638E6B1A17A7F9B900A35FDB /* SettingsCell.xib in Resources */,
 				635484B5171C2FA7003457CB /* Default@2x.png in Resources */,
 				63C8CD70179A4435003BB80C /* AniListMiniCell.xib in Resources */,
 				635484B7171C2FA7003457CB /* Default-568h@2x.png in Resources */,
@@ -1352,6 +1363,7 @@
 				639FA1E017936ABF000AA0D1 /* back.png in Resources */,
 				6324CEB11799793400B308B0 /* grayArrow.png in Resources */,
 				639FA1E217936ABF000AA0D1 /* back@2x.png in Resources */,
+				638E6B1B17A7F9B900A35FDB /* SettingsCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1454,6 +1466,7 @@
 				6331027B176605DF00097658 /* UIColor+AniList.m in Sources */,
 				63EFEC3D176966B8009CEAB3 /* UMALHTTPClient.m in Sources */,
 				63894CC1176A9C05007D2D05 /* UserProfile.m in Sources */,
+				638E6B1717A7F54D00A35FDB /* SettingsCell.m in Sources */,
 				63894CC6176A9E37007D2D05 /* LoginViewController.m in Sources */,
 				6371444A1770074600E60B9F /* SearchViewController.m in Sources */,
 				637144501770157A00E60B9F /* NSDictionary+AniList.m in Sources */,
@@ -1503,6 +1516,7 @@
 				636F866D175A5F53007E1FB6 /* AFURLConnectionOperation.m in Sources */,
 				636F866F175A5F53007E1FB6 /* AFXMLRequestOperation.m in Sources */,
 				636F8671175A5F53007E1FB6 /* UIImageView+AFNetworking.m in Sources */,
+				638E6B1817A7F54D00A35FDB /* SettingsCell.m in Sources */,
 				636F8672175A5F5E007E1FB6 /* SWRevealViewController.m in Sources */,
 				636F8677175A7AB8007E1FB6 /* XMLReader.m in Sources */,
 				636F867B175A7D17007E1FB6 /* MALUserClient.m in Sources */,
