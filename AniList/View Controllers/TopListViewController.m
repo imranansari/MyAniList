@@ -53,7 +53,6 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.alpha = 0.0f;
-    self.tableView.frame = CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, self.tableView.frame.size.height-20);
     self.topItems = [[NSMutableArray alloc] init];
     self.currentPage = 1;
     
@@ -80,6 +79,9 @@ static BOOL fetching = NO;
                     
                     NSMutableDictionary *mutableTopAnime = [topAnime mutableCopy];
                     mutableTopAnime[@"rank"] = @(rank);
+                    
+                    ALLog(@"rank: %0.02f", [mutableTopAnime[@"rank"] floatValue]);
+                    ALLog(@"score: %0.02f", [mutableTopAnime[@"members_score"] floatValue]);
                     
                     rank++;
                     
@@ -159,7 +161,14 @@ static BOOL fetching = NO;
 #pragma mark - Table view data source
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    return [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 0)];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+    UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    indicator.frame = view.bounds;
+    [indicator startAnimating];
+    
+    [view addSubview:indicator];
+    
+    return view;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -167,7 +176,7 @@ static BOOL fetching = NO;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return 1;
+    return 44;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

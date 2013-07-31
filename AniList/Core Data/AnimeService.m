@@ -298,6 +298,9 @@ static NSArray *cachedAnimeList = nil;
     if(data[kPopularityRank] && ![data[kPopularityRank] isNull])
         anime.popularity_rank = data[kPopularityRank];
     
+    if(data[kMembersScore] && ![data[kMembersScore] isNull])
+        anime.average_score = [data[kMembersScore] isKindOfClass:[NSString class]] ? @([data[kMembersScore] doubleValue]) : data[kMembersScore];
+    
     if(data[kImageURL] && ![data[kImageURL] isNull])
         anime.image_url = data[kImageURL];
     else if(data[kImage] && ![data[kImage] isNull])

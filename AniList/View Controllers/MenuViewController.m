@@ -161,6 +161,14 @@ static NSString *CellIdentifier = @"Cell";
     [self loadTopViewController:viewController forEntity:@"Anime"];
 }
 
+- (void)loadPopularAnimeViewController:(UIViewController *)viewController {
+    
+}
+
+- (void)loadUpcomingAnimeViewController:(UIViewController *)viewController {
+    
+}
+
 - (void)loadTopMangaViewController:(UIViewController *)viewController {
     [self loadTopViewController:viewController forEntity:@"Manga"];
 }
@@ -209,6 +217,10 @@ static NSString *CellIdentifier = @"Cell";
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if(indexPath.row > 0 && indexPath.row < 4) {
+        return 30;
+    }
+    
     return [MenuCell cellHeight];
 }
 
@@ -226,6 +238,8 @@ static NSString *CellIdentifier = @"Cell";
     if(!cell) {
         cell = [[MenuCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
+    
+    
     
     cell.textLabel.text = items[indexPath.row][kCellTitleKey];
     [cell.textLabel addShadow];
