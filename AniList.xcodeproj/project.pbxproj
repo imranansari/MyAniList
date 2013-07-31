@@ -234,6 +234,10 @@
 		638E6B1817A7F54D00A35FDB /* SettingsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 638E6B1617A7F54D00A35FDB /* SettingsCell.m */; };
 		638E6B1A17A7F9B900A35FDB /* SettingsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 638E6B1917A7F9B900A35FDB /* SettingsCell.xib */; };
 		638E6B1B17A7F9B900A35FDB /* SettingsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 638E6B1917A7F9B900A35FDB /* SettingsCell.xib */; };
+		638E6B1E17A7FD1F00A35FDB /* AniListStatCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 638E6B1D17A7FD1F00A35FDB /* AniListStatCell.m */; };
+		638E6B1F17A7FD1F00A35FDB /* AniListStatCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 638E6B1D17A7FD1F00A35FDB /* AniListStatCell.m */; };
+		638E6B2117A7FD2E00A35FDB /* AniListStatCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 638E6B2017A7FD2E00A35FDB /* AniListStatCell.xib */; };
+		638E6B2217A7FD2E00A35FDB /* AniListStatCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 638E6B2017A7FD2E00A35FDB /* AniListStatCell.xib */; };
 		63922CED171D82C800D41BCE /* spacepyro.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 63922CEC171D82C800D41BCE /* spacepyro.jpg */; };
 		6392F4BC1793851F00D566BD /* anime_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6392F4BB1793851F00D566BD /* anime_background@2x.png */; };
 		639FA1DF17936ABF000AA0D1 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 639FA1DD17936ABF000AA0D1 /* back.png */; };
@@ -520,6 +524,9 @@
 		638E6B1517A7F54D00A35FDB /* SettingsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsCell.h; path = Views/SettingsCell.h; sourceTree = "<group>"; };
 		638E6B1617A7F54D00A35FDB /* SettingsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsCell.m; path = Views/SettingsCell.m; sourceTree = "<group>"; };
 		638E6B1917A7F9B900A35FDB /* SettingsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SettingsCell.xib; path = Views/SettingsCell.xib; sourceTree = "<group>"; };
+		638E6B1C17A7FD1F00A35FDB /* AniListStatCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AniListStatCell.h; path = Views/AniListStatCell.h; sourceTree = "<group>"; };
+		638E6B1D17A7FD1F00A35FDB /* AniListStatCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AniListStatCell.m; path = Views/AniListStatCell.m; sourceTree = "<group>"; };
+		638E6B2017A7FD2E00A35FDB /* AniListStatCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AniListStatCell.xib; path = Views/AniListStatCell.xib; sourceTree = "<group>"; };
 		63922CEC171D82C800D41BCE /* spacepyro.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = spacepyro.jpg; path = Images/Placeholders/spacepyro.jpg; sourceTree = "<group>"; };
 		6392F4BB1793851F00D566BD /* anime_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "anime_background@2x.png"; sourceTree = "<group>"; };
 		639FA1DD17936ABF000AA0D1 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = back.png; path = Images/Icons/back.png; sourceTree = "<group>"; };
@@ -885,6 +892,9 @@
 				638E6B1517A7F54D00A35FDB /* SettingsCell.h */,
 				638E6B1617A7F54D00A35FDB /* SettingsCell.m */,
 				638E6B1917A7F9B900A35FDB /* SettingsCell.xib */,
+				638E6B1C17A7FD1F00A35FDB /* AniListStatCell.h */,
+				638E6B1D17A7FD1F00A35FDB /* AniListStatCell.m */,
+				638E6B2017A7FD2E00A35FDB /* AniListStatCell.xib */,
 			);
 			name = "Table Cells";
 			sourceTree = "<group>";
@@ -1301,6 +1311,7 @@
 				6309651A1737E82500B43489 /* Icon.png in Resources */,
 				637CF6F31759940E0009ADF3 /* test_background@2x.png in Resources */,
 				636F8689175B1091007E1FB6 /* AniListUserInfoViewController.xib in Resources */,
+				638E6B2117A7FD2E00A35FDB /* AniListStatCell.xib in Resources */,
 				636F8697175B116F007E1FB6 /* AniListDetailsViewController.xib in Resources */,
 				636F86AA175BA037007E1FB6 /* header_bg.png in Resources */,
 				6324CEB61799793400B308B0 /* whiteArrow@2x.png in Resources */,
@@ -1335,6 +1346,7 @@
 				63C8CD71179A4436003BB80C /* AniListMiniCell.xib in Resources */,
 				636F8698175B116F007E1FB6 /* AniListDetailsViewController.xib in Resources */,
 				6324CEB31799793400B308B0 /* grayArrow@2x.png in Resources */,
+				638E6B2217A7FD2E00A35FDB /* AniListStatCell.xib in Resources */,
 				6324CEB51799793400B308B0 /* whiteArrow.png in Resources */,
 				630E0FE31768E9980061110A /* minus@2x.png in Resources */,
 				636F86AB175BA037007E1FB6 /* header_bg.png in Resources */,
@@ -1411,6 +1423,7 @@
 				632F436C171CD6FA00A5B43A /* MenuViewController.m in Sources */,
 				632F4370171CD72F00A5B43A /* ProfileCell.m in Sources */,
 				632F4381171CD9C900A5B43A /* MenuCell.m in Sources */,
+				638E6B1E17A7FD1F00A35FDB /* AniListStatCell.m in Sources */,
 				632F4384171CD9E100A5B43A /* AniListCell.m in Sources */,
 				632F438A171CDA0000A5B43A /* AnimeCell.m in Sources */,
 				632F438D171CDA0E00A5B43A /* MangaCell.m in Sources */,
@@ -1589,6 +1602,7 @@
 				639FA1EA17937006000AA0D1 /* UINavigationController+AniList.m in Sources */,
 				639FA1F417937896000AA0D1 /* UIBarButtonItem+AniList.m in Sources */,
 				63DB4E50179AD7B800C20ECC /* Tag.m in Sources */,
+				638E6B1F17A7FD1F00A35FDB /* AniListStatCell.m in Sources */,
 				6374DB4D179CF016003D7264 /* TagListViewController.m in Sources */,
 				63DB4E54179AD7CE00C20ECC /* Synonym.m in Sources */,
 				63DB4E58179AD7D800C20ECC /* Genre.m in Sources */,

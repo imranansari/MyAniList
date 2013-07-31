@@ -69,20 +69,30 @@ static NSString *CellIdentifier = @"Cell";
                       kCellActionKey : @"loadViewController:",
                       },
                   @{
-                      kCellTitleKey : @"Top Anime",
+                      kCellTitleKey : @"- Top",
                       kCellViewControllerKey : @"TopListViewController",
-                      kCellActionKey : @"loadTopViewController:"
+                      kCellActionKey : @"loadTopAnimeViewController:"
+                      },
+                  @{
+                      kCellTitleKey : @"- Popular",
+                      kCellViewControllerKey : @"TopListViewController",
+                      kCellActionKey : @"loadPopularAnimeViewController:"
+                      },
+                  @{
+                      kCellTitleKey : @"- Upcoming",
+                      kCellViewControllerKey : @"TopListViewController",
+                      kCellActionKey : @"loadUpcomingAnimeViewController:"
                       },
                   @{
                       kCellTitleKey : @"Manga",
                       kCellViewControllerKey : @"MangaListViewController",
                       kCellActionKey : @"loadViewController:"
                       },
-                  @{
-                      kCellTitleKey : @"Top Manga",
-                      kCellViewControllerKey : @"TopListViewController",
-                      kCellActionKey : @"loadTopViewController:"
-                      },
+//                  @{
+//                      kCellTitleKey : @"Top Manga",
+//                      kCellViewControllerKey : @"TopListViewController",
+//                      kCellActionKey : @"loadTopMangaViewController:"
+//                      },
                   @{
                       kCellTitleKey : @"Search",
                       kCellViewControllerKey : @"SearchViewController",
@@ -147,9 +157,17 @@ static NSString *CellIdentifier = @"Cell";
     [self.revealViewController setFrontViewController:navigationController animated:YES];
 }
 
-- (void)loadTopViewController:(UIViewController *)viewController {
+- (void)loadTopAnimeViewController:(UIViewController *)viewController {
+    [self loadTopViewController:viewController forEntity:@"Anime"];
+}
+
+- (void)loadTopMangaViewController:(UIViewController *)viewController {
+    [self loadTopViewController:viewController forEntity:@"Manga"];
+}
+
+- (void)loadTopViewController:(UIViewController *)viewController forEntity:(NSString *)entity {
     TopListViewController *topListViewController = (TopListViewController *)viewController;
-    topListViewController.entityName = @"Anime";
+    topListViewController.entityName = entity;
     AniListNavigationController *navigationController = [[AniListNavigationController alloc] initWithRootViewController:topListViewController];
     [self.revealViewController setFrontViewController:navigationController animated:YES];
 }

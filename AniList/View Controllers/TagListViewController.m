@@ -52,7 +52,7 @@
     
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    
+
     self.topSectionLabel.backgroundColor = [UIColor clearColor];
     self.topSectionLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
     self.topSectionLabel.textColor = [UIColor lightGrayColor];

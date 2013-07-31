@@ -419,6 +419,28 @@
     }];
 }
 
+- (void)getTopMangaForType:(MangaType)mangaType atPage:(NSNumber *)page success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure {
+    
+    ALLog(@"Getting top list for manga type %@...", [Manga stringForMangaType:mangaType]);
+    
+    NSString *path = @"/manga/top";
+    
+    NSDictionary *parameters = @{
+                                 //                                 @"type" : [Anime stringForAnimeType:animeType], // not working at the moment.
+                                 @"page" : page
+                                 };
+    
+    [[UMALHTTPClient sharedClient] authenticate];
+    [[UMALHTTPClient sharedClient] getPath:path
+                                parameters:parameters
+                                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                       success(operation, responseObject);
+                                   }
+                                   failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                       failure(operation, error);
+                                   }];
+}
+
 - (void)getMangaDetailsForID:(NSNumber *)mangaID success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure {
     NSString *path = [NSString stringWithFormat:@"/manga/%d", [mangaID intValue]];
     

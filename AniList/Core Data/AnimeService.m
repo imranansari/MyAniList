@@ -292,6 +292,12 @@ static NSArray *cachedAnimeList = nil;
         }
     }
     
+    if(data[kRank] && ![data[kRank] isNull])
+        anime.rank = data[kRank];
+    
+    if(data[kPopularityRank] && ![data[kPopularityRank] isNull])
+        anime.popularity_rank = data[kPopularityRank];
+    
     if(data[kImageURL] && ![data[kImageURL] isNull])
         anime.image_url = data[kImageURL];
     else if(data[kImage] && ![data[kImage] isNull])
@@ -299,7 +305,8 @@ static NSArray *cachedAnimeList = nil;
     
     // Strip out any letters in the filename.
     if(anime.image_url) {
-        
+        NSArray *parts = [anime.image_url componentsSeparatedByString:@"/"];
+        NSString *filename = [parts lastObject];
     }
     
     anime.type = @([Anime animeTypeForValue:data[kType]]);

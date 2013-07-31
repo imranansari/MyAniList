@@ -11,6 +11,7 @@
 
 @interface AnimeService : NSObject
 
++ (NSArray *)allAnime;
 + (Anime *)animeForID:(NSNumber *)ID;
 + (BOOL)addAnimeList:(NSDictionary *)data;
 + (Anime *)addAnime:(NSDictionary *)data fromRelatedManga:(Manga *)manga;
@@ -20,6 +21,5 @@
 + (void)deleteAnime:(Anime *)anime;
 
 + (NSString *)animeToXML:(NSNumber *)animeID;
-+ (NSArray *)allAnime;
 
 @end

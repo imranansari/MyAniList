@@ -12,7 +12,7 @@
 #import "AnimeViewController.h"
 #import "Manga.h"
 #import "MangaViewController.h"
-#import "AniListCell.h"
+#import "AniListStatCell.h"
 #import "MALHTTPClient.h"
 
 #import "AnimeService.h"
@@ -23,6 +23,7 @@
 @property (nonatomic, strong) NSMutableArray *topItems;
 @property (nonatomic, weak) IBOutlet UIView *maskView;
 @property (nonatomic, weak) IBOutlet AniListTableView *tableView;
+@property (nonatomic, weak) IBOutlet UIActivityIndicatorView *indicator;
 @property (nonatomic, assign) int currentPage;
 @end
 
@@ -36,7 +37,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.hidesBackButton = NO;
+
     }
     return self;
 }
@@ -48,8 +49,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.title = [NSString stringWithFormat:@"Top %@", self.entityName];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.tableView.alpha = 0.0f;
+    self.tableView.frame = CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, self.tableView.frame.size.height-20);
     self.topItems = [[NSMutableArray alloc] init];
     self.currentPage = 1;
     
@@ -60,16 +64,35 @@ static BOOL fetching = NO;
 
 - (void)fetchTopItemsAtPage:(NSNumber *)page {
     if(!fetching) {
-        ALLog(@"Fetching anime at page: %d", [page intValue]);
+        ALLog(@"Fetching entity for page: %d", [page intValue]);
         fetching = YES;
         
         if([self.entityName isEqualToString:@"Anime"]) {
             [[MALHTTPClient sharedClient] getTopAnimeForType:AnimeTypeTV atPage:page success:^(id operation, id response) {
+                
+                int rank = 1 + (30 * ([page intValue] - 1));
+                
                 ALLog(@"Items fetched: %d", ((NSArray *)response).count);
                 
+                NSMutableArray *indexPaths = [NSMutableArray array];
+                
                 for(NSDictionary *topAnime in response) {
-                    Anime *anime = [AnimeService addAnime:topAnime fromList:NO];
+                    
+                    NSMutableDictionary *mutableTopAnime = [topAnime mutableCopy];
+                    mutableTopAnime[@"rank"] = @(rank);
+                    
+                    rank++;
+                    
+                    Anime *anime = [AnimeService addAnime:[mutableTopAnime copy] fromList:NO];
                     [self.topItems addObject:anime];
+                    [indexPaths addObject:[NSIndexPath indexPathForRow:(rank-1) inSection:0]];
+                }
+                
+                if(self.tableView.alpha == 0) {
+                    [UIView animateWithDuration:0.3f animations:^{
+                        self.tableView.alpha = 1.0f;
+                        self.indicator.alpha = 0.0f;
+                    }];
                 }
                 
                 [self.tableView reloadData];
@@ -80,8 +103,41 @@ static BOOL fetching = NO;
                 fetching = NO;
             }];
         }
-        else {
-            
+        else if([self.entityName isEqualToString:@"Manga"]) {
+            [[MALHTTPClient sharedClient] getTopMangaForType:MangaTypeManga atPage:page success:^(id operation, id response) {
+                
+                int rank = 1 + (30 * ([page intValue] - 1));
+                
+                ALLog(@"Items fetched: %d", ((NSArray *)response).count);
+                
+                NSMutableArray *indexPaths = [NSMutableArray array];
+                
+                for(NSDictionary *topManga in response) {
+                    
+                    NSMutableDictionary *mutableTopManga = [topManga mutableCopy];
+                    mutableTopManga[@"rank"] = @(rank);
+                    
+                    rank++;
+                    Manga *manga = [MangaService addManga:[mutableTopManga copy] fromList:NO];
+                    
+                    [self.topItems addObject:manga];
+                    [indexPaths addObject:[NSIndexPath indexPathForRow:(rank-1) inSection:0]];
+                }
+                
+                if(self.tableView.alpha == 0) {
+                    [UIView animateWithDuration:0.3f animations:^{
+                        self.tableView.alpha = 1.0f;
+                        self.indicator.alpha = 0.0f;
+                    }];
+                }
+                
+                [self.tableView reloadData];
+                self.currentPage++;
+                fetching = NO;
+            } failure:^(id operation, NSError *error) {
+                ALLog(@"Unable to get items. Trying again. Error: %@", error.localizedDescription);
+                fetching = NO;
+            }];
         }
     }
 }
@@ -115,7 +171,7 @@ static BOOL fetching = NO;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [AniListCell cellHeight];
+    return [AniListStatCell cellHeight];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -130,10 +186,10 @@ static BOOL fetching = NO;
     
     static NSString *CellIdentifier = @"Cell";
     
-    AniListCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    AniListStatCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if(!cell) {
-        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"AnimeCell" owner:self options:nil];
-        cell = (AniListCell *)nib[0];
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"AniListStatCell" owner:self options:nil];
+        cell = (AniListStatCell *)nib[0];
     }
     
     NSManagedObject *item = self.topItems[indexPath.row];
@@ -164,7 +220,7 @@ static BOOL fetching = NO;
 }
 
 - (void)configureCell:(UITableViewCell *)cell withObject:(NSManagedObject *)object {
-    AniListCell *anilistCell = (AniListCell *)cell;
+    AniListStatCell *anilistCell = (AniListStatCell *)cell;
     NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     NSURLRequest *imageRequest;
     NSString *cachedImageLocation = @"";
@@ -174,7 +230,9 @@ static BOOL fetching = NO;
         anilistCell.title.text = anime.title;
         anilistCell.progress.text = [Anime stringForAnimeWatchedStatus:[anime.watched_status intValue]];
         anilistCell.rank.text = [anime.user_score intValue] != -1 ? [NSString stringWithFormat:@"%d", [anime.user_score intValue]] : @"";
+        anilistCell.average_rank.text = [anime.average_score intValue] != -1 ? [NSString stringWithFormat:@"%0.02f", [anime.average_score doubleValue]] : @"";
         anilistCell.type.text = [Anime stringForAnimeType:[anime.type intValue]];
+        anilistCell.stat.text = [NSString stringWithFormat:@"#%d", [anime.rank intValue]];
         imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:anime.image_url]];
         cachedImageLocation = [NSString stringWithFormat:@"%@/%@", documentsDirectory, anime.image];
     }
@@ -183,7 +241,9 @@ static BOOL fetching = NO;
         anilistCell.title.text = manga.title;
         anilistCell.progress.text = [Manga stringForMangaReadStatus:[manga.read_status intValue]];
         anilistCell.rank.text = [manga.user_score intValue] != -1 ? [NSString stringWithFormat:@"%d", [manga.user_score intValue]] : @"";
+        anilistCell.average_rank.text = [manga.average_score intValue] != -1 ? [NSString stringWithFormat:@"%0.02f", [manga.average_score doubleValue]] : @"";
         anilistCell.type.text = [Manga stringForMangaType:[manga.type intValue]];
+        anilistCell.stat.text = [NSString stringWithFormat:@"#%d", [manga.rank intValue]];
         imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:manga.image_url]];
         cachedImageLocation = [NSString stringWithFormat:@"%@/%@", documentsDirectory, manga.image];
     }
