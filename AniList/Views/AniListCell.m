@@ -111,7 +111,13 @@
 
 - (void)showEditScreenForAnime:(Anime *)anime {
     self.editedAnime = anime;
-    self.editProgress.text = [NSString stringWithFormat:@"%d / %d", [anime.current_episode intValue], [anime.total_episodes intValue]];
+    
+    if([anime.total_episodes intValue] > 0) {
+        self.editProgress.text = [NSString stringWithFormat:@"%d / %d", [anime.current_episode intValue], [anime.total_episodes intValue]];
+    }
+    else {
+        self.editProgress.text = [NSString stringWithFormat:@"%d", [anime.current_episode intValue]];
+    }
     
     [self showEditScreen];
 }

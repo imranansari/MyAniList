@@ -265,7 +265,8 @@ static BOOL alreadyFetched = NO;
         case NSFetchedResultsChangeUpdate:
             if(self.tableView.editing) {
                 if([self.editedAnime.current_episode intValue] == [self.editedAnime.total_episodes intValue] &&
-                   [self.editedAnime.watched_status intValue] != AnimeWatchedStatusCompleted) {
+                   [self.editedAnime.watched_status intValue] != AnimeWatchedStatusCompleted &&
+                   [self.editedAnime.total_episodes intValue] != 0) {
                     [self promptForFinishing:self.editedAnime];
                 }
             }
@@ -313,7 +314,7 @@ static BOOL alreadyFetched = NO;
     
     animeCell.type.text = [Anime stringForAnimeType:[anime.type intValue]];
     [animeCell.type addShadow];
-    
+
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:anime.image_url]];
         UIImage *cachedImage = [anime imageForAnime];
@@ -377,6 +378,9 @@ static BOOL alreadyFetched = NO;
                 AnimeUserInfoEditViewController *vc = [[AnimeUserInfoEditViewController alloc] init];
                 vc.anime = self.editedAnime;
                 [self.navigationController pushViewController:vc animated:YES];
+                self.tableView.editing = NO;
+                self.editedIndexPath = nil;
+                self.editedAnime = nil;
             }
             break;
         case ActionSheetPromptDeletion:

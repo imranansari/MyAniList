@@ -146,8 +146,11 @@ static NSArray *animeStatusOrder;
             if([self.anime.current_episode intValue] == [self.anime.total_episodes intValue]) {
                 self.progressLabel.text = [NSString stringWithFormat:@"Finished all %d %@", [self.anime.total_episodes intValue], unit];
             }
-            else {
+            else if([self.anime.total_episodes intValue] > 0) {
                 self.progressLabel.text = [NSString stringWithFormat:@"Watched %d of %d %@", [self.anime.current_episode intValue], [self.anime.total_episodes intValue], [Anime unitForAnimeType:[self.anime.type intValue] plural:YES]];
+            }
+            else {
+                self.progressLabel.text = [NSString stringWithFormat:@"Watched %d %@", [self.anime.current_episode intValue], [Anime unitForAnimeType:[self.anime.type intValue] plural:YES]];
             }
         }
         else {
@@ -177,17 +180,19 @@ static NSArray *animeStatusOrder;
 #pragma mark - IBAction Methods
 
 - (IBAction)addItemButtonPressed:(id)sender {
-    if([self.anime.current_episode intValue] < [self.anime.total_episodes intValue]) {
-        self.anime.current_episode = @([self.anime.current_episode intValue] + 1);
-        self.originalCurrentEpisode = self.anime.current_episode;
+    self.anime.current_episode = @([self.anime.current_episode intValue] + 1);
+    self.originalCurrentEpisode = self.anime.current_episode;
+    
+    if([self.anime.current_episode intValue] >= [self.anime.total_episodes intValue] && [self.anime.total_episodes intValue] > 0) {
         
-        if([self.anime.current_episode intValue] == [self.anime.total_episodes intValue] && [self.anime.watched_status intValue] != AnimeWatchedStatusCompleted) {
-
-            if(!self.anime.user_date_finish) {
-                self.anime.user_date_finish = [NSDate date];
-                [self updateLabels];
-            }
-            
+        self.anime.current_episode = self.anime.total_episodes;
+        
+        if(!self.anime.user_date_finish) {
+            self.anime.user_date_finish = [NSDate date];
+            [self updateLabels];
+        }
+        
+        if([self.anime.watched_status intValue] != AnimeWatchedStatusCompleted) {
             // Set scroller to completed.
             self.anime.watched_status = @(AnimeWatchedStatusCompleted);
             [self configureStatusAnimated:YES];

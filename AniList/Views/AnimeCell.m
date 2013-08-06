@@ -50,20 +50,25 @@
 }
 
 - (void)updateProgress {
-    self.editProgress.text = [NSString stringWithFormat:@"%d / %d", [self.editedAnime.current_episode intValue], [self.editedAnime.total_episodes intValue]];
+    if([self.editedAnime.total_episodes intValue] > 0) {
+        self.editProgress.text = [NSString stringWithFormat:@"%d / %d", [self.editedAnime.current_episode intValue], [self.editedAnime.total_episodes intValue]];
+    }
+    else {
+        self.editProgress.text = [NSString stringWithFormat:@"%d", [self.editedAnime.current_episode intValue]];
+    }
 }
 
 - (void)showEditScreen {
     
     [super showEditScreen];
     
-    if([self.editedAnime.current_episode intValue] >= [self.editedAnime.total_episodes intValue]) {
+    if([self.editedAnime.current_episode intValue] >= [self.editedAnime.total_episodes intValue] && [self.editedAnime.total_episodes intValue] > 0) {
         self.editedAnime.current_episode = @([self.editedAnime.total_episodes intValue]);
         self.plusButton.userInteractionEnabled = NO;
         self.plusButton.alpha = 0.5f;
     }
     
-    if([self.editedAnime.current_episode intValue] <= 0) {
+    if([self.editedAnime.current_episode intValue] < 0) {
         self.editedAnime.current_episode = @(0);
         self.minusButton.userInteractionEnabled = NO;
         self.minusButton.alpha = 0.5f;
@@ -75,7 +80,7 @@
 - (IBAction)plusButtonPressed:(id)sender {
     if(self.editedAnime && [self.editedAnime.current_episode intValue] >= 0) {
         self.editedAnime.current_episode = @([self.editedAnime.current_episode intValue] + 1);
-        if([self.editedAnime.current_episode intValue] >= [self.editedAnime.total_episodes intValue]) {
+        if([self.editedAnime.current_episode intValue] >= [self.editedAnime.total_episodes intValue] && [self.editedAnime.total_episodes intValue] > 0) {
             self.editedAnime.current_episode = @([self.editedAnime.total_episodes intValue]);
             // Mark as completed?
             self.plusButton.userInteractionEnabled = NO;
