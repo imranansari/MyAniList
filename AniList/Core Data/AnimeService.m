@@ -308,8 +308,12 @@ static NSArray *cachedAnimeList = nil;
     
     // Strip out any letters in the filename.
     if(anime.image_url) {
-        NSArray *parts = [anime.image_url componentsSeparatedByString:@"/"];
-        NSString *filename = [parts lastObject];
+        NSString *extension = [[anime.image_url lastPathComponent] pathExtension];
+        NSString *filename = [[anime.image_url lastPathComponent] stringByDeletingPathExtension];
+        NSString *path = [anime.image_url stringByDeletingLastPathComponent];
+        filename = [filename stringByTrimmingCharactersInSet:[NSCharacterSet letterCharacterSet]];
+        filename = [NSString stringWithFormat:@"%@/%@.%@", path, filename, extension];
+        anime.image_url = filename;
     }
     
     anime.type = @([Anime animeTypeForValue:data[kType]]);
@@ -410,6 +414,16 @@ static NSArray *cachedAnimeList = nil;
     
     if(data[kImageURL] && ![data[kImageURL] isNull])
         anime.image_url = data[kImageURL];
+    
+    // Strip out any letters in the filename.
+    if(anime.image_url) {
+        NSString *extension = [[anime.image_url lastPathComponent] pathExtension];
+        NSString *filename = [[anime.image_url lastPathComponent] stringByDeletingPathExtension];
+        NSString *path = [anime.image_url stringByDeletingLastPathComponent];
+        filename = [filename stringByTrimmingCharactersInSet:[NSCharacterSet letterCharacterSet]];
+        filename = [NSString stringWithFormat:@"%@/%@.%@", path, filename, extension];
+        anime.image_url = filename;
+    }
     
     anime.type = @([Anime animeTypeForValue:data[kType]]);
     anime.total_episodes = [data[kEpisodes] isNull] ? @(-1) : [data[kEpisodes] isKindOfClass:[NSString class]] ? @([data[kEpisodes] intValue]) : data[kEpisodes];
