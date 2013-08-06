@@ -108,6 +108,8 @@
 		633BBF6517B0BAEC00AE573D /* PopularListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 633BBF6217B0BAEC00AE573D /* PopularListViewController.m */; };
 		633BBF6617B0BAEC00AE573D /* PopularListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 633BBF6317B0BAEC00AE573D /* PopularListViewController.xib */; };
 		633BBF6717B0BAEC00AE573D /* PopularListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 633BBF6317B0BAEC00AE573D /* PopularListViewController.xib */; };
+		633BBF6A17B0C52C00AE573D /* UIApplication+AniList.m in Sources */ = {isa = PBXBuildFile; fileRef = 633BBF6917B0C52C00AE573D /* UIApplication+AniList.m */; };
+		633BBF6B17B0C52C00AE573D /* UIApplication+AniList.m in Sources */ = {isa = PBXBuildFile; fileRef = 633BBF6917B0C52C00AE573D /* UIApplication+AniList.m */; };
 		63461A0C1777F4700053652C /* MangaDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63461A0B1777F4700053652C /* MangaDetailsViewController.m */; };
 		63461A0D1777F4700053652C /* MangaDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63461A0B1777F4700053652C /* MangaDetailsViewController.m */; };
 		63461A101777F8A20053652C /* MangaUserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63461A0F1777F8A20053652C /* MangaUserInfoViewController.m */; };
@@ -401,6 +403,8 @@
 		633BBF6117B0BAEC00AE573D /* PopularListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopularListViewController.h; sourceTree = "<group>"; };
 		633BBF6217B0BAEC00AE573D /* PopularListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopularListViewController.m; sourceTree = "<group>"; };
 		633BBF6317B0BAEC00AE573D /* PopularListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PopularListViewController.xib; sourceTree = "<group>"; };
+		633BBF6817B0C52C00AE573D /* UIApplication+AniList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIApplication+AniList.h"; path = "Categories/UIApplication+AniList.h"; sourceTree = "<group>"; };
+		633BBF6917B0C52C00AE573D /* UIApplication+AniList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIApplication+AniList.m"; path = "Categories/UIApplication+AniList.m"; sourceTree = "<group>"; };
 		63461A0A1777F4700053652C /* MangaDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MangaDetailsViewController.h; sourceTree = "<group>"; };
 		63461A0B1777F4700053652C /* MangaDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MangaDetailsViewController.m; sourceTree = "<group>"; };
 		63461A0E1777F8A20053652C /* MangaUserInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MangaUserInfoViewController.h; sourceTree = "<group>"; };
@@ -968,6 +972,8 @@
 				639FA1F217937896000AA0D1 /* UIBarButtonItem+AniList.m */,
 				63D045A9179CE87A006507D3 /* UIButton+AniList.h */,
 				63D045AA179CE87A006507D3 /* UIButton+AniList.m */,
+				633BBF6817B0C52C00AE573D /* UIApplication+AniList.h */,
+				633BBF6917B0C52C00AE573D /* UIApplication+AniList.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -1450,6 +1456,7 @@
 				635027A0171E51450004C106 /* AnimeViewController.m in Sources */,
 				635027BA171ED41A0004C106 /* AnimeService.m in Sources */,
 				635027BD171ED60A0004C106 /* Anime.m in Sources */,
+				633BBF6A17B0C52C00AE573D /* UIApplication+AniList.m in Sources */,
 				6324CECA17997F1800B308B0 /* AnalyticsManager.m in Sources */,
 				6372893B17542D110032F425 /* MALHTTPClient.m in Sources */,
 				637CF6EC175986840009ADF3 /* NSObject+AniList.m in Sources */,
@@ -1528,6 +1535,7 @@
 				635484D0171C2FA7003457CB /* AniListTests.m in Sources */,
 				63D045A8179CDA5D006507D3 /* TagView.m in Sources */,
 				6353C230171C457D0060F062 /* TTTAttributedLabel.m in Sources */,
+				633BBF6B17B0C52C00AE573D /* UIApplication+AniList.m in Sources */,
 				6372893C17542D110032F425 /* MALHTTPClient.m in Sources */,
 				637CF6ED175986840009ADF3 /* NSObject+AniList.m in Sources */,
 				6380F998179ADADF0090B66C /* TagService.m in Sources */,

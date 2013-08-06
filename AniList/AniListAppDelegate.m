@@ -108,6 +108,14 @@
     [[UIToolbar appearance] setBackgroundImage:[[UIImage new] resizableImageWithCapInsets:UIEdgeInsetsMake(22, 5, 22, 5)] forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
     
     [[UISegmentedControl appearance] setBackgroundImage:[UIImage imageNamed:@"image_placeholder.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    
+    if([UIApplication isiOS7]) {
+        [[UINavigationBar appearance] setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
+        [[UINavigationBar appearance] setShadowImage:[[UIImage alloc] init]];
+
+        [[UINavigationBar appearance] setTitleTextAttributes:@{ UITextAttributeTextColor : [UIColor whiteColor],
+                                                                UITextAttributeFont      : [UIFont fontWithName:@"HelveticaNeue-Light" size:0.0] }];
+    }
 }
 
 - (void)createDirectories {

@@ -50,9 +50,9 @@ static NSString *CellIdentifier = @"Cell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
+//    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
     self.tableView.scrollEnabled = NO;
-    
+
     self.profileImage.contentMode = UIViewContentModeScaleAspectFill;
     self.profileImage.backgroundColor = [UIColor clearColor];
     self.profileImage.layer.borderColor = [UIColor colorWithWhite:1.0f alpha:0.4f].CGColor;
@@ -240,8 +240,7 @@ static NSString *CellIdentifier = @"Cell";
         cell = [[MenuCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
-    
-    
+//    [cell addGradient];
     cell.textLabel.text = items[indexPath.row][kCellTitleKey];
     [cell.textLabel addShadow];
     
