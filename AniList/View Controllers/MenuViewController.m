@@ -15,6 +15,7 @@
 #import "MALHTTPClient.h"
 #import "LoginViewController.h"
 #import "TopListViewController.h"
+#import "PopularListViewController.h"
 
 #define kCellTitleKey @"kCellTitleKey"
 #define kCellViewControllerKey @"kCellViewControllerKey"
@@ -75,7 +76,7 @@ static NSString *CellIdentifier = @"Cell";
                       },
                   @{
                       kCellTitleKey : @"- Popular",
-                      kCellViewControllerKey : @"TopListViewController",
+                      kCellViewControllerKey : @"PopularListViewController",
                       kCellActionKey : @"loadPopularAnimeViewController:"
                       },
                   @{
@@ -162,11 +163,11 @@ static NSString *CellIdentifier = @"Cell";
 }
 
 - (void)loadPopularAnimeViewController:(UIViewController *)viewController {
-    
+    [self loadPopularViewController:viewController forEntity:@"Anime"];
 }
 
 - (void)loadUpcomingAnimeViewController:(UIViewController *)viewController {
-    
+
 }
 
 - (void)loadTopMangaViewController:(UIViewController *)viewController {
@@ -180,10 +181,10 @@ static NSString *CellIdentifier = @"Cell";
     [self.revealViewController setFrontViewController:navigationController animated:YES];
 }
 
-- (void)loadPopularViewController:(UIViewController *)viewController {
-    AniListViewController *anilistViewController = (AniListViewController *)viewController;
-    anilistViewController.viewPopular = YES;
-    AniListNavigationController *navigationController = [[AniListNavigationController alloc] initWithRootViewController:anilistViewController];
+- (void)loadPopularViewController:(UIViewController *)viewController forEntity:(NSString *)entity {
+    PopularListViewController *popularListViewController = (PopularListViewController *)viewController;
+    popularListViewController.entityName = entity;
+    AniListNavigationController *navigationController = [[AniListNavigationController alloc] initWithRootViewController:popularListViewController];
     [self.revealViewController setFrontViewController:navigationController animated:YES];
 }
 

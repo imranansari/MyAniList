@@ -1,12 +1,12 @@
 //
-//  TopListViewController.m
+//  PopularListViewController.m
 //  AniList
 //
-//  Created by Corey Roberts on 7/21/13.
+//  Created by Corey Roberts on 8/6/13.
 //  Copyright (c) 2013 SpacePyro Inc. All rights reserved.
 //
 
-#import "TopListViewController.h"
+#import "PopularListViewController.h"
 #import "AniListTableView.h"
 #import "Anime.h"
 #import "AnimeViewController.h"
@@ -18,7 +18,7 @@
 #import "AnimeService.h"
 #import "MangaService.h"
 
-@interface TopListViewController ()
+@interface PopularListViewController ()
 @property (nonatomic, copy) NSArray *sectionHeaders;
 @property (nonatomic, strong) NSMutableArray *topItems;
 @property (nonatomic, weak) IBOutlet UIView *maskView;
@@ -27,7 +27,7 @@
 @property (nonatomic, assign) int currentPage;
 @end
 
-@implementation TopListViewController
+@implementation PopularListViewController
 
 - (id)init {
     return [self initWithNibName:@"TopListViewController" bundle:[NSBundle mainBundle]];
@@ -37,19 +37,19 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-
+        
     }
     return self;
 }
 
 - (void)dealloc {
-    ALLog(@"TagList deallocating.");
+    ALLog(@"PopularList deallocating.");
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = [NSString stringWithFormat:@"Top %@", self.entityName];
+    self.title = [NSString stringWithFormat:@"Popular %@", self.entityName];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.alpha = 0.0f;
@@ -67,7 +67,7 @@ static BOOL fetching = NO;
         fetching = YES;
         
         if([self.entityName isEqualToString:@"Anime"]) {
-            [[MALHTTPClient sharedClient] getTopAnimeForType:AnimeTypeTV atPage:page success:^(id operation, id response) {
+            [[MALHTTPClient sharedClient] getPopularAnimeForType:AnimeTypeTV atPage:page success:^(id operation, id response) {
                 
                 int rank = 1 + (30 * ([page intValue] - 1));
                 
@@ -84,13 +84,13 @@ static BOOL fetching = NO;
                 for(NSDictionary *topAnime in response) {
                     
                     NSMutableDictionary *mutableTopAnime = [topAnime mutableCopy];
-                    mutableTopAnime[@"rank"] = @(rank);
+                    mutableTopAnime[@"popularity_rank"] = @(rank);
                     
-                    ALLog(@"rank: %0.02f", [mutableTopAnime[@"rank"] floatValue]);
+                    ALLog(@"rank: %0.02f", [mutableTopAnime[@"popularity_rank"] floatValue]);
                     ALLog(@"score: %0.02f", [mutableTopAnime[@"members_score"] floatValue]);
                     
                     Anime *anime = [AnimeService addAnime:[mutableTopAnime copy] fromList:NO];
-
+                    
                     [self.topItems addObject:anime];
                     [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:(rank-1) inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
                     
@@ -115,7 +115,7 @@ static BOOL fetching = NO;
             }];
         }
         else if([self.entityName isEqualToString:@"Manga"]) {
-            [[MALHTTPClient sharedClient] getTopMangaForType:MangaTypeManga atPage:page success:^(id operation, id response) {
+            [[MALHTTPClient sharedClient] getPopularMangaForType:MangaTypeManga atPage:page success:^(id operation, id response) {
                 
                 int rank = 1 + (30 * ([page intValue] - 1));
                 
@@ -250,7 +250,7 @@ static BOOL fetching = NO;
         anilistCell.rank.text = [anime.user_score intValue] != -1 ? [NSString stringWithFormat:@"%d", [anime.user_score intValue]] : @"";
         anilistCell.average_rank.text = [anime.average_score intValue] != -1 ? [NSString stringWithFormat:@"%0.02f", [anime.average_score doubleValue]] : @"";
         anilistCell.type.text = [Anime stringForAnimeType:[anime.type intValue]];
-        anilistCell.stat.text = [NSString stringWithFormat:@"#%d", [anime.rank intValue]];
+        anilistCell.stat.text = [NSString stringWithFormat:@"#%d", [anime.popularity_rank intValue]];
         imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:anime.image_url]];
         cachedImageLocation = [NSString stringWithFormat:@"%@/%@", documentsDirectory, anime.image];
     }
@@ -261,7 +261,7 @@ static BOOL fetching = NO;
         anilistCell.rank.text = [manga.user_score intValue] != -1 ? [NSString stringWithFormat:@"%d", [manga.user_score intValue]] : @"";
         anilistCell.average_rank.text = [manga.average_score intValue] != -1 ? [NSString stringWithFormat:@"%0.02f", [manga.average_score doubleValue]] : @"";
         anilistCell.type.text = [Manga stringForMangaType:[manga.type intValue]];
-        anilistCell.stat.text = [NSString stringWithFormat:@"#%d", [manga.rank intValue]];
+        anilistCell.stat.text = [NSString stringWithFormat:@"#%d", [manga.popularity_rank intValue]];
         imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:manga.image_url]];
         cachedImageLocation = [NSString stringWithFormat:@"%@/%@", documentsDirectory, manga.image];
     }
