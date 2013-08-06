@@ -30,7 +30,7 @@
 @implementation PopularListViewController
 
 - (id)init {
-    return [self initWithNibName:@"TopListViewController" bundle:[NSBundle mainBundle]];
+    return [self initWithNibName:@"PopularListViewController" bundle:[NSBundle mainBundle]];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil

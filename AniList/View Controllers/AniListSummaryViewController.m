@@ -67,6 +67,16 @@
 //                         navigationController.imageView.frame = CGRectMake(navigationController.imageView.frame.origin.x, 0, navigationController.imageView.frame.size.width, navigationController.imageView.frame.size.height);
 //                     }
 //                     completion:nil];
+    
+    if([UIApplication isiOS7]) {
+        [UIView animateWithDuration:0.2f
+                              delay:0.0f
+                            options:UIViewAnimationOptionCurveEaseInOut
+                         animations:^{
+                             self.view.alpha = 1.0f;
+                         }
+                         completion:nil];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -78,11 +88,27 @@
 //                         navigationController.imageView.frame = CGRectMake(navigationController.imageView.frame.origin.x, self.currentYBackgroundPosition, navigationController.imageView.frame.size.width, navigationController.imageView.frame.size.height);
 //                     }
 //                     completion:nil];
+    
+    if([UIApplication isiOS7]) {
+        [UIView animateWithDuration:0.2f
+                              delay:0.0f
+                            options:UIViewAnimationOptionCurveEaseInOut
+                         animations:^{
+                             self.view.alpha = 0.0f;
+                         }
+                         completion:nil];
+    }
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)dealloc {
+    self.relatedTableView.delegate = nil;
+    self.scrollView.delegate = nil;
 }
 
 #pragma mark - UILabel Fix Method

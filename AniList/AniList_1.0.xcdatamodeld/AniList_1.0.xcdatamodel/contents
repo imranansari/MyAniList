@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2061" systemVersion="13A510d" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3389" systemVersion="13A524d" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Anime" representedClassName="Anime" syncable="YES">
         <attribute name="anime_id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="average_count" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
@@ -48,6 +48,10 @@
         <relationship name="summaries" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Anime" syncable="YES"/>
         <relationship name="synonyms" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Synonym" syncable="YES"/>
         <relationship name="tags" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Tag" inverseName="anime" inverseEntity="Tag" syncable="YES"/>
+    </entity>
+    <entity name="Friend" representedClassName="Friend" syncable="YES">
+        <attribute name="image_url" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="Genre" representedClassName="Genre" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
@@ -106,10 +110,11 @@
         <relationship name="manga" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Manga" inverseName="tags" inverseEntity="Manga" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Anime" positionX="-603" positionY="234" width="128" height="750"/>
-        <element name="Genre" positionX="-252" positionY="486" width="128" height="90"/>
-        <element name="Manga" positionX="115" positionY="234" width="128" height="660"/>
-        <element name="Synonym" positionX="160" positionY="192" width="128" height="60"/>
-        <element name="Tag" positionX="-342" positionY="360" width="128" height="90"/>
+        <element name="Anime" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Genre" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Manga" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Synonym" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Tag" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Friend" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
 </model>

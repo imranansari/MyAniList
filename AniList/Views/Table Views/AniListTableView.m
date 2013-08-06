@@ -25,9 +25,12 @@
     self = [super initWithCoder:aDecoder];
     if(self) {
         self.backgroundColor = [UIColor clearColor];
-        self.frame = CGRectMake(self.frame.origin.x,
+        
+        int frameOffset = [UIApplication isiOS7] ? 0 : 10;
+        
+        self.frame = CGRectMake(self.frame.origin.x - frameOffset,
                                 self.frame.origin.y + DEFAULT_OFFSET,
-                                self.frame.size.width,
+                                self.frame.size.width + (frameOffset * 2),
                                 self.frame.size.height - DEFAULT_OFFSET);
         self.backgroundView = nil;
         self.separatorColor = [UIColor grayColor];

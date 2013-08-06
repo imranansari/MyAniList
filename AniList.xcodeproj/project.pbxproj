@@ -110,6 +110,14 @@
 		633BBF6717B0BAEC00AE573D /* PopularListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 633BBF6317B0BAEC00AE573D /* PopularListViewController.xib */; };
 		633BBF6A17B0C52C00AE573D /* UIApplication+AniList.m in Sources */ = {isa = PBXBuildFile; fileRef = 633BBF6917B0C52C00AE573D /* UIApplication+AniList.m */; };
 		633BBF6B17B0C52C00AE573D /* UIApplication+AniList.m in Sources */ = {isa = PBXBuildFile; fileRef = 633BBF6917B0C52C00AE573D /* UIApplication+AniList.m */; };
+		633BBF6F17B1358400AE573D /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 633BBF6D17B1358400AE573D /* FriendsViewController.m */; };
+		633BBF7017B1358400AE573D /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 633BBF6D17B1358400AE573D /* FriendsViewController.m */; };
+		633BBF7117B1358400AE573D /* FriendsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 633BBF6E17B1358400AE573D /* FriendsViewController.xib */; };
+		633BBF7217B1358400AE573D /* FriendsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 633BBF6E17B1358400AE573D /* FriendsViewController.xib */; };
+		633BBF7517B1381C00AE573D /* Friend.m in Sources */ = {isa = PBXBuildFile; fileRef = 633BBF7417B1381C00AE573D /* Friend.m */; };
+		633BBF7617B1381C00AE573D /* Friend.m in Sources */ = {isa = PBXBuildFile; fileRef = 633BBF7417B1381C00AE573D /* Friend.m */; };
+		633BBF7917B139AD00AE573D /* FriendService.m in Sources */ = {isa = PBXBuildFile; fileRef = 633BBF7817B139AD00AE573D /* FriendService.m */; };
+		633BBF7A17B139AD00AE573D /* FriendService.m in Sources */ = {isa = PBXBuildFile; fileRef = 633BBF7817B139AD00AE573D /* FriendService.m */; };
 		63461A0C1777F4700053652C /* MangaDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63461A0B1777F4700053652C /* MangaDetailsViewController.m */; };
 		63461A0D1777F4700053652C /* MangaDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63461A0B1777F4700053652C /* MangaDetailsViewController.m */; };
 		63461A101777F8A20053652C /* MangaUserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63461A0F1777F8A20053652C /* MangaUserInfoViewController.m */; };
@@ -405,6 +413,13 @@
 		633BBF6317B0BAEC00AE573D /* PopularListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PopularListViewController.xib; sourceTree = "<group>"; };
 		633BBF6817B0C52C00AE573D /* UIApplication+AniList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIApplication+AniList.h"; path = "Categories/UIApplication+AniList.h"; sourceTree = "<group>"; };
 		633BBF6917B0C52C00AE573D /* UIApplication+AniList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIApplication+AniList.m"; path = "Categories/UIApplication+AniList.m"; sourceTree = "<group>"; };
+		633BBF6C17B1358400AE573D /* FriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsViewController.h; sourceTree = "<group>"; };
+		633BBF6D17B1358400AE573D /* FriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsViewController.m; sourceTree = "<group>"; };
+		633BBF6E17B1358400AE573D /* FriendsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendsViewController.xib; sourceTree = "<group>"; };
+		633BBF7317B1381C00AE573D /* Friend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Friend.h; path = "Core Data/Friend.h"; sourceTree = "<group>"; };
+		633BBF7417B1381C00AE573D /* Friend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Friend.m; path = "Core Data/Friend.m"; sourceTree = "<group>"; };
+		633BBF7717B139AD00AE573D /* FriendService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FriendService.h; path = "Core Data/FriendService.h"; sourceTree = "<group>"; };
+		633BBF7817B139AD00AE573D /* FriendService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FriendService.m; path = "Core Data/FriendService.m"; sourceTree = "<group>"; };
 		63461A0A1777F4700053652C /* MangaDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MangaDetailsViewController.h; sourceTree = "<group>"; };
 		63461A0B1777F4700053652C /* MangaDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MangaDetailsViewController.m; sourceTree = "<group>"; };
 		63461A0E1777F8A20053652C /* MangaUserInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MangaUserInfoViewController.h; sourceTree = "<group>"; };
@@ -776,6 +791,9 @@
 				633BBF6117B0BAEC00AE573D /* PopularListViewController.h */,
 				633BBF6217B0BAEC00AE573D /* PopularListViewController.m */,
 				633BBF6317B0BAEC00AE573D /* PopularListViewController.xib */,
+				633BBF6C17B1358400AE573D /* FriendsViewController.h */,
+				633BBF6D17B1358400AE573D /* FriendsViewController.m */,
+				633BBF6E17B1358400AE573D /* FriendsViewController.xib */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -823,6 +841,8 @@
 			isa = PBXGroup;
 			children = (
 				635484B8171C2FA7003457CB /* AniList_1.0.xcdatamodeld */,
+				633BBF7317B1381C00AE573D /* Friend.h */,
+				633BBF7417B1381C00AE573D /* Friend.m */,
 				63DB4E55179AD7D800C20ECC /* Genre.h */,
 				63DB4E56179AD7D800C20ECC /* Genre.m */,
 				63DB4E51179AD7CE00C20ECC /* Synonym.h */,
@@ -843,6 +863,8 @@
 				6380F992179ADAD10090B66C /* GenreService.m */,
 				6380F995179ADADE0090B66C /* TagService.h */,
 				6380F996179ADADF0090B66C /* TagService.m */,
+				633BBF7717B139AD00AE573D /* FriendService.h */,
+				633BBF7817B139AD00AE573D /* FriendService.m */,
 			);
 			name = "Core Data";
 			sourceTree = "<group>";
@@ -1297,6 +1319,7 @@
 				63D8791C17A20C89002ACA13 /* red_bg_pressed.png in Resources */,
 				630E0FE41768E9980061110A /* plus.png in Resources */,
 				635484B3171C2FA7003457CB /* Default.png in Resources */,
+				633BBF7117B1358400AE573D /* FriendsViewController.xib in Resources */,
 				6324CEB21799793400B308B0 /* grayArrow@2x.png in Resources */,
 				638E6B1A17A7F9B900A35FDB /* SettingsCell.xib in Resources */,
 				635484B5171C2FA7003457CB /* Default@2x.png in Resources */,
@@ -1391,6 +1414,7 @@
 				6324CEAD1799793400B308B0 /* blueArrow.png in Resources */,
 				636691DD17A2B2E70013B0F6 /* TopListViewController.xib in Resources */,
 				639FA1E017936ABF000AA0D1 /* back.png in Resources */,
+				633BBF7217B1358400AE573D /* FriendsViewController.xib in Resources */,
 				6324CEB11799793400B308B0 /* grayArrow.png in Resources */,
 				639FA1E217936ABF000AA0D1 /* back@2x.png in Resources */,
 				638E6B1B17A7F9B900A35FDB /* SettingsCell.xib in Resources */,
@@ -1440,6 +1464,7 @@
 				6353C22F171C457D0060F062 /* TTTAttributedLabel.m in Sources */,
 				632F436C171CD6FA00A5B43A /* MenuViewController.m in Sources */,
 				632F4370171CD72F00A5B43A /* ProfileCell.m in Sources */,
+				633BBF7917B139AD00AE573D /* FriendService.m in Sources */,
 				632F4381171CD9C900A5B43A /* MenuCell.m in Sources */,
 				638E6B1E17A7FD1F00A35FDB /* AniListStatCell.m in Sources */,
 				632F4384171CD9E100A5B43A /* AniListCell.m in Sources */,
@@ -1460,6 +1485,7 @@
 				6324CECA17997F1800B308B0 /* AnalyticsManager.m in Sources */,
 				6372893B17542D110032F425 /* MALHTTPClient.m in Sources */,
 				637CF6EC175986840009ADF3 /* NSObject+AniList.m in Sources */,
+				633BBF6F17B1358400AE573D /* FriendsViewController.m in Sources */,
 				636F864C175A5F49007E1FB6 /* SWRevealViewController.m in Sources */,
 				636F8660175A5F53007E1FB6 /* AFHTTPClient.m in Sources */,
 				636F8662175A5F53007E1FB6 /* AFHTTPRequestOperation.m in Sources */,
@@ -1479,6 +1505,7 @@
 				636F8695175B116F007E1FB6 /* AniListDetailsViewController.m in Sources */,
 				636F869C175B117D007E1FB6 /* AnimeDetailsViewController.m in Sources */,
 				636F86A2175B1232007E1FB6 /* SynopsisView.m in Sources */,
+				633BBF7517B1381C00AE573D /* Friend.m in Sources */,
 				636F86B0175BA1E3007E1FB6 /* UILabel+AniList.m in Sources */,
 				636F86B4175BA3B8007E1FB6 /* UIView+AniList.m in Sources */,
 				6301D94B175D66AF00163160 /* AniListSummaryViewController.m in Sources */,
@@ -1561,10 +1588,12 @@
 				636F869D175B117D007E1FB6 /* AnimeDetailsViewController.m in Sources */,
 				636691DB17A2B2E70013B0F6 /* TopListViewController.m in Sources */,
 				636F86A3175B1232007E1FB6 /* SynopsisView.m in Sources */,
+				633BBF7617B1381C00AE573D /* Friend.m in Sources */,
 				636F86B1175BA1E3007E1FB6 /* UILabel+AniList.m in Sources */,
 				636F86B5175BA3B8007E1FB6 /* UIView+AniList.m in Sources */,
 				6301D92F175D631000163160 /* MenuViewController.m in Sources */,
 				6301D930175D631000163160 /* AniListViewController.m in Sources */,
+				633BBF7A17B139AD00AE573D /* FriendService.m in Sources */,
 				6301D931175D631000163160 /* AnimeListViewController.m in Sources */,
 				6301D932175D631000163160 /* MangaListViewController.m in Sources */,
 				6301D933175D631000163160 /* AnimeViewController.m in Sources */,
@@ -1615,6 +1644,7 @@
 				63B0DFA81789C529006F0868 /* GTMNSString+HTML.m in Sources */,
 				63B0DFAE1789D065006F0868 /* AnimeServiceTests.m in Sources */,
 				63B0DFB11789D087006F0868 /* AnimeTests.m in Sources */,
+				633BBF7017B1358400AE573D /* FriendsViewController.m in Sources */,
 				63B0DFB41789D091006F0868 /* MangaTests.m in Sources */,
 				63B0DFB71789D09B006F0868 /* MangaServiceTests.m in Sources */,
 				63FC20A817920EB000DFD544 /* CRTransitionLabel.m in Sources */,

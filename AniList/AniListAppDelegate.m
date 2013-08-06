@@ -59,13 +59,17 @@
 }
 
 - (void)setStyleAttributes {
-    [[UIBarButtonItem appearance] setBackgroundImage:[[UIImage alloc] init] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-    [[UIBarButtonItem appearance] setBackgroundImage:[[UIImage alloc] init] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
-
-    UIImage *backButton = [UIImage imageNamed:@"back.png"];
-    backButton = [backButton resizableImageWithCapInsets:UIEdgeInsetsMake(0, backButton.size.width, 0, 0)];
-    [[UIBarButtonItem appearance] setBackButtonBackgroundImage:backButton forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-    [[UIBarButtonItem appearance] setBackButtonBackgroundImage:backButton forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
+    if(![UIApplication isiOS7]) {
+        [[UIBarButtonItem appearance] setBackgroundImage:[[UIImage alloc] init] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+        [[UIBarButtonItem appearance] setBackgroundImage:[[UIImage alloc] init] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
+        
+        UIImage *backButton = [UIImage imageNamed:@"back.png"];
+        backButton = [backButton resizableImageWithCapInsets:UIEdgeInsetsMake(0, backButton.size.width, 0, 0)];
+        [[UIBarButtonItem appearance] setBackButtonBackgroundImage:backButton forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+        [[UIBarButtonItem appearance] setBackButtonBackgroundImage:backButton forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
+    }
+    
+    [UIApplication sharedApplication].statusBarStyle = [UIApplication isiOS7] ? UIStatusBarStyleLightContent : UIStatusBarStyleDefault;
 
     [[UIBarButtonItem appearance] setTitleTextAttributes:
                         @{
@@ -114,7 +118,9 @@
         [[UINavigationBar appearance] setShadowImage:[[UIImage alloc] init]];
 
         [[UINavigationBar appearance] setTitleTextAttributes:@{ UITextAttributeTextColor : [UIColor whiteColor],
-                                                                UITextAttributeFont      : [UIFont fontWithName:@"HelveticaNeue-Light" size:0.0] }];
+                                                                UITextAttributeFont      : [UIFont fontWithName:@"HelveticaNeue-Light" size:0.0],
+                                                                UITextAttributeTextShadowOffset : [NSValue valueWithUIOffset:UIOffsetMake(0, -1)]
+                                                                }];
     }
 }
 
