@@ -235,10 +235,11 @@ static BOOL alreadyFetched = NO;
             
         case NSFetchedResultsChangeUpdate:
             if(self.tableView.editing) {
-                if([self.editedManga.current_chapter intValue] == [self.editedManga.total_chapters intValue] &&
-                   [self.editedManga.current_volume intValue] == [self.editedManga.total_volumes intValue] &&
-                   [self.editedManga.read_status intValue] != MangaReadStatusCompleted &&
-                   ([self.editedManga.total_chapters intValue] != 0 || [self.editedManga.total_volumes intValue] != 0) ) {
+                if((([self.editedManga.current_chapter intValue] == [self.editedManga.total_chapters intValue]) ||
+                    ([self.editedManga.current_volume intValue] == [self.editedManga.total_volumes intValue])) &&
+                     [self.editedManga.read_status intValue] != MangaReadStatusCompleted &&
+                    ([self.editedManga.total_chapters intValue] != 0 || [self.editedManga.total_volumes intValue] != 0) ) {
+                    
                     [self promptForFinishing:self.editedManga];
                 }
             }
@@ -340,11 +341,17 @@ static BOOL alreadyFetched = NO;
         case ActionSheetPromptFinishing:
             if(buttonIndex == 0) {
                 self.editedManga.read_status = @(MangaReadStatusCompleted);
+                self.editedManga.current_chapter = self.editedManga.total_chapters;
+                self.editedManga.current_volume = self.editedManga.total_volumes;
+
                 if(!self.editedManga.user_date_finish)
                     self.editedManga.user_date_finish = [NSDate date];
                 MangaUserInfoEditViewController *vc = [[MangaUserInfoEditViewController alloc] init];
                 vc.manga = self.editedManga;
                 [self.navigationController pushViewController:vc animated:YES];
+                self.tableView.editing = NO;
+                self.editedIndexPath = nil;
+                self.editedManga = nil;
             }
             break;
         case ActionSheetPromptDeletion:

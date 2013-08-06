@@ -75,6 +75,7 @@ static BOOL fetching = NO;
                 
                 NSMutableArray *indexPaths = [NSMutableArray array];
                 
+                [self.tableView beginUpdates];
                 for(NSDictionary *topAnime in response) {
                     
                     NSMutableDictionary *mutableTopAnime = [topAnime mutableCopy];
@@ -83,12 +84,15 @@ static BOOL fetching = NO;
                     ALLog(@"rank: %0.02f", [mutableTopAnime[@"rank"] floatValue]);
                     ALLog(@"score: %0.02f", [mutableTopAnime[@"members_score"] floatValue]);
                     
-                    rank++;
-                    
                     Anime *anime = [AnimeService addAnime:[mutableTopAnime copy] fromList:NO];
-                    [self.topItems addObject:anime];
                     [indexPaths addObject:[NSIndexPath indexPathForRow:(rank-1) inSection:0]];
+                    [self.topItems addObject:anime];
+                    [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:(rank-1) inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+                    
+                    rank++;
                 }
+                
+                [self.tableView endUpdates];
                 
                 if(self.tableView.alpha == 0) {
                     [UIView animateWithDuration:0.3f animations:^{
@@ -97,7 +101,8 @@ static BOOL fetching = NO;
                     }];
                 }
                 
-                [self.tableView reloadData];
+//                [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
+//                [self.tableView reloadData];
                 self.currentPage++;
                 fetching = NO;
             } failure:^(id operation, NSError *error) {

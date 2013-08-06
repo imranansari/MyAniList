@@ -165,6 +165,8 @@
     
     [super showEditScreen];
     
+    [self.plusChapterButton setBackgroundImage:[UIImage imageNamed:@"white_bg_pressed.png"] forState:UIControlStateHighlighted];
+    
     [self updateProgress];
     
     if([self.editedManga.current_volume intValue] >= [self.editedManga.total_volumes intValue] && [self.editedManga.total_volumes intValue] != 0) {
