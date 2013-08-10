@@ -298,6 +298,10 @@
 		63BEA7491761A14400432BED /* AniListScoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63BEA7471761A14400432BED /* AniListScoreView.m */; };
 		63BEA74D176213B600432BED /* RRSGlowLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 63BEA74C176213B600432BED /* RRSGlowLabel.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		63BEA74E176213B600432BED /* RRSGlowLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 63BEA74C176213B600432BED /* RRSGlowLabel.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		63C063A817B5F735009C4FFE /* intro_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 63C063A617B5F735009C4FFE /* intro_background.png */; };
+		63C063A917B5F735009C4FFE /* intro_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 63C063A617B5F735009C4FFE /* intro_background.png */; };
+		63C063AA17B5F735009C4FFE /* intro_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63C063A717B5F735009C4FFE /* intro_background@2x.png */; };
+		63C063AB17B5F735009C4FFE /* intro_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63C063A717B5F735009C4FFE /* intro_background@2x.png */; };
 		63C8CD69179A3114003BB80C /* AniListRelatedTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C8CD68179A3114003BB80C /* AniListRelatedTableView.m */; };
 		63C8CD6A179A3114003BB80C /* AniListRelatedTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C8CD68179A3114003BB80C /* AniListRelatedTableView.m */; };
 		63C8CD6D179A441E003BB80C /* AniListMiniCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C8CD6C179A441E003BB80C /* AniListMiniCell.m */; };
@@ -598,6 +602,8 @@
 		63BEA7471761A14400432BED /* AniListScoreView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AniListScoreView.m; path = Views/AniListScoreView.m; sourceTree = "<group>"; };
 		63BEA74B176213B600432BED /* RRSGlowLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RRSGlowLabel.h; sourceTree = "<group>"; };
 		63BEA74C176213B600432BED /* RRSGlowLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RRSGlowLabel.m; sourceTree = "<group>"; };
+		63C063A617B5F735009C4FFE /* intro_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = intro_background.png; sourceTree = "<group>"; };
+		63C063A717B5F735009C4FFE /* intro_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "intro_background@2x.png"; sourceTree = "<group>"; };
 		63C8CD67179A3114003BB80C /* AniListRelatedTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AniListRelatedTableView.h; path = AniList/Views/AniListRelatedTableView.h; sourceTree = SOURCE_ROOT; };
 		63C8CD68179A3114003BB80C /* AniListRelatedTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AniListRelatedTableView.m; path = AniList/Views/AniListRelatedTableView.m; sourceTree = SOURCE_ROOT; };
 		63C8CD6B179A441E003BB80C /* AniListMiniCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AniListMiniCell.h; path = Views/AniListMiniCell.h; sourceTree = "<group>"; };
@@ -951,6 +957,8 @@
 		63502792171E4D430004C106 /* Background */ = {
 			isa = PBXGroup;
 			children = (
+				63C063A617B5F735009C4FFE /* intro_background.png */,
+				63C063A717B5F735009C4FFE /* intro_background@2x.png */,
 				63D8791E17A20D8E002ACA13 /* white_bg_pressed.png */,
 				63D8791B17A20C89002ACA13 /* red_bg_pressed.png */,
 				6392F4BB1793851F00D566BD /* anime_background@2x.png */,
@@ -1322,6 +1330,7 @@
 				633BBF7117B1358400AE573D /* FriendsViewController.xib in Resources */,
 				6324CEB21799793400B308B0 /* grayArrow@2x.png in Resources */,
 				638E6B1A17A7F9B900A35FDB /* SettingsCell.xib in Resources */,
+				63C063AA17B5F735009C4FFE /* intro_background@2x.png in Resources */,
 				635484B5171C2FA7003457CB /* Default@2x.png in Resources */,
 				63C8CD70179A4435003BB80C /* AniListMiniCell.xib in Resources */,
 				635484B7171C2FA7003457CB /* Default-568h@2x.png in Resources */,
@@ -1334,6 +1343,7 @@
 				630E0FE21768E9980061110A /* minus@2x.png in Resources */,
 				6324CEB41799793400B308B0 /* whiteArrow.png in Resources */,
 				63D8791F17A20D8E002ACA13 /* white_bg_pressed.png in Resources */,
+				63C063A817B5F735009C4FFE /* intro_background.png in Resources */,
 				632F439C171CDDED00A5B43A /* AniListViewController.xib in Resources */,
 				63922CED171D82C800D41BCE /* spacepyro.jpg in Resources */,
 				63502795171E4D430004C106 /* bg.png in Resources */,
@@ -1381,6 +1391,7 @@
 				635484CD171C2FA7003457CB /* InfoPlist.strings in Resources */,
 				6324CEA91799793400B308B0 /* blackArrow.png in Resources */,
 				630E0FE51768E9980061110A /* plus.png in Resources */,
+				63C063A917B5F735009C4FFE /* intro_background.png in Resources */,
 				637CF6F41759940E0009ADF3 /* test_background@2x.png in Resources */,
 				636F868A175B1091007E1FB6 /* AniListUserInfoViewController.xib in Resources */,
 				63C8CD71179A4436003BB80C /* AniListMiniCell.xib in Resources */,
@@ -1396,6 +1407,7 @@
 				6301D94F175D6F1A00163160 /* MenuViewController.xib in Resources */,
 				6301D950175D6F1A00163160 /* AniListViewController.xib in Resources */,
 				630E0FE71768E9980061110A /* plus@2x.png in Resources */,
+				63C063AB17B5F735009C4FFE /* intro_background@2x.png in Resources */,
 				6301D951175D6F1D00163160 /* ProfileCell.xib in Resources */,
 				6324CEAF1799793400B308B0 /* blueArrow@2x.png in Resources */,
 				6301D952175D6F1D00163160 /* AnimeCell.xib in Resources */,

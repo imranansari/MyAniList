@@ -11,6 +11,6 @@
 #define kUserLoggedIn @"kUserLoggedIn"
 #define kUserLoggedOut @"kUserLoggedOut"
 
-@interface LoginViewController : UIViewController<UITextFieldDelegate, UINavigationControllerDelegate>
+@interface LoginViewController : UIViewController<UITextFieldDelegate, UINavigationControllerDelegate, UIScrollViewDelegate>
 
 @end

@@ -1,4 +1,4 @@
-//
+    //
 //  AniListAppDelegate.m
 //  AniList
 //
