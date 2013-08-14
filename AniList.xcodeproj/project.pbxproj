@@ -114,8 +114,6 @@
 		633BBF7017B1358400AE573D /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 633BBF6D17B1358400AE573D /* FriendsViewController.m */; };
 		633BBF7117B1358400AE573D /* FriendsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 633BBF6E17B1358400AE573D /* FriendsViewController.xib */; };
 		633BBF7217B1358400AE573D /* FriendsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 633BBF6E17B1358400AE573D /* FriendsViewController.xib */; };
-		633BBF7517B1381C00AE573D /* Friend.m in Sources */ = {isa = PBXBuildFile; fileRef = 633BBF7417B1381C00AE573D /* Friend.m */; };
-		633BBF7617B1381C00AE573D /* Friend.m in Sources */ = {isa = PBXBuildFile; fileRef = 633BBF7417B1381C00AE573D /* Friend.m */; };
 		633BBF7917B139AD00AE573D /* FriendService.m in Sources */ = {isa = PBXBuildFile; fileRef = 633BBF7817B139AD00AE573D /* FriendService.m */; };
 		633BBF7A17B139AD00AE573D /* FriendService.m in Sources */ = {isa = PBXBuildFile; fileRef = 633BBF7817B139AD00AE573D /* FriendService.m */; };
 		63461A0C1777F4700053652C /* MangaDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63461A0B1777F4700053652C /* MangaDetailsViewController.m */; };
@@ -302,6 +300,16 @@
 		63C063A917B5F735009C4FFE /* intro_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 63C063A617B5F735009C4FFE /* intro_background.png */; };
 		63C063AA17B5F735009C4FFE /* intro_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63C063A717B5F735009C4FFE /* intro_background@2x.png */; };
 		63C063AB17B5F735009C4FFE /* intro_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63C063A717B5F735009C4FFE /* intro_background@2x.png */; };
+		63C063AE17B67C40009C4FFE /* Friend.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C063AD17B67C40009C4FFE /* Friend.m */; };
+		63C063AF17B67C40009C4FFE /* Friend.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C063AD17B67C40009C4FFE /* Friend.m */; };
+		63C063B217B67C51009C4FFE /* FriendAnime.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C063B117B67C51009C4FFE /* FriendAnime.m */; };
+		63C063B317B67C51009C4FFE /* FriendAnime.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C063B117B67C51009C4FFE /* FriendAnime.m */; };
+		63C063BB17B67FD0009C4FFE /* FriendDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C063B917B67FD0009C4FFE /* FriendDetailViewController.m */; };
+		63C063BC17B67FD0009C4FFE /* FriendDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C063B917B67FD0009C4FFE /* FriendDetailViewController.m */; };
+		63C063BD17B67FD0009C4FFE /* FriendDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63C063BA17B67FD0009C4FFE /* FriendDetailViewController.xib */; };
+		63C063BE17B67FD0009C4FFE /* FriendDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63C063BA17B67FD0009C4FFE /* FriendDetailViewController.xib */; };
+		63C063C117B68845009C4FFE /* FriendAnimeService.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C063C017B68845009C4FFE /* FriendAnimeService.m */; };
+		63C063C217B68845009C4FFE /* FriendAnimeService.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C063C017B68845009C4FFE /* FriendAnimeService.m */; };
 		63C8CD69179A3114003BB80C /* AniListRelatedTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C8CD68179A3114003BB80C /* AniListRelatedTableView.m */; };
 		63C8CD6A179A3114003BB80C /* AniListRelatedTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C8CD68179A3114003BB80C /* AniListRelatedTableView.m */; };
 		63C8CD6D179A441E003BB80C /* AniListMiniCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C8CD6C179A441E003BB80C /* AniListMiniCell.m */; };
@@ -420,8 +428,6 @@
 		633BBF6C17B1358400AE573D /* FriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsViewController.h; sourceTree = "<group>"; };
 		633BBF6D17B1358400AE573D /* FriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsViewController.m; sourceTree = "<group>"; };
 		633BBF6E17B1358400AE573D /* FriendsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendsViewController.xib; sourceTree = "<group>"; };
-		633BBF7317B1381C00AE573D /* Friend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Friend.h; path = "Core Data/Friend.h"; sourceTree = "<group>"; };
-		633BBF7417B1381C00AE573D /* Friend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Friend.m; path = "Core Data/Friend.m"; sourceTree = "<group>"; };
 		633BBF7717B139AD00AE573D /* FriendService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FriendService.h; path = "Core Data/FriendService.h"; sourceTree = "<group>"; };
 		633BBF7817B139AD00AE573D /* FriendService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FriendService.m; path = "Core Data/FriendService.m"; sourceTree = "<group>"; };
 		63461A0A1777F4700053652C /* MangaDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MangaDetailsViewController.h; sourceTree = "<group>"; };
@@ -604,6 +610,15 @@
 		63BEA74C176213B600432BED /* RRSGlowLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RRSGlowLabel.m; sourceTree = "<group>"; };
 		63C063A617B5F735009C4FFE /* intro_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = intro_background.png; sourceTree = "<group>"; };
 		63C063A717B5F735009C4FFE /* intro_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "intro_background@2x.png"; sourceTree = "<group>"; };
+		63C063AC17B67C40009C4FFE /* Friend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Friend.h; path = "Core Data/Friend.h"; sourceTree = "<group>"; };
+		63C063AD17B67C40009C4FFE /* Friend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Friend.m; path = "Core Data/Friend.m"; sourceTree = "<group>"; };
+		63C063B017B67C51009C4FFE /* FriendAnime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FriendAnime.h; path = "Core Data/FriendAnime.h"; sourceTree = "<group>"; };
+		63C063B117B67C51009C4FFE /* FriendAnime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FriendAnime.m; path = "Core Data/FriendAnime.m"; sourceTree = "<group>"; };
+		63C063B817B67FD0009C4FFE /* FriendDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendDetailViewController.h; sourceTree = "<group>"; };
+		63C063B917B67FD0009C4FFE /* FriendDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendDetailViewController.m; sourceTree = "<group>"; };
+		63C063BA17B67FD0009C4FFE /* FriendDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendDetailViewController.xib; sourceTree = "<group>"; };
+		63C063BF17B68845009C4FFE /* FriendAnimeService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FriendAnimeService.h; path = "Core Data/FriendAnimeService.h"; sourceTree = "<group>"; };
+		63C063C017B68845009C4FFE /* FriendAnimeService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FriendAnimeService.m; path = "Core Data/FriendAnimeService.m"; sourceTree = "<group>"; };
 		63C8CD67179A3114003BB80C /* AniListRelatedTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AniListRelatedTableView.h; path = AniList/Views/AniListRelatedTableView.h; sourceTree = SOURCE_ROOT; };
 		63C8CD68179A3114003BB80C /* AniListRelatedTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AniListRelatedTableView.m; path = AniList/Views/AniListRelatedTableView.m; sourceTree = SOURCE_ROOT; };
 		63C8CD6B179A441E003BB80C /* AniListMiniCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AniListMiniCell.h; path = Views/AniListMiniCell.h; sourceTree = "<group>"; };
@@ -800,6 +815,9 @@
 				633BBF6C17B1358400AE573D /* FriendsViewController.h */,
 				633BBF6D17B1358400AE573D /* FriendsViewController.m */,
 				633BBF6E17B1358400AE573D /* FriendsViewController.xib */,
+				63C063B817B67FD0009C4FFE /* FriendDetailViewController.h */,
+				63C063B917B67FD0009C4FFE /* FriendDetailViewController.m */,
+				63C063BA17B67FD0009C4FFE /* FriendDetailViewController.xib */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -846,9 +864,11 @@
 		632F438F171CDA2C00A5B43A /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
+				63C063B017B67C51009C4FFE /* FriendAnime.h */,
+				63C063B117B67C51009C4FFE /* FriendAnime.m */,
+				63C063AC17B67C40009C4FFE /* Friend.h */,
+				63C063AD17B67C40009C4FFE /* Friend.m */,
 				635484B8171C2FA7003457CB /* AniList_1.0.xcdatamodeld */,
-				633BBF7317B1381C00AE573D /* Friend.h */,
-				633BBF7417B1381C00AE573D /* Friend.m */,
 				63DB4E55179AD7D800C20ECC /* Genre.h */,
 				63DB4E56179AD7D800C20ECC /* Genre.m */,
 				63DB4E51179AD7CE00C20ECC /* Synonym.h */,
@@ -871,6 +891,8 @@
 				6380F996179ADADF0090B66C /* TagService.m */,
 				633BBF7717B139AD00AE573D /* FriendService.h */,
 				633BBF7817B139AD00AE573D /* FriendService.m */,
+				63C063BF17B68845009C4FFE /* FriendAnimeService.h */,
+				63C063C017B68845009C4FFE /* FriendAnimeService.m */,
 			);
 			name = "Core Data";
 			sourceTree = "<group>";
@@ -1299,6 +1321,11 @@
 				CLASSPREFIX = AniList;
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "SpacePyro Inc.";
+				TargetAttributes = {
+					6354849A171C2FA7003457CB = {
+						DevelopmentTeam = QYFSMCG7FR;
+					};
+				};
 			};
 			buildConfigurationList = 63548496171C2FA7003457CB /* Build configuration list for PBXProject "AniList" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1342,6 +1369,7 @@
 				630E0FE01768E9980061110A /* minus.png in Resources */,
 				630E0FE21768E9980061110A /* minus@2x.png in Resources */,
 				6324CEB41799793400B308B0 /* whiteArrow.png in Resources */,
+				63C063BD17B67FD0009C4FFE /* FriendDetailViewController.xib in Resources */,
 				63D8791F17A20D8E002ACA13 /* white_bg_pressed.png in Resources */,
 				63C063A817B5F735009C4FFE /* intro_background.png in Resources */,
 				632F439C171CDDED00A5B43A /* AniListViewController.xib in Resources */,
@@ -1429,6 +1457,7 @@
 				633BBF7217B1358400AE573D /* FriendsViewController.xib in Resources */,
 				6324CEB11799793400B308B0 /* grayArrow.png in Resources */,
 				639FA1E217936ABF000AA0D1 /* back@2x.png in Resources */,
+				63C063BE17B67FD0009C4FFE /* FriendDetailViewController.xib in Resources */,
 				638E6B1B17A7F9B900A35FDB /* SettingsCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1479,6 +1508,7 @@
 				633BBF7917B139AD00AE573D /* FriendService.m in Sources */,
 				632F4381171CD9C900A5B43A /* MenuCell.m in Sources */,
 				638E6B1E17A7FD1F00A35FDB /* AniListStatCell.m in Sources */,
+				63C063B217B67C51009C4FFE /* FriendAnime.m in Sources */,
 				632F4384171CD9E100A5B43A /* AniListCell.m in Sources */,
 				632F438A171CDA0000A5B43A /* AnimeCell.m in Sources */,
 				632F438D171CDA0E00A5B43A /* MangaCell.m in Sources */,
@@ -1506,6 +1536,7 @@
 				6324CEA61799793400B308B0 /* EGORefreshTableHeaderView.m in Sources */,
 				636F8668175A5F53007E1FB6 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				636F866A175A5F53007E1FB6 /* AFPropertyListRequestOperation.m in Sources */,
+				63C063BB17B67FD0009C4FFE /* FriendDetailViewController.m in Sources */,
 				636F866C175A5F53007E1FB6 /* AFURLConnectionOperation.m in Sources */,
 				636F866E175A5F53007E1FB6 /* AFXMLRequestOperation.m in Sources */,
 				636F8670175A5F53007E1FB6 /* UIImageView+AFNetworking.m in Sources */,
@@ -1515,9 +1546,9 @@
 				636F8687175B1091007E1FB6 /* AniListUserInfoViewController.m in Sources */,
 				636F868E175B10A6007E1FB6 /* AnimeUserInfoViewController.m in Sources */,
 				636F8695175B116F007E1FB6 /* AniListDetailsViewController.m in Sources */,
+				63C063C117B68845009C4FFE /* FriendAnimeService.m in Sources */,
 				636F869C175B117D007E1FB6 /* AnimeDetailsViewController.m in Sources */,
 				636F86A2175B1232007E1FB6 /* SynopsisView.m in Sources */,
-				633BBF7517B1381C00AE573D /* Friend.m in Sources */,
 				636F86B0175BA1E3007E1FB6 /* UILabel+AniList.m in Sources */,
 				636F86B4175BA3B8007E1FB6 /* UIView+AniList.m in Sources */,
 				6301D94B175D66AF00163160 /* AniListSummaryViewController.m in Sources */,
@@ -1536,6 +1567,7 @@
 				63859E8B1763F28C0029397C /* AnimeUserInfoEditViewController.m in Sources */,
 				63047A4217656CE10039D795 /* AniListDatePickerView.m in Sources */,
 				6331027B176605DF00097658 /* UIColor+AniList.m in Sources */,
+				63C063AE17B67C40009C4FFE /* Friend.m in Sources */,
 				63EFEC3D176966B8009CEAB3 /* UMALHTTPClient.m in Sources */,
 				63894CC1176A9C05007D2D05 /* UserProfile.m in Sources */,
 				638E6B1717A7F54D00A35FDB /* SettingsCell.m in Sources */,
@@ -1593,6 +1625,7 @@
 				636F8672175A5F5E007E1FB6 /* SWRevealViewController.m in Sources */,
 				636F8677175A7AB8007E1FB6 /* XMLReader.m in Sources */,
 				636F867B175A7D17007E1FB6 /* MALUserClient.m in Sources */,
+				63C063C217B68845009C4FFE /* FriendAnimeService.m in Sources */,
 				636F8688175B1091007E1FB6 /* AniListUserInfoViewController.m in Sources */,
 				633BBF6517B0BAEC00AE573D /* PopularListViewController.m in Sources */,
 				636F868F175B10A6007E1FB6 /* AnimeUserInfoViewController.m in Sources */,
@@ -1600,7 +1633,6 @@
 				636F869D175B117D007E1FB6 /* AnimeDetailsViewController.m in Sources */,
 				636691DB17A2B2E70013B0F6 /* TopListViewController.m in Sources */,
 				636F86A3175B1232007E1FB6 /* SynopsisView.m in Sources */,
-				633BBF7617B1381C00AE573D /* Friend.m in Sources */,
 				636F86B1175BA1E3007E1FB6 /* UILabel+AniList.m in Sources */,
 				636F86B5175BA3B8007E1FB6 /* UIView+AniList.m in Sources */,
 				6301D92F175D631000163160 /* MenuViewController.m in Sources */,
@@ -1634,10 +1666,12 @@
 				63BEA7491761A14400432BED /* AniListScoreView.m in Sources */,
 				63BEA74E176213B600432BED /* RRSGlowLabel.m in Sources */,
 				63859E8C1763F28C0029397C /* AnimeUserInfoEditViewController.m in Sources */,
+				63C063BC17B67FD0009C4FFE /* FriendDetailViewController.m in Sources */,
 				63047A4317656CE10039D795 /* AniListDatePickerView.m in Sources */,
 				6331027C176605DF00097658 /* UIColor+AniList.m in Sources */,
 				63EFEC3E176966B8009CEAB3 /* UMALHTTPClient.m in Sources */,
 				63894CC2176A9C05007D2D05 /* UserProfile.m in Sources */,
+				63C063AF17B67C40009C4FFE /* Friend.m in Sources */,
 				63894CC7176A9E37007D2D05 /* LoginViewController.m in Sources */,
 				63D045AC179CE87A006507D3 /* UIButton+AniList.m in Sources */,
 				63C8CD6A179A3114003BB80C /* AniListRelatedTableView.m in Sources */,
@@ -1669,6 +1703,7 @@
 				638E6B1F17A7FD1F00A35FDB /* AniListStatCell.m in Sources */,
 				6374DB4D179CF016003D7264 /* TagListViewController.m in Sources */,
 				63DB4E54179AD7CE00C20ECC /* Synonym.m in Sources */,
+				63C063B317B67C51009C4FFE /* FriendAnime.m in Sources */,
 				63DB4E58179AD7D800C20ECC /* Genre.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1774,7 +1809,7 @@
 		635484D4171C2FA7003457CB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Corey Roberts (8E236WJF76)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Corey Roberts (8E236WJF76)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1805,7 +1840,7 @@
 		635484D5171C2FA7003457CB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Corey Roberts (8E236WJF76)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Corey Roberts (8E236WJF76)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

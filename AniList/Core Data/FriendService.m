@@ -15,15 +15,31 @@
 @implementation FriendService
 
 + (Friend *)addFriend:(NSString *)username {
-
-#warning - check before adding a new person
+    Friend *friend = [FriendService friendWithUsername:username];
     
-    ALLog(@"Friend '%@' is new, adding to the database.", username);
-    Friend *friend = [NSEntityDescription insertNewObjectForEntityForName:ENTITY_NAME inManagedObjectContext:[FriendService managedObjectContext]];
-    
-    friend.username = username;
+    if(!friend) {
+        ALLog(@"Friend '%@' is new, adding to the database.", username);
+        friend = [NSEntityDescription insertNewObjectForEntityForName:ENTITY_NAME inManagedObjectContext:[FriendService managedObjectContext]];
+        friend.username = username;
+    }
     
     return friend;
+}
+
++ (Friend *)friendWithUsername:(NSString *)name {
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITY_NAME inManagedObjectContext:[FriendService managedObjectContext]];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"username == %@", name];
+    request.entity = entity;
+    request.predicate = predicate;
+    
+    NSError *error = nil;
+    NSArray *results = [[FriendService managedObjectContext] executeFetchRequest:request error:&error];
+    
+    if(results.count) {
+        return (Friend *)results[0];
+    }
+    else return nil;
 }
 
 

@@ -9,11 +9,14 @@
 #import <Foundation/Foundation.h>
 #import "Anime.h"
 
+@class Friend;
+
 @interface AnimeService : NSObject
 
 + (NSArray *)allAnime;
 + (Anime *)animeForID:(NSNumber *)ID;
 + (BOOL)addAnimeList:(NSDictionary *)data;
++ (BOOL)addAnimeList:(NSDictionary *)data forFriend:(Friend *)friend;
 + (Anime *)addAnime:(NSDictionary *)data fromRelatedManga:(Manga *)manga;
 + (BOOL)addAnimeListFromSearch:(NSArray *)data;
 + (Anime *)addAnime:(NSDictionary *)data fromList:(BOOL)fromList;

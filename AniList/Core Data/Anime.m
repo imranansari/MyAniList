@@ -7,8 +7,6 @@
 //
 
 #import "Anime.h"
-#import "Anime.h"
-
 
 @implementation Anime
 
@@ -59,6 +57,7 @@
 @dynamic summaries;
 @dynamic synonyms;
 @dynamic tags;
+@dynamic userlist;
 
 - (void)awakeFromInsert {
     self.watched_status = @(AnimeWatchedStatusNotWatching);

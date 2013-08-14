@@ -14,6 +14,10 @@
 #import "GenreService.h"
 #import "MangaService.h"
 
+#import "Friend.h"
+#import "FriendAnime.h"
+#import "FriendAnimeService.h"
+
 #define ENTITY_NAME @"Anime"
 
 @interface AnimeService()
@@ -119,59 +123,8 @@ static NSArray *cachedAnimeList = nil;
     
     MVComputeTimeWithNameAndBlock((const char *)"animelist", ^{
         for(NSDictionary *animeItem in animes) {
-            NSMutableDictionary *anime = [[NSMutableDictionary alloc] init];
-            
-            [anime addEntriesFromDictionary:@{ kID : @([animeItem[@"series_animedb_id"][@"text"] intValue]) } ];
-            [anime addEntriesFromDictionary:@{ kUserEndDate : animeItem[@"my_finish_date"][@"text"] }];
-            [anime addEntriesFromDictionary:@{ kUserLastUpdated : @([animeItem[@"my_last_updated"][@"text"] intValue]) }];
-            [anime addEntriesFromDictionary:@{ kUserStartDate : animeItem[@"my_start_date"][@"text"] }];
-            [anime addEntriesFromDictionary:@{ kUserRewatchingStatus : @([animeItem[@"my_rewatching"][@"text"] intValue]) }];
-            [anime addEntriesFromDictionary:@{ kUserRewatchingEpisode : @([animeItem[@"my_rewatching_ep"][@"text"] intValue]) }];
-            [anime addEntriesFromDictionary:@{ kUserScore : @([animeItem[@"my_score"][@"text"] intValue]) }];
-            [anime addEntriesFromDictionary:@{ kUserWatchedStatus : animeItem[@"my_status"][@"text"] }];
-            
-            [anime addEntriesFromDictionary:@{ kUserWatchedEpisodes : @([animeItem[@"my_watched_episodes"][@"text"] intValue]) }];
-            [anime addEntriesFromDictionary:@{ kAirEndDate : animeItem[@"series_end"][@"text"] }];
-            [anime addEntriesFromDictionary:@{ kEpisodes : @([animeItem[@"series_episodes"][@"text"] intValue]) }];
-            [anime addEntriesFromDictionary:@{ kImageURL : animeItem[@"series_image"][@"text"] }];
-            [anime addEntriesFromDictionary:@{ kAirStartDate : animeItem[@"series_start"][@"text"] }];
-            [anime addEntriesFromDictionary:@{ kAirStatus : animeItem[@"series_status"][@"text"] }];
-            
-            NSString *synonyms = animeItem[@"series_synonyms"][@"text"];
-            NSArray *synonymsArray = [synonyms componentsSeparatedByString:@";"];
-            NSMutableArray *result = [NSMutableArray array];
-            
-            for(int i = 0; i < synonymsArray.count; i++) {
-                NSString *synonym = synonymsArray[i];
-                synonym = [synonym stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-                if(synonym.length > 0)
-                    [result addObject:synonym];
-            }
-            
-            if(result.count > 0) {
-                NSDictionary *otherTitles = @{ kOtherTitles : @{ kSynonyms : result }};
-                [anime addEntriesFromDictionary:otherTitles];
-            }
 
-#warning - no support for user generated tags so far.
-//            NSString *tags = animeItem[@"my_tags"][@"text"];
-//            NSArray *tagsArray = [tags componentsSeparatedByString:@","];
-//            NSMutableArray *tagResults = [NSMutableArray array];
-//            
-//            for(int i = 0; i < tagsArray.count; i++) {
-//                NSString *tag = tagsArray[i];
-//                tag = [tag stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-//                if(tag.length > 0)
-//                    [tagResults addObject:tag];
-//            }
-//            
-//            if(tagResults.count > 0) {
-//                NSDictionary *animeTags = @{ kTag : tagResults };
-//                [anime addEntriesFromDictionary:animeTags];
-//            }
-            
-            [anime addEntriesFromDictionary:@{ kTitle : animeItem[@"series_title"][@"text"] }];
-            [anime addEntriesFromDictionary:@{ kType : animeItem[@"series_type"][@"text"] }];
+            NSMutableDictionary *anime = [AnimeService createDictionaryForAnime:animeItem];
             
             [AnimeService addAnime:anime fromList:YES];
         }
@@ -180,6 +133,97 @@ static NSArray *cachedAnimeList = nil;
     });
     
     return NO;
+}
+
++ (BOOL)addAnimeList:(NSDictionary *)data forFriend:(Friend *)friend {
+    NSDictionary *animeDetails = data[@"myanimelist"];
+    NSArray *animes = animeDetails[@"anime"];
+    NSDictionary *animeUserInfo = animeDetails[@"myinfo"];
+    
+    // This is just one anime.
+    if([animes isKindOfClass:[NSDictionary class]]) {
+        NSDictionary *soloAnime = (NSDictionary *)animes;
+        animes = @[soloAnime];
+    }
+    
+    cachedAnimeList = nil;
+    
+    MVComputeTimeWithNameAndBlock((const char *)"friend_animelist", ^{
+        for(NSDictionary *animeItem in animes) {
+            
+            NSMutableDictionary *animeDictionary = [AnimeService createDictionaryForAnime:animeItem];
+            
+            NSNumber *friendScore = animeDictionary[kUserScore];
+        
+            [animeDictionary removeObjectForKey:kUserScore];
+            
+            Anime *anime = [AnimeService addAnime:animeDictionary fromList:YES];
+            FriendAnime *friendAnime = [FriendAnimeService addFriend:friend toAnime:anime];
+            friendAnime.score = @([friendScore intValue]);
+        }
+        
+        [[AnimeService managedObjectContext] save:nil];
+    });
+    
+    return NO;
+}
+
++ (NSMutableDictionary *)createDictionaryForAnime:(NSDictionary *)animeItem {
+    NSMutableDictionary *anime = [[NSMutableDictionary alloc] init];
+    
+    [anime addEntriesFromDictionary:@{ kID : @([animeItem[@"series_animedb_id"][@"text"] intValue]) } ];
+    [anime addEntriesFromDictionary:@{ kUserEndDate : animeItem[@"my_finish_date"][@"text"] }];
+    [anime addEntriesFromDictionary:@{ kUserLastUpdated : @([animeItem[@"my_last_updated"][@"text"] intValue]) }];
+    [anime addEntriesFromDictionary:@{ kUserStartDate : animeItem[@"my_start_date"][@"text"] }];
+    [anime addEntriesFromDictionary:@{ kUserRewatchingStatus : @([animeItem[@"my_rewatching"][@"text"] intValue]) }];
+    [anime addEntriesFromDictionary:@{ kUserRewatchingEpisode : @([animeItem[@"my_rewatching_ep"][@"text"] intValue]) }];
+    [anime addEntriesFromDictionary:@{ kUserScore : @([animeItem[@"my_score"][@"text"] intValue]) }];
+    [anime addEntriesFromDictionary:@{ kUserWatchedStatus : animeItem[@"my_status"][@"text"] }];
+    
+    [anime addEntriesFromDictionary:@{ kUserWatchedEpisodes : @([animeItem[@"my_watched_episodes"][@"text"] intValue]) }];
+    [anime addEntriesFromDictionary:@{ kAirEndDate : animeItem[@"series_end"][@"text"] }];
+    [anime addEntriesFromDictionary:@{ kEpisodes : @([animeItem[@"series_episodes"][@"text"] intValue]) }];
+    [anime addEntriesFromDictionary:@{ kImageURL : animeItem[@"series_image"][@"text"] }];
+    [anime addEntriesFromDictionary:@{ kAirStartDate : animeItem[@"series_start"][@"text"] }];
+    [anime addEntriesFromDictionary:@{ kAirStatus : animeItem[@"series_status"][@"text"] }];
+    
+    NSString *synonyms = animeItem[@"series_synonyms"][@"text"];
+    NSArray *synonymsArray = [synonyms componentsSeparatedByString:@";"];
+    NSMutableArray *result = [NSMutableArray array];
+    
+    for(int i = 0; i < synonymsArray.count; i++) {
+        NSString *synonym = synonymsArray[i];
+        synonym = [synonym stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        if(synonym.length > 0)
+            [result addObject:synonym];
+    }
+    
+    if(result.count > 0) {
+        NSDictionary *otherTitles = @{ kOtherTitles : @{ kSynonyms : result }};
+        [anime addEntriesFromDictionary:otherTitles];
+    }
+    
+#warning - no support for user generated tags so far.
+    //            NSString *tags = animeItem[@"my_tags"][@"text"];
+    //            NSArray *tagsArray = [tags componentsSeparatedByString:@","];
+    //            NSMutableArray *tagResults = [NSMutableArray array];
+    //
+    //            for(int i = 0; i < tagsArray.count; i++) {
+    //                NSString *tag = tagsArray[i];
+    //                tag = [tag stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    //                if(tag.length > 0)
+    //                    [tagResults addObject:tag];
+    //            }
+    //
+    //            if(tagResults.count > 0) {
+    //                NSDictionary *animeTags = @{ kTag : tagResults };
+    //                [anime addEntriesFromDictionary:animeTags];
+    //            }
+    
+    [anime addEntriesFromDictionary:@{ kTitle : animeItem[@"series_title"][@"text"] }];
+    [anime addEntriesFromDictionary:@{ kType : animeItem[@"series_type"][@"text"] }];
+
+    return anime;
 }
 
 + (Anime *)addAnime:(NSDictionary *)data fromRelatedManga:(Manga *)manga {

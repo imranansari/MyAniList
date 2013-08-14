@@ -78,7 +78,7 @@ typedef enum {
     UnofficialAnimeAirStatusNotYetAired
 } UnofficialAnimeAirStatus;
 
-@class Anime, Manga, Synonym, Genre, Tag;
+@class Anime, Manga, Synonym, Genre, Tag, FriendAnime;
 
 @interface Anime : NSManagedObject
 
@@ -129,6 +129,7 @@ typedef enum {
 @property (nonatomic, retain) NSSet *summaries;
 @property (nonatomic, retain) NSSet *synonyms;
 @property (nonatomic, retain) NSSet *tags;
+@property (nonatomic, retain) NSSet *userlist;
 
 + (AnimeType)animeTypeForValue:(NSString *)value;
 + (NSString *)stringForAnimeType:(AnimeType)animeType;
@@ -221,5 +222,10 @@ typedef enum {
 - (void)removeTagsObject:(Tag *)value;
 - (void)addTags:(NSSet *)values;
 - (void)removeTags:(NSSet *)values;
+
+- (void)addUserlistObject:(FriendAnime *)value;
+- (void)removeUserlistObject:(FriendAnime *)value;
+- (void)addUserlist:(NSSet *)values;
+- (void)removeUserlist:(NSSet *)values;
 
 @end

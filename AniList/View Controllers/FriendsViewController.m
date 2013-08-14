@@ -13,6 +13,7 @@
 #import "ProfileCell.h"
 #import "FriendService.h"
 #import "AniListAppDelegate.h"
+#import "FriendDetailViewController.h"
 
 @interface FriendsViewController ()
 @property (nonatomic, copy) NSArray *sectionHeaders;
@@ -197,15 +198,12 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-//    Anime *anime = [self.fetchedResultsController objectAtIndexPath:indexPath];
-//    
-//    AniListNavigationController *navigationController = (AniListNavigationController *)self.navigationController;
-//    
-//    AnimeViewController *animeVC = [[AnimeViewController alloc] init];
-//    animeVC.anime = anime;
-//    animeVC.currentYBackgroundPosition = navigationController.imageView.frame.origin.y;
-//    
-//    [self.navigationController pushViewController:animeVC animated:YES];
+    Friend *friend = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    
+    FriendDetailViewController *vc = [[FriendDetailViewController alloc] init];
+    vc.friend = friend;
+    
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
