@@ -47,10 +47,10 @@
     
     self.searchDisplayController.searchResultsTableView.backgroundColor = [UIColor clearColor];
     self.searchDisplayController.searchResultsTableView.separatorColor = [UIColor clearColor];
-    self.searchDisplayController.searchBar.tintColor = [UIColor blackColor];
+//    self.searchDisplayController.searchBar.tintColor = [UIColor blackColor];
     
-    self.searchDisplayController.searchBar.backgroundImage = [UIImage new];
-    self.searchDisplayController.searchBar.translucent = YES;
+//    self.searchDisplayController.searchBar.backgroundImage = [UIImage new];
+//    self.searchDisplayController.searchBar.translucent = YES;
 }
 
 - (void)viewDidAppear:(BOOL)animated {

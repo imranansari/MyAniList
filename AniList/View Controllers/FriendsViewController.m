@@ -51,6 +51,22 @@
     self.tableView.dataSource = self;
     self.tableView.alpha = 1.0f;
     self.tableView.sectionHeaderHeight = 0;
+    
+    CAGradientLayer *gradient = [CAGradientLayer layer];
+    gradient.frame = self.maskView.bounds;
+    gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor colorWithRed:0 green:0 blue:0 alpha:0] CGColor], (id)[[UIColor colorWithRed:0 green:0 blue:0 alpha:1] CGColor], nil];
+    
+    gradient.startPoint = CGPointMake(0.0, 0.015f);
+    gradient.endPoint = CGPointMake(0.0f, 0.05f);
+    
+    self.maskView.layer.mask = gradient;
+
+    
+    if([UIApplication isiOS7]) {
+        self.tableView.contentInset = UIEdgeInsetsMake(20, 0, 0, 0);
+        self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(20, 0, 0, 0);
+        self.tableView.contentOffset = CGPointMake(0, -20);
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -75,6 +91,10 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     return [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 0)];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 1;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
@@ -124,7 +144,7 @@
     [fetchRequest setFetchBatchSize:20];
     
     // Edit the sort key as appropriate.
-    fetchRequest.sortDescriptors = @[[[NSSortDescriptor alloc] initWithKey:@"username" ascending:NO]];
+    fetchRequest.sortDescriptors = @[[[NSSortDescriptor alloc] initWithKey:@"username" ascending:YES]];
 //    fetchRequest.predicate = [self predicate];
     
     // Edit the section name key path and cache name if appropriate.
@@ -215,64 +235,52 @@
     ProfileCell *profileCell = (ProfileCell *)cell;
     
     profileCell.username.text = friend.username;
-//    Anime *anime = (Anime *)object;
-//    AnimeCell *animeCell = (AnimeCell *)cell;
-//    animeCell.title.text = anime.title;
-//    [animeCell.title addShadow];
-//    [animeCell.title sizeToFit];
-//    
-//    animeCell.progress.text = [AnimeCell progressTextForAnime:anime];
-//    [animeCell.progress addShadow];
-//    
-//    if(self.viewTop) {
-//        animeCell.rank.text = [NSString stringWithFormat:@"#%d (%0.02f)", [self.tableView indexPathForCell:cell].row+1, [anime.average_score doubleValue]];
-//    }
-//    else {
-//        animeCell.rank.text = [anime.user_score intValue] != -1 ? [NSString stringWithFormat:@"%d", [anime.user_score intValue]] : @"";
-//    }
-//    
-//    [animeCell.rank addShadow];
-//    
-//    animeCell.type.text = [Anime stringForAnimeType:[anime.type intValue]];
-//    [animeCell.type addShadow];
-//    
-//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//        NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:anime.image_url]];
-//        UIImage *cachedImage = [anime imageForAnime];
-//        
-//        if(!cachedImage) {
-//            [animeCell.image setImageWithURLRequest:imageRequest placeholderImage:cachedImage success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-//                
-//                dispatch_async(dispatch_get_main_queue(), ^{
-//                    animeCell.image.alpha = 0.0f;
-//                    animeCell.image.image = image;
-//                    
-//                    [UIView animateWithDuration:0.3f animations:^{
-//                        animeCell.image.alpha = 1.0f;
-//                    }];
-//                });
-//                
-//                if(!anime.image) {
-//                    // Save the image onto disk if it doesn't exist or they aren't the same.
-//                    [anime saveImage:image fromRequest:request];
-//                }
-//                
-//            } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-//                // Log failure.
-//                ALLog(@"Couldn't fetch image at URL %@.", [request.URL absoluteString]);
-//            }];
-//        }
-//        else {
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                animeCell.image.image = cachedImage;
-//            });
-//        }
-//    });
+    profileCell.animeStats.text = @"";
+    profileCell.mangaStats.text = @"";
+    profileCell.lastSeen.text = @"";
+    
+    if([friend.anime_total_entries intValue] > 0)
+        profileCell.animeStats.text = [NSString stringWithFormat:@"%d anime watched, %d listed", [friend.anime_completed intValue], [friend.anime_total_entries intValue]];
+    
+    
+    if([friend.manga_total_entries intValue] > 0)
+        profileCell.mangaStats.text = [NSString stringWithFormat:@"%d manga read, %d listed", [friend.manga_completed intValue], [friend.manga_total_entries intValue]];
+    
+    if(friend.last_seen.length > 0)
+        profileCell.lastSeen.text = [NSString stringWithFormat:@"Last seen %@", friend.last_seen];
+    
+    [profileCell.avatar setImageWithURL:[NSURL URLWithString:friend.image_url]];
 }
 
 - (IBAction)addButtonPressed:(id)sender {
     [self.usernameField resignFirstResponder];
-    [FriendService addFriend:self.usernameField.text];
+    NSString *username = [self.usernameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    if(username.length > 0) {
+        Friend *friend = [FriendService addFriend:username];
+        [[MALHTTPClient sharedClient] getProfileForUser:friend.username success:^(id operation, id response) {
+            ALLog(@"result: %@", response);
+            NSDictionary *animeStats = response[kAnimeStats];
+            NSDictionary *mangaStats = response[kMangaStats];
+            NSDictionary *details = response[@"details"];
+            NSString *avatarURL = response[@"avatar_url"];
+            
+            friend.anime_completed = animeStats[@"completed"];
+            friend.anime_total_entries = animeStats[@"total_entries"];
+            
+            friend.manga_completed = mangaStats[@"completed"];
+            friend.manga_total_entries = mangaStats[@"total_entries"];
+            
+            friend.image_url = avatarURL;
+            
+            friend.last_seen = [details[@"last_online"] lowercaseString];
+            
+        } failure:^(id operation, NSError *error) {
+            ALLog(@"Failure :(");
+        }];
+        
+        [self.tableView reloadData];
+    }
 }
 
 #pragma mark - UITextFieldDelegate Methods

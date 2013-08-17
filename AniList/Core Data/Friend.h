@@ -2,7 +2,7 @@
 //  Friend.h
 //  AniList
 //
-//  Created by Corey Roberts on 8/10/13.
+//  Created by Corey Roberts on 8/16/13.
 //  Copyright (c) 2013 SpacePyro Inc. All rights reserved.
 //
 
@@ -13,8 +13,13 @@
 
 @interface Friend : NSManagedObject
 
-@property (nonatomic, retain) NSString * username;
-@property (nonatomic, retain) NSString * image_url;
+@property (nonatomic, retain) NSString *image_url;
+@property (nonatomic, retain) NSString *username;
+@property (nonatomic, retain) NSNumber *anime_completed;
+@property (nonatomic, retain) NSNumber *anime_total_entries;
+@property (nonatomic, retain) NSNumber *manga_completed;
+@property (nonatomic, retain) NSNumber *manga_total_entries;
+@property (nonatomic, retain) NSString *last_seen;
 @property (nonatomic, retain) NSSet *sharedAnime;
 @end
 

@@ -51,7 +51,12 @@
         <relationship name="userlist" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="FriendAnime" inverseName="anime" inverseEntity="FriendAnime" syncable="YES"/>
     </entity>
     <entity name="Friend" representedClassName="Friend" syncable="YES">
+        <attribute name="anime_completed" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="anime_total_entries" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="image_url" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="last_seen" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="manga_completed" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="manga_total_entries" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="sharedAnime" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="FriendAnime" inverseName="user" inverseEntity="FriendAnime" syncable="YES"/>
     </entity>

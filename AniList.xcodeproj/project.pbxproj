@@ -116,6 +116,8 @@
 		633BBF7217B1358400AE573D /* FriendsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 633BBF6E17B1358400AE573D /* FriendsViewController.xib */; };
 		633BBF7917B139AD00AE573D /* FriendService.m in Sources */ = {isa = PBXBuildFile; fileRef = 633BBF7817B139AD00AE573D /* FriendService.m */; };
 		633BBF7A17B139AD00AE573D /* FriendService.m in Sources */ = {isa = PBXBuildFile; fileRef = 633BBF7817B139AD00AE573D /* FriendService.m */; };
+		633E695A17BF2B9C00477040 /* Friend.m in Sources */ = {isa = PBXBuildFile; fileRef = 633E695917BF2B9C00477040 /* Friend.m */; };
+		633E695B17BF2B9C00477040 /* Friend.m in Sources */ = {isa = PBXBuildFile; fileRef = 633E695917BF2B9C00477040 /* Friend.m */; };
 		63461A0C1777F4700053652C /* MangaDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63461A0B1777F4700053652C /* MangaDetailsViewController.m */; };
 		63461A0D1777F4700053652C /* MangaDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63461A0B1777F4700053652C /* MangaDetailsViewController.m */; };
 		63461A101777F8A20053652C /* MangaUserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63461A0F1777F8A20053652C /* MangaUserInfoViewController.m */; };
@@ -300,8 +302,6 @@
 		63C063A917B5F735009C4FFE /* intro_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 63C063A617B5F735009C4FFE /* intro_background.png */; };
 		63C063AA17B5F735009C4FFE /* intro_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63C063A717B5F735009C4FFE /* intro_background@2x.png */; };
 		63C063AB17B5F735009C4FFE /* intro_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63C063A717B5F735009C4FFE /* intro_background@2x.png */; };
-		63C063AE17B67C40009C4FFE /* Friend.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C063AD17B67C40009C4FFE /* Friend.m */; };
-		63C063AF17B67C40009C4FFE /* Friend.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C063AD17B67C40009C4FFE /* Friend.m */; };
 		63C063B217B67C51009C4FFE /* FriendAnime.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C063B117B67C51009C4FFE /* FriendAnime.m */; };
 		63C063B317B67C51009C4FFE /* FriendAnime.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C063B117B67C51009C4FFE /* FriendAnime.m */; };
 		63C063BB17B67FD0009C4FFE /* FriendDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C063B917B67FD0009C4FFE /* FriendDetailViewController.m */; };
@@ -430,6 +430,8 @@
 		633BBF6E17B1358400AE573D /* FriendsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendsViewController.xib; sourceTree = "<group>"; };
 		633BBF7717B139AD00AE573D /* FriendService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FriendService.h; path = "Core Data/FriendService.h"; sourceTree = "<group>"; };
 		633BBF7817B139AD00AE573D /* FriendService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FriendService.m; path = "Core Data/FriendService.m"; sourceTree = "<group>"; };
+		633E695817BF2B9C00477040 /* Friend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Friend.h; path = "Core Data/Friend.h"; sourceTree = "<group>"; };
+		633E695917BF2B9C00477040 /* Friend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Friend.m; path = "Core Data/Friend.m"; sourceTree = "<group>"; };
 		63461A0A1777F4700053652C /* MangaDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MangaDetailsViewController.h; sourceTree = "<group>"; };
 		63461A0B1777F4700053652C /* MangaDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MangaDetailsViewController.m; sourceTree = "<group>"; };
 		63461A0E1777F8A20053652C /* MangaUserInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MangaUserInfoViewController.h; sourceTree = "<group>"; };
@@ -610,8 +612,6 @@
 		63BEA74C176213B600432BED /* RRSGlowLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RRSGlowLabel.m; sourceTree = "<group>"; };
 		63C063A617B5F735009C4FFE /* intro_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = intro_background.png; sourceTree = "<group>"; };
 		63C063A717B5F735009C4FFE /* intro_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "intro_background@2x.png"; sourceTree = "<group>"; };
-		63C063AC17B67C40009C4FFE /* Friend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Friend.h; path = "Core Data/Friend.h"; sourceTree = "<group>"; };
-		63C063AD17B67C40009C4FFE /* Friend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Friend.m; path = "Core Data/Friend.m"; sourceTree = "<group>"; };
 		63C063B017B67C51009C4FFE /* FriendAnime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FriendAnime.h; path = "Core Data/FriendAnime.h"; sourceTree = "<group>"; };
 		63C063B117B67C51009C4FFE /* FriendAnime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FriendAnime.m; path = "Core Data/FriendAnime.m"; sourceTree = "<group>"; };
 		63C063B817B67FD0009C4FFE /* FriendDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendDetailViewController.h; sourceTree = "<group>"; };
@@ -866,8 +866,8 @@
 			children = (
 				63C063B017B67C51009C4FFE /* FriendAnime.h */,
 				63C063B117B67C51009C4FFE /* FriendAnime.m */,
-				63C063AC17B67C40009C4FFE /* Friend.h */,
-				63C063AD17B67C40009C4FFE /* Friend.m */,
+				633E695817BF2B9C00477040 /* Friend.h */,
+				633E695917BF2B9C00477040 /* Friend.m */,
 				635484B8171C2FA7003457CB /* AniList_1.0.xcdatamodeld */,
 				63DB4E55179AD7D800C20ECC /* Genre.h */,
 				63DB4E56179AD7D800C20ECC /* Genre.m */,
@@ -1527,6 +1527,7 @@
 				6324CECA17997F1800B308B0 /* AnalyticsManager.m in Sources */,
 				6372893B17542D110032F425 /* MALHTTPClient.m in Sources */,
 				637CF6EC175986840009ADF3 /* NSObject+AniList.m in Sources */,
+				633E695A17BF2B9C00477040 /* Friend.m in Sources */,
 				633BBF6F17B1358400AE573D /* FriendsViewController.m in Sources */,
 				636F864C175A5F49007E1FB6 /* SWRevealViewController.m in Sources */,
 				636F8660175A5F53007E1FB6 /* AFHTTPClient.m in Sources */,
@@ -1567,7 +1568,6 @@
 				63859E8B1763F28C0029397C /* AnimeUserInfoEditViewController.m in Sources */,
 				63047A4217656CE10039D795 /* AniListDatePickerView.m in Sources */,
 				6331027B176605DF00097658 /* UIColor+AniList.m in Sources */,
-				63C063AE17B67C40009C4FFE /* Friend.m in Sources */,
 				63EFEC3D176966B8009CEAB3 /* UMALHTTPClient.m in Sources */,
 				63894CC1176A9C05007D2D05 /* UserProfile.m in Sources */,
 				638E6B1717A7F54D00A35FDB /* SettingsCell.m in Sources */,
@@ -1666,12 +1666,12 @@
 				63BEA7491761A14400432BED /* AniListScoreView.m in Sources */,
 				63BEA74E176213B600432BED /* RRSGlowLabel.m in Sources */,
 				63859E8C1763F28C0029397C /* AnimeUserInfoEditViewController.m in Sources */,
+				633E695B17BF2B9C00477040 /* Friend.m in Sources */,
 				63C063BC17B67FD0009C4FFE /* FriendDetailViewController.m in Sources */,
 				63047A4317656CE10039D795 /* AniListDatePickerView.m in Sources */,
 				6331027C176605DF00097658 /* UIColor+AniList.m in Sources */,
 				63EFEC3E176966B8009CEAB3 /* UMALHTTPClient.m in Sources */,
 				63894CC2176A9C05007D2D05 /* UserProfile.m in Sources */,
-				63C063AF17B67C40009C4FFE /* Friend.m in Sources */,
 				63894CC7176A9E37007D2D05 /* LoginViewController.m in Sources */,
 				63D045AC179CE87A006507D3 /* UIButton+AniList.m in Sources */,
 				63C8CD6A179A3114003BB80C /* AniListRelatedTableView.m in Sources */,

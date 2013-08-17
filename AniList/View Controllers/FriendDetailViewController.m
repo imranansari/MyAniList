@@ -22,6 +22,7 @@
 @property (nonatomic, weak) IBOutlet AniListTableView *tableView;
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView *indicator;
 @property (nonatomic, weak) IBOutlet UIView *maskView;
+@property (nonatomic, weak) IBOutlet UIImageView *avatar;
 @property (nonatomic, copy) NSArray *sectionHeaders;
 @end
 
@@ -47,6 +48,7 @@
     
     self.title = [NSString stringWithFormat:@"%@'s List", self.friend.username];
     self.tableView.backgroundColor = [UIColor clearColor];
+    [self.avatar setImageWithURL:[NSURL URLWithString:self.friend.image_url]];
     
     CAGradientLayer *gradient = [CAGradientLayer layer];
     gradient.frame = self.maskView.bounds;
@@ -84,7 +86,7 @@
 }
 
 - (NSPredicate *)predicate {
-    return [NSPredicate predicateWithFormat:@"watched_status < 7"];
+    return [NSPredicate predicateWithFormat:@"watched_status < 7 && user == %@", self.friend];
 }
 
 - (NSString *)sectionKeyPathName {
@@ -251,6 +253,8 @@
     
     AnimeViewController *vc = [[AnimeViewController alloc] init];
     vc.anime = anime;
+    
+    self.navigationItem.backBarButtonItem = [UIBarButtonItem customBackButtonWithTitle:@"Back"];
     
     [self.navigationController pushViewController:vc animated:YES];
 }
