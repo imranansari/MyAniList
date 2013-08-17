@@ -157,7 +157,7 @@ static NSArray *cachedAnimeList = nil;
             [animeDictionary removeObjectForKey:kUserWatchedEpisodes];
             [animeDictionary removeObjectForKey:kUserWatchedStatus];
             
-            Anime *anime = [AnimeService addAnime:animeDictionary fromList:YES];
+            Anime *anime = [AnimeService addAnime:animeDictionary fromList:NO];
             FriendAnime *friendAnime = [FriendAnimeService addFriend:friend toAnime:anime];
             
             if(friendScore && ![friendScore isNull])

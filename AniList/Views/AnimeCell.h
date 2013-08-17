@@ -8,12 +8,12 @@
 
 #import "AniListCell.h"
 
-@class Anime;
+@class Anime, FriendAnime;
 
 @interface AnimeCell : AniListCell
 
 + (CGFloat)cellHeight;
-
++ (NSString *)progressTextForFriendAnime:(FriendAnime *)friendAnime;
 + (NSString *)progressTextForAnime:(Anime *)anime;
 - (void)addShadow;
 

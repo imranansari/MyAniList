@@ -27,7 +27,7 @@
         self.backgroundColor = [UIColor clearColor];
         
         int frameOffset = [UIApplication isiOS7] ? 0 : 10;
-        int verticalOffset = [UIApplication isiOS7] ? 0 : 44;
+        int verticalOffset = [UIApplication isiOS7] ? 0 : 0;
         
         self.frame = CGRectMake(self.frame.origin.x - frameOffset,
                                 self.frame.origin.y + verticalOffset,

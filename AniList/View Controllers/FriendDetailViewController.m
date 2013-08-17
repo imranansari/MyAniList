@@ -73,6 +73,12 @@
     self.tableView.backgroundColor = [UIColor clearColor];
     [self.avatar setImageWithURL:[NSURL URLWithString:self.friend.image_url]];
     
+    if(![UIApplication isiOS7]) {
+        [self.animeButton setBackgroundImage:[UIImage new] forState:UIControlStateNormal];
+        [self.mangaButton setBackgroundImage:[UIImage new] forState:UIControlStateNormal];
+        [self.compareButton setBackgroundImage:[UIImage new] forState:UIControlStateNormal];
+    }
+    
     CAGradientLayer *gradient = [CAGradientLayer layer];
     gradient.frame = self.maskView.bounds;
     gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor colorWithRed:0 green:0 blue:0 alpha:0] CGColor], (id)[[UIColor colorWithRed:0 green:0 blue:0 alpha:1] CGColor], nil];
@@ -137,35 +143,38 @@
 }
 
 - (void)fetchData {
-    [[MALHTTPClient sharedClient] getAnimeListForUser:self.friend.username
-                                         initialFetch:YES
-                                              success:^(NSURLRequest *operation, id response) {
-                                                  ALLog(@"Got dat list!");
-                                                  [AnimeService addAnimeList:(NSDictionary *)response forFriend:self.friend];
-                                              }
-                                              failure:^(NSURLRequest *operation, NSError *error) {
-                                                  ALLog(@"Couldn't fetch list!");
-                                              }];
-    
-    [[MALHTTPClient sharedClient] getMangaListForUser:self.friend.username
-                                         initialFetch:YES
-                                              success:^(NSURLRequest *operation, id response) {
-                                                  ALLog(@"Got dat list!");
-                                                  [MangaService addMangaList:(NSDictionary *)response forFriend:self.friend];
-                                              }
-                                              failure:^(NSURLRequest *operation, NSError *error) {
-                                                  ALLog(@"Couldn't fetch list!");
-                                              }];
+    double delayInSeconds = 0.5f;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [[MALHTTPClient sharedClient] getAnimeListForUser:self.friend.username
+                                             initialFetch:YES
+                                                  success:^(NSURLRequest *operation, id response) {
+                                                      ALLog(@"Got dat list!");
+                                                      //                                                  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                                                      [AnimeService addAnimeList:(NSDictionary *)response forFriend:self.friend];
+                                                      //                                                  });
+                                                  }
+                                                  failure:^(NSURLRequest *operation, NSError *error) {
+                                                      ALLog(@"Couldn't fetch list!");
+                                                  }];
+        
+        [[MALHTTPClient sharedClient] getMangaListForUser:self.friend.username
+                                             initialFetch:YES
+                                                  success:^(NSURLRequest *operation, id response) {
+                                                      ALLog(@"Got dat list!");
+                                                      //                                                  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                                                      [MangaService addMangaList:(NSDictionary *)response forFriend:self.friend];
+                                                      //                                                  });
+                                                  }
+                                                  failure:^(NSURLRequest *operation, NSError *error) {
+                                                      ALLog(@"Couldn't fetch list!");
+                                                  }];
+    });
 }
 
 #pragma mark - IBAction methods
 
 - (void)reloadTable {
-    
-    self.fetchedResultsController = nil;
-    NSError *error = nil;
-    if (![[self fetchedResultsController] performFetch:&error]) {}
-    
     [UIView animateWithDuration:0.15f
                           delay:0.0f
                         options:UIViewAnimationOptionCurveEaseInOut
@@ -173,6 +182,12 @@
                          self.tableView.alpha = 0.0f;
                      }
                      completion:^(BOOL finished) {
+                         [self.tableView setContentOffset:self.tableView.contentOffset animated:NO];
+                         [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
+                         self.fetchedResultsController = nil;
+                         NSError *error = nil;
+                         if (![[self fetchedResultsController] performFetch:&error]) {}
+                         
                          [self.tableView reloadData];
                          
                          [UIView animateWithDuration:0.15f
@@ -368,15 +383,24 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    FriendAnime *friendAnime = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    Anime *anime = friendAnime.anime;
+    NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
-    AnimeViewController *vc = [[AnimeViewController alloc] init];
-    vc.anime = anime;
-    
-    self.navigationItem.backBarButtonItem = [UIBarButtonItem customBackButtonWithTitle:@"Back"];
-    
-    [self.navigationController pushViewController:vc animated:YES];
+    if([object isMemberOfClass:[FriendAnime class]]) {
+        FriendAnime *friendAnime = (FriendAnime *)object;
+        Anime *anime = friendAnime.anime;
+        AnimeViewController *vc = [[AnimeViewController alloc] init];
+        vc.anime = anime;
+        self.navigationItem.backBarButtonItem = [UIBarButtonItem customBackButtonWithTitle:@"Back"];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    else if([object isMemberOfClass:[FriendManga class]]) {
+        FriendManga *friendManga = (FriendManga *)object;
+        Manga *manga = friendManga.manga;
+        MangaViewController *vc = [[MangaViewController alloc] init];
+        vc.manga = manga;
+        self.navigationItem.backBarButtonItem = [UIBarButtonItem customBackButtonWithTitle:@"Back"];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
@@ -389,24 +413,24 @@
     NSURLRequest *imageRequest;
     NSString *cachedImageLocation = @"";
     
-#warning - all of this code is gross. Will need to add a core data parent entity here with common traits.
-    
     if([object isKindOfClass:[FriendAnime class]]) {
-        Anime *anime = ((FriendAnime *)object).anime;
+        FriendAnime *friendAnime = (FriendAnime *)object;
+        Anime *anime = friendAnime.anime;
         AnimeCell *animeCell = (AnimeCell *)cell;
         animeCell.title.text = anime.title;
-        animeCell.progress.text = [Anime stringForAnimeWatchedStatus:[anime.watched_status intValue]];
-        animeCell.rank.text = [anime.user_score intValue] != -1 ? [NSString stringWithFormat:@"%d", [anime.user_score intValue]] : @"";
+        animeCell.progress.text = [AnimeCell progressTextForFriendAnime:friendAnime];
+        animeCell.rank.text = [friendAnime.score intValue] != -1 ? [NSString stringWithFormat:@"%d", [friendAnime.score intValue]] : @"";
         animeCell.type.text = [Anime stringForAnimeType:[anime.type intValue]];
         imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:anime.image_url]];
         cachedImageLocation = [NSString stringWithFormat:@"%@/%@", documentsDirectory, anime.image];
     }
     else if([object isKindOfClass:[FriendManga class]]) {
-        Manga *manga = ((FriendManga *)object).manga;
+        FriendManga *friendManga = (FriendManga *)object;
+        Manga *manga = friendManga.manga;
         MangaCell *mangaCell = (MangaCell *)cell;
         mangaCell.title.text = manga.title;
-        mangaCell.progress.text = [Manga stringForMangaReadStatus:[manga.read_status intValue]];
-        mangaCell.rank.text = [manga.user_score intValue] != -1 ? [NSString stringWithFormat:@"%d", [manga.user_score intValue]] : @"";
+        mangaCell.progress.text = [Manga stringForMangaReadStatus:[friendManga.read_status intValue]];
+        mangaCell.rank.text = [friendManga.score intValue] != -1 ? [NSString stringWithFormat:@"%d", [friendManga.score intValue]] : @"";
         mangaCell.type.text = [Manga stringForMangaType:[manga.type intValue]];
         imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:manga.image_url]];
         cachedImageLocation = [NSString stringWithFormat:@"%@/%@", documentsDirectory, manga.image];

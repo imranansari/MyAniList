@@ -144,7 +144,7 @@
     [fetchRequest setFetchBatchSize:20];
     
     // Edit the sort key as appropriate.
-    fetchRequest.sortDescriptors = @[[[NSSortDescriptor alloc] initWithKey:@"username" ascending:YES]];
+    fetchRequest.sortDescriptors = @[[[NSSortDescriptor alloc] initWithKey:@"username" ascending:YES selector:@selector(caseInsensitiveCompare:)]];
 //    fetchRequest.predicate = [self predicate];
     
     // Edit the section name key path and cache name if appropriate.

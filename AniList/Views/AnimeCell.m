@@ -7,6 +7,7 @@
 //
 
 #import "AnimeCell.h"
+#import "FriendAnime.h"
 #import "Anime.h"
 
 @implementation AnimeCell
@@ -23,6 +24,24 @@
 
 + (CGFloat)cellHeight {
     return 90;
+}
+
++ (NSString *)progressTextForFriendAnime:(FriendAnime *)friendAnime {
+    
+    Anime *anime = friendAnime.anime;
+    
+    if([friendAnime.current_episode intValue] == [anime.total_episodes intValue] ||
+       [anime.total_episodes intValue] < 1                                 ||
+       [anime.type intValue] == AnimeTypeMovie) {
+        return @"";
+    }
+    
+    // If we've yet to watch it, or the current episode we're on is 0, then list how many episodes exist.
+    if([friendAnime.watched_status intValue] == AnimeWatchedStatusPlanToWatch || [friendAnime.current_episode intValue] == 0) {
+        return [NSString stringWithFormat:@"%d %@", [anime.total_episodes intValue], [Anime unitForAnimeType:[anime.type intValue] plural:[anime.total_episodes intValue] != 1 ? YES : NO]];
+    }
+    
+    return [NSString stringWithFormat:@"Watched %d of %d %@", [friendAnime.current_episode intValue], [anime.total_episodes intValue], [Anime unitForAnimeType:[anime.type intValue] plural:[anime.total_episodes intValue] != 1 ? YES : NO]];
 }
 
 + (NSString *)progressTextForAnime:(Anime *)anime {

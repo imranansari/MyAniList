@@ -125,7 +125,7 @@
         <relationship name="related_manga" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Manga" syncable="YES"/>
         <relationship name="synonyms" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Synonym" syncable="YES"/>
         <relationship name="tags" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Tag" inverseName="manga" inverseEntity="Tag" syncable="YES"/>
-        <relationship name="userlist" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FriendManga" inverseName="manga" inverseEntity="FriendManga" syncable="YES"/>
+        <relationship name="userlist" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="FriendManga" inverseName="manga" inverseEntity="FriendManga" syncable="YES"/>
     </entity>
     <entity name="Synonym" representedClassName="Synonym" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
