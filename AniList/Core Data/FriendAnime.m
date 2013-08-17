@@ -14,6 +14,8 @@
 @implementation FriendAnime
 
 @dynamic score;
+@dynamic current_episode;
+@dynamic watched_status;
 @dynamic anime;
 @dynamic user;
 

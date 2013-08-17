@@ -154,12 +154,25 @@ static NSArray *cachedAnimeList = nil;
             NSMutableDictionary *animeDictionary = [AnimeService createDictionaryForAnime:animeItem];
             
             NSNumber *friendScore = animeDictionary[kUserScore];
-        
+            NSNumber *friendCurrentEpisode = animeDictionary[kUserWatchedEpisodes];
+            NSString *friendWatchedStatus = animeDictionary[kUserWatchedStatus];
+            
             [animeDictionary removeObjectForKey:kUserScore];
+            [animeDictionary removeObjectForKey:kUserWatchedEpisodes];
+            [animeDictionary removeObjectForKey:kUserWatchedStatus];
             
             Anime *anime = [AnimeService addAnime:animeDictionary fromList:YES];
             FriendAnime *friendAnime = [FriendAnimeService addFriend:friend toAnime:anime];
-            friendAnime.score = @([friendScore intValue]);
+            
+            if(friendScore && ![friendScore isNull])
+                friendAnime.score = [friendScore intValue] == 0 ? @(-1) : [friendScore isKindOfClass:[NSString class]] ? @([friendScore intValue]) : friendScore;
+            
+            if(friendWatchedStatus && ![friendWatchedStatus isNull])
+                friendAnime.watched_status = @([Anime animeWatchedStatusForValue:friendWatchedStatus]);
+            
+            if(friendCurrentEpisode && ![friendCurrentEpisode isNull])
+                friendAnime.current_episode = friendCurrentEpisode;
+            
         }
         
         [[AnimeService managedObjectContext] save:nil];

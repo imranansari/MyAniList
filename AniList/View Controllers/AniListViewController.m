@@ -56,7 +56,7 @@
     self.topSectionLabel.textAlignment = NSTextAlignmentCenter;
     
     // This value is implicitly set to YES in iOS 7.0.
-    nvc.navigationBar.translucent = YES; // Setting this slides the view up, underneath the nav bar (otherwise it'll appear black)
+//    nvc.navigationBar.tra .nslucent = YES; // Setting this slides the view up, underneath the nav bar (otherwise it'll appear black)
 
     if([[UIDevice currentDevice].systemVersion compare:@"7.0" options:NSNumericSearch] != NSOrderedAscending) {
 //        nvc.navigationBar.barTintColor = [UIColor blueColor];
@@ -105,6 +105,9 @@
     UILongPressGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(didSwipe:)];
     [longPressGestureRecognizer setMinimumPressDuration:0.4f];
     [self.tableView addGestureRecognizer:longPressGestureRecognizer];
+    
+    self.maskView.frame = CGRectMake(self.maskView.frame.origin.x, self.maskView.frame.origin.y + 2, self.maskView.frame.size.width, self.maskView.frame.size.height - 2);
+    self.tableView.frame = CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y + 46, self.tableView.frame.size.width, self.tableView.frame.size.height - 46);
 }
 
 - (void)viewDidAppear:(BOOL)animated {

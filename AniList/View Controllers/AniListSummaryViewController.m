@@ -36,6 +36,10 @@
     self.titleLabel.alpha = 0.0f;
     self.view.backgroundColor = [UIColor clearColor];
     
+    if([UIApplication isiOS7]) {
+        self.titleLabel.frame = CGRectMake(self.titleLabel.frame.origin.x + 10, self.titleLabel.frame.origin.y, self.titleLabel.frame.size.width - 20, self.titleLabel.frame.size.height);
+    }
+    
     self.relatedTableView = [[AniListRelatedTableView alloc] initWithFrame:CGRectMake(0, 400, 320, 100)];
     self.relatedTableView.delegate = self;
     self.relatedTableView.dataSource = self;
@@ -379,7 +383,8 @@
 #pragma mark - UIScrollViewDelegate Methods
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    if(scrollView.contentOffset.y < 38) {
+    int frameOffset = [UIApplication isiOS7] ? -10 : 38;
+    if(scrollView.contentOffset.y < frameOffset) {
         [self removeTitle];
     }
     else {

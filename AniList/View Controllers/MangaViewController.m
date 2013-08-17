@@ -133,7 +133,9 @@
     if(self.manga.synopsis)
         [self.synopsisView addSynopsis:self.manga.synopsis];
     
-    self.mangaDetailsViewController.view.frame = CGRectMake(0, 30, self.mangaDetailsViewController.view.frame.size.width, self.mangaDetailsViewController.view.frame.size.height);
+    int frameOffset = [UIApplication isiOS7] ? -50 : 0;
+    
+    self.mangaDetailsViewController.view.frame = CGRectMake(0, 30 + frameOffset, self.mangaDetailsViewController.view.frame.size.width, self.mangaDetailsViewController.view.frame.size.height);
     self.userInfoView.view.frame = CGRectMake(0, self.mangaDetailsViewController.view.frame.origin.y + self.mangaDetailsViewController.view.frame.size.height, self.userInfoView.view.frame.size.width, self.userInfoView.view.frame.size.height);
     self.detailsLabel.frame = CGRectMake(self.detailsLabel.frame.origin.x, self.userInfoView.view.frame.origin.y + self.userInfoView.view.frame.size.height, self.detailsLabel.frame.size.width, self.detailsLabel.frame.size.height);
     

@@ -43,7 +43,7 @@
 }
 
 - (void)dealloc {
-    ALLog(@"TagList deallocating.");
+    ALLog(@"TopList deallocating.");
 }
 
 - (void)viewDidLoad {

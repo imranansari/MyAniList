@@ -117,10 +117,17 @@
         [[UINavigationBar appearance] setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
         [[UINavigationBar appearance] setShadowImage:[[UIImage alloc] init]];
 
-        [[UINavigationBar appearance] setTitleTextAttributes:@{ UITextAttributeTextColor : [UIColor whiteColor],
-                                                                UITextAttributeFont      : [UIFont fontWithName:@"HelveticaNeue-Light" size:0.0],
-                                                                UITextAttributeTextShadowOffset : [NSValue valueWithUIOffset:UIOffsetMake(0, -1)]
-                                                                }];
+        [[UINavigationBar appearance] setTitleTextAttributes:@{
+                                                               UITextAttributeTextColor : [UIColor whiteColor],
+                                                               UITextAttributeFont      : [UIFont fontWithName:@"HelveticaNeue-Light" size:18.0],
+                                                               UITextAttributeTextShadowOffset : [NSValue valueWithUIOffset:UIOffsetMake(0, -1)]
+                                                               
+                                                               }];
+        
+        [[UIBarButtonItem appearance] setTitleTextAttributes:@{
+                                                               UITextAttributeFont      : [UIFont fontWithName:@"HelveticaNeue-Light" size:14.0],
+                                                               } forState:UIControlStateNormal];
+        self.window.tintColor = [UIColor whiteColor];
     }
 }
 

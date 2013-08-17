@@ -48,7 +48,6 @@
         [nvc.navigationBar setBackgroundImage:maskedImage forBarMetrics:UIBarMetricsDefault];
     }
     
-#warning - Why does this break for unit testing?
     if(revealController) {
         [self.view addGestureRecognizer:revealController.panGestureRecognizer];
         [self.menuButton addTarget:revealController action:@selector(revealToggle:) forControlEvents:UIControlEventTouchUpInside];

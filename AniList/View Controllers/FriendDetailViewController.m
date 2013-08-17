@@ -13,6 +13,8 @@
 #import "Anime.h"
 #import "MALHTTPClient.h"
 #import "AnimeService.h"
+#import "FriendAnime.h"
+#import "FriendAnimeService.h"
 #import "AnimeViewController.h"
 #import "MangaViewController.h"
 
@@ -47,8 +49,8 @@
     gradient.frame = self.maskView.bounds;
     gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor colorWithRed:0 green:0 blue:0 alpha:0] CGColor], (id)[[UIColor colorWithRed:0 green:0 blue:0 alpha:1] CGColor], nil];
     
-    gradient.startPoint = CGPointMake(0.0, 0.005f);
-    gradient.endPoint = CGPointMake(0.0f, 0.10f);
+    gradient.startPoint = CGPointMake(0.0, 0.025f);
+    gradient.endPoint = CGPointMake(0.0f, 0.05f);
     
     self.maskView.layer.mask = gradient;
 }
@@ -245,6 +247,8 @@
 
 - (void)configureCell:(UITableViewCell *)cell withObject:(NSManagedObject *)object {
     Anime *anime = (Anime *)object;
+    FriendAnime *friendAnime = [FriendAnimeService anime:anime forFriend:self.friend];
+    
     AnimeCell *animeCell = (AnimeCell *)cell;
     animeCell.title.text = anime.title;
     [animeCell.title addShadow];
@@ -253,7 +257,7 @@
     animeCell.progress.text = [AnimeCell progressTextForAnime:anime];
     [animeCell.progress addShadow];
     
-    animeCell.rank.text = [anime.user_score intValue] != -1 ? [NSString stringWithFormat:@"%d", [anime.user_score intValue]] : @"";
+    animeCell.rank.text = [anime.user_score intValue] != -1 ? [NSString stringWithFormat:@"%d | %d", [anime.user_score intValue], [friendAnime.score intValue]] : @"";
     
     [animeCell.rank addShadow];
     

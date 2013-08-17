@@ -499,6 +499,9 @@ static NSString * const SWSegueRightIdentifier = @"sw_right";
     [self _setFrontViewPosition:initialPosition withDuration:0.0];
 }
 
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
 
 - (void)viewDidAppear:(BOOL)animated
 {

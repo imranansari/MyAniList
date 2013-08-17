@@ -56,7 +56,9 @@
         <relationship name="sharedAnime" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="FriendAnime" inverseName="user" inverseEntity="FriendAnime" syncable="YES"/>
     </entity>
     <entity name="FriendAnime" representedClassName="FriendAnime" syncable="YES">
+        <attribute name="current_episode" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="score" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="watched_status" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <relationship name="anime" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Anime" inverseName="userlist" inverseEntity="Anime" syncable="YES"/>
         <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Friend" inverseName="sharedAnime" inverseEntity="Friend" syncable="YES"/>
     </entity>
@@ -119,10 +121,10 @@
     <elements>
         <element name="Anime" positionX="0" positionY="0" width="0" height="0"/>
         <element name="Friend" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="FriendAnime" positionX="0" positionY="0" width="0" height="0"/>
         <element name="Genre" positionX="0" positionY="0" width="0" height="0"/>
         <element name="Manga" positionX="0" positionY="0" width="0" height="0"/>
         <element name="Synonym" positionX="0" positionY="0" width="0" height="0"/>
         <element name="Tag" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="FriendAnime" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
 </model>

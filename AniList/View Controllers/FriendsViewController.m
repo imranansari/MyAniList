@@ -19,7 +19,6 @@
 @property (nonatomic, copy) NSArray *sectionHeaders;
 @property (nonatomic, weak) IBOutlet UIView *maskView;
 @property (nonatomic, weak) IBOutlet AniListTableView *tableView;
-@property (nonatomic, weak) IBOutlet UIActivityIndicatorView *indicator;
 @property (nonatomic, weak) IBOutlet UITextField *usernameField;
 @property (nonatomic, weak) IBOutlet UIButton *addButton;
 @property (nonatomic, assign) int currentPage;
@@ -51,6 +50,7 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.alpha = 1.0f;
+    self.tableView.sectionHeaderHeight = 0;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -274,5 +274,16 @@
     [self.usernameField resignFirstResponder];
     [FriendService addFriend:self.usernameField.text];
 }
+
+#pragma mark - UITextFieldDelegate Methods
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if(textField == self.usernameField) {
+        [self addButtonPressed:nil];
+    }
+    
+    return YES;
+}
+
 
 @end

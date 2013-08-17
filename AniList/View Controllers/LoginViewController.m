@@ -22,8 +22,13 @@
 @property (nonatomic, weak) IBOutlet UIView *discoverView;
 @property (nonatomic, weak) IBOutlet UIView *compareView;
 @property (nonatomic, weak) IBOutlet UIView *loginView;
+@property (nonatomic, weak) IBOutlet UIActivityIndicatorView *indicator;
+@property (nonatomic, weak) IBOutlet UILabel *statusLabel;
+@property (nonatomic, weak) IBOutlet UIButton *skipToLoginButton;
+@property (nonatomic, weak) IBOutlet UIButton *loginButton;
 @property (nonatomic, strong) UIView *backgroundView;
 
+- (IBAction)skipToLoginButtonPressed:(id)sender;
 - (IBAction)loginButtonPressed:(id)sender;
 - (IBAction)backgroundButtonPressed:(id)sender;
 
@@ -88,11 +93,15 @@
     self.loginView.frame = CGRectMake(self.compareView.frame.origin.x + self.compareView.frame.size.width, 0, self.loginView.frame.size.width, self.loginView.frame.size.height);
     self.loginView.backgroundColor = [UIColor clearColor];
     
+    self.indicator.alpha = 0.0f;
+    self.statusLabel.text = @"";
+    self.statusLabel.alpha = 0.0f;
+    
     CAGradientLayer *gradient = [CAGradientLayer layer];
     gradient.frame = CGRectMake(-50, 0, backgroundImageView.frame.size.width+50, backgroundImageView.frame.size.height*2);
-    gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor colorWithWhite:1.0f alpha:0.35] CGColor], (id)[[UIColor colorWithWhite:0.0f alpha:1.0] CGColor], nil];
+    gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor colorWithWhite:1.0f alpha:0.25] CGColor], (id)[[UIColor colorWithWhite:0.0f alpha:1.0] CGColor], nil];
     
-    gradient.startPoint = CGPointMake(0.0, 0.20f);
+    gradient.startPoint = CGPointMake(0.0, 0.15f);
     gradient.endPoint = CGPointMake(0.0f, 0.30f);
     
     overlay.layer.mask = gradient;
@@ -123,7 +132,25 @@
 
 #pragma mark - IBAction Methods
 
+- (IBAction)skipToLoginButtonPressed:(id)sender {
+    [UIView animateWithDuration:1.0f
+                          delay:0.0f
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         [self.scrollView scrollRectToVisible:self.loginView.frame animated:NO];
+                     }
+                     completion:nil];
+}
+
 - (IBAction)loginButtonPressed:(id)sender {
+    [UIView animateWithDuration:0.3f animations:^{
+        self.indicator.alpha = 1.0f;
+        self.statusLabel.alpha = 0.0f;
+        self.loginButton.alpha = 0.5f;
+        self.loginButton.userInteractionEnabled = NO;
+        self.username.enabled = NO;
+        self.password.enabled = NO;
+    }];
     [[MALHTTPClient sharedClient] loginWithUsername:self.username.text andPassword:self.password.text success:^(id operation, id response) {
         [[UserProfile profile] setUsername:self.username.text andPassword:self.password.text];
         ALLog(@"Logged in!");
@@ -132,6 +159,15 @@
     } failure:^(id operation, NSError *error) {
         ALLog(@"Could not log in.");
         // Error logic to handle failure.
+        [UIView animateWithDuration:0.3f animations:^{
+            self.indicator.alpha = 0.0f;
+            self.statusLabel.alpha = 1.0f;
+            self.statusLabel.text = @"Couldn't log in. Please try again.";
+            self.loginButton.alpha = 1.0f;
+            self.loginButton.userInteractionEnabled = YES;
+            self.username.enabled = YES;
+            self.password.enabled = YES;
+        }];
     }];
 }
 
@@ -154,6 +190,23 @@
 }
 
 #pragma mark - UITextFieldDelegate Methods
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    if(textField == self.username) {
+        if([self.username.text isEqualToString:@"Username"]) {
+            self.username.text = @"";
+        }
+    }
+    
+    if(textField == self.password) {
+        if([self.password.text isEqualToString:@"Password"]) {
+            self.password.text = @"";
+            self.password.secureTextEntry = YES;
+        }
+    }
+    
+    return YES;
+}
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     if(textField == self.username) {

@@ -49,8 +49,7 @@ static NSString *CellIdentifier = @"Cell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-//    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
+
     self.tableView.scrollEnabled = NO;
 
     self.profileImage.contentMode = UIViewContentModeScaleAspectFill;

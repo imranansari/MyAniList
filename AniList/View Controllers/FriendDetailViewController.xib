@@ -60,7 +60,7 @@
                 </button>
                 <view contentMode="scaleToFill" id="iZE-XL-cYV">
                     <rect key="frame" x="0.0" y="143" width="320" height="425"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <subviews>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="H2c-8Z-XTV" customClass="AniListTableView">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="425"/>

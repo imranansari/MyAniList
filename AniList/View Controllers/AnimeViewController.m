@@ -180,7 +180,7 @@
     if(self.anime.synopsis)
         [self.synopsisView addSynopsis:self.anime.synopsis];
     
-    int frameOffset = [UIApplication isiOS7] ? -20 : 0;
+    int frameOffset = [UIApplication isiOS7] ? -50 : 0;
     
     self.animeDetailsViewController.view.frame = CGRectMake(0, 30 + frameOffset, self.animeDetailsViewController.view.frame.size.width, self.animeDetailsViewController.view.frame.size.height);
     self.userInfoView.view.frame = CGRectMake(0, self.animeDetailsViewController.view.frame.origin.y + self.animeDetailsViewController.view.frame.size.height, self.userInfoView.view.frame.size.width, self.userInfoView.view.frame.size.height);

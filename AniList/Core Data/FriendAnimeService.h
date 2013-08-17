@@ -13,5 +13,6 @@
 @interface FriendAnimeService : NSObject
 
 + (FriendAnime *)addFriend:(Friend *)friend toAnime:(Anime *)anime;
++ (FriendAnime *)anime:(Anime *)anime forFriend:(Friend *)friend;
 
 @end
