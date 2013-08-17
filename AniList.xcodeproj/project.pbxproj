@@ -116,8 +116,14 @@
 		633BBF7217B1358400AE573D /* FriendsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 633BBF6E17B1358400AE573D /* FriendsViewController.xib */; };
 		633BBF7917B139AD00AE573D /* FriendService.m in Sources */ = {isa = PBXBuildFile; fileRef = 633BBF7817B139AD00AE573D /* FriendService.m */; };
 		633BBF7A17B139AD00AE573D /* FriendService.m in Sources */ = {isa = PBXBuildFile; fileRef = 633BBF7817B139AD00AE573D /* FriendService.m */; };
-		633E695A17BF2B9C00477040 /* Friend.m in Sources */ = {isa = PBXBuildFile; fileRef = 633E695917BF2B9C00477040 /* Friend.m */; };
-		633E695B17BF2B9C00477040 /* Friend.m in Sources */ = {isa = PBXBuildFile; fileRef = 633E695917BF2B9C00477040 /* Friend.m */; };
+		633E696217BFBF5B00477040 /* FriendManga.m in Sources */ = {isa = PBXBuildFile; fileRef = 633E696117BFBF5B00477040 /* FriendManga.m */; };
+		633E696317BFBF5B00477040 /* FriendManga.m in Sources */ = {isa = PBXBuildFile; fileRef = 633E696117BFBF5B00477040 /* FriendManga.m */; };
+		633E696A17BFC04900477040 /* Friend.m in Sources */ = {isa = PBXBuildFile; fileRef = 633E696917BFC04900477040 /* Friend.m */; };
+		633E696B17BFC04900477040 /* Friend.m in Sources */ = {isa = PBXBuildFile; fileRef = 633E696917BFC04900477040 /* Friend.m */; };
+		633E696E17BFC32600477040 /* FriendMangaService.m in Sources */ = {isa = PBXBuildFile; fileRef = 633E696D17BFC32600477040 /* FriendMangaService.m */; };
+		633E696F17BFC32600477040 /* FriendMangaService.m in Sources */ = {isa = PBXBuildFile; fileRef = 633E696D17BFC32600477040 /* FriendMangaService.m */; };
+		633E697217BFD16D00477040 /* Manga.m in Sources */ = {isa = PBXBuildFile; fileRef = 633E697117BFD16D00477040 /* Manga.m */; };
+		633E697317BFD16D00477040 /* Manga.m in Sources */ = {isa = PBXBuildFile; fileRef = 633E697117BFD16D00477040 /* Manga.m */; };
 		63461A0C1777F4700053652C /* MangaDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63461A0B1777F4700053652C /* MangaDetailsViewController.m */; };
 		63461A0D1777F4700053652C /* MangaDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63461A0B1777F4700053652C /* MangaDetailsViewController.m */; };
 		63461A101777F8A20053652C /* MangaUserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63461A0F1777F8A20053652C /* MangaUserInfoViewController.m */; };
@@ -274,8 +280,6 @@
 		63B0DFB71789D09B006F0868 /* MangaServiceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B0DFB61789D09B006F0868 /* MangaServiceTests.m */; };
 		63B386AC1776401D001A7E31 /* MangaService.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B386AB1776401D001A7E31 /* MangaService.m */; };
 		63B386AD1776401D001A7E31 /* MangaService.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B386AB1776401D001A7E31 /* MangaService.m */; };
-		63B386B017764721001A7E31 /* Manga.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B386AF17764720001A7E31 /* Manga.m */; };
-		63B386B117764721001A7E31 /* Manga.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B386AF17764720001A7E31 /* Manga.m */; };
 		63B386B31777B91C001A7E31 /* MangaCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63B386B21777B91C001A7E31 /* MangaCell.xib */; };
 		63B386B41777B91C001A7E31 /* MangaCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63B386B21777B91C001A7E31 /* MangaCell.xib */; };
 		63B386B71777BA39001A7E31 /* MangaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B386B61777BA38001A7E31 /* MangaViewController.m */; };
@@ -430,8 +434,14 @@
 		633BBF6E17B1358400AE573D /* FriendsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendsViewController.xib; sourceTree = "<group>"; };
 		633BBF7717B139AD00AE573D /* FriendService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FriendService.h; path = "Core Data/FriendService.h"; sourceTree = "<group>"; };
 		633BBF7817B139AD00AE573D /* FriendService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FriendService.m; path = "Core Data/FriendService.m"; sourceTree = "<group>"; };
-		633E695817BF2B9C00477040 /* Friend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Friend.h; path = "Core Data/Friend.h"; sourceTree = "<group>"; };
-		633E695917BF2B9C00477040 /* Friend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Friend.m; path = "Core Data/Friend.m"; sourceTree = "<group>"; };
+		633E696017BFBF5B00477040 /* FriendManga.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FriendManga.h; path = "Core Data/FriendManga.h"; sourceTree = "<group>"; };
+		633E696117BFBF5B00477040 /* FriendManga.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FriendManga.m; path = "Core Data/FriendManga.m"; sourceTree = "<group>"; };
+		633E696817BFC04900477040 /* Friend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Friend.h; path = "Core Data/Friend.h"; sourceTree = "<group>"; };
+		633E696917BFC04900477040 /* Friend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Friend.m; path = "Core Data/Friend.m"; sourceTree = "<group>"; };
+		633E696C17BFC32600477040 /* FriendMangaService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FriendMangaService.h; path = "Core Data/FriendMangaService.h"; sourceTree = "<group>"; };
+		633E696D17BFC32600477040 /* FriendMangaService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FriendMangaService.m; path = "Core Data/FriendMangaService.m"; sourceTree = "<group>"; };
+		633E697017BFD16D00477040 /* Manga.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Manga.h; path = "Core Data/Manga.h"; sourceTree = "<group>"; };
+		633E697117BFD16D00477040 /* Manga.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Manga.m; path = "Core Data/Manga.m"; sourceTree = "<group>"; };
 		63461A0A1777F4700053652C /* MangaDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MangaDetailsViewController.h; sourceTree = "<group>"; };
 		63461A0B1777F4700053652C /* MangaDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MangaDetailsViewController.m; sourceTree = "<group>"; };
 		63461A0E1777F8A20053652C /* MangaUserInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MangaUserInfoViewController.h; sourceTree = "<group>"; };
@@ -589,8 +599,6 @@
 		63B0DFB61789D09B006F0868 /* MangaServiceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MangaServiceTests.m; sourceTree = "<group>"; };
 		63B386AA1776401D001A7E31 /* MangaService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MangaService.h; path = "Core Data/MangaService.h"; sourceTree = "<group>"; };
 		63B386AB1776401D001A7E31 /* MangaService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MangaService.m; path = "Core Data/MangaService.m"; sourceTree = "<group>"; };
-		63B386AE17764720001A7E31 /* Manga.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Manga.h; path = "Core Data/Manga.h"; sourceTree = "<group>"; };
-		63B386AF17764720001A7E31 /* Manga.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Manga.m; path = "Core Data/Manga.m"; sourceTree = "<group>"; };
 		63B386B21777B91C001A7E31 /* MangaCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MangaCell.xib; path = Views/MangaCell.xib; sourceTree = "<group>"; };
 		63B386B51777BA38001A7E31 /* MangaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MangaViewController.h; sourceTree = "<group>"; };
 		63B386B61777BA38001A7E31 /* MangaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MangaViewController.m; sourceTree = "<group>"; };
@@ -864,11 +872,15 @@
 		632F438F171CDA2C00A5B43A /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
+				633E696017BFBF5B00477040 /* FriendManga.h */,
+				633E696117BFBF5B00477040 /* FriendManga.m */,
 				63C063B017B67C51009C4FFE /* FriendAnime.h */,
 				63C063B117B67C51009C4FFE /* FriendAnime.m */,
-				633E695817BF2B9C00477040 /* Friend.h */,
-				633E695917BF2B9C00477040 /* Friend.m */,
 				635484B8171C2FA7003457CB /* AniList_1.0.xcdatamodeld */,
+				633E697017BFD16D00477040 /* Manga.h */,
+				633E697117BFD16D00477040 /* Manga.m */,
+				633E696817BFC04900477040 /* Friend.h */,
+				633E696917BFC04900477040 /* Friend.m */,
 				63DB4E55179AD7D800C20ECC /* Genre.h */,
 				63DB4E56179AD7D800C20ECC /* Genre.m */,
 				63DB4E51179AD7CE00C20ECC /* Synonym.h */,
@@ -877,8 +889,6 @@
 				63DB4E4E179AD7B800C20ECC /* Tag.m */,
 				635027BB171ED60A0004C106 /* Anime.h */,
 				635027BC171ED60A0004C106 /* Anime.m */,
-				63B386AE17764720001A7E31 /* Manga.h */,
-				63B386AF17764720001A7E31 /* Manga.m */,
 				635027B8171ED41A0004C106 /* AnimeService.h */,
 				635027B9171ED41A0004C106 /* AnimeService.m */,
 				63B386AA1776401D001A7E31 /* MangaService.h */,
@@ -893,6 +903,8 @@
 				633BBF7817B139AD00AE573D /* FriendService.m */,
 				63C063BF17B68845009C4FFE /* FriendAnimeService.h */,
 				63C063C017B68845009C4FFE /* FriendAnimeService.m */,
+				633E696C17BFC32600477040 /* FriendMangaService.h */,
+				633E696D17BFC32600477040 /* FriendMangaService.m */,
 			);
 			name = "Core Data";
 			sourceTree = "<group>";
@@ -1518,6 +1530,7 @@
 				632F43A4171CDE2F00A5B43A /* AnimeTableView.m in Sources */,
 				632F43A7171CDE3900A5B43A /* MangaTableView.m in Sources */,
 				632F43AB171D7DF100A5B43A /* AnimeListViewController.m in Sources */,
+				633E696E17BFC32600477040 /* FriendMangaService.m in Sources */,
 				632F43AE171D7DFB00A5B43A /* MangaListViewController.m in Sources */,
 				6350279C171E4EA20004C106 /* UIFont+AniList.m in Sources */,
 				635027A0171E51450004C106 /* AnimeViewController.m in Sources */,
@@ -1527,7 +1540,6 @@
 				6324CECA17997F1800B308B0 /* AnalyticsManager.m in Sources */,
 				6372893B17542D110032F425 /* MALHTTPClient.m in Sources */,
 				637CF6EC175986840009ADF3 /* NSObject+AniList.m in Sources */,
-				633E695A17BF2B9C00477040 /* Friend.m in Sources */,
 				633BBF6F17B1358400AE573D /* FriendsViewController.m in Sources */,
 				636F864C175A5F49007E1FB6 /* SWRevealViewController.m in Sources */,
 				636F8660175A5F53007E1FB6 /* AFHTTPClient.m in Sources */,
@@ -1568,6 +1580,7 @@
 				63859E8B1763F28C0029397C /* AnimeUserInfoEditViewController.m in Sources */,
 				63047A4217656CE10039D795 /* AniListDatePickerView.m in Sources */,
 				6331027B176605DF00097658 /* UIColor+AniList.m in Sources */,
+				633E697217BFD16D00477040 /* Manga.m in Sources */,
 				63EFEC3D176966B8009CEAB3 /* UMALHTTPClient.m in Sources */,
 				63894CC1176A9C05007D2D05 /* UserProfile.m in Sources */,
 				638E6B1717A7F54D00A35FDB /* SettingsCell.m in Sources */,
@@ -1575,8 +1588,8 @@
 				6371444A1770074600E60B9F /* SearchViewController.m in Sources */,
 				637144501770157A00E60B9F /* NSDictionary+AniList.m in Sources */,
 				63B386AC1776401D001A7E31 /* MangaService.m in Sources */,
-				63B386B017764721001A7E31 /* Manga.m in Sources */,
 				63B386B71777BA39001A7E31 /* MangaViewController.m in Sources */,
+				633E696A17BFC04900477040 /* Friend.m in Sources */,
 				63B386BE1777E29D001A7E31 /* AniListSearchDisplayController.m in Sources */,
 				63461A0C1777F4700053652C /* MangaDetailsViewController.m in Sources */,
 				63461A101777F8A20053652C /* MangaUserInfoViewController.m in Sources */,
@@ -1593,6 +1606,7 @@
 				639FA1E917937006000AA0D1 /* UINavigationController+AniList.m in Sources */,
 				639FA1F317937896000AA0D1 /* UIBarButtonItem+AniList.m in Sources */,
 				6380F997179ADADF0090B66C /* TagService.m in Sources */,
+				633E696217BFBF5B00477040 /* FriendManga.m in Sources */,
 				63DB4E4F179AD7B800C20ECC /* Tag.m in Sources */,
 				63DB4E53179AD7CE00C20ECC /* Synonym.m in Sources */,
 				63DB4E57179AD7D800C20ECC /* Genre.m in Sources */,
@@ -1639,6 +1653,7 @@
 				6301D930175D631000163160 /* AniListViewController.m in Sources */,
 				633BBF7A17B139AD00AE573D /* FriendService.m in Sources */,
 				6301D931175D631000163160 /* AnimeListViewController.m in Sources */,
+				633E696B17BFC04900477040 /* Friend.m in Sources */,
 				6301D932175D631000163160 /* MangaListViewController.m in Sources */,
 				6301D933175D631000163160 /* AnimeViewController.m in Sources */,
 				6301D934175D631000163160 /* AniListAppDelegate.m in Sources */,
@@ -1647,12 +1662,14 @@
 				6301D937175D631900163160 /* MenuCell.m in Sources */,
 				6324CECB17997F1800B308B0 /* AnalyticsManager.m in Sources */,
 				6301D938175D631900163160 /* AniListCell.m in Sources */,
+				633E696317BFBF5B00477040 /* FriendManga.m in Sources */,
 				6301D939175D631900163160 /* AnimeCell.m in Sources */,
 				6301D93A175D631900163160 /* MangaCell.m in Sources */,
 				6301D93B175D631C00163160 /* AniListTableView.m in Sources */,
 				6301D93C175D631C00163160 /* AnimeTableView.m in Sources */,
 				6301D93D175D631C00163160 /* MangaTableView.m in Sources */,
 				6301D93E175D632100163160 /* AnimeService.m in Sources */,
+				633E696F17BFC32600477040 /* FriendMangaService.m in Sources */,
 				6301D93F175D632500163160 /* UIFont+AniList.m in Sources */,
 				6301D940175D632C00163160 /* main.m in Sources */,
 				6324CEA71799793400B308B0 /* EGORefreshTableHeaderView.m in Sources */,
@@ -1666,7 +1683,6 @@
 				63BEA7491761A14400432BED /* AniListScoreView.m in Sources */,
 				63BEA74E176213B600432BED /* RRSGlowLabel.m in Sources */,
 				63859E8C1763F28C0029397C /* AnimeUserInfoEditViewController.m in Sources */,
-				633E695B17BF2B9C00477040 /* Friend.m in Sources */,
 				63C063BC17B67FD0009C4FFE /* FriendDetailViewController.m in Sources */,
 				63047A4317656CE10039D795 /* AniListDatePickerView.m in Sources */,
 				6331027C176605DF00097658 /* UIColor+AniList.m in Sources */,
@@ -1678,7 +1694,6 @@
 				6371444B1770074600E60B9F /* SearchViewController.m in Sources */,
 				637144511770157A00E60B9F /* NSDictionary+AniList.m in Sources */,
 				63B386AD1776401D001A7E31 /* MangaService.m in Sources */,
-				63B386B117764721001A7E31 /* Manga.m in Sources */,
 				63B386B81777BA39001A7E31 /* MangaViewController.m in Sources */,
 				63B386BF1777E29D001A7E31 /* AniListSearchDisplayController.m in Sources */,
 				63461A0D1777F4700053652C /* MangaDetailsViewController.m in Sources */,
@@ -1688,6 +1703,7 @@
 				63461A1A1778004D0053652C /* SettingsViewController.m in Sources */,
 				63B0DFA41789C3F7006F0868 /* NSString+HTML.m in Sources */,
 				63B0DFA81789C529006F0868 /* GTMNSString+HTML.m in Sources */,
+				633E697317BFD16D00477040 /* Manga.m in Sources */,
 				63B0DFAE1789D065006F0868 /* AnimeServiceTests.m in Sources */,
 				63B0DFB11789D087006F0868 /* AnimeTests.m in Sources */,
 				633BBF7017B1358400AE573D /* FriendsViewController.m in Sources */,

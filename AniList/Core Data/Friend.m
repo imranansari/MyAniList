@@ -2,12 +2,13 @@
 //  Friend.m
 //  AniList
 //
-//  Created by Corey Roberts on 8/16/13.
+//  Created by Corey Roberts on 8/17/13.
 //  Copyright (c) 2013 SpacePyro Inc. All rights reserved.
 //
 
 #import "Friend.h"
 #import "FriendAnime.h"
+#import "FriendManga.h"
 
 
 @implementation Friend
@@ -20,5 +21,6 @@
 @dynamic manga_total_entries;
 @dynamic last_seen;
 @dynamic sharedAnime;
+@dynamic sharedManga;
 
 @end

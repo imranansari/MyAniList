@@ -14,6 +14,8 @@
 #import "GenreService.h"
 #import "AnimeService.h"
 #import "Anime.h"
+#import "FriendManga.h"
+#import "FriendMangaService.h"
 
 #define ENTITY_NAME @"Manga"
 
@@ -59,60 +61,7 @@
     NSDictionary *mangaUserInfo = mangaDetails[@"myinfo"];
     
     for(NSDictionary *mangaItem in mangaDictionary) {
-        NSMutableDictionary *manga = [[NSMutableDictionary alloc] init];
-        
-        [manga addEntriesFromDictionary:@{ kID : @([mangaItem[@"series_mangadb_id"][@"text"] intValue]) }];
-        [manga addEntriesFromDictionary:@{ kUserEndDate : mangaItem[@"my_finish_date"][@"text"] }];
-        [manga addEntriesFromDictionary:@{ kUserLastUpdated : @([mangaItem[@"my_last_updated"][@"text"] intValue]) }];
-        [manga addEntriesFromDictionary:@{ kUserStartDate : mangaItem[@"my_start_date"][@"text"] }];
-        [manga addEntriesFromDictionary:@{ kUserRereadingStatus : @([mangaItem[@"my_rereadingg"][@"text"] intValue]) }];
-        [manga addEntriesFromDictionary:@{ kUserRereadingChapter : @([mangaItem[@"my_rereading_chap"][@"text"] intValue])}];
-        [manga addEntriesFromDictionary:@{ kUserScore : @([mangaItem[@"my_score"][@"text"] intValue])}];
-        [manga addEntriesFromDictionary:@{ kUserReadStatus : @([mangaItem[@"my_status"][@"text"] intValue])}];
-        [manga addEntriesFromDictionary:@{ kUserChaptersRead : @([mangaItem[@"my_read_chapters"][@"text"] intValue])}];
-        [manga addEntriesFromDictionary:@{ kUserVolumesRead : @([mangaItem[@"my_read_volumes"][@"text"] intValue])}];
-        [manga addEntriesFromDictionary:@{ kSeriesEndDate : mangaItem[@"series_end"][@"text"] }];
-        [manga addEntriesFromDictionary:@{ kVolumes : @([mangaItem[@"series_volumes"][@"text"] intValue]) }];
-        [manga addEntriesFromDictionary:@{ kChapters : @([mangaItem[@"series_chapters"][@"text"] intValue]) }];
-        [manga addEntriesFromDictionary:@{ kImageURL : mangaItem[@"series_image"][@"text"] }];
-        [manga addEntriesFromDictionary:@{ kSeriesStartDate : mangaItem[@"series_start"][@"text"] }];
-        [manga addEntriesFromDictionary:@{ kSeriesStatus : mangaItem[@"series_status"][@"text"] }];
-        [manga addEntriesFromDictionary:@{ kTitle : mangaItem[@"series_title"][@"text"] }];
-        [manga addEntriesFromDictionary:@{ kType : mangaItem[@"series_type"][@"text"] }];
-        
-        NSString *synonyms = mangaItem[@"series_synonyms"][@"text"];
-        NSArray *synonymsArray = [synonyms componentsSeparatedByString:@";"];
-        NSMutableArray *result = [NSMutableArray array];
-        
-        for(int i = 0; i < synonymsArray.count; i++) {
-            NSString *synonym = synonymsArray[i];
-            synonym = [synonym stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-            if(synonym.length > 0)
-                [result addObject:synonym];
-        }
-        
-        if(result.count > 0) {
-            NSDictionary *otherTitles = @{ kOtherTitles : @{ kSynonyms : result }};
-            [manga addEntriesFromDictionary:otherTitles];
-        }
-        
-        NSString *tags = mangaItem[@"my_tags"][@"text"];
-        NSArray *tagsArray = [tags componentsSeparatedByString:@","];
-        NSMutableArray *tagResults = [NSMutableArray array];
-        
-        for(int i = 0; i < tagsArray.count; i++) {
-            NSString *tag = tagsArray[i];
-            tag = [tag stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-            if(tag.length > 0)
-                [tagResults addObject:tag];
-        }
-        
-        if(tagResults.count > 0) {
-            NSDictionary *mangaTags = @{ kTag : tagResults };
-            [manga addEntriesFromDictionary:mangaTags];
-        }
-
-        
+        NSMutableDictionary *manga = [MangaService createDictionaryForManga:mangaItem];
         [MangaService addManga:manga fromList:YES];
     }
     
@@ -120,6 +69,112 @@
     
     
     return NO;
+}
+
++ (BOOL)addMangaList:(NSDictionary *)data forFriend:(Friend *)friend {
+    NSDictionary *mangaDetails = data[@"myanimelist"];
+    NSArray *mangaDictionary = mangaDetails[@"manga"];
+    NSDictionary *mangaUserInfo = mangaDetails[@"myinfo"];
+    
+    // This is just one manga.
+    if([mangaDictionary isKindOfClass:[NSDictionary class]]) {
+        NSDictionary *soloManga = (NSDictionary *)mangaDictionary;
+        mangaDictionary = @[soloManga];
+    }
+    
+    MVComputeTimeWithNameAndBlock((const char *)"friend_mangalist", ^{
+        for(NSDictionary *mangaItem in mangaDictionary) {
+            
+            NSMutableDictionary *mangaDictionary = [MangaService createDictionaryForManga:mangaItem];
+            
+            NSNumber *friendScore = mangaDictionary[kUserScore];
+            NSNumber *friendCurrentChapter = mangaDictionary[kUserChaptersRead];
+            NSNumber *friendCurrentVolume = mangaDictionary[kUserVolumesRead];
+            NSString *friendReadStatus = mangaDictionary[kUserReadStatus];
+            
+            [mangaDictionary removeObjectForKey:kUserScore];
+            [mangaDictionary removeObjectForKey:kUserChaptersRead];
+            [mangaDictionary removeObjectForKey:kUserVolumesRead];
+            [mangaDictionary removeObjectForKey:kUserReadStatus];
+            
+            Manga *manga = [MangaService addManga:mangaDictionary fromList:YES];
+            FriendManga *friendManga = [FriendMangaService addFriend:friend toManga:manga];
+            
+            if(friendScore && ![friendScore isNull])
+                friendManga.score = [friendScore intValue] == 0 ? @(-1) : [friendScore isKindOfClass:[NSString class]] ? @([friendScore intValue]) : friendScore;
+            
+            if(friendReadStatus && ![friendReadStatus isNull])
+                friendManga.read_status = @([Manga mangaReadStatusForValue:friendReadStatus]);
+            
+            if(friendCurrentChapter && ![friendCurrentChapter isNull])
+                friendManga.current_chapter = friendCurrentChapter;
+            
+            if(friendCurrentVolume && ![friendCurrentVolume isNull])
+                friendManga.current_volume = friendCurrentVolume;
+        }
+        
+        [[MangaService managedObjectContext] save:nil];
+    });
+    
+    return NO;
+}
+
+
++ (NSMutableDictionary *)createDictionaryForManga:(NSDictionary *)mangaItem {
+    NSMutableDictionary *manga = [[NSMutableDictionary alloc] init];
+    
+    [manga addEntriesFromDictionary:@{ kID : @([mangaItem[@"series_mangadb_id"][@"text"] intValue]) }];
+    [manga addEntriesFromDictionary:@{ kUserEndDate : mangaItem[@"my_finish_date"][@"text"] }];
+    [manga addEntriesFromDictionary:@{ kUserLastUpdated : @([mangaItem[@"my_last_updated"][@"text"] intValue]) }];
+    [manga addEntriesFromDictionary:@{ kUserStartDate : mangaItem[@"my_start_date"][@"text"] }];
+    [manga addEntriesFromDictionary:@{ kUserRereadingStatus : @([mangaItem[@"my_rereadingg"][@"text"] intValue]) }];
+    [manga addEntriesFromDictionary:@{ kUserRereadingChapter : @([mangaItem[@"my_rereading_chap"][@"text"] intValue])}];
+    [manga addEntriesFromDictionary:@{ kUserScore : @([mangaItem[@"my_score"][@"text"] intValue])}];
+    [manga addEntriesFromDictionary:@{ kUserReadStatus : @([mangaItem[@"my_status"][@"text"] intValue])}];
+    [manga addEntriesFromDictionary:@{ kUserChaptersRead : @([mangaItem[@"my_read_chapters"][@"text"] intValue])}];
+    [manga addEntriesFromDictionary:@{ kUserVolumesRead : @([mangaItem[@"my_read_volumes"][@"text"] intValue])}];
+    [manga addEntriesFromDictionary:@{ kSeriesEndDate : mangaItem[@"series_end"][@"text"] }];
+    [manga addEntriesFromDictionary:@{ kVolumes : @([mangaItem[@"series_volumes"][@"text"] intValue]) }];
+    [manga addEntriesFromDictionary:@{ kChapters : @([mangaItem[@"series_chapters"][@"text"] intValue]) }];
+    [manga addEntriesFromDictionary:@{ kImageURL : mangaItem[@"series_image"][@"text"] }];
+    [manga addEntriesFromDictionary:@{ kSeriesStartDate : mangaItem[@"series_start"][@"text"] }];
+    [manga addEntriesFromDictionary:@{ kSeriesStatus : mangaItem[@"series_status"][@"text"] }];
+    [manga addEntriesFromDictionary:@{ kTitle : mangaItem[@"series_title"][@"text"] }];
+    [manga addEntriesFromDictionary:@{ kType : mangaItem[@"series_type"][@"text"] }];
+    
+    NSString *synonyms = mangaItem[@"series_synonyms"][@"text"];
+    NSArray *synonymsArray = [synonyms componentsSeparatedByString:@";"];
+    NSMutableArray *result = [NSMutableArray array];
+    
+    for(int i = 0; i < synonymsArray.count; i++) {
+        NSString *synonym = synonymsArray[i];
+        synonym = [synonym stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        if(synonym.length > 0)
+            [result addObject:synonym];
+    }
+    
+    if(result.count > 0) {
+        NSDictionary *otherTitles = @{ kOtherTitles : @{ kSynonyms : result }};
+        [manga addEntriesFromDictionary:otherTitles];
+    }
+    
+    NSString *tags = mangaItem[@"my_tags"][@"text"];
+    NSArray *tagsArray = [tags componentsSeparatedByString:@","];
+    NSMutableArray *tagResults = [NSMutableArray array];
+    
+    for(int i = 0; i < tagsArray.count; i++) {
+        NSString *tag = tagsArray[i];
+        tag = [tag stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        if(tag.length > 0)
+            [tagResults addObject:tag];
+    }
+    
+    if(tagResults.count > 0) {
+        NSDictionary *mangaTags = @{ kTag : tagResults };
+        [manga addEntriesFromDictionary:mangaTags];
+    }
+    
+    return manga;
 }
 
 + (Manga *)addManga:(NSDictionary *)data fromRelatedAnime:(Anime *)anime {
@@ -213,6 +268,15 @@
         }
     }
     
+    if(data[kRank] && ![data[kRank] isNull])
+        manga.rank = data[kRank];
+    
+    if(data[kPopularityRank] && ![data[kPopularityRank] isNull])
+        manga.popularity_rank = data[kPopularityRank];
+    
+    if(data[kMembersScore] && ![data[kMembersScore] isNull])
+        manga.average_score = [data[kMembersScore] isKindOfClass:[NSString class]] ? @([data[kMembersScore] doubleValue]) : data[kMembersScore];
+    
     if(data[kImageURL] && ![data[kImageURL] isNull])
         manga.image_url = data[kImageURL];
     else if(data[kImage] && ![data[kImage] isNull])
@@ -224,11 +288,15 @@
     manga.status = @([Manga mangaPublishStatusForValue:data[kSeriesStatus]]);
     
     // note: not the user start/end date.
-    manga.date_start = [NSDate parseDate:data[kSeriesStartDate]];
-    manga.date_finish = [NSDate parseDate:data[kSeriesEndDate]];
+    if(data[kSeriesStartDate] && ![data[kSeriesStartDate] isNull])
+        manga.date_start = [NSDate parseDate:data[kSeriesStartDate]];
+    if(data[kSeriesEndDate] && ![data[kSeriesEndDate] isNull])
+        manga.date_finish = [NSDate parseDate:data[kSeriesEndDate]];
     
-    manga.user_date_start = [NSDate parseDate:data[kUserStartDate]];
-    manga.user_date_finish = [NSDate parseDate:data[kUserEndDate]];
+    if(data[kUserStartDate] && ![data[kUserStartDate] isNull])
+        manga.user_date_start = [NSDate parseDate:data[kUserStartDate]];
+    if(data[kUserEndDate] && ![data[kUserEndDate] isNull])
+        manga.user_date_finish = [NSDate parseDate:data[kUserEndDate]];
     
     //    anime.classification = data[@"classification"];
     //    anime.average_score = data[@"members_score"];
@@ -239,10 +307,16 @@
     //    anime.tags = data[@"tags"];
     //    anime.manga_adaptations = data[@"manga_adaptations"];
     
-    manga.read_status = @([Manga mangaReadStatusForValue:data[kUserReadStatus]]);
-    manga.current_chapter = data[kUserChaptersRead];
-    manga.current_volume = data[kUserVolumesRead];
-    manga.user_score = [data[kUserScore] intValue] == 0 ? @(-1) : [data[kUserScore] isKindOfClass:[NSString class]] ? @([data[kUserScore] intValue]) : data[kUserScore];
+    if(data[kUserReadStatus] && ![data[kUserReadStatus] isNull])
+        manga.read_status = @([Manga mangaReadStatusForValue:data[kUserReadStatus]]);
+    
+    if(data[kUserChaptersRead] && ![data[kUserChaptersRead] isNull])
+        manga.current_chapter = data[kUserChaptersRead];
+    if(data[kUserVolumesRead] && ![data[kUserVolumesRead] isNull])
+        manga.current_volume = data[kUserVolumesRead];
+    
+    if(data[kUserScore] && ![data[kUserScore] isNull])
+        manga.user_score = ([data[kUserScore] isNull] || [data[kUserScore] intValue] == 0) ? @(-1) : [data[kUserScore] isKindOfClass:[NSString class]] ? @([data[kUserScore] intValue]) : data[kUserScore];
     
     if(!fromList)
         [[MangaService managedObjectContext] save:&error];
@@ -328,6 +402,7 @@
     //    anime.classification = data[@"classification"];
     if(data[kMembersScore] && ![data[kMembersScore] isNull])
         manga.average_score = [data[kMembersScore] isKindOfClass:[NSString class]] ? @([data[kMembersScore] doubleValue]) : data[kMembersScore];
+    
     if(data[kMembersCount] &&![data[kMembersCount] isNull])
         manga.average_count = data[kMembersCount];
     if(data[kFavoritedCount] &&![data[kFavoritedCount] isNull])

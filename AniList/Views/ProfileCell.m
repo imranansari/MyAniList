@@ -56,7 +56,7 @@
 {
     [super setSelected:selected animated:animated];
 
-    // Configure the view for the selected state
+    self.avatar.superview.backgroundColor = [UIColor defaultBackgroundColor];
 }
 
 + (CGFloat)cellHeight {

@@ -123,9 +123,7 @@ static NSArray *cachedAnimeList = nil;
     
     MVComputeTimeWithNameAndBlock((const char *)"animelist", ^{
         for(NSDictionary *animeItem in animes) {
-
             NSMutableDictionary *anime = [AnimeService createDictionaryForAnime:animeItem];
-            
             [AnimeService addAnime:anime fromList:YES];
         }
         
@@ -145,8 +143,6 @@ static NSArray *cachedAnimeList = nil;
         NSDictionary *soloAnime = (NSDictionary *)animes;
         animes = @[soloAnime];
     }
-    
-    cachedAnimeList = nil;
     
     MVComputeTimeWithNameAndBlock((const char *)"friend_animelist", ^{
         for(NSDictionary *animeItem in animes) {

@@ -59,6 +59,7 @@
         <attribute name="manga_total_entries" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="sharedAnime" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="FriendAnime" inverseName="user" inverseEntity="FriendAnime" syncable="YES"/>
+        <relationship name="sharedManga" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="FriendManga" inverseName="user" inverseEntity="FriendManga" syncable="YES"/>
     </entity>
     <entity name="FriendAnime" representedClassName="FriendAnime" syncable="YES">
         <attribute name="column" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
@@ -67,6 +68,15 @@
         <attribute name="watched_status" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <relationship name="anime" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Anime" inverseName="userlist" inverseEntity="Anime" syncable="YES"/>
         <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Friend" inverseName="sharedAnime" inverseEntity="Friend" syncable="YES"/>
+    </entity>
+    <entity name="FriendManga" representedClassName="FriendManga" syncable="YES">
+        <attribute name="column" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="current_chapter" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="current_volume" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="read_status" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="score" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="manga" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="Manga" inverseName="userlist" inverseEntity="Manga" syncable="YES"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="Friend" inverseName="sharedManga" inverseEntity="Friend" syncable="YES"/>
     </entity>
     <entity name="Genre" representedClassName="Genre" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
@@ -115,6 +125,7 @@
         <relationship name="related_manga" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Manga" syncable="YES"/>
         <relationship name="synonyms" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Synonym" syncable="YES"/>
         <relationship name="tags" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Tag" inverseName="manga" inverseEntity="Tag" syncable="YES"/>
+        <relationship name="userlist" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FriendManga" inverseName="manga" inverseEntity="FriendManga" syncable="YES"/>
     </entity>
     <entity name="Synonym" representedClassName="Synonym" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
@@ -132,5 +143,6 @@
         <element name="Manga" positionX="0" positionY="0" width="0" height="0"/>
         <element name="Synonym" positionX="0" positionY="0" width="0" height="0"/>
         <element name="Tag" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="FriendManga" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
 </model>

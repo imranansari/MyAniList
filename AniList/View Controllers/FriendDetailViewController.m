@@ -7,14 +7,27 @@
 //
 
 #import "FriendDetailViewController.h"
+
 #import "AnimeCell.h"
+#import "MangaCell.h"
+
 #import "AniListTableView.h"
 #import "AniListAppDelegate.h"
+
 #import "Anime.h"
-#import "MALHTTPClient.h"
+#import "Manga.h"
+
 #import "AnimeService.h"
+#import "MangaService.h"
+
+#import "MALHTTPClient.h"
+
 #import "FriendAnime.h"
 #import "FriendAnimeService.h"
+
+#import "FriendManga.h"
+#import "FriendMangaService.h"
+
 #import "AnimeViewController.h"
 #import "MangaViewController.h"
 
@@ -23,7 +36,17 @@
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView *indicator;
 @property (nonatomic, weak) IBOutlet UIView *maskView;
 @property (nonatomic, weak) IBOutlet UIImageView *avatar;
+
+@property (nonatomic, weak) IBOutlet UIButton *animeButton;
+@property (nonatomic, weak) IBOutlet UIButton *mangaButton;
+@property (nonatomic, weak) IBOutlet UIButton *compareButton;
+
 @property (nonatomic, copy) NSArray *sectionHeaders;
+
+- (IBAction)animeButtonPressed:(id)sender;
+- (IBAction)mangaButtonPressed:(id)sender;
+- (IBAction)compareButtonPressed:(id)sender;
+
 @end
 
 @implementation FriendDetailViewController
@@ -43,7 +66,7 @@
 {
     self.hidesBackButton = NO;
     [super viewDidLoad];
- 
+    self.animeButton.selected = YES;
     [self fetchData];
     
     self.title = [NSString stringWithFormat:@"%@'s List", self.friend.username];
@@ -76,17 +99,37 @@
 }
 
 - (NSString *)entityName {
-    return @"FriendAnime";
+    if(self.animeButton.selected) {
+        return @"FriendAnime";
+    }
+    else {
+        return @"FriendManga";
+    }
 }
 
 - (NSArray *)sortDescriptors {
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"anime.title" ascending:YES];
-    NSSortDescriptor *primaryDescriptor = [[NSSortDescriptor alloc] initWithKey:@"watched_status" ascending:YES];
+    NSSortDescriptor *sortDescriptor;
+    NSSortDescriptor *primaryDescriptor;
+    
+    if(self.animeButton.selected) {
+        sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"anime.title" ascending:YES];
+        primaryDescriptor = [[NSSortDescriptor alloc] initWithKey:@"watched_status" ascending:YES];
+    }
+    else {
+        sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"manga.title" ascending:YES];
+        primaryDescriptor = [[NSSortDescriptor alloc] initWithKey:@"read_status" ascending:YES];
+    }
+
     return @[primaryDescriptor, sortDescriptor];
 }
 
 - (NSPredicate *)predicate {
-    return [NSPredicate predicateWithFormat:@"watched_status < 7 && user == %@", self.friend];
+    if(self.animeButton.selected) {
+        return [NSPredicate predicateWithFormat:@"watched_status < 7 && user == %@", self.friend];
+    }
+    else {
+        return [NSPredicate predicateWithFormat:@"read_status < 7 && user == %@", self.friend];
+    }
 }
 
 - (NSString *)sectionKeyPathName {
@@ -103,6 +146,71 @@
                                               failure:^(NSURLRequest *operation, NSError *error) {
                                                   ALLog(@"Couldn't fetch list!");
                                               }];
+    
+    [[MALHTTPClient sharedClient] getMangaListForUser:self.friend.username
+                                         initialFetch:YES
+                                              success:^(NSURLRequest *operation, id response) {
+                                                  ALLog(@"Got dat list!");
+                                                  [MangaService addMangaList:(NSDictionary *)response forFriend:self.friend];
+                                              }
+                                              failure:^(NSURLRequest *operation, NSError *error) {
+                                                  ALLog(@"Couldn't fetch list!");
+                                              }];
+}
+
+#pragma mark - IBAction methods
+
+- (void)reloadTable {
+    
+    self.fetchedResultsController = nil;
+    NSError *error = nil;
+    if (![[self fetchedResultsController] performFetch:&error]) {}
+    
+    [UIView animateWithDuration:0.15f
+                          delay:0.0f
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         self.tableView.alpha = 0.0f;
+                     }
+                     completion:^(BOOL finished) {
+                         [self.tableView reloadData];
+                         
+                         [UIView animateWithDuration:0.15f
+                                               delay:0.0f
+                                             options:UIViewAnimationOptionCurveEaseInOut
+                                          animations:^{
+                                              self.tableView.alpha = 1.0f;
+                                          }
+                                          completion:nil];
+                     }];
+}
+
+- (IBAction)animeButtonPressed:(id)sender {
+    if(self.animeButton.selected)
+        return;
+    
+    self.animeButton.selected = YES;
+    self.mangaButton.selected = NO;
+    
+    self.sectionHeaders = @[@"Watching", @"Completed", @"On Hold", @"Dropped", @"Plan To Watch"];
+    
+    [self reloadTable];
+}
+
+- (IBAction)mangaButtonPressed:(id)sender {
+    if(self.mangaButton.selected)
+        return;
+    
+    self.animeButton.selected = NO;
+    self.mangaButton.selected = YES;
+    
+    self.sectionHeaders = @[@"Reading", @"Completed", @"On Hold", @"Dropped", @"Plan To Read"];
+    
+    [self reloadTable];
+}
+
+- (IBAction)compareButtonPressed:(id)sender {
+    self.compareButton.selected = !self.compareButton.selected;
 }
 
 #pragma mark - Table view data source
@@ -142,16 +250,28 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    static NSString *CellIdentifier = @"Cell";
+    static NSString *animeCellIdentifier = @"AnimeCellIdentifier";
+    static NSString *mangaCellIdentifier = @"MangaCellIdentifier";
     
-    AnimeCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if(!cell) {
-        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"AnimeCell" owner:self options:nil];
-        cell = (AnimeCell *)nib[0];
+    UITableViewCell *cell;
+    
+    if(self.animeButton.selected) {
+        cell = (AnimeCell *)[tableView dequeueReusableCellWithIdentifier:animeCellIdentifier];
+        if(!cell) {
+            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"AnimeCell" owner:self options:nil];
+            cell = (AnimeCell *)nib[0];
+        }
+    }
+    else {
+        cell = (MangaCell *)[tableView dequeueReusableCellWithIdentifier:mangaCellIdentifier];
+        if(!cell) {
+            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"MangaCell" owner:self options:nil];
+            cell = (MangaCell *)nib[0];
+        }
     }
     
-    FriendAnime *anime = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    [self configureCell:cell withObject:anime];
+    NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    [self configureCell:cell withObject:object];
     
     return cell;
 }
@@ -264,43 +384,60 @@
 }
 
 - (void)configureCell:(UITableViewCell *)cell withObject:(NSManagedObject *)object {
-    FriendAnime *friendAnime = (FriendAnime *)object;
-    Anime *anime = friendAnime.anime;
+    AniListCell *anilistCell = (AniListCell *)cell;
+    NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSURLRequest *imageRequest;
+    NSString *cachedImageLocation = @"";
     
-    AnimeCell *animeCell = (AnimeCell *)cell;
-    animeCell.title.text = anime.title;
-    [animeCell.title addShadow];
-    [animeCell.title sizeToFit];
+#warning - all of this code is gross. Will need to add a core data parent entity here with common traits.
     
-    animeCell.progress.text = [AnimeCell progressTextForAnime:anime];
-    [animeCell.progress addShadow];
+    if([object isKindOfClass:[FriendAnime class]]) {
+        Anime *anime = ((FriendAnime *)object).anime;
+        AnimeCell *animeCell = (AnimeCell *)cell;
+        animeCell.title.text = anime.title;
+        animeCell.progress.text = [Anime stringForAnimeWatchedStatus:[anime.watched_status intValue]];
+        animeCell.rank.text = [anime.user_score intValue] != -1 ? [NSString stringWithFormat:@"%d", [anime.user_score intValue]] : @"";
+        animeCell.type.text = [Anime stringForAnimeType:[anime.type intValue]];
+        imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:anime.image_url]];
+        cachedImageLocation = [NSString stringWithFormat:@"%@/%@", documentsDirectory, anime.image];
+    }
+    else if([object isKindOfClass:[FriendManga class]]) {
+        Manga *manga = ((FriendManga *)object).manga;
+        MangaCell *mangaCell = (MangaCell *)cell;
+        mangaCell.title.text = manga.title;
+        mangaCell.progress.text = [Manga stringForMangaReadStatus:[manga.read_status intValue]];
+        mangaCell.rank.text = [manga.user_score intValue] != -1 ? [NSString stringWithFormat:@"%d", [manga.user_score intValue]] : @"";
+        mangaCell.type.text = [Manga stringForMangaType:[manga.type intValue]];
+        imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:manga.image_url]];
+        cachedImageLocation = [NSString stringWithFormat:@"%@/%@", documentsDirectory, manga.image];
+    }
     
-    animeCell.rank.text = [anime.user_score intValue] != -1 ? [NSString stringWithFormat:@"%d | %d", [anime.user_score intValue], [friendAnime.score intValue]] : @"";
-    
-    [animeCell.rank addShadow];
-    
-    animeCell.type.text = [Anime stringForAnimeType:[anime.type intValue]];
-    [animeCell.type addShadow];
+    [anilistCell.title sizeToFit];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:anime.image_url]];
-        UIImage *cachedImage = [anime imageForAnime];
+        
+        UIImage *cachedImage = [UIImage imageWithContentsOfFile:cachedImageLocation];
         
         if(!cachedImage) {
-            [animeCell.image setImageWithURLRequest:imageRequest placeholderImage:cachedImage success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+            [anilistCell.image setImageWithURLRequest:imageRequest placeholderImage:cachedImage success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    animeCell.image.alpha = 0.0f;
-                    animeCell.image.image = image;
+                    anilistCell.image.alpha = 0.0f;
+                    anilistCell.image.image = image;
                     
                     [UIView animateWithDuration:0.3f animations:^{
-                        animeCell.image.alpha = 1.0f;
+                        anilistCell.image.alpha = 1.0f;
                     }];
                 });
                 
-                if(!anime.image) {
-                    // Save the image onto disk if it doesn't exist or they aren't the same.
-                    [anime saveImage:image fromRequest:request];
+                // Save the image onto disk if it doesn't exist or they aren't the same.
+                if([object isKindOfClass:[Anime class]]) {
+                    Anime *anime = (Anime *)object;
+                    [anime saveImage:image fromRequest:imageRequest];
+                }
+                else if([object isKindOfClass:[Manga class]]) {
+                    Manga *manga = (Manga *)object;
+                    [manga saveImage:image fromRequest:imageRequest];
                 }
                 
             } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
@@ -310,7 +447,7 @@
         }
         else {
             dispatch_async(dispatch_get_main_queue(), ^{
-                animeCell.image.image = cachedImage;
+                anilistCell.image.image = cachedImage;
             });
         }
     });

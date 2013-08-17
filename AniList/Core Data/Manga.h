@@ -75,7 +75,7 @@ typedef enum {
 } MangaRelation;
 
 
-@class Anime, Genre, Synonym, Tag;
+@class Anime, Genre, Synonym, Tag, FriendManga;
 
 @interface Manga : NSManagedObject
 
@@ -120,6 +120,7 @@ typedef enum {
 @property (nonatomic, retain) NSSet *related_manga;
 @property (nonatomic, retain) NSSet *synonyms;
 @property (nonatomic, retain) NSSet *tags;
+@property (nonatomic, retain) NSSet *userlist;
 
 + (MangaType)mangaTypeForValue:(NSString *)value;
 + (NSString *)stringForMangaType:(MangaType)mangaType;
@@ -181,5 +182,11 @@ typedef enum {
 - (void)removeTagsObject:(Tag *)value;
 - (void)addTags:(NSSet *)values;
 - (void)removeTags:(NSSet *)values;
+
+- (void)addUserlistObject:(FriendManga *)value;
+- (void)removeUserlistObject:(FriendManga *)value;
+- (void)addUserlist:(NSSet *)values;
+- (void)removeUserlist:(NSSet *)values;
+
 
 @end

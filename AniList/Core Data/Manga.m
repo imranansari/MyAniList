@@ -53,6 +53,7 @@
 @dynamic related_manga;
 @dynamic synonyms;
 @dynamic tags;
+@dynamic userlist;
 
 - (void)awakeFromInsert {
     self.read_status = @(MangaReadStatusNotReading);
