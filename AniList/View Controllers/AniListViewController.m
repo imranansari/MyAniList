@@ -125,30 +125,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    if([UIApplication isiOS7]) {
-        [UIView animateWithDuration:0.2f
-                              delay:0.0f
-                            options:UIViewAnimationOptionCurveEaseInOut
-                         animations:^{
-                             self.view.alpha = 1.0f;
-                         }
-                         completion:nil];
-    }
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    if([UIApplication isiOS7]) {
-        [UIView animateWithDuration:0.2f
-                              delay:0.0f
-                            options:UIViewAnimationOptionCurveEaseInOut
-                         animations:^{
-                             self.view.alpha = 0.0f;
-                         }
-                         completion:nil];
-    }
-}
-
 #pragma mark - Gesture Management Methods
 
 - (void)didSwipe:(UIGestureRecognizer *)gestureRecognizer {

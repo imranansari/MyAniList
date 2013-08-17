@@ -60,5 +60,28 @@
     }];
 }
 
+- (void)animateOut {
+    if([UIApplication isiOS7]) {
+        [UIView animateWithDuration:0.2f
+                              delay:0.0f
+                            options:UIViewAnimationOptionCurveEaseInOut
+                         animations:^{
+                             self.alpha = 0.0f;
+                         }
+                         completion:nil];
+    }
+}
+
+- (void)animateIn {
+    if([UIApplication isiOS7]) {
+        [UIView animateWithDuration:0.2f
+                              delay:0.0f
+                            options:UIViewAnimationOptionCurveEaseInOut
+                         animations:^{
+                             self.alpha = 1.0f;
+                         }
+                         completion:nil];
+    }
+}
 
 @end

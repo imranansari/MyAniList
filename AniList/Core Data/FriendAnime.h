@@ -14,6 +14,7 @@
 @interface FriendAnime : NSManagedObject
 
 @property (nonatomic, retain) NSNumber *score;
+@property (nonatomic, retain) NSNumber *column;
 @property (nonatomic, retain) NSNumber *current_episode;
 @property (nonatomic, retain) NSNumber *watched_status;
 @property (nonatomic, retain) Anime *anime;

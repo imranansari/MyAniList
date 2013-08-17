@@ -40,19 +40,31 @@
 
 - (void)viewDidLoad
 {
+    self.hidesBackButton = NO;
     [super viewDidLoad];
+ 
     [self fetchData];
     
+    self.title = [NSString stringWithFormat:@"%@'s List", self.friend.username];
     self.tableView.backgroundColor = [UIColor clearColor];
     
     CAGradientLayer *gradient = [CAGradientLayer layer];
     gradient.frame = self.maskView.bounds;
     gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor colorWithRed:0 green:0 blue:0 alpha:0] CGColor], (id)[[UIColor colorWithRed:0 green:0 blue:0 alpha:1] CGColor], nil];
     
-    gradient.startPoint = CGPointMake(0.0, 0.025f);
+    gradient.startPoint = CGPointMake(0.0, 0.015f);
     gradient.endPoint = CGPointMake(0.0f, 0.05f);
     
     self.maskView.layer.mask = gradient;
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+    if(indexPath) {
+        [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -62,17 +74,17 @@
 }
 
 - (NSString *)entityName {
-    return @"Anime";
+    return @"FriendAnime";
 }
 
 - (NSArray *)sortDescriptors {
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:YES];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"anime.title" ascending:YES];
     NSSortDescriptor *primaryDescriptor = [[NSSortDescriptor alloc] initWithKey:@"watched_status" ascending:YES];
     return @[primaryDescriptor, sortDescriptor];
 }
 
 - (NSPredicate *)predicate {
-    return [NSPredicate predicateWithFormat:@"watched_status < 7 && ANY userlist.user == %@", self.friend];
+    return [NSPredicate predicateWithFormat:@"watched_status < 7"];
 }
 
 - (NSString *)sectionKeyPathName {
@@ -83,10 +95,11 @@
     [[MALHTTPClient sharedClient] getAnimeListForUser:self.friend.username
                                          initialFetch:YES
                                               success:^(NSURLRequest *operation, id response) {
+                                                  ALLog(@"Got dat list!");
                                                   [AnimeService addAnimeList:(NSDictionary *)response forFriend:self.friend];
                                               }
                                               failure:^(NSURLRequest *operation, NSError *error) {
-                                                  // Derp.
+                                                  ALLog(@"Couldn't fetch list!");
                                               }];
 }
 
@@ -135,7 +148,7 @@
         cell = (AnimeCell *)nib[0];
     }
     
-    Anime *anime = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    FriendAnime *anime = [self.fetchedResultsController objectAtIndexPath:indexPath];
     [self configureCell:cell withObject:anime];
     
     return cell;
@@ -164,7 +177,7 @@
     
     // Edit the section name key path and cache name if appropriate.
     // nil for section name key path means "no sections".
-    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"column" cacheName:nil];
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:[self sectionKeyPathName] cacheName:nil];
     aFetchedResultsController.delegate = self;
     self.fetchedResultsController = aFetchedResultsController;
     
@@ -233,7 +246,8 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    Anime *anime = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    FriendAnime *friendAnime = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    Anime *anime = friendAnime.anime;
     
     AnimeViewController *vc = [[AnimeViewController alloc] init];
     vc.anime = anime;
@@ -246,8 +260,8 @@
 }
 
 - (void)configureCell:(UITableViewCell *)cell withObject:(NSManagedObject *)object {
-    Anime *anime = (Anime *)object;
-    FriendAnime *friendAnime = [FriendAnimeService anime:anime forFriend:self.friend];
+    FriendAnime *friendAnime = (FriendAnime *)object;
+    Anime *anime = friendAnime.anime;
     
     AnimeCell *animeCell = (AnimeCell *)cell;
     animeCell.title.text = anime.title;

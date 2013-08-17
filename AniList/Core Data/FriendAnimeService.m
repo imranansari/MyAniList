@@ -46,7 +46,22 @@
         return (FriendAnime *)results[0];
     }
     else return nil;
+}
 
++ (NSArray *)animeForFriend:(Friend *)friend {
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITY_NAME inManagedObjectContext:[FriendAnimeService managedObjectContext]];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"user == %@", friend];
+    request.entity = entity;
+    request.predicate = predicate;
+    
+    NSError *error = nil;
+    NSArray *results = [[FriendAnimeService managedObjectContext] executeFetchRequest:request error:&error];
+    
+    if(results.count) {
+        return results;
+    }
+    else return nil;
 }
 
 + (NSManagedObjectContext *)managedObjectContext {

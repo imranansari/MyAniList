@@ -14,8 +14,17 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.backgroundColor = [UIColor whiteColor];
+        self.backgroundColor = [UIColor clearColor];
         self.backgroundView = [[UIView alloc] initWithFrame:self.frame];
+        
+        UIView *selectedBackgroundView = [[UIView alloc] initWithFrame:self.frame];
+        selectedBackgroundView.backgroundColor = [UIColor defaultBackgroundColor];
+        
+        self.selectedBackgroundView = selectedBackgroundView;
+
+        self.username.textColor = [UIColor whiteColor];
+        self.animeStats.textColor = [UIColor whiteColor];
+        self.mangaStats.textColor = [UIColor whiteColor];
     }
     return self;
 }
