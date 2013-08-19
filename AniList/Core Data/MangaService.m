@@ -191,10 +191,10 @@
     Anime *animeAdaptation = [AnimeService animeForID:data[@"anime_id"]];
     
     if(animeAdaptation) {
-        ALLog(@"Anime adaptation '%@' exists for '%@'.", animeAdaptation.title, manga.title);
+        ALVLog(@"Anime adaptation '%@' exists for '%@'.", animeAdaptation.title, manga.title);
     }
     else {
-        ALLog(@"Anime adaptation '%@' does not exist for '%@'. Addint to the databaes.", animeAdaptation.title, manga.title);
+        ALVLog(@"Anime adaptation '%@' does not exist for '%@'. Addint to the databaes.", animeAdaptation.title, manga.title);
         animeAdaptation = [AnimeService addAnime:data fromRelatedManga:manga];
     }
     
@@ -207,10 +207,10 @@
     Manga *relatedManga = [MangaService mangaForID:data[@"manga_id"]];
     
     if(relatedManga) {
-        ALLog(@"Related manga exists.");
+        ALVLog(@"Related manga exists.");
     }
     else {
-        ALLog(@"Related manga does not exist. Creating.");
+        ALVLog(@"Related manga does not exist. Creating.");
         relatedManga = [NSEntityDescription insertNewObjectForEntityForName:ENTITY_NAME inManagedObjectContext:[MangaService managedObjectContext]];
         relatedManga.manga_id = [data[@"manga_id"] isKindOfClass:[NSString class]] ? @([data[@"manga_id"] intValue]) : data[@"manga_id"];
         relatedManga.title = data[kTitle];
@@ -236,7 +236,7 @@
     Manga *existingManga = [MangaService mangaForID:data[kID]];
     
     if(existingManga) {
-        ALLog(@"Manga exists. Updating details.");
+        ALVLog(@"Manga exists. Updating details.");
         return [MangaService editManga:data fromList:fromList withObject:existingManga];
     }
     
@@ -421,10 +421,10 @@
     // If the last time we updated (according to the server) is less than what we get from the server,
     // don't bother updating user details.
     if(lastUpdated && [lastUpdated intValue] <= [manga.last_updated intValue]) {
-        ALLog(@"Update times match, no need to update user data.");
+        ALVLog(@"Update times match, no need to update user data.");
     }
     else {
-        ALLog(@"Update times differ, updating user data...");
+        ALVLog(@"Update times differ, updating user data...");
         
         if(data[kUserReadStatus] && ![data[kUserReadStatus] isNull])
             manga.read_status = @([Manga mangaReadStatusForValue:data[kUserReadStatus]]);

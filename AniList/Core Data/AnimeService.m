@@ -313,7 +313,7 @@ static NSArray *cachedAnimeList = nil;
     Anime *existingAnime = [AnimeService animeForID:data[kID] fromCache:fromList];
     
     if(existingAnime) {
-        ALLog(@"Anime exists. Updating details.");
+        ALVLog(@"Anime exists. Updating details.");
         return [AnimeService editAnime:data fromList:fromList withObject:existingAnime];
     }
     
@@ -511,10 +511,10 @@ static NSArray *cachedAnimeList = nil;
     // If the last time we updated (according to the server) is less than what we get from the server,
     // don't bother updating user details.
     if(lastUpdated && [lastUpdated intValue] <= [anime.last_updated intValue]) {
-        ALLog(@"Update times match, no need to update user data.");
+        ALVLog(@"Update times match, no need to update user data.");
     }
     else {
-        ALLog(@"Update times differ, updating user data...");
+        ALVLog(@"Update times differ, updating user data...");
         
         if(data[kUserStartDate] && ![data[kUserStartDate] isNull])
             anime.user_date_start = [NSDate parseDate:data[kUserStartDate]];

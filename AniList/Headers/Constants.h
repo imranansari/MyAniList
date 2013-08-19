@@ -77,10 +77,18 @@
 
 static const BOOL UI_DEBUG = NO;
 
+#define VERBOSE_DEBUGGING NO
+
 #ifdef DEBUG
 #define ALLog( s, ... ) NSLog( @"<%p %@:(%d)> %@", self, [[NSString stringWithUTF8String:__FILE__] lastPathComponent], __LINE__, [NSString stringWithFormat:(s), ##__VA_ARGS__] )
 #else
 #define ALLog( s, ... ) do {} while (0)
+#endif
+
+#if VERBOSE_DEBUGGING
+#define ALVLog( s, ...) ALLog( s, ... )
+#else
+#define ALVLog( s, ... ) do {} while (0)
 #endif
 
 NS_INLINE void MVComputeTimeWithNameAndBlock(const char *caller, void (^block)()) {

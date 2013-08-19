@@ -102,7 +102,6 @@
 }
 
 + (MangaPublishStatus)mangaPublishStatusForValue:(NSString *)value {
-    ALLog(@"publish status: %@", value);
     value = [value lowercaseString];
     int publishStatus = [value intValue];
 
