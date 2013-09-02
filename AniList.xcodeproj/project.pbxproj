@@ -124,6 +124,10 @@
 		633E696F17BFC32600477040 /* FriendMangaService.m in Sources */ = {isa = PBXBuildFile; fileRef = 633E696D17BFC32600477040 /* FriendMangaService.m */; };
 		633E697217BFD16D00477040 /* Manga.m in Sources */ = {isa = PBXBuildFile; fileRef = 633E697117BFD16D00477040 /* Manga.m */; };
 		633E697317BFD16D00477040 /* Manga.m in Sources */ = {isa = PBXBuildFile; fileRef = 633E697117BFD16D00477040 /* Manga.m */; };
+		633E697617C257DF00477040 /* CompareCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 633E697517C257DF00477040 /* CompareCell.m */; };
+		633E697717C257E000477040 /* CompareCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 633E697517C257DF00477040 /* CompareCell.m */; };
+		633E697917C257F800477040 /* CompareCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 633E697817C257F800477040 /* CompareCell.xib */; };
+		633E697A17C257F800477040 /* CompareCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 633E697817C257F800477040 /* CompareCell.xib */; };
 		63461A0C1777F4700053652C /* MangaDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63461A0B1777F4700053652C /* MangaDetailsViewController.m */; };
 		63461A0D1777F4700053652C /* MangaDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63461A0B1777F4700053652C /* MangaDetailsViewController.m */; };
 		63461A101777F8A20053652C /* MangaUserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63461A0F1777F8A20053652C /* MangaUserInfoViewController.m */; };
@@ -302,6 +306,8 @@
 		63BEA7491761A14400432BED /* AniListScoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63BEA7471761A14400432BED /* AniListScoreView.m */; };
 		63BEA74D176213B600432BED /* RRSGlowLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 63BEA74C176213B600432BED /* RRSGlowLabel.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		63BEA74E176213B600432BED /* RRSGlowLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 63BEA74C176213B600432BED /* RRSGlowLabel.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		63BFB1D917CB876B0041BEA1 /* ImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 63BFB1D817CB876B0041BEA1 /* ImageManager.m */; };
+		63BFB1DA17CB876B0041BEA1 /* ImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 63BFB1D817CB876B0041BEA1 /* ImageManager.m */; };
 		63C063A817B5F735009C4FFE /* intro_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 63C063A617B5F735009C4FFE /* intro_background.png */; };
 		63C063A917B5F735009C4FFE /* intro_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 63C063A617B5F735009C4FFE /* intro_background.png */; };
 		63C063AA17B5F735009C4FFE /* intro_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63C063A717B5F735009C4FFE /* intro_background@2x.png */; };
@@ -442,6 +448,9 @@
 		633E696D17BFC32600477040 /* FriendMangaService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FriendMangaService.m; path = "Core Data/FriendMangaService.m"; sourceTree = "<group>"; };
 		633E697017BFD16D00477040 /* Manga.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Manga.h; path = "Core Data/Manga.h"; sourceTree = "<group>"; };
 		633E697117BFD16D00477040 /* Manga.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Manga.m; path = "Core Data/Manga.m"; sourceTree = "<group>"; };
+		633E697417C257DF00477040 /* CompareCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompareCell.h; path = Views/CompareCell.h; sourceTree = "<group>"; };
+		633E697517C257DF00477040 /* CompareCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CompareCell.m; path = Views/CompareCell.m; sourceTree = "<group>"; };
+		633E697817C257F800477040 /* CompareCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CompareCell.xib; path = Views/CompareCell.xib; sourceTree = "<group>"; };
 		63461A0A1777F4700053652C /* MangaDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MangaDetailsViewController.h; sourceTree = "<group>"; };
 		63461A0B1777F4700053652C /* MangaDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MangaDetailsViewController.m; sourceTree = "<group>"; };
 		63461A0E1777F8A20053652C /* MangaUserInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MangaUserInfoViewController.h; sourceTree = "<group>"; };
@@ -618,6 +627,8 @@
 		63BEA7471761A14400432BED /* AniListScoreView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AniListScoreView.m; path = Views/AniListScoreView.m; sourceTree = "<group>"; };
 		63BEA74B176213B600432BED /* RRSGlowLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RRSGlowLabel.h; sourceTree = "<group>"; };
 		63BEA74C176213B600432BED /* RRSGlowLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RRSGlowLabel.m; sourceTree = "<group>"; };
+		63BFB1D717CB876B0041BEA1 /* ImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageManager.h; path = Classes/ImageManager.h; sourceTree = "<group>"; };
+		63BFB1D817CB876B0041BEA1 /* ImageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageManager.m; path = Classes/ImageManager.m; sourceTree = "<group>"; };
 		63C063A617B5F735009C4FFE /* intro_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = intro_background.png; sourceTree = "<group>"; };
 		63C063A717B5F735009C4FFE /* intro_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "intro_background@2x.png"; sourceTree = "<group>"; };
 		63C063B017B67C51009C4FFE /* FriendAnime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FriendAnime.h; path = "Core Data/FriendAnime.h"; sourceTree = "<group>"; };
@@ -865,6 +876,8 @@
 				63894CC0176A9C05007D2D05 /* UserProfile.m */,
 				63B551121792F0B1001D74A3 /* Settings.h */,
 				63B551131792F0B1001D74A3 /* Settings.m */,
+				63BFB1D717CB876B0041BEA1 /* ImageManager.h */,
+				63BFB1D817CB876B0041BEA1 /* ImageManager.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -971,6 +984,9 @@
 				638E6B1C17A7FD1F00A35FDB /* AniListStatCell.h */,
 				638E6B1D17A7FD1F00A35FDB /* AniListStatCell.m */,
 				638E6B2017A7FD2E00A35FDB /* AniListStatCell.xib */,
+				633E697417C257DF00477040 /* CompareCell.h */,
+				633E697517C257DF00477040 /* CompareCell.m */,
+				633E697817C257F800477040 /* CompareCell.xib */,
 			);
 			name = "Table Cells";
 			sourceTree = "<group>";
@@ -1381,6 +1397,7 @@
 				630E0FE01768E9980061110A /* minus.png in Resources */,
 				630E0FE21768E9980061110A /* minus@2x.png in Resources */,
 				6324CEB41799793400B308B0 /* whiteArrow.png in Resources */,
+				633E697917C257F800477040 /* CompareCell.xib in Resources */,
 				63C063BD17B67FD0009C4FFE /* FriendDetailViewController.xib in Resources */,
 				63D8791F17A20D8E002ACA13 /* white_bg_pressed.png in Resources */,
 				63C063A817B5F735009C4FFE /* intro_background.png in Resources */,
@@ -1443,6 +1460,7 @@
 				636F86AB175BA037007E1FB6 /* header_bg.png in Resources */,
 				636F86AD175BA037007E1FB6 /* header_bg@2x.png in Resources */,
 				630E0FE11768E9980061110A /* minus.png in Resources */,
+				633E697A17C257F800477040 /* CompareCell.xib in Resources */,
 				6301D94E175D66AF00163160 /* AniListSummaryViewController.xib in Resources */,
 				6301D94F175D6F1A00163160 /* MenuViewController.xib in Resources */,
 				6301D950175D6F1A00163160 /* AniListViewController.xib in Resources */,
@@ -1525,6 +1543,7 @@
 				632F438A171CDA0000A5B43A /* AnimeCell.m in Sources */,
 				632F438D171CDA0E00A5B43A /* MangaCell.m in Sources */,
 				632F439B171CDDED00A5B43A /* AniListViewController.m in Sources */,
+				63BFB1D917CB876B0041BEA1 /* ImageManager.m in Sources */,
 				63C8CD6D179A441E003BB80C /* AniListMiniCell.m in Sources */,
 				632F43A1171CDE2100A5B43A /* AniListTableView.m in Sources */,
 				632F43A4171CDE2F00A5B43A /* AnimeTableView.m in Sources */,
@@ -1542,6 +1561,7 @@
 				637CF6EC175986840009ADF3 /* NSObject+AniList.m in Sources */,
 				633BBF6F17B1358400AE573D /* FriendsViewController.m in Sources */,
 				636F864C175A5F49007E1FB6 /* SWRevealViewController.m in Sources */,
+				633E697617C257DF00477040 /* CompareCell.m in Sources */,
 				636F8660175A5F53007E1FB6 /* AFHTTPClient.m in Sources */,
 				636F8662175A5F53007E1FB6 /* AFHTTPRequestOperation.m in Sources */,
 				636F8664175A5F53007E1FB6 /* AFImageRequestOperation.m in Sources */,
@@ -1636,6 +1656,7 @@
 				636F866F175A5F53007E1FB6 /* AFXMLRequestOperation.m in Sources */,
 				636F8671175A5F53007E1FB6 /* UIImageView+AFNetworking.m in Sources */,
 				638E6B1817A7F54D00A35FDB /* SettingsCell.m in Sources */,
+				63BFB1DA17CB876B0041BEA1 /* ImageManager.m in Sources */,
 				636F8672175A5F5E007E1FB6 /* SWRevealViewController.m in Sources */,
 				636F8677175A7AB8007E1FB6 /* XMLReader.m in Sources */,
 				636F867B175A7D17007E1FB6 /* MALUserClient.m in Sources */,
@@ -1686,6 +1707,7 @@
 				63C063BC17B67FD0009C4FFE /* FriendDetailViewController.m in Sources */,
 				63047A4317656CE10039D795 /* AniListDatePickerView.m in Sources */,
 				6331027C176605DF00097658 /* UIColor+AniList.m in Sources */,
+				633E697717C257E000477040 /* CompareCell.m in Sources */,
 				63EFEC3E176966B8009CEAB3 /* UMALHTTPClient.m in Sources */,
 				63894CC2176A9C05007D2D05 /* UserProfile.m in Sources */,
 				63894CC7176A9E37007D2D05 /* LoginViewController.m in Sources */,

@@ -130,6 +130,9 @@
 }
 
 - (NSPredicate *)predicate {
+#warning - may have to create FriendAnime entities for the current user in order to compare.
+    // For comparing, just remove user predicate to get all anime.
+    
     if(self.animeButton.selected) {
         return [NSPredicate predicateWithFormat:@"watched_status < 7 && user == %@", self.friend];
     }
@@ -146,29 +149,23 @@
     double delayInSeconds = 0.5f;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        [[MALHTTPClient sharedClient] getAnimeListForUser:self.friend.username
-                                             initialFetch:YES
-                                                  success:^(NSURLRequest *operation, id response) {
-                                                      ALLog(@"Got dat list!");
-                                                      //                                                  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                                                      [AnimeService addAnimeList:(NSDictionary *)response forFriend:self.friend];
-                                                      //                                                  });
-                                                  }
-                                                  failure:^(NSURLRequest *operation, NSError *error) {
-                                                      ALLog(@"Couldn't fetch list!");
-                                                  }];
+        [[MALHTTPClient sharedClient] getAnimeListForUser:self.friend.username initialFetch:YES success:^(NSURLRequest *operation, id response) {
+            ALLog(@"Got dat list!");
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                [AnimeService addAnimeList:(NSDictionary *)response forFriend:self.friend];
+            });
+        } failure:^(NSURLRequest *operation, NSError *error) {
+            ALLog(@"Couldn't fetch list!");
+        }];
         
-        [[MALHTTPClient sharedClient] getMangaListForUser:self.friend.username
-                                             initialFetch:YES
-                                                  success:^(NSURLRequest *operation, id response) {
-                                                      ALLog(@"Got dat list!");
-                                                      //                                                  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                                                      [MangaService addMangaList:(NSDictionary *)response forFriend:self.friend];
-                                                      //                                                  });
-                                                  }
-                                                  failure:^(NSURLRequest *operation, NSError *error) {
-                                                      ALLog(@"Couldn't fetch list!");
-                                                  }];
+        [[MALHTTPClient sharedClient] getMangaListForUser:self.friend.username initialFetch:YES success:^(NSURLRequest *operation, id response) {
+            ALLog(@"Got dat list!");
+//            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                [MangaService addMangaList:(NSDictionary *)response forFriend:self.friend];
+//            });
+        } failure:^(NSURLRequest *operation, NSError *error) {
+            ALLog(@"Couldn't fetch list!");
+        }];
     });
 }
 
