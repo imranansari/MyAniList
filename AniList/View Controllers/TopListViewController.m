@@ -18,6 +18,8 @@
 #import "AnimeService.h"
 #import "MangaService.h"
 
+#define MAX_ATTEMPTS 5
+
 @interface TopListViewController ()
 @property (nonatomic, copy) NSArray *sectionHeaders;
 @property (nonatomic, strong) NSMutableArray *topItems;
@@ -25,6 +27,7 @@
 @property (nonatomic, weak) IBOutlet AniListTableView *tableView;
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView *indicator;
 @property (nonatomic, assign) int currentPage;
+@property (nonatomic, assign) int attempts;
 @end
 
 @implementation TopListViewController
@@ -62,9 +65,10 @@
 static BOOL fetching = NO;
 
 - (void)fetchTopItemsAtPage:(NSNumber *)page {
-    if(!fetching) {
+    if(!fetching && self.attempts < MAX_ATTEMPTS) {
         ALLog(@"Fetching entity for page: %d", [page intValue]);
         fetching = YES;
+        self.attempts++;
         
         if([self.entityName isEqualToString:@"Anime"]) {
             [[MALHTTPClient sharedClient] getTopAnimeForType:AnimeTypeTV atPage:page success:^(id operation, id response) {

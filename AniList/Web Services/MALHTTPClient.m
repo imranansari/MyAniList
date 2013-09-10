@@ -231,7 +231,19 @@
                                        success(operation, responseObject);
                                    }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       failure(operation, error);
+                                       // Falling back to the official API.
+                                       Anime *anime = [AnimeService animeForID:animeID];
+                                       [[MALHTTPClient sharedClient] searchForAnimeWithQuery:anime.title success:^(id operation, id response) {
+                                           dispatch_async(dispatch_get_main_queue(), ^{
+                                               if([response isKindOfClass:[NSArray class]] && ((NSArray *)response).count > 0) {
+                                                   success(operation, (NSArray *)response[0]);
+                                               }
+                                           });
+                                       } failure:^(id operation, NSError *error) {
+                                           dispatch_async(dispatch_get_main_queue(), ^{
+                                               failure(operation, error);
+                                           });
+                                       }];
                                    }];
 }
 
@@ -470,13 +482,25 @@
     
     [[UMALHTTPClient sharedClient] authenticate];
     [[UMALHTTPClient sharedClient] getPath:path
-                               parameters:parameters
-                                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                      success(operation, responseObject);
-                                  }
-                                  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                      failure(operation, error);
-                                  }];
+                                parameters:parameters
+                                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                       success(operation, responseObject);
+                                   }
+                                   failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                       // Falling back to the official API.
+                                       Manga *manga = [MangaService mangaForID:mangaID];
+                                       [[MALHTTPClient sharedClient] searchForMangaWithQuery:manga.title success:^(id operation, id response) {
+                                           dispatch_async(dispatch_get_main_queue(), ^{
+                                               if([response isKindOfClass:[NSArray class]] && ((NSArray *)response).count > 0) {
+                                                   success(operation, (NSArray *)response[0]);
+                                               }
+                                           });
+                                       } failure:^(id operation, NSError *error) {
+                                           dispatch_async(dispatch_get_main_queue(), ^{
+                                               failure(operation, error);
+                                           });
+                                       }];
+                                   }];
 }
 
 - (void)addMangaToListWithID:(NSNumber *)mangaID success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure {

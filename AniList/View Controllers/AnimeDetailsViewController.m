@@ -67,10 +67,25 @@
 #pragma mark - UIView Methods
 
 - (void)displayDetailsViewAnimated:(BOOL)animated {
-    self.score.text = [NSString stringWithFormat:@"Score: %0.02f", [self.anime.average_score doubleValue]];
-    self.totalPeopleScored.text = [NSString stringWithFormat:@"(by %d people)", [self.anime.average_count intValue]];
-    self.rank.text = [NSString stringWithFormat:@"Rank: #%d", [self.anime.rank intValue]];
-    self.popularity.text = [NSString stringWithFormat:@"Popularity: #%d", [self.anime.popularity_rank intValue]];
+    if([self.anime.average_score doubleValue] != 0)
+        self.score.text = [NSString stringWithFormat:@"Score: %0.02f", [self.anime.average_score doubleValue]];
+    else self.score.hidden = YES;
+    
+    if([self.anime.average_count intValue] != 0)
+        self.totalPeopleScored.text = [NSString stringWithFormat:@"(by %d people)", [self.anime.average_count intValue]];
+    else self.totalPeopleScored.hidden = YES;
+    
+    if([self.anime.rank intValue] != 0)
+        self.rank.text = [NSString stringWithFormat:@"Rank: #%d", [self.anime.rank intValue]];
+    else self.rank.hidden = YES;
+    
+    if([self.anime.popularity_rank intValue] != 0)
+        self.popularity.text = [NSString stringWithFormat:@"Popularity: #%d", [self.anime.popularity_rank intValue]];
+    else self.popularity.hidden = YES;
+    
+    if(self.popularity.hidden && self.rank.hidden && self.totalPeopleScored.hidden) {
+        self.score.frame = self.popularity.frame;
+    }
     
     [super displayDetailsViewAnimated:animated];
 }
