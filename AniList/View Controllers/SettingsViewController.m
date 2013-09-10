@@ -178,7 +178,7 @@
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             [[MALHTTPClient sharedClient] getAnimeDetailsForID:anime.anime_id success:^(id operation, id response) {
                 counter++;
-                [AnimeService addAnime:response fromList:NO];
+                [AnimeService addAnime:response];
                 
                 ALLog(@"Recieved extra details for '%@.'", anime.title);
                 ALLog(@"Progress: %0.0f completed", (counter / total) * 100);
@@ -204,7 +204,7 @@
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             [[MALHTTPClient sharedClient] getMangaDetailsForID:manga.manga_id success:^(id operation, id response) {
                 counter++;
-                [MangaService addManga:response fromList:NO];
+                [MangaService addManga:response];
                 
                 ALLog(@"Recieved extra details for '%@.'", manga.title);
                 ALLog(@"Progress: %0.0f completed", (counter / total) * 100);

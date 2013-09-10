@@ -213,6 +213,8 @@
                                    }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        failure(operation, error);
+                                       
+#warning - need to fall back to the official API here.
                                    }];
 }
 
@@ -232,6 +234,7 @@
                                    }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        failure(operation, error);
+#warning - need to fall back to the official API here.
                                    }];
 }
 

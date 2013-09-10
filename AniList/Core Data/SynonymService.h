@@ -12,11 +12,11 @@
 
 @interface SynonymService : NSObject
 
-+ (Synonym *)addSynonym:(NSString *)title toAnime:(Anime *)anime;
-+ (Synonym *)addSynonym:(NSString *)title toManga:(Manga *)manga;
-+ (Synonym *)addEnglishTitle:(NSString *)englishTitle toAnime:(Anime *)anime;
-+ (Synonym *)addEnglishTitle:(NSString *)englishTitle toManga:(Manga *)manga;
-+ (Synonym *)addJapaneseTitle:(NSString *)japaneseTitle toAnime:(Anime *)anime;
-+ (Synonym *)addJapaneseTitle:(NSString *)japaneseTitle toManga:(Manga *)manga;
++ (Synonym *)addSynonym:(NSString *)title toAnime:(Anime *)anime withContext:(NSManagedObjectContext *)context;
++ (Synonym *)addSynonym:(NSString *)title toManga:(Manga *)manga withContext:(NSManagedObjectContext *)context;
++ (Synonym *)addEnglishTitle:(NSString *)englishTitle toAnime:(Anime *)anime withContext:(NSManagedObjectContext *)context;
++ (Synonym *)addEnglishTitle:(NSString *)englishTitle toManga:(Manga *)manga withContext:(NSManagedObjectContext *)context;
++ (Synonym *)addJapaneseTitle:(NSString *)japaneseTitle toAnime:(Anime *)anime withContext:(NSManagedObjectContext *)context;
++ (Synonym *)addJapaneseTitle:(NSString *)japaneseTitle toManga:(Manga *)manga withContext:(NSManagedObjectContext *)context;
 
 @end

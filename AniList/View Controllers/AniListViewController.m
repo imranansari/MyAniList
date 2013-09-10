@@ -10,6 +10,7 @@
 #import "AniListAppDelegate.h"
 #import "CRTransitionLabel.h"
 #import "AniListCell.h"
+#import "Anime.h"
 
 @interface AniListViewController ()
 @property (nonatomic, weak) IBOutlet CRTransitionLabel *topSectionLabel;
@@ -199,7 +200,17 @@
 #pragma mark - Table view data source
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    if(self.viewTop || self.viewPopular) return nil;
+    
+    ALLog(@"sectionindextitles: %@", [self.fetchedResultsController sectionIndexTitles]);
+    
+    for(int i = 0; i < [self.tableView numberOfSections]; i++) {
+        ALLog(@"Section %d: %d", i, [self.tableView numberOfRowsInSection:i]);
+        for(int j = 0; j < [self.tableView numberOfRowsInSection:i]; j++) {
+            Anime *anime = [self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:j inSection:i]];
+            ALLog(@"anime column: %d", [anime.column intValue]);
+                            
+        }
+    }
     
     NSNumber *headerSection = [self.fetchedResultsController sectionIndexTitles][section];
     NSString *count = [NSString stringWithFormat:@"%d", [self.tableView numberOfRowsInSection:section]];
@@ -308,12 +319,15 @@
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
            atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
+    
     switch(type) {
         case NSFetchedResultsChangeInsert:
+            ALLog(@"inserting section %d", sectionIndex);
             [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
             break;
             
         case NSFetchedResultsChangeDelete:
+            ALLog(@"deleting section %d", sectionIndex);
             [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
             break;
     }

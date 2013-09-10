@@ -15,12 +15,14 @@
 
 + (NSArray *)allManga;
 + (Manga *)mangaForID:(NSNumber *)ID;
++ (Manga *)mangaForID:(NSNumber *)ID withMOC:(NSManagedObjectContext *)context;
 + (BOOL)addMangaList:(NSDictionary *)data;
 + (BOOL)addMangaList:(NSDictionary *)data forFriend:(Friend *)friend;
-+ (Manga *)addManga:(NSDictionary *)data fromRelatedAnime:(Anime *)anime;
++ (Manga *)addManga:(NSDictionary *)data fromRelatedAnime:(Anime *)anime withContext:(NSManagedObjectContext *)context;
 + (BOOL)addMangaListFromSearch:(NSArray *)data;
-+ (Manga *)addManga:(NSDictionary *)data fromList:(BOOL)fromList;
-+ (Manga *)editManga:(NSDictionary *)data fromList:(BOOL)fromList;
++ (Manga *)addManga:(NSDictionary *)data;
++ (Manga *)addManga:(NSDictionary *)data withMOC:(NSManagedObjectContext *)context;
++ (Manga *)editManga:(NSDictionary *)data withMOC:(NSManagedObjectContext *)context withObject:(Manga *)manga;
 + (void)deleteManga:(Manga *)manga;
 
 + (NSString *)mangaToXML:(NSNumber *)mangaID;

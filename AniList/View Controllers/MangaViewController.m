@@ -50,7 +50,7 @@
     [self adjustTitle];
     
     [[MALHTTPClient sharedClient] getMangaDetailsForID:self.manga.manga_id success:^(NSURLRequest *operation, id response) {
-        [MangaService addManga:response fromList:NO];
+        [MangaService addManga:response];
         [[NSNotificationCenter defaultCenter] postNotificationName:kMangaDidUpdate object:@(YES)];
     } failure:^(NSURLRequest *operation, NSError *error) {
         [[NSNotificationCenter defaultCenter] postNotificationName:kMangaDidUpdate object:@(NO)];

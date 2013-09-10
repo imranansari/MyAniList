@@ -17,7 +17,11 @@
 @implementation GenreService
 
 + (NSArray *)animeWithGenre:(NSString *)genreName {
-    Genre *genre = [GenreService genreWithName:genreName];
+    return [self animeWithGenre:genreName withContext:[GenreService managedObjectContext]];
+}
+
++ (NSArray *)animeWithGenre:(NSString *)genreName withContext:(NSManagedObjectContext *)context {
+    Genre *genre = [GenreService genreWithName:genreName withContext:context];
     if(genre) {
         return [genre.anime allObjects];
     }
@@ -25,7 +29,11 @@
 }
 
 + (NSArray *)mangaWithGenre:(NSString *)genreName {
-    Genre *genre = [GenreService genreWithName:genreName];
+    return [self mangaWithGenre:genreName withContext:[GenreService managedObjectContext]];
+}
+
++ (NSArray *)mangaWithGenre:(NSString *)genreName withContext:(NSManagedObjectContext *)context {
+    Genre *genre = [GenreService genreWithName:genreName withContext:context];
     if(genre) {
         return [genre.manga allObjects];
     }
@@ -33,15 +41,15 @@
 }
 
 
-+ (Genre *)genreWithName:(NSString *)name {
++ (Genre *)genreWithName:(NSString *)name withContext:(NSManagedObjectContext *)context {
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITY_NAME inManagedObjectContext:[GenreService managedObjectContext]];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITY_NAME inManagedObjectContext:context];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name == %@", name];
     request.entity = entity;
     request.predicate = predicate;
     
     NSError *error = nil;
-    NSArray *results = [[GenreService managedObjectContext] executeFetchRequest:request error:&error];
+    NSArray *results = [context executeFetchRequest:request error:&error];
     
     if(results.count) {
         return (Genre *)results[0];
@@ -49,7 +57,7 @@
     else return nil;
 }
 
-+ (Genre *)addGenre:(NSString *)title toAnime:(Anime *)anime {
++ (Genre *)addGenre:(NSString *)title toAnime:(Anime *)anime withContext:(NSManagedObjectContext *)context {
     
     // Before adding, check and make sure we don't already have it.
     for(Genre *genre in anime.genres) {
@@ -61,10 +69,10 @@
     
     
     // If we don't own it, maybe we've already created one? Fetch in the database for the genre and check.
-    Genre *genre = [GenreService genreWithName:title];
+    Genre *genre = [GenreService genreWithName:title withContext:context];
     if(!genre) {
         ALLog(@"Genre '%@' for '%@' is new, adding to the database.", title, anime.title);
-        genre = [NSEntityDescription insertNewObjectForEntityForName:ENTITY_NAME inManagedObjectContext:[GenreService managedObjectContext]];
+        genre = [NSEntityDescription insertNewObjectForEntityForName:ENTITY_NAME inManagedObjectContext:context];
         genre.name = title;
     }
     
@@ -73,7 +81,7 @@
     return genre;
 }
 
-+ (Genre *)addGenre:(NSString *)title toManga:(Manga *)manga {
++ (Genre *)addGenre:(NSString *)title toManga:(Manga *)manga withContext:(NSManagedObjectContext *)context {
     
     // Before adding, check and make sure we don't already have it.
     for(Genre *genre in manga.genres) {
@@ -85,7 +93,7 @@
     
     ALLog(@"Genre '%@' for '%@' is new, adding to the database.", title, manga.title);
     
-    Genre *genre = [NSEntityDescription insertNewObjectForEntityForName:ENTITY_NAME inManagedObjectContext:[GenreService managedObjectContext]];
+    Genre *genre = [NSEntityDescription insertNewObjectForEntityForName:ENTITY_NAME inManagedObjectContext:context];
     
     genre.name = title;
     
@@ -98,5 +106,6 @@
     AniListAppDelegate *delegate = (AniListAppDelegate *)[UIApplication sharedApplication].delegate;
     return delegate.managedObjectContext;
 }
+
 
 @end

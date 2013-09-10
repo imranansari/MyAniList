@@ -89,7 +89,7 @@ static BOOL fetching = NO;
                     ALLog(@"rank: %0.02f", [mutableTopAnime[@"rank"] floatValue]);
                     ALLog(@"score: %0.02f", [mutableTopAnime[@"members_score"] floatValue]);
                     
-                    Anime *anime = [AnimeService addAnime:[mutableTopAnime copy] fromList:NO];
+                    Anime *anime = [AnimeService addAnime:[mutableTopAnime copy]];
 
                     [self.topItems addObject:anime];
                     [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:(rank-1) inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
@@ -129,7 +129,7 @@ static BOOL fetching = NO;
                     mutableTopManga[@"rank"] = @(rank);
                     
                     rank++;
-                    Manga *manga = [MangaService addManga:[mutableTopManga copy] fromList:NO];
+                    Manga *manga = [MangaService addManga:[mutableTopManga copy]];
                     
                     [self.topItems addObject:manga];
                     [indexPaths addObject:[NSIndexPath indexPathForRow:(rank-1) inSection:0]];

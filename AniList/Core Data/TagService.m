@@ -17,7 +17,11 @@
 @implementation TagService
 
 + (NSArray *)animeWithTag:(NSString *)tagName {
-    Tag *tag = [TagService tagWithName:tagName];
+    return [self animeWithTag:tagName withContext:[TagService managedObjectContext]];
+}
+
++ (NSArray *)animeWithTag:(NSString *)tagName withContext:(NSManagedObjectContext *)context {
+    Tag *tag = [TagService tagWithName:tagName withContext:context];
     if(tag) {
         return [tag.anime allObjects];
     }
@@ -25,7 +29,11 @@
 }
 
 + (NSArray *)mangaWithTag:(NSString *)tagName {
-    Tag *tag = [TagService tagWithName:tagName];
+    return [self mangaWithTag:tagName withContext:[TagService managedObjectContext]];
+}
+
++ (NSArray *)mangaWithTag:(NSString *)tagName withContext:(NSManagedObjectContext *)context {
+    Tag *tag = [TagService tagWithName:tagName withContext:context];
     if(tag) {
         return [tag.manga allObjects];
     }
@@ -33,14 +41,18 @@
 }
 
 + (Tag *)tagWithName:(NSString *)name {
+    return [self tagWithName:name withContext:[TagService managedObjectContext]];
+}
+
++ (Tag *)tagWithName:(NSString *)name withContext:(NSManagedObjectContext *)context {
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITY_NAME inManagedObjectContext:[TagService managedObjectContext]];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITY_NAME inManagedObjectContext:context];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name == %@", name];
     request.entity = entity;
     request.predicate = predicate;
     
     NSError *error = nil;
-    NSArray *results = [[TagService managedObjectContext] executeFetchRequest:request error:&error];
+    NSArray *results = [context executeFetchRequest:request error:&error];
     
     if(results.count) {
         return (Tag *)results[0];
@@ -49,6 +61,10 @@
 }
 
 + (Tag *)addTag:(NSString *)title toAnime:(Anime *)anime {
+    return [self addTag:title toAnime:anime withContext:[TagService managedObjectContext]];
+}
+
++ (Tag *)addTag:(NSString *)title toAnime:(Anime *)anime withContext:(NSManagedObjectContext *)context {
     
     // Before adding, check and make sure we don't already have it.
     for(Tag *tag in anime.tags) {
@@ -60,10 +76,10 @@
     
     
     // If we don't own it, maybe we've already created one? Fetch in the database for the genre and check.
-    Tag *tag = [TagService tagWithName:title];
+    Tag *tag = [TagService tagWithName:title withContext:context];
     if(!tag) {
         ALLog(@"Tag '%@' for '%@' is new, adding to the database.", title, anime.title);
-        tag = [NSEntityDescription insertNewObjectForEntityForName:ENTITY_NAME inManagedObjectContext:[TagService managedObjectContext]];
+        tag = [NSEntityDescription insertNewObjectForEntityForName:ENTITY_NAME inManagedObjectContext:context];
         tag.name = title;
     }
     
@@ -74,6 +90,10 @@
 }
 
 + (Tag *)addTag:(NSString *)title toManga:(Manga *)manga {
+    return [self addTag:title toManga:manga withContext:[TagService managedObjectContext]];
+}
+
++ (Tag *)addTag:(NSString *)title toManga:(Manga *)manga withContext:(NSManagedObjectContext *)context {
     
     // Before adding, check and make sure we don't already have it.
     for(Tag *tag in manga.tags) {
@@ -84,10 +104,10 @@
     }
     
     // If we don't own it, maybe we've already created one? Fetch in the database for the genre and check.
-    Tag *tag = [TagService tagWithName:title];
+    Tag *tag = [TagService tagWithName:title withContext:context];
     if(!tag) {
         ALLog(@"Tag '%@' for '%@' is new, adding to the database.", title, manga.title);
-        tag = [NSEntityDescription insertNewObjectForEntityForName:ENTITY_NAME inManagedObjectContext:[TagService managedObjectContext]];
+        tag = [NSEntityDescription insertNewObjectForEntityForName:ENTITY_NAME inManagedObjectContext:context];
         tag.name = title;
     }
     

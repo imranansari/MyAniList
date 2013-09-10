@@ -24,8 +24,6 @@
 
 @end
 
-static NSArray *cachedAnimeList = nil;
-
 @implementation AnimeService
 
 /* Need to cover:
@@ -60,49 +58,36 @@ static NSArray *cachedAnimeList = nil;
 }
 
 + (Anime *)animeForID:(NSNumber *)ID {
-    return [self animeForID:ID fromCache:NO];
+    return [self animeForID:ID withMOC:[self childMOC]];
 }
 
-+ (Anime *)animeForID:(NSNumber *)ID fromCache:(BOOL)fromCache {
-    if(fromCache) {
-        if(!cachedAnimeList) {
-            NSFetchRequest *request = [[NSFetchRequest alloc] init];
-            NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITY_NAME inManagedObjectContext:[AnimeService managedObjectContext]];
-            request.entity = entity;
-            
-            NSError *error = nil;
-            cachedAnimeList = [[AnimeService managedObjectContext] executeFetchRequest:request error:&error];
-        }
-        
-        for(Anime *anime in cachedAnimeList) {
-            if([anime.anime_id intValue] == [ID intValue])
-                return anime;
-        }
-        
-        return nil;
++ (Anime *)animeForID:(NSNumber *)ID withMOC:(NSManagedObjectContext *)context {
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITY_NAME inManagedObjectContext:context];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"anime_id == %d", [ID intValue]];
+    request.entity = entity;
+    request.predicate = predicate;
+    request.fetchLimit = 1;
+    
+    NSError *error = nil;
+    NSArray *results = [context executeFetchRequest:request error:&error];
+    
+    if(results.count) {
+        return (Anime *)results[0];
     }
-    else {
-        NSFetchRequest *request = [[NSFetchRequest alloc] init];
-        NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITY_NAME inManagedObjectContext:[AnimeService managedObjectContext]];
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"anime_id == %d", [ID intValue]];
-        request.entity = entity;
-        request.predicate = predicate;
-        request.fetchLimit = 1;
-        
-        NSError *error = nil;
-        NSArray *results = [[AnimeService managedObjectContext] executeFetchRequest:request error:&error];
-        
-        if(results.count) {
-            return (Anime *)results[0];
-        }
-        else return nil;
-    }
+    else return nil;
 }
 
 + (BOOL)addAnimeListFromSearch:(NSArray *)data {
+    NSManagedObjectContext *context = [self childMOC];
     for(NSDictionary *result in data) {
-        [AnimeService addAnime:result fromList:NO];
+        [AnimeService addAnime:result withMOC:context];
     }
+    
+    [context save:nil];
+    [[AnimeService managedObjectContext] performBlock:^{
+        [[AnimeService managedObjectContext] save:nil];
+    }];
     
     return NO;
 }
@@ -112,6 +97,7 @@ static NSArray *cachedAnimeList = nil;
     NSDictionary *animeDetails = data[@"myanimelist"];
     NSArray *animes = animeDetails[@"anime"];
     NSDictionary *animeUserInfo = animeDetails[@"myinfo"];
+    NSManagedObjectContext *context = [self childMOC];
     
     // This is just one anime.
     if([animes isKindOfClass:[NSDictionary class]]) {
@@ -119,15 +105,32 @@ static NSArray *cachedAnimeList = nil;
         animes = @[soloAnime];
     }
     
-    cachedAnimeList = nil;
-    
     MVComputeTimeWithNameAndBlock((const char *)"animelist", ^{
         for(NSDictionary *animeItem in animes) {
             NSMutableDictionary *anime = [AnimeService createDictionaryForAnime:animeItem];
-            [AnimeService addAnime:anime fromList:YES];
+            [AnimeService addAnime:anime withMOC:context];
         }
         
+        __block NSError *error = nil;
+        
+        [context save:nil];
         [[AnimeService managedObjectContext] save:nil];
+//        
+//        [context performBlock:^{
+//            [context save:&error];
+//            if(error) {
+//                ALLog(@"An error occurred while saving the child: %@", error.localizedDescription);
+//            }
+//            error = nil;
+//            [[AnimeService managedObjectContext] performBlock:^{
+//                [[AnimeService managedObjectContext] save:&error];
+//                
+//                if(error) {
+//                    ALLog(@"An error occurred while saving the parent: %@", error.localizedDescription);
+//                }
+//            }];
+//        }];
+        
     });
     
     return NO;
@@ -143,6 +146,8 @@ static NSArray *cachedAnimeList = nil;
         NSDictionary *soloAnime = (NSDictionary *)animes;
         animes = @[soloAnime];
     }
+
+    NSManagedObjectContext *context = [self childMOC];
     
     MVComputeTimeWithNameAndBlock((const char *)"friend_animelist", ^{
         for(NSDictionary *animeItem in animes) {
@@ -157,7 +162,7 @@ static NSArray *cachedAnimeList = nil;
             [animeDictionary removeObjectForKey:kUserWatchedEpisodes];
             [animeDictionary removeObjectForKey:kUserWatchedStatus];
             
-            Anime *anime = [AnimeService addAnime:animeDictionary fromList:NO];
+            Anime *anime = [AnimeService addAnime:animeDictionary withMOC:context];
             FriendAnime *friendAnime = [FriendAnimeService addFriend:friend toAnime:anime];
             
             if(friendScore && ![friendScore isNull])
@@ -171,7 +176,10 @@ static NSArray *cachedAnimeList = nil;
             
         }
         
-        [[AnimeService managedObjectContext] save:nil];
+        [context save:nil];
+        [[AnimeService managedObjectContext] performBlock:^{
+            [[AnimeService managedObjectContext] save:nil];
+        }];
     });
     
     return NO;
@@ -235,8 +243,8 @@ static NSArray *cachedAnimeList = nil;
     return anime;
 }
 
-+ (Anime *)addAnime:(NSDictionary *)data fromRelatedManga:(Manga *)manga {
-    Anime *relatedAnime = [NSEntityDescription insertNewObjectForEntityForName:ENTITY_NAME inManagedObjectContext:[AnimeService managedObjectContext]];
++ (Anime *)addAnime:(NSDictionary *)data fromRelatedManga:(Manga *)manga withContext:(NSManagedObjectContext *)context {
+    Anime *relatedAnime = [NSEntityDescription insertNewObjectForEntityForName:ENTITY_NAME inManagedObjectContext:context];
     relatedAnime.anime_id = [data[@"anime_id"] isKindOfClass:[NSString class]] ? @([data[@"anime_id"] intValue]) : data[@"anime_id"];
     relatedAnime.title = data[kTitle];
     
@@ -245,16 +253,16 @@ static NSArray *cachedAnimeList = nil;
     return relatedAnime;
 }
 
-+ (Manga *)addMangaAdaptation:(NSDictionary *)data toAnime:(Anime *)anime {
-    Manga *mangaAdaptation = [MangaService mangaForID:data[@"manga_id"]];
++ (Manga *)addMangaAdaptation:(NSDictionary *)data toAnime:(Anime *)anime withContext:(NSManagedObjectContext *)context {
+    Manga *mangaAdaptation = [MangaService mangaForID:data[@"manga_id"] withMOC:context];
     
     if(mangaAdaptation) {
-        ALLog(@"Manga adaptation '%@' exists for '%@'.", mangaAdaptation.title, anime.title);
+        ALVLog(@"Manga adaptation '%@' exists for '%@'.", mangaAdaptation.title, anime.title);
     }
     else {
         // Add Manga here.
-        ALLog(@"Manga adaptation '%@' does not exist for '%@'. Adding to the database.", mangaAdaptation.title, anime.title);
-        mangaAdaptation = [MangaService addManga:data fromRelatedAnime:anime];
+        ALVLog(@"Manga adaptation '%@' does not exist for '%@'. Adding to the database.", mangaAdaptation.title, anime.title);
+        mangaAdaptation = [MangaService addManga:data fromRelatedAnime:anime withContext:context];
     }
     
     [anime addManga_adaptationsObject:mangaAdaptation];
@@ -262,15 +270,15 @@ static NSArray *cachedAnimeList = nil;
     return mangaAdaptation;
 }
 
-+ (Anime *)addRelatedAnime:(NSDictionary *)data toAnime:(Anime *)anime relationType:(AnimeRelation)relationType {
-    Anime *relatedAnime = [AnimeService animeForID:data[@"anime_id"] fromCache:NO];
++ (Anime *)addRelatedAnime:(NSDictionary *)data toAnime:(Anime *)anime relationType:(AnimeRelation)relationType withContext:(NSManagedObjectContext *)context {
+    Anime *relatedAnime = [AnimeService animeForID:data[@"anime_id"] withMOC:context];
     
     if(relatedAnime) {
-        ALLog(@"Related anime exists.");
+        ALVLog(@"Related anime exists.");
     }
     else {
-        ALLog(@"Related anime does not exist. Creating.");
-        relatedAnime = [NSEntityDescription insertNewObjectForEntityForName:ENTITY_NAME inManagedObjectContext:[AnimeService managedObjectContext]];
+        ALVLog(@"Related anime does not exist. Creating.");
+        relatedAnime = [NSEntityDescription insertNewObjectForEntityForName:ENTITY_NAME inManagedObjectContext:context];
         relatedAnime.anime_id = [data[@"anime_id"] isKindOfClass:[NSString class]] ? @([data[@"anime_id"] intValue]) : data[@"anime_id"];
         relatedAnime.title = data[kTitle];
     }
@@ -309,17 +317,25 @@ static NSArray *cachedAnimeList = nil;
     return relatedAnime;
 }
 
-+ (Anime *)addAnime:(NSDictionary *)data fromList:(BOOL)fromList {
-    Anime *existingAnime = [AnimeService animeForID:data[kID] fromCache:fromList];
++ (Anime *)addAnime:(NSDictionary *)data {
+    NSManagedObjectContext *context = [self childMOC];
+    Anime *anime = [self addAnime:data withMOC:[self childMOC]];
+    [context save:nil];
+    
+    return anime;
+}
+
++ (Anime *)addAnime:(NSDictionary *)data withMOC:(NSManagedObjectContext *)context {
+    Anime *existingAnime = [AnimeService animeForID:data[kID] withMOC:context];
     
     if(existingAnime) {
         ALVLog(@"Anime exists. Updating details.");
-        return [AnimeService editAnime:data fromList:fromList withObject:existingAnime];
+        return [AnimeService editAnime:data withMOC:context withObject:existingAnime];
     }
     
     NSError *error = nil;
     
-    Anime *anime = [NSEntityDescription insertNewObjectForEntityForName:ENTITY_NAME inManagedObjectContext:[AnimeService managedObjectContext]];
+    Anime *anime = [NSEntityDescription insertNewObjectForEntityForName:ENTITY_NAME inManagedObjectContext:context];
     
     anime.anime_id = [data[kID] isKindOfClass:[NSString class]] ? @([data[kID] intValue]) : data[kID];
     anime.title = data[kTitle];
@@ -329,19 +345,19 @@ static NSArray *cachedAnimeList = nil;
     NSDictionary *otherTitles = data[kOtherTitles];
     if(otherTitles[kSynonyms] && ![otherTitles[kSynonyms] isNull]) {
         for(NSString *synonym in otherTitles[kSynonyms]) {
-            [SynonymService addSynonym:synonym toAnime:anime];
+            [SynonymService addSynonym:synonym toAnime:anime withContext:context];
         }
     }
     
     if(otherTitles[kEnglishTitles] && ![otherTitles[kEnglishTitles] isNull]) {
         for(NSString *englishTitle in otherTitles[kEnglishTitles]) {
-            [SynonymService addEnglishTitle:englishTitle toAnime:anime];
+            [SynonymService addEnglishTitle:englishTitle toAnime:anime withContext:context];
         }
     }
     
     if(otherTitles[kJapaneseTitles] && ![otherTitles[kJapaneseTitles] isNull]) {
         for(NSString *japaneseTitle in otherTitles[kJapaneseTitles]) {
-            [SynonymService addJapaneseTitle:japaneseTitle toAnime:anime];
+            [SynonymService addJapaneseTitle:japaneseTitle toAnime:anime withContext:context];
         }
     }
     
@@ -398,22 +414,18 @@ static NSArray *cachedAnimeList = nil;
     if(data[kUserWatchedStatus] && ![data[kUserWatchedStatus] isNull])
         anime.watched_status = @([Anime animeWatchedStatusForValue:data[kUserWatchedStatus]]);
     
+    ALLog(@"Watched status: %d (c: %d), (%@)", [anime.watched_status intValue], [anime.column intValue], anime.title);
+    
     if(data[kUserWatchedEpisodes] && ![data[kUserWatchedEpisodes] isNull])
         anime.current_episode = data[kUserWatchedEpisodes];
     
     if(data[kUserScore] && ![data[kUserScore] isNull])
         anime.user_score = [data[kUserScore] intValue] == 0 ? @(-1) : [data[kUserScore] isKindOfClass:[NSString class]] ? @([data[kUserScore] intValue]) : data[kUserScore];
     
-    if(!fromList)
-        [[AnimeService managedObjectContext] save:&error];
-    
-    if(!error) {
-        return anime;
-    }
-    else return nil;
+    return anime;
 }
 
-+ (Anime *)editAnime:(NSDictionary *)data fromList:(BOOL)fromList withObject:(Anime *)anime {
++ (Anime *)editAnime:(NSDictionary *)data withMOC:(NSManagedObjectContext *)context withObject:(Anime *)anime {
     if(!anime) {
         ALLog(@"Anime does not exist; unable to edit!");
         return nil;
@@ -427,33 +439,33 @@ static NSArray *cachedAnimeList = nil;
     NSDictionary *otherTitles = data[kOtherTitles];
     if(otherTitles[kSynonyms] && ![otherTitles[kSynonyms] isNull]) {
         for(NSString *synonym in otherTitles[kSynonyms]) {
-            [SynonymService addSynonym:synonym toAnime:anime];
+            [SynonymService addSynonym:synonym toAnime:anime withContext:context];
         }
     }
     
     if(otherTitles[kEnglishTitles] && ![otherTitles[kEnglishTitles] isNull]) {
         for(NSString *englishTitle in otherTitles[kEnglishTitles]) {
-            [SynonymService addEnglishTitle:englishTitle toAnime:anime];
+            [SynonymService addEnglishTitle:englishTitle toAnime:anime withContext:context];
         }
     }
     
     if(otherTitles[kJapaneseTitles] && ![otherTitles[kJapaneseTitles] isNull]) {
         for(NSString *japaneseTitle in otherTitles[kJapaneseTitles]) {
-            [SynonymService addJapaneseTitle:japaneseTitle toAnime:anime];
+            [SynonymService addJapaneseTitle:japaneseTitle toAnime:anime withContext:context];
         }
     }
     
     // Genres
     if(data[kGenres] && ![data[kGenres] isNull]) {
         for(NSString *genre in data[kGenres]) {
-            [GenreService addGenre:genre toAnime:anime];
+            [GenreService addGenre:genre toAnime:anime withContext:context];
         }
     }
     
     // Tags
     if(data[kTag] && ![data[kTag] isNull]) {
         for(NSString *tag in data[kTag]) {
-            [TagService addTag:tag toAnime:anime];
+            [TagService addTag:tag toAnime:anime withContext:context];
         }
     }
 
@@ -463,7 +475,7 @@ static NSArray *cachedAnimeList = nil;
     if(data[kPopularityRank] && ![data[kPopularityRank] isNull])
         anime.popularity_rank = data[kPopularityRank];
     
-    [AnimeService parseRelatedInformation:data forAnime:anime];
+    [AnimeService parseRelatedInformation:data forAnime:anime withContext:context];
     
     if(data[kImageURL] && ![data[kImageURL] isNull])
         anime.image_url = data[kImageURL];
@@ -531,9 +543,6 @@ static NSArray *cachedAnimeList = nil;
             anime.user_score = ([data[kUserScore] isNull] || [data[kUserScore] intValue] == 0) ? @(-1) : [data[kUserScore] isKindOfClass:[NSString class]] ? @([data[kUserScore] intValue]) : data[kUserScore];
     }
     
-    if(!fromList)
-        [[AnimeService managedObjectContext] save:&error];
-    
     if(!error) {
         return anime;
     }
@@ -546,22 +555,33 @@ static NSArray *cachedAnimeList = nil;
     return delegate.managedObjectContext;
 }
 
++ (NSManagedObjectContext *)childMOC {
+    AniListAppDelegate *delegate = (AniListAppDelegate *)[UIApplication sharedApplication].delegate;
+    NSManagedObjectContext *parentMOC = delegate.managedObjectContext;
+    
+    NSManagedObjectContext *childMOC = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+    
+    childMOC.parentContext = parentMOC;
+    
+    return childMOC;
+}
+
 #pragma mark - Data Conversion Methods
 
-+ (void)parseRelatedInformation:(NSDictionary *)data forAnime:(Anime *)anime {
++ (void)parseRelatedInformation:(NSDictionary *)data forAnime:(Anime *)anime withContext:(NSManagedObjectContext *)context {
     
     // Prequels
     if(data[kPrequels] && ![data[kPrequels] isNull]) {
         NSArray *prequels = data[kPrequels];
         for(NSDictionary *prequel in prequels) {
-            Anime *prequelAnime = [self addRelatedAnime:prequel toAnime:anime relationType:AnimeRelationPrequel];
+            Anime *prequelAnime = [self addRelatedAnime:prequel toAnime:anime relationType:AnimeRelationPrequel withContext:context];
             if(prequelAnime) {
                 ALLog(@"Prequel found for %@ -> %@.", anime.title, prequelAnime.title);
                 
                 // We do a simple check; have we added anything else besides the ID and title? If so, don't bother attempting to update.
                 if([prequelAnime.type intValue] == 0) {
                     [[MALHTTPClient sharedClient] getAnimeDetailsForID:prequelAnime.anime_id success:^(id operation, id response) {
-                        [self addAnime:response fromList:NO];
+                        [self addAnime:response withMOC:context];
                         [[NSNotificationCenter defaultCenter] postNotificationName:kRelatedAnimeDidUpdate object:prequelAnime];
                     } failure:^(id operation, NSError *error) {
                         ALLog(@"Failed to get prequel.");
@@ -575,14 +595,14 @@ static NSArray *cachedAnimeList = nil;
     if(data[kSequels] && ![data[kSequels] isNull]) {
         NSArray *sequels = data[kSequels];
         for(NSDictionary *sequel in sequels) {
-            Anime *sequelAnime = [self addRelatedAnime:sequel toAnime:anime relationType:AnimeRelationSequel];
+            Anime *sequelAnime = [self addRelatedAnime:sequel toAnime:anime relationType:AnimeRelationSequel withContext:context];
             if(sequelAnime) {
                 ALLog(@"Sequel found for %@ -> %@.", anime.title, sequelAnime.title);
                 
                 // We do a simple check; have we added anything else besides the ID and title? If so, don't bother attempting to update.
                 if([sequelAnime.type intValue] == 0) {
                     [[MALHTTPClient sharedClient] getAnimeDetailsForID:sequelAnime.anime_id success:^(id operation, id response) {
-                        [self addAnime:response fromList:NO];
+                        [self addAnime:response withMOC:context];
                         [[NSNotificationCenter defaultCenter] postNotificationName:kRelatedAnimeDidUpdate object:sequelAnime];
                     } failure:^(id operation, NSError *error) {
                         ALLog(@"Failed to get sequel.");
@@ -596,14 +616,14 @@ static NSArray *cachedAnimeList = nil;
     if(data[kMangaAdaptations] && ![data[kMangaAdaptations] isNull]) {
         NSArray *mangaAdaptations = data[kMangaAdaptations];
         for(NSDictionary *mangaAdaptation in mangaAdaptations) {
-            Manga *manga = [self addMangaAdaptation:mangaAdaptation toAnime:anime];
+            Manga *manga = [self addMangaAdaptation:mangaAdaptation toAnime:anime withContext:context];
             if(manga) {
                 ALLog(@"Manga adaptation found for %@ -> %@.", anime.title, manga.title);
                 
                 // We do a simple check; have we added anything else besides the ID and title? If so, don't bother attempting to update.
                 if([manga.type intValue] == 0) {
                     [[MALHTTPClient sharedClient] getMangaDetailsForID:manga.manga_id success:^(id operation, id response) {
-                        [MangaService addManga:response fromList:NO];
+                        [MangaService addManga:response withMOC:context];
                         [[NSNotificationCenter defaultCenter] postNotificationName:kRelatedMangaDidUpdate object:manga];
                     } failure:^(id operation, NSError *error) {
                         ALLog(@"Failed to get manga.");
@@ -617,14 +637,14 @@ static NSArray *cachedAnimeList = nil;
     if(data[kSideStores] && ![data[kSideStores] isNull]) {
         NSArray *sideStories = data[kSideStores];
         for(NSDictionary *sideStory in sideStories) {
-            Anime *sideStoryAnime = [self addRelatedAnime:sideStory toAnime:anime relationType:AnimeRelationSideStory];
+            Anime *sideStoryAnime = [self addRelatedAnime:sideStory toAnime:anime relationType:AnimeRelationSideStory withContext:context];
             if(sideStoryAnime) {
                 ALLog(@"Side story found for %@ -> %@.", anime.title, sideStoryAnime.title);
                 
                 // We do a simple check; have we added anything else besides the ID and title? If so, don't bother attempting to update.
                 if([sideStoryAnime.type intValue] == 0) {
                     [[MALHTTPClient sharedClient] getAnimeDetailsForID:sideStoryAnime.anime_id success:^(id operation, id response) {
-                        [self addAnime:response fromList:NO];
+                        [self addAnime:response withMOC:context];
                         [[NSNotificationCenter defaultCenter] postNotificationName:kRelatedAnimeDidUpdate object:sideStoryAnime];
                     } failure:^(id operation, NSError *error) {
                         ALLog(@"Failed to get side story.");
@@ -646,14 +666,14 @@ static NSArray *cachedAnimeList = nil;
         }
         
         for(NSDictionary *parentStory in parentStories) {
-            Anime *parentStoryAnime = [self addRelatedAnime:parentStory toAnime:anime relationType:AnimeRelationParentStory];
+            Anime *parentStoryAnime = [self addRelatedAnime:parentStory toAnime:anime relationType:AnimeRelationParentStory withContext:context];
             if(parentStoryAnime) {
                 ALLog(@"Parent story found for %@ -> %@.", anime.title, parentStoryAnime.title);
                 
                 // We do a simple check; have we added anything else besides the ID and title? If so, don't bother attempting to update.
                 if([parentStoryAnime.type intValue] == 0) {
                     [[MALHTTPClient sharedClient] getAnimeDetailsForID:parentStoryAnime.anime_id success:^(id operation, id response) {
-                        [self addAnime:response fromList:NO];
+                        [self addAnime:response withMOC:context];
                         [[NSNotificationCenter defaultCenter] postNotificationName:kRelatedAnimeDidUpdate object:parentStoryAnime];
                     } failure:^(id operation, NSError *error) {
                         ALLog(@"Failed to get parent story.");
@@ -667,14 +687,14 @@ static NSArray *cachedAnimeList = nil;
     if(data[kCharacterAnime] && ![data[kCharacterAnime] isNull]) {
         NSArray *characters = data[kCharacterAnime];
         for(NSDictionary *character in characters) {
-            Anime *characterAnime = [self addRelatedAnime:character toAnime:anime relationType:AnimeRelationCharacterAnime];
+            Anime *characterAnime = [self addRelatedAnime:character toAnime:anime relationType:AnimeRelationCharacterAnime withContext:context];
             if(character) {
                 ALLog(@"Character anime found for %@ -> %@.", anime.title, characterAnime.title);
                 
                 // We do a simple check; have we added anything else besides the ID and title? If so, don't bother attempting to update.
                 if([characterAnime.type intValue] == 0) {
                     [[MALHTTPClient sharedClient] getAnimeDetailsForID:characterAnime.anime_id success:^(id operation, id response) {
-                        [self addAnime:response fromList:NO];
+                        [self addAnime:response withMOC:context];
                         [[NSNotificationCenter defaultCenter] postNotificationName:kRelatedAnimeDidUpdate object:characterAnime];
                     } failure:^(id operation, NSError *error) {
                         ALLog(@"Failed to get character anime.");
@@ -688,14 +708,14 @@ static NSArray *cachedAnimeList = nil;
     if(data[kSpinOffs] && ![data[kSpinOffs] isNull]) {
         NSArray *spinoffs = data[kSpinOffs];
         for(NSDictionary *spinoff in spinoffs) {
-            Anime *spinoffAnime = [self addRelatedAnime:spinoff toAnime:anime relationType:AnimeRelationSpinOff];
+            Anime *spinoffAnime = [self addRelatedAnime:spinoff toAnime:anime relationType:AnimeRelationSpinOff withContext:context];
             if(spinoffAnime) {
                 ALLog(@"Spinoff anime found for %@ -> %@.", anime.title, spinoffAnime.title);
                 
                 // We do a simple check; have we added anything else besides the ID and title? If so, don't bother attempting to update.
                 if([spinoffAnime.type intValue] == 0) {
                     [[MALHTTPClient sharedClient] getAnimeDetailsForID:spinoffAnime.anime_id success:^(id operation, id response) {
-                        [self addAnime:response fromList:NO];
+                        [self addAnime:response withMOC:context];
                         [[NSNotificationCenter defaultCenter] postNotificationName:kRelatedAnimeDidUpdate object:spinoffAnime];
                     } failure:^(id operation, NSError *error) {
                         ALLog(@"Failed to get spinoff.");
@@ -709,14 +729,14 @@ static NSArray *cachedAnimeList = nil;
     if(data[kSummaries] && ![data[kSummaries] isNull]) {
         NSArray *summaries = data[kSummaries];
         for(NSDictionary *summary in summaries) {
-            Anime *summaryAnime = [self addRelatedAnime:summary toAnime:anime relationType:AnimeRelationSummaries];
+            Anime *summaryAnime = [self addRelatedAnime:summary toAnime:anime relationType:AnimeRelationSummaries withContext:context];
             if(summaryAnime) {
                 ALLog(@"Summary anime found for %@ -> %@.", anime.title, summaryAnime.title);
                 
                 // We do a simple check; have we added anything else besides the ID and title? If so, don't bother attempting to update.
                 if([summaryAnime.type intValue] == 0) {
                     [[MALHTTPClient sharedClient] getAnimeDetailsForID:summaryAnime.anime_id success:^(id operation, id response) {
-                        [self addAnime:response fromList:NO];
+                        [self addAnime:response withMOC:context];
                         [[NSNotificationCenter defaultCenter] postNotificationName:kRelatedAnimeDidUpdate object:summaryAnime];
                     } failure:^(id operation, NSError *error) {
                         ALLog(@"Failed to get summary anime.");
@@ -730,14 +750,14 @@ static NSArray *cachedAnimeList = nil;
     if(data[kAlternativeVersions] && ![data[kAlternativeVersions] isNull]) {
         NSArray *alternativeVersions = data[kAlternativeVersions];
         for(NSDictionary *alternativeVersion in alternativeVersions) {
-            Anime *alternativeVersionAnime = [self addRelatedAnime:alternativeVersion toAnime:anime relationType:AnimeRelationAlternativeVersions];
+            Anime *alternativeVersionAnime = [self addRelatedAnime:alternativeVersion toAnime:anime relationType:AnimeRelationAlternativeVersions withContext:context];
             if(alternativeVersionAnime) {
                 ALLog(@"Alternative Version anime found for %@ -> %@.", anime.title, alternativeVersionAnime.title);
                 
                 // We do a simple check; have we added anything else besides the ID and title? If so, don't bother attempting to update.
                 if([alternativeVersionAnime.type intValue] == 0) {
                     [[MALHTTPClient sharedClient] getAnimeDetailsForID:alternativeVersionAnime.anime_id success:^(id operation, id response) {
-                        [self addAnime:response fromList:NO];
+                        [self addAnime:response withMOC:context];
                         [[NSNotificationCenter defaultCenter] postNotificationName:kRelatedAnimeDidUpdate object:alternativeVersionAnime];
                     } failure:^(id operation, NSError *error) {
                         ALLog(@"Failed to get alternative version.");

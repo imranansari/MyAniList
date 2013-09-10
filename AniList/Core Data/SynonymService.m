@@ -16,7 +16,7 @@
 
 @implementation SynonymService
 
-+ (Synonym *)addSynonym:(NSString *)title toAnime:(Anime *)anime {
++ (Synonym *)addSynonym:(NSString *)title toAnime:(Anime *)anime withContext:(NSManagedObjectContext *)context {
     
     // Before adding, check and make sure we don't already have it.
     for(Synonym *synonym in anime.synonyms) {
@@ -27,7 +27,7 @@
     }
     
     ALVLog(@"Synonym '%@' for '%@' is new, adding to the database.", title, anime.title);
-    Synonym *synonym = [NSEntityDescription insertNewObjectForEntityForName:ENTITY_NAME inManagedObjectContext:[SynonymService managedObjectContext]];
+    Synonym *synonym = [NSEntityDescription insertNewObjectForEntityForName:ENTITY_NAME inManagedObjectContext:context];
     
     synonym.name = title;
     
@@ -36,7 +36,7 @@
     return synonym;
 }
 
-+ (Synonym *)addSynonym:(NSString *)title toManga:(Manga *)manga {
++ (Synonym *)addSynonym:(NSString *)title toManga:(Manga *)manga withContext:(NSManagedObjectContext *)context {
     
     // Before adding, check and make sure we don't already have it.
     for(Synonym *synonym in manga.synonyms) {
@@ -47,7 +47,7 @@
     }
     
     ALVLog(@"Synonym '%@' for '%@' is new, adding to the database.", title, manga.title);
-    Synonym *synonym = [NSEntityDescription insertNewObjectForEntityForName:ENTITY_NAME inManagedObjectContext:[SynonymService managedObjectContext]];
+    Synonym *synonym = [NSEntityDescription insertNewObjectForEntityForName:ENTITY_NAME inManagedObjectContext:context];
     
     synonym.name = title;
     
@@ -56,7 +56,7 @@
     return synonym;
 }
 
-+ (Synonym *)addEnglishTitle:(NSString *)englishTitle toAnime:(Anime *)anime {
++ (Synonym *)addEnglishTitle:(NSString *)englishTitle toAnime:(Anime *)anime withContext:(NSManagedObjectContext *)context {
     // Before adding, check and make sure we don't already have it.
     for(Synonym *synonym in anime.english_titles) {
         if([synonym.name isEqualToString:englishTitle]) {
@@ -66,7 +66,7 @@
     }
     
     ALVLog(@"English title '%@' for '%@' is new, adding to the database.", englishTitle, anime.title);
-    Synonym *synonym = [NSEntityDescription insertNewObjectForEntityForName:ENTITY_NAME inManagedObjectContext:[SynonymService managedObjectContext]];
+    Synonym *synonym = [NSEntityDescription insertNewObjectForEntityForName:ENTITY_NAME inManagedObjectContext:context];
     
     synonym.name = englishTitle;
     
@@ -75,7 +75,7 @@
     return synonym;
 }
 
-+ (Synonym *)addEnglishTitle:(NSString *)englishTitle toManga:(Manga *)manga {
++ (Synonym *)addEnglishTitle:(NSString *)englishTitle toManga:(Manga *)manga withContext:(NSManagedObjectContext *)context {
     // Before adding, check and make sure we don't already have it.
     for(Synonym *synonym in manga.english_titles) {
         if([synonym.name isEqualToString:englishTitle]) {
@@ -85,7 +85,7 @@
     }
     
     ALVLog(@"English title '%@' for '%@' is new, adding to the database.", englishTitle, manga.title);
-    Synonym *synonym = [NSEntityDescription insertNewObjectForEntityForName:ENTITY_NAME inManagedObjectContext:[SynonymService managedObjectContext]];
+    Synonym *synonym = [NSEntityDescription insertNewObjectForEntityForName:ENTITY_NAME inManagedObjectContext:context];
     
     synonym.name = englishTitle;
     
@@ -94,7 +94,7 @@
     return synonym;
 }
 
-+ (Synonym *)addJapaneseTitle:(NSString *)japaneseTitle toAnime:(Anime *)anime {
++ (Synonym *)addJapaneseTitle:(NSString *)japaneseTitle toAnime:(Anime *)anime withContext:(NSManagedObjectContext *)context {
     // Before adding, check and make sure we don't already have it.
     for(Synonym *synonym in anime.japanese_titles) {
         if([synonym.name isEqualToString:japaneseTitle]) {
@@ -104,7 +104,7 @@
     }
     
     ALVLog(@"Japanese title '%@' for '%@' is new, adding to the database.", japaneseTitle, anime.title);
-    Synonym *synonym = [NSEntityDescription insertNewObjectForEntityForName:ENTITY_NAME inManagedObjectContext:[SynonymService managedObjectContext]];
+    Synonym *synonym = [NSEntityDescription insertNewObjectForEntityForName:ENTITY_NAME inManagedObjectContext:context];
     
     synonym.name = japaneseTitle;
     
@@ -113,7 +113,7 @@
     return synonym;
 }
 
-+ (Synonym *)addJapaneseTitle:(NSString *)japaneseTitle toManga:(Manga *)manga {
++ (Synonym *)addJapaneseTitle:(NSString *)japaneseTitle toManga:(Manga *)manga withContext:(NSManagedObjectContext *)context {
     // Before adding, check and make sure we don't already have it.
     for(Synonym *synonym in manga.japanese_titles) {
         if([synonym.name isEqualToString:japaneseTitle]) {
@@ -123,7 +123,7 @@
     }
     
     ALVLog(@"Japanese title '%@' for '%@' is new, adding to the database.", japaneseTitle, manga.title);
-    Synonym *synonym = [NSEntityDescription insertNewObjectForEntityForName:ENTITY_NAME inManagedObjectContext:[SynonymService managedObjectContext]];
+    Synonym *synonym = [NSEntityDescription insertNewObjectForEntityForName:ENTITY_NAME inManagedObjectContext:context];
     
     synonym.name = japaneseTitle;
     

@@ -63,7 +63,7 @@
     [self adjustTitle];
     
     [[MALHTTPClient sharedClient] getAnimeDetailsForID:self.anime.anime_id success:^(NSURLRequest *operation, id response) {
-        [AnimeService addAnime:response fromList:NO];
+        [AnimeService addAnime:response];
         [[NSNotificationCenter defaultCenter] postNotificationName:kAnimeDidUpdate object:@(YES)];
     } failure:^(NSURLRequest *operation, NSError *error) {
         ALLog(@"Couldn't get anime details. Error: %@", error.localizedDescription);

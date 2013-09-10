@@ -304,6 +304,30 @@
             self.column = @(5);
             break;
     }
+    
+    if(self.title)
+        ALLog(@"Anime %@ is now set to column %d.", self.title, [self.column intValue]);
+}
+
+- (NSNumber *)column {
+    // Update column appropriately.
+    switch ([self.watched_status intValue]) {
+        case AnimeWatchedStatusWatching:
+            return @(0);
+        case AnimeWatchedStatusCompleted:
+            return @(1);
+        case AnimeWatchedStatusOnHold:
+            return @(2);
+        case AnimeWatchedStatusDropped:
+            return @(3);
+        case AnimeWatchedStatusPlanToWatch:
+            return @(4);
+        case AnimeWatchedStatusUnknown:
+        default:
+            return @(5);
+    }
+    
+    return @(5);
 }
 
 - (BOOL)hasAdditionalDetails {

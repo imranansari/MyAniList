@@ -13,8 +13,10 @@
 @interface GenreService : NSObject
 
 + (NSArray *)animeWithGenre:(NSString *)genreName;
++ (NSArray *)animeWithGenre:(NSString *)genreName withContext:(NSManagedObjectContext *)context;
 + (NSArray *)mangaWithGenre:(NSString *)genreName;
-+ (Genre *)addGenre:(NSString *)title toAnime:(Anime *)anime;
-+ (Genre *)addGenre:(NSString *)title toManga:(Manga *)manga;
++ (NSArray *)mangaWithGenre:(NSString *)genreName withContext:(NSManagedObjectContext *)context;
++ (Genre *)addGenre:(NSString *)title toAnime:(Anime *)anime withContext:(NSManagedObjectContext *)context;
++ (Genre *)addGenre:(NSString *)title toManga:(Manga *)manga withContext:(NSManagedObjectContext *)context;
 
 @end

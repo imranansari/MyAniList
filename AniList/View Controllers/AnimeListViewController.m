@@ -93,34 +93,20 @@ static BOOL alreadyFetched = NO;
 
 - (void)fetchData {
     if([UserProfile userIsLoggedIn]) {
-        
-        if(self.viewTop) {
-            [[MALHTTPClient sharedClient] getTopAnimeForType:AnimeTypeTV atPage:@(1) success:^(id operation, id response) {
-                ALLog(@"Anime list found: %@", response);
-                for(NSDictionary *anime in response) {
-                    [AnimeService addAnime:anime fromList:NO];
-                }
-            } failure:^(id operation, NSError *error) {
-                ALLog(@"Could not fetch top.");
-            }];
-        }
-        else if(self.viewPopular) {
-            
-        }
-        else {
-            [[MALHTTPClient sharedClient] getAnimeListForUser:[[UserProfile profile] username]
-                                                 initialFetch:!alreadyFetched
-                                                      success:^(NSURLRequest *operation, id response) {
+        [[MALHTTPClient sharedClient] getAnimeListForUser:[[UserProfile profile] username]
+                                             initialFetch:!alreadyFetched
+                                                  success:^(NSURLRequest *operation, id response) {
+                                                      dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                                                           [AnimeService addAnimeList:(NSDictionary *)response];
                                                           alreadyFetched = YES;
                                                           [super fetchData];
-                                                      }
-                                                      failure:^(NSURLRequest *operation, NSError *error) {
-                                                          // Derp.
-                                                          
-                                                          [super fetchData];
-                                                      }];
-        }
+                                                      });
+                                                  }
+                                                  failure:^(NSURLRequest *operation, NSError *error) {
+                                                      // Derp.
+                                                      
+                                                      [super fetchData];
+                                                  }];
     }
 }
 
@@ -132,6 +118,8 @@ static BOOL alreadyFetched = NO;
             ALLog(@"Failed to update '%@'.", anime.title);
         }];
     }
+    
+    [self.managedObjectContext save:nil];
     
     self.tableView.editing = NO;
     self.editedIndexPath = nil;
@@ -314,39 +302,48 @@ static BOOL alreadyFetched = NO;
     
     animeCell.type.text = [Anime stringForAnimeType:[anime.type intValue]];
     [animeCell.type addShadow];
-
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:anime.image_url]];
-        UIImage *cachedImage = [anime imageForAnime];
-        
-        if(!cachedImage) {
-            [animeCell.image setImageWithURLRequest:imageRequest placeholderImage:cachedImage success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-                
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    animeCell.image.alpha = 0.0f;
-                    animeCell.image.image = image;
+    
+    UIImage *image = [[ImageManager sharedManager] imageForAnime:anime];
+    
+    if(image) {
+        animeCell.image.image = image;
+    }
+    else {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:anime.image_url]];
+//            UIImage *cachedImage = [anime imageForAnime];
+            
+//            if(!cachedImage) {
+                [animeCell.image setImageWithURLRequest:imageRequest placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
                     
-                    [UIView animateWithDuration:0.3f animations:^{
-                        animeCell.image.alpha = 1.0f;
-                    }];
-                });
-                
-                if(!anime.image) {
-                    // Save the image onto disk if it doesn't exist or they aren't the same.
-                    [anime saveImage:image fromRequest:request];
-                }
-                
-            } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-                // Log failure.
-                ALLog(@"Couldn't fetch image at URL %@.", [request.URL absoluteString]);
-            }];
-        }
-        else {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                animeCell.image.image = cachedImage;
-            });
-        }
-    });
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        animeCell.image.alpha = 0.0f;
+                        animeCell.image.image = image;
+                        
+                        [UIView animateWithDuration:0.3f animations:^{
+                            animeCell.image.alpha = 1.0f;
+                        }];
+                    });
+                    
+                    if(!anime.image) {
+                        // Save the image onto disk if it doesn't exist or they aren't the same.
+                        [anime saveImage:image fromRequest:request];
+                    }
+                    
+                    [[ImageManager sharedManager] addImage:image forAnime:anime];
+                    
+                } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+                    // Log failure.
+                    ALLog(@"Couldn't fetch image at URL %@.", [request.URL absoluteString]);
+                }];
+//            }
+//            else {
+//                dispatch_async(dispatch_get_main_queue(), ^{
+//                    animeCell.image.image = cachedImage;
+//                });
+//            }
+        });
+    }
 }
 
 #pragma mark - UIScrollViewDelegate Methods
