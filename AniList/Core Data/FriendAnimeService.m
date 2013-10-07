@@ -58,8 +58,14 @@
     NSError *error = nil;
     NSArray *results = [[FriendAnimeService managedObjectContext] executeFetchRequest:request error:&error];
     
+    NSMutableArray *anime = [NSMutableArray array];
+    
     if(results.count) {
-        return results;
+        for(FriendAnime *friendAnime in results) {
+            [anime addObject:friendAnime.anime];
+        }
+        
+        return anime;
     }
     else return nil;
 }

@@ -30,6 +30,7 @@
 
 #import "AnimeViewController.h"
 #import "MangaViewController.h"
+#import "CompareViewController.h"
 
 @interface FriendDetailViewController ()
 @property (nonatomic, weak) IBOutlet AniListTableView *tableView;
@@ -151,9 +152,9 @@
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         [[MALHTTPClient sharedClient] getAnimeListForUser:self.friend.username initialFetch:YES success:^(NSURLRequest *operation, id response) {
             ALLog(@"Got dat list!");
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 [AnimeService addAnimeList:(NSDictionary *)response forFriend:self.friend];
-            });
+//            });
         } failure:^(NSURLRequest *operation, NSError *error) {
             ALLog(@"Couldn't fetch list!");
         }];
@@ -222,7 +223,9 @@
 }
 
 - (IBAction)compareButtonPressed:(id)sender {
-    self.compareButton.selected = !self.compareButton.selected;
+    CompareViewController *vc = [[CompareViewController alloc] init];
+    vc.friend = self.friend;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - Table view data source

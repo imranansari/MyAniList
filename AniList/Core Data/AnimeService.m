@@ -59,6 +59,17 @@ static NSArray *cachedAnimeList = nil;
     return [[AnimeService managedObjectContext] executeFetchRequest:request error:&error];
 }
 
++ (NSArray *)myAnime {
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITY_NAME inManagedObjectContext:[AnimeService managedObjectContext]];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"watched_status < 7"];
+    request.entity = entity;
+    request.predicate = predicate;
+    
+    NSError *error = nil;
+    return [[AnimeService managedObjectContext] executeFetchRequest:request error:&error];
+}
+
 + (Anime *)animeForID:(NSNumber *)ID {
     return [self animeForID:ID fromCache:NO];
 }

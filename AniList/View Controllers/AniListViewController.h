@@ -12,6 +12,7 @@
 #import "AniListTableView.h"
 #import "AniListNavigationController.h"
 #import "EGORefreshTableHeaderView.h"
+#import "ImageManager.h"
 
 @interface AniListViewController : BaseViewController<UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, EGORefreshTableHeaderDelegate, UIActionSheetDelegate>
 

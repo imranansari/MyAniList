@@ -317,7 +317,7 @@ static BOOL alreadyFetched = NO;
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:anime.image_url]];
-        UIImage *cachedImage = [anime imageForAnime];
+        UIImage *cachedImage = [[ImageManager sharedManager] imageForAnime:anime];
         
         if(!cachedImage) {
             [animeCell.image setImageWithURLRequest:imageRequest placeholderImage:cachedImage success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
@@ -334,6 +334,7 @@ static BOOL alreadyFetched = NO;
                 if(!anime.image) {
                     // Save the image onto disk if it doesn't exist or they aren't the same.
                     [anime saveImage:image fromRequest:request];
+                    [[ImageManager sharedManager] addImage:image forAnime:anime];
                 }
                 
             } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {

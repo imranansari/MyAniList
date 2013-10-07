@@ -77,7 +77,7 @@
 
 static const BOOL UI_DEBUG = NO;
 
-#define VERBOSE_DEBUGGING NO
+#define VERBOSE_DEBUGGING YES
 
 #ifdef DEBUG
 #define ALLog( s, ... ) NSLog( @"<%p %@:(%d)> %@", self, [[NSString stringWithUTF8String:__FILE__] lastPathComponent], __LINE__, [NSString stringWithFormat:(s), ##__VA_ARGS__] )

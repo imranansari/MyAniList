@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4488.2" systemVersion="13A538g" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4510" systemVersion="13A598" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3715.3"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -37,14 +37,14 @@
                         <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="7yX-qU-ibZ">
-                        <rect key="frame" x="63" y="57" width="82" height="32"/>
+                        <rect key="frame" x="57" y="57" width="82" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="24"/>
                         <color key="textColor" red="0.97620376279999999" green="0.97620376279999999" blue="0.97620376279999999" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Theirs" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="V4c-Tf-Xpg">
-                        <rect key="frame" x="63" y="40" width="82" height="24"/>
+                        <rect key="frame" x="57" y="40" width="82" height="24"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="16"/>
                         <color key="textColor" white="0.80411724452554756" alpha="1" colorSpace="calibratedWhite"/>
@@ -52,7 +52,7 @@
                         <color key="shadowColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Mine" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="tX1-1F-7BF">
-                        <rect key="frame" x="151" y="40" width="82" height="24"/>
+                        <rect key="frame" x="145" y="40" width="82" height="24"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="16"/>
                         <color key="textColor" white="0.80411724452554756" alpha="1" colorSpace="calibratedWhite"/>
@@ -60,7 +60,7 @@
                         <color key="shadowColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Difference" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ll8-Hy-9Sr">
-                        <rect key="frame" x="238" y="40" width="86" height="24"/>
+                        <rect key="frame" x="232" y="40" width="86" height="24"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="16"/>
                         <color key="textColor" white="0.80411724452554756" alpha="1" colorSpace="calibratedWhite"/>
@@ -68,14 +68,14 @@
                         <color key="shadowColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="9" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Nxv-LX-eUl">
-                        <rect key="frame" x="151" y="57" width="82" height="32"/>
+                        <rect key="frame" x="145" y="57" width="82" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="24"/>
                         <color key="textColor" red="0.97620376279999999" green="0.97620376279999999" blue="0.97620376279999999" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ges-qd-yPk">
-                        <rect key="frame" x="238" y="57" width="82" height="32"/>
+                        <rect key="frame" x="232" y="57" width="82" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="24"/>
                         <color key="textColor" red="0.97620376279999999" green="0.97620376279999999" blue="0.97620376279999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -85,10 +85,10 @@
             </tableViewCellContentView>
             <color key="backgroundColor" red="0.085406397300000006" green="0.10355921780000001" blue="0.21910873719999999" alpha="1" colorSpace="calibratedRGB"/>
             <connections>
-                <outlet property="difference" destination="Ll8-Hy-9Sr" id="FVH-Di-79E"/>
+                <outlet property="difference" destination="ges-qd-yPk" id="bXx-MF-Ykn"/>
                 <outlet property="image" destination="0JS-Ac-9a6" id="y2M-pB-hXk"/>
                 <outlet property="loadingView" destination="8bF-wR-gex" id="36f-Ft-e0m"/>
-                <outlet property="myScore" destination="tX1-1F-7BF" id="SxL-I2-FSu"/>
+                <outlet property="myScore" destination="Nxv-LX-eUl" id="zyr-M7-0gb"/>
                 <outlet property="theirScore" destination="7yX-qU-ibZ" id="vkI-MI-fb3"/>
                 <outlet property="title" destination="CD4-zD-1CG" id="QzC-sw-9IL"/>
             </connections>

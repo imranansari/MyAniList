@@ -17,4 +17,6 @@
 @property (nonatomic, weak) IBOutlet UILabel *difference;
 @property (nonatomic, weak) IBOutlet UIView *loadingView;
 
++ (CGFloat)cellHeight;
+
 @end

@@ -14,6 +14,7 @@
 @interface AnimeService : NSObject
 
 + (NSArray *)allAnime;
++ (NSArray *)myAnime;
 + (Anime *)animeForID:(NSNumber *)ID;
 + (BOOL)addAnimeList:(NSDictionary *)data;
 + (BOOL)addAnimeList:(NSDictionary *)data forFriend:(Friend *)friend;

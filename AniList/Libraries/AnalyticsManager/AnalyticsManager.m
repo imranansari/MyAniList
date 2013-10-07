@@ -42,9 +42,9 @@ static AnalyticsManager *sharedInstance = nil;
 }
 
 - (void)initGoogleAnalytics {
-    [GAI sharedInstance].debug = YES;
+    [GAI sharedInstance].debug = NO;
     [GAI sharedInstance].dispatchInterval = 30;
-    [GAI sharedInstance].trackUncaughtExceptions = YES;
+    [GAI sharedInstance].trackUncaughtExceptions = NO;
     
     self.tracker = [[GAI sharedInstance] trackerWithTrackingId:kTrackingId];
     
