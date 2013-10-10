@@ -20,13 +20,16 @@
 
 #import "MALHTTPClient.h"
 
+#import "AnimeViewController.h"
+#import "MangaViewController.h"
+
 @interface CompareViewController ()
 @property (nonatomic, copy) NSArray *myItems;
 @property (nonatomic, copy) NSArray *friendItems;
 
 @property (nonatomic, copy) NSArray *mutualItems;
 @property (nonatomic, copy) NSArray *friendExclusiveItems;
-@property (nonatomic, copy) NSArray *myExclusiveItems;
+@property (nonatomic, copy) NSArray *userExclusiveItems;
 
 @property (nonatomic, weak) IBOutlet UIView *maskView;
 @property (nonatomic, weak) IBOutlet AniListTableView *tableView;
@@ -42,7 +45,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        self.hidesBackButton = NO;
     }
     return self;
 }
@@ -73,25 +76,40 @@
     
     [set1 intersectSet:set2];
     
-    NSArray *intersectedItems = [set1 allObjects];
+    NSMutableArray *intersectedItems = [[set1 allObjects] mutableCopy];
+    
+    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES];
+    [intersectedItems sortUsingDescriptors:@[sortDescriptor]];
+    
+    
+    NSMutableArray *mutualItems = [NSMutableArray array];
+    NSMutableArray *exclusiveFriendItems = [NSMutableArray array];
+    NSMutableArray *exclusiveUserItems = [NSMutableArray array];
     
     for(Anime *anime in intersectedItems) {
         FriendAnime *friendAnime = [FriendAnimeService anime:anime forFriend:self.friend];
         
         // Friend has not seen this anime.
-        if([friendAnime.score intValue] == -1) {
-            
+        if([friendAnime.score intValue] == -1 && [anime.user_score intValue] > -1) {
+            [exclusiveUserItems addObject:anime];
         }
-        
         // You have not seen this anime.
-        if([anime.user_score intValue] == -1) {
-            
+        else if([anime.user_score intValue] == -1 && [friendAnime.score intValue] > -1) {
+            [exclusiveFriendItems addObject:anime];
+        }
+        else {
+            [mutualItems addObject:anime];
         }
     }
     
-    self.mutualItems = [set1 allObjects];
+    self.mutualItems = [mutualItems copy];
+    self.userExclusiveItems = [exclusiveUserItems copy];
+    self.friendExclusiveItems = [exclusiveFriendItems copy];
     
-    ALLog(@"Similar anime count: %d", self.mutualItems.count);
+    ALLog(@"Anime count: %d", set1.count);
+    ALLog(@"Mutual items: %d", self.mutualItems.count);
+    ALLog(@"Friend-exclusive items: %d", self.friendExclusiveItems.count);
+    ALLog(@"User-exclusive items: %d", self.userExclusiveItems.count);
 }
 
 - (void)didReceiveMemoryWarning
@@ -101,6 +119,33 @@
 }
 
 #pragma mark - Table view data source
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    
+    NSString *title = @"";
+    NSArray *data;
+    
+    switch (section) {
+        case ComparisonSectionMutual:
+            title = @"Shared";
+            data = self.mutualItems;
+            break;
+        case ComparisonSectionFriend:
+            title = [NSString stringWithFormat:@"Rated by %@", self.friend.username];
+            data = self.friendExclusiveItems;
+            break;
+        case ComparisonSectionUser:
+            title = [NSString stringWithFormat:@"Rated by %@", [UserProfile profile].username];
+            data = self.userExclusiveItems;
+            break;
+        default:
+            return nil;
+    }
+    
+    NSString *count = [NSString stringWithFormat:@"%d", data.count];
+    
+    return [UIView tableHeaderWithPrimaryText:title andSecondaryText:count];
+}
 
 //- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
 //    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
@@ -114,7 +159,7 @@
 //}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 1;
+    return 44;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
@@ -126,11 +171,25 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.mutualItems count];
+    switch (section) {
+        case ComparisonSectionMutual:
+            return [self.mutualItems count];
+            break;
+        case ComparisonSectionFriend:
+            return [self.friendExclusiveItems count];
+            break;
+        case ComparisonSectionUser:
+            return [self.userExclusiveItems count];
+            break;
+        default:
+            break;
+    }
+    
+    return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -143,7 +202,24 @@
         cell = (CompareCell *)nib[0];
     }
     
-    NSManagedObject *item = self.mutualItems[indexPath.row];
+    NSArray *data;
+    
+    switch (indexPath.section) {
+        case ComparisonSectionMutual:
+            data = self.mutualItems;
+            break;
+        case ComparisonSectionFriend:
+            data = self.friendExclusiveItems;
+            break;
+        case ComparisonSectionUser:
+            data = self.userExclusiveItems;
+            break;
+        default:
+            NSAssert(nil, @"");
+            break;
+    }
+    
+    NSManagedObject *item = data[indexPath.row];
     [self configureCell:cell withObject:item];
     
     return cell;
@@ -152,22 +228,26 @@
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSManagedObject *object = self.mutualItems[indexPath.row];
-//    
-//#warning - back button can get pretty long here. Best solution?
-//    
-//    if([object isMemberOfClass:[Anime class]]) {
-//        AnimeViewController *vc = [[AnimeViewController alloc] init];
-//        vc.anime = (Anime *)object;
-//        [self.navigationController pushViewController:vc animated:YES];
-//    }
-//    else if([object isMemberOfClass:[Manga class]]) {
-//        MangaViewController *vc = [[MangaViewController alloc] init];
-//        vc.manga = (Manga *)object;
-//        [self.navigationController pushViewController:vc animated:YES];
-//    }
+    NSArray *data;
     
-    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    switch (indexPath.section) {
+        case ComparisonSectionMutual:
+            data = self.mutualItems;
+            break;
+        case ComparisonSectionFriend:
+            data = self.friendExclusiveItems;
+            break;
+        case ComparisonSectionUser:
+            data = self.userExclusiveItems;
+            break;
+        default:
+            NSAssert(nil, @"");
+            break;
+    }
+    
+    AnimeViewController *vc = [[AnimeViewController alloc] init];
+    vc.anime = data[indexPath.row];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)configureCell:(UITableViewCell *)cell withObject:(NSManagedObject *)object {
@@ -182,10 +262,20 @@
         
         anilistCell.title.text = anime.title;
         
-        anilistCell.theirScore.text = [NSString stringWithFormat:@"%d", [friendAnime.score intValue]];
-        anilistCell.myScore.text = [NSString stringWithFormat:@"%d", [anime.user_score intValue]];
+        if([friendAnime.score intValue] > -1)
+            anilistCell.theirScore.text = [NSString stringWithFormat:@"%d", [friendAnime.score intValue]];
+        else
+            anilistCell.theirScore.text = @"-";
         
-        anilistCell.difference.text = [NSString stringWithFormat:@"%d", [anime.user_score intValue] - [friendAnime.score intValue]];
+        if([anime.user_score intValue] > -1)
+            anilistCell.myScore.text = [NSString stringWithFormat:@"%d", [anime.user_score intValue]];
+        else
+            anilistCell.myScore.text = @"-";
+        
+        if([friendAnime.score intValue] > -1 && [anime.user_score intValue] > -1)
+            anilistCell.difference.text = [NSString stringWithFormat:@"%d", [anime.user_score intValue] - [friendAnime.score intValue]];
+        else
+            anilistCell.difference.text = @"-";
         
         imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:anime.image_url]];
         cachedImageLocation = [NSString stringWithFormat:@"%@/%@", documentsDirectory, anime.image];

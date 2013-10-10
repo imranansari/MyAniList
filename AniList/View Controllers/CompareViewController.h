@@ -9,7 +9,13 @@
 #import "BaseViewController.h"
 #import "Friend.h"
 
-@interface CompareViewController : BaseViewController
+typedef enum {
+    ComparisonSectionMutual = 0,
+    ComparisonSectionFriend,
+    ComparisonSectionUser
+} ComparisonSection;
+
+@interface CompareViewController : BaseViewController<UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) Friend *friend;
 
