@@ -59,8 +59,13 @@
     NSError *error = nil;
     NSArray *results = [[FriendMangaService managedObjectContext] executeFetchRequest:request error:&error];
     
+    NSMutableArray *manga = [NSMutableArray array];
+    
     if(results.count) {
-        return results;
+        for(FriendManga *friendManga in results) {
+            [manga addObject:friendManga.manga];
+        }
+        return manga;
     }
     else return nil;
 }

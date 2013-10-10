@@ -34,8 +34,8 @@
 }
 
 - (void)addShadow {
-    self.shadowColor = [UIColor defaultShadowColor];
-    self.shadowOffset = CGSizeMake(0, 1);
+//    self.shadowColor = [UIColor defaultShadowColor];
+//    self.shadowOffset = CGSizeMake(0, 1);
 }
 
 @end

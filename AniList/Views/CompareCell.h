@@ -18,5 +18,6 @@
 @property (nonatomic, weak) IBOutlet UIView *loadingView;
 
 + (CGFloat)cellHeight;
+- (void)setUserScore:(int)userScore andFriendScore:(int)friendScore;
 
 @end

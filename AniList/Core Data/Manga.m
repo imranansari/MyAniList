@@ -201,15 +201,15 @@
     
     switch (readStatus) {
         case MangaReadStatusReading:
-            return [NSString stringWithFormat:@"Currently reading this %@.", seriesText];
+            return [NSString stringWithFormat:@"You are currently reading this %@.", seriesText];
         case MangaReadStatusCompleted:
-            return [NSString stringWithFormat:@"Finished with this %@.", seriesText];
+            return [NSString stringWithFormat:@"You finished this %@.", seriesText];
         case MangaReadStatusOnHold:
-            return [NSString stringWithFormat:@"Putting this %@ on hold.", seriesText];
+            return [NSString stringWithFormat:@"You put this %@ on hold.", seriesText];
         case MangaReadStatusDropped:
-            return [NSString stringWithFormat:@"Dropping this %@.", seriesText];
+            return [NSString stringWithFormat:@"You dropped this %@.", seriesText];
         case MangaReadStatusPlanToRead:
-            return [NSString stringWithFormat:@"Planning to read this %@.", seriesText];
+            return [NSString stringWithFormat:@"You are planning to read this %@.", seriesText];
         case MangaReadStatusNotReading:
             return [NSString stringWithFormat:@"Add this %@ to your list?", seriesText];
         case MangaReadStatusUnknown:

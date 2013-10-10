@@ -91,27 +91,9 @@
     [attributes setValue:[UIFont fontWithName:@"HelveticaNeue-Light" size:0.0] forKey:UITextAttributeFont];
     
     [[UIBarButtonItem appearance] setTitleTextAttributes:attributes forState:UIControlStateNormal];
-    
-    // Image between two unselected segments.
-    [[UISegmentedControl appearance] setDividerImage:[[UIImage alloc] init]
-                                 forLeftSegmentState:UIControlStateNormal
-                                   rightSegmentState:UIControlStateNormal
-                                          barMetrics:UIBarMetricsDefault];
-    
-    // Image between segment selected on the left and unselected on the right.
-    [[UISegmentedControl appearance] setDividerImage:[[UIImage alloc] init]
-                                 forLeftSegmentState:UIControlStateSelected
-                                   rightSegmentState:UIControlStateNormal
-                                          barMetrics:UIBarMetricsDefault];
-    // Image between segment selected on the right and unselected on the right.
-    [[UISegmentedControl appearance] setDividerImage:[[UIImage alloc] init]
-                                 forLeftSegmentState:UIControlStateNormal
-                                   rightSegmentState:UIControlStateSelected
-                                          barMetrics:UIBarMetricsDefault];
+
     // Toolbar
     [[UIToolbar appearance] setBackgroundImage:[[UIImage new] resizableImageWithCapInsets:UIEdgeInsetsMake(22, 5, 22, 5)] forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
-    
-    [[UISegmentedControl appearance] setBackgroundImage:[UIImage imageNamed:@"image_placeholder.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     
     if([UIApplication isiOS7]) {
         [[UINavigationBar appearance] setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];

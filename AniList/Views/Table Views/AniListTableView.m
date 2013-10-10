@@ -8,8 +8,6 @@
 
 #import "AniListTableView.h"
 
-#define DEFAULT_OFFSET  44
-
 @implementation AniListTableView
 
 - (id)initWithFrame:(CGRect)frame

@@ -40,7 +40,7 @@ typedef enum {
 @property (nonatomic, weak) Manga *editedManga;
 
 + (CGFloat)cellHeight;
-- (void)addShadow;
+- (void)addShadow __deprecated;
 - (void)showEditScreen;
 - (void)revokeEditScreen;
 

@@ -189,15 +189,15 @@
     
     switch (watchedStatus) {
         case AnimeWatchedStatusWatching:
-            return [NSString stringWithFormat:@"Currently watching this %@.", seriesText];
+            return [NSString stringWithFormat:@"You are currently watching this %@.", seriesText];
         case AnimeWatchedStatusCompleted:
-            return [NSString stringWithFormat:@"Finished with this %@.", seriesText];
+            return [NSString stringWithFormat:@"You finished this %@.", seriesText];
         case AnimeWatchedStatusOnHold:
-            return [NSString stringWithFormat:@"Putting this %@ on hold.", seriesText];
+            return [NSString stringWithFormat:@"You put this %@ on hold.", seriesText];
         case AnimeWatchedStatusDropped:
-            return [NSString stringWithFormat:@"Dropping this %@.", seriesText];
+            return [NSString stringWithFormat:@"You dropped this %@.", seriesText];
         case AnimeWatchedStatusPlanToWatch:
-            return [NSString stringWithFormat:@"Planning to watch this %@.", seriesText];
+            return [NSString stringWithFormat:@"You are planning to watch this %@.", seriesText];
         case AnimeWatchedStatusNotWatching:
             return [NSString stringWithFormat:@"Add this %@ to your list?", seriesText];
         case AnimeWatchedStatusUnknown:

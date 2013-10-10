@@ -45,4 +45,37 @@
     return 90;
 }
 
+- (void)setUserScore:(int)userScore andFriendScore:(int)friendScore {
+    if(userScore > 0) {
+        self.myScore.text = [NSString stringWithFormat:@"%d", userScore];
+    }
+    else {
+        self.myScore.text = @"-";
+        self.difference.text = @"-";
+    }
+    
+    if(friendScore > 0) {
+        self.theirScore.text = [NSString stringWithFormat:@"%d", friendScore];
+    }
+    else {
+        self.theirScore.text = @"-";
+        self.difference.text = @"-";
+    }
+    
+    if(userScore > 0 && friendScore > 0) {
+        
+        self.difference.text = [NSString stringWithFormat:@"%d", userScore - friendScore];
+        
+        if(userScore > friendScore) {
+            self.difference.textColor = [UIColor greenColor];
+        }
+        else if(friendScore > userScore) {
+            self.difference.textColor = [UIColor redColor];
+        }
+        else {
+            self.difference.textColor = [UIColor whiteColor];
+        }
+    }
+}
+
 @end
