@@ -409,9 +409,6 @@
 
 - (void)configureCell:(UITableViewCell *)cell withObject:(NSManagedObject *)object {
     AniListCell *anilistCell = (AniListCell *)cell;
-    NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSURLRequest *imageRequest;
-    NSString *cachedImageLocation = @"";
     
     if([object isKindOfClass:[FriendAnime class]]) {
         FriendAnime *friendAnime = (FriendAnime *)object;
@@ -421,8 +418,7 @@
         animeCell.progress.text = [AnimeCell progressTextForFriendAnime:friendAnime];
         animeCell.rank.text = [friendAnime.score intValue] != -1 ? [NSString stringWithFormat:@"%d", [friendAnime.score intValue]] : @"";
         animeCell.type.text = [Anime stringForAnimeType:[anime.type intValue]];
-        imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:anime.image_url]];
-        cachedImageLocation = [NSString stringWithFormat:@"%@/%@", documentsDirectory, anime.image];
+        [animeCell setImageWithItem:anime];
     }
     else if([object isKindOfClass:[FriendManga class]]) {
         FriendManga *friendManga = (FriendManga *)object;
@@ -432,13 +428,10 @@
         mangaCell.progress.text = [Manga stringForMangaReadStatus:[friendManga.read_status intValue]];
         mangaCell.rank.text = [friendManga.score intValue] != -1 ? [NSString stringWithFormat:@"%d", [friendManga.score intValue]] : @"";
         mangaCell.type.text = [Manga stringForMangaType:[manga.type intValue]];
-        imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:manga.image_url]];
-        cachedImageLocation = [NSString stringWithFormat:@"%@/%@", documentsDirectory, manga.image];
+        [mangaCell setImageWithItem:manga];
     }
     
     [anilistCell.title sizeToFit];
-    
-    [anilistCell setImageWithItem:object];
 }
 
 @end

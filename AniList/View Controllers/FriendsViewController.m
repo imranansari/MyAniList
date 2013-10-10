@@ -50,7 +50,6 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.alpha = 1.0f;
-    self.tableView.sectionHeaderHeight = 0;
     
     CAGradientLayer *gradient = [CAGradientLayer layer];
     gradient.frame = self.maskView.bounds;
@@ -60,13 +59,6 @@
     gradient.endPoint = CGPointMake(0.0f, 0.05f);
     
     self.maskView.layer.mask = gradient;
-
-    
-    if([UIApplication isiOS7]) {
-        self.tableView.contentInset = UIEdgeInsetsMake(20, 0, 0, 0);
-        self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(20, 0, 0, 0);
-        self.tableView.contentOffset = CGPointMake(0, -20);
-    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
