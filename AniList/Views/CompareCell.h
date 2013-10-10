@@ -19,5 +19,6 @@
 
 + (CGFloat)cellHeight;
 - (void)setUserScore:(int)userScore andFriendScore:(int)friendScore;
+- (void)setImageWithItem:(NSManagedObject *)object;
 
 @end

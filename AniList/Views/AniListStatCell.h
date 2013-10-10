@@ -20,5 +20,6 @@
 @property (nonatomic, weak) IBOutlet UIView *loadingView;
 
 + (CGFloat)cellHeight;
+- (void)setImageWithItem:(NSManagedObject *)object;
 
 @end

@@ -446,44 +446,7 @@
     
     [anilistCell.title sizeToFit];
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        UIImage *cachedImage = [UIImage imageWithContentsOfFile:cachedImageLocation];
-        
-        if(!cachedImage) {
-            [anilistCell.image setImageWithURLRequest:imageRequest placeholderImage:cachedImage success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-                
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    anilistCell.image.alpha = 0.0f;
-                    anilistCell.image.image = image;
-                    
-                    [UIView animateWithDuration:0.3f animations:^{
-                        anilistCell.image.alpha = 1.0f;
-                    }];
-                });
-                
-                // Save the image onto disk if it doesn't exist or they aren't the same.
-                if([object isKindOfClass:[Anime class]]) {
-                    Anime *anime = (Anime *)object;
-                    [anime saveImage:image fromRequest:imageRequest];
-                    [[ImageManager sharedManager] addImage:image forAnime:anime];
-                }
-                else if([object isKindOfClass:[Manga class]]) {
-                    Manga *manga = (Manga *)object;
-                    [manga saveImage:image fromRequest:imageRequest];
-                    [[ImageManager sharedManager] addImage:image forManga:manga];
-                }
-                
-            } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-                // Log failure.
-                ALLog(@"Couldn't fetch image at URL %@.", [request.URL absoluteString]);
-            }];
-        }
-        else {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                anilistCell.image.image = cachedImage;
-            });
-        }
-    });
+    [anilistCell setImageWithItem:object];
 }
 
 @end

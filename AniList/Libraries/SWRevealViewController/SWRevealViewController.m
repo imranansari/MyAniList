@@ -968,7 +968,7 @@ static NSString * const SWSegueRightIdentifier = @"sw_right";
         frontDeploymentCompletion();
         [self _dequeue];
     };
-    NSLog(@"duration: %f", duration);
+
     if ( duration > 0.0f )
     {
         [UIView animateWithDuration:duration delay:0.0

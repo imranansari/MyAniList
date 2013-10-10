@@ -297,57 +297,13 @@ static BOOL alreadyFetched = NO;
     Anime *anime = (Anime *)object;
     AnimeCell *animeCell = (AnimeCell *)cell;
     animeCell.title.text = anime.title;
-    [animeCell.title addShadow];
     [animeCell.title sizeToFit];
     
     animeCell.progress.text = [AnimeCell progressTextForAnime:anime];
-    [animeCell.progress addShadow];
-    
-    if(self.viewTop) {
-        animeCell.rank.text = [NSString stringWithFormat:@"#%d (%0.02f)", [self.tableView indexPathForCell:cell].row+1, [anime.average_score doubleValue]];
-    }
-    else {
-        animeCell.rank.text = [anime.user_score intValue] != -1 ? [NSString stringWithFormat:@"%d", [anime.user_score intValue]] : @"";
-    }
-    
-    [animeCell.rank addShadow];
-    
+    animeCell.rank.text = [anime.user_score intValue] != -1 ? [NSString stringWithFormat:@"%d", [anime.user_score intValue]] : @"";
     animeCell.type.text = [Anime stringForAnimeType:[anime.type intValue]];
-    [animeCell.type addShadow];
-
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:anime.image_url]];
-        UIImage *cachedImage = [[ImageManager sharedManager] imageForAnime:anime];
-        
-        if(!cachedImage) {
-            [animeCell.image setImageWithURLRequest:imageRequest placeholderImage:cachedImage success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-                
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    animeCell.image.alpha = 0.0f;
-                    animeCell.image.image = image;
-                    
-                    [UIView animateWithDuration:0.3f animations:^{
-                        animeCell.image.alpha = 1.0f;
-                    }];
-                });
-                
-                if(!anime.image) {
-                    // Save the image onto disk if it doesn't exist or they aren't the same.
-                    [anime saveImage:image fromRequest:request];
-                    [[ImageManager sharedManager] addImage:image forAnime:anime];
-                }
-                
-            } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-                // Log failure.
-                ALLog(@"Couldn't fetch image at URL %@.", [request.URL absoluteString]);
-            }];
-        }
-        else {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                animeCell.image.image = cachedImage;
-            });
-        }
-    });
+    
+    [animeCell setImageWithItem:anime];
 }
 
 #pragma mark - UIScrollViewDelegate Methods

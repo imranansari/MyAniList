@@ -20,5 +20,6 @@
 - (void)setup;
 + (CGFloat)cellHeight;
 - (void)addShadow;
+- (void)setImageWithItem:(NSManagedObject *)object;
 
 @end

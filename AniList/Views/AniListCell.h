@@ -43,6 +43,7 @@ typedef enum {
 - (void)addShadow __deprecated;
 - (void)showEditScreen;
 - (void)revokeEditScreen;
+- (void)setImageWithItem:(NSManagedObject *)object;
 
 - (void)showEditScreenForAnime:(Anime *)anime;
 - (void)showEditScreenForManga:(Manga *)manga;

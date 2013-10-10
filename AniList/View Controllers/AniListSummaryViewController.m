@@ -217,39 +217,7 @@
     cell.rank.text = [anime.user_score intValue] != -1 ? [NSString stringWithFormat:@"%d", [anime.user_score intValue]] : @"";
     cell.type.text = [Anime stringForAnimeType:[anime.type intValue]];
     
-    NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:anime.image_url]];
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        UIImage *cachedImage = [anime imageForAnime];
-        
-        if(!cachedImage) {
-            [cell.image setImageWithURLRequest:imageRequest placeholderImage:cachedImage success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-                
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    cell.image.alpha = 0.0f;
-                    cell.image.image = image;
-                    
-                    [UIView animateWithDuration:0.3f animations:^{
-                        cell.image.alpha = 1.0f;
-                    }];
-                });
-                
-                if(!anime.image) {
-                    // Save the image onto disk if it doesn't exist or they aren't the same.
-                    [anime saveImage:image fromRequest:request];
-                }
-                
-            } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-                // Log failure.
-                ALLog(@"Couldn't fetch image at URL %@.", [request.URL absoluteString]);
-            }];
-        }
-        else {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                cell.image.image = cachedImage;
-            });
-        }
-    });
+    [cell setImageWithItem:anime];
 }
 
 - (void)configureMangaCell:(AniListMiniCell *)cell atIndexPath:(NSIndexPath *)indexPath {
@@ -263,38 +231,7 @@
     cell.rank.text = [manga.user_score intValue] != -1 ? [NSString stringWithFormat:@"%d", [manga.user_score intValue]] : @"";
     cell.type.text = [Manga stringForMangaType:[manga.type intValue]];
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:manga.image_url]];
-        UIImage *cachedImage = [manga imageForManga];
-        
-        if(!cachedImage) {
-            [cell.image setImageWithURLRequest:imageRequest placeholderImage:cachedImage success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-                
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    cell.image.alpha = 0.0f;
-                    cell.image.image = image;
-                    
-                    [UIView animateWithDuration:0.3f animations:^{
-                        cell.image.alpha = 1.0f;
-                    }];
-                });
-                
-                if(!manga.image) {
-                    // Save the image onto disk if it doesn't exist or they aren't the same.
-                    [manga saveImage:image fromRequest:request];
-                }
-                
-            } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-                // Log failure.
-                ALLog(@"Couldn't fetch image at URL %@.", [request.URL absoluteString]);
-            }];
-        }
-        else {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                cell.image.image = cachedImage;
-            });
-        }
-    });
+    [cell setImageWithItem:manga];
 }
 
 

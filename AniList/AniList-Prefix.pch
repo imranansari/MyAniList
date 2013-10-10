@@ -17,4 +17,5 @@
     #import "UserProfile.h"
     #import "AnalyticsManager.h"
     #import "ImageManager.h"
+    #import "MALHTTPClient.h"
 #endif
