@@ -38,15 +38,13 @@
 @property (nonatomic, weak) IBOutlet UIView *maskView;
 @property (nonatomic, weak) IBOutlet UIImageView *avatar;
 
-@property (nonatomic, weak) IBOutlet UIButton *animeButton;
-@property (nonatomic, weak) IBOutlet UIButton *mangaButton;
 @property (nonatomic, weak) IBOutlet UIButton *compareButton;
+@property (nonatomic, weak) IBOutlet UISegmentedControl *compareControl;
 
 @property (nonatomic, copy) NSArray *sectionHeaders;
 
-- (IBAction)animeButtonPressed:(id)sender;
-- (IBAction)mangaButtonPressed:(id)sender;
 - (IBAction)compareButtonPressed:(id)sender;
+- (IBAction)compareControlPressed:(id)sender;
 
 @end
 
@@ -67,18 +65,12 @@
 {
     self.hidesBackButton = NO;
     [super viewDidLoad];
-    self.animeButton.selected = YES;
+    self.compareControl.selectedSegmentIndex = 0;
     [self fetchData];
     
     self.title = [NSString stringWithFormat:@"%@'s List", self.friend.username];
     self.tableView.backgroundColor = [UIColor clearColor];
     [self.avatar setImageWithURL:[NSURL URLWithString:self.friend.image_url]];
-    
-    if(![UIApplication isiOS7]) {
-        [self.animeButton setBackgroundImage:[UIImage new] forState:UIControlStateNormal];
-        [self.mangaButton setBackgroundImage:[UIImage new] forState:UIControlStateNormal];
-        [self.compareButton setBackgroundImage:[UIImage new] forState:UIControlStateNormal];
-    }
     
     CAGradientLayer *gradient = [CAGradientLayer layer];
     gradient.frame = self.maskView.bounds;
@@ -106,7 +98,7 @@
 }
 
 - (NSString *)entityName {
-    if(self.animeButton.selected) {
+    if(self.compareControl.selectedSegmentIndex == 0) {
         return @"FriendAnime";
     }
     else {
@@ -118,7 +110,7 @@
     NSSortDescriptor *sortDescriptor;
     NSSortDescriptor *primaryDescriptor;
     
-    if(self.animeButton.selected) {
+    if(self.compareControl.selectedSegmentIndex == 0) {
         sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"anime.title" ascending:YES];
         primaryDescriptor = [[NSSortDescriptor alloc] initWithKey:@"watched_status" ascending:YES];
     }
@@ -134,7 +126,7 @@
 #warning - may have to create FriendAnime entities for the current user in order to compare.
     // For comparing, just remove user predicate to get all anime.
     
-    if(self.animeButton.selected) {
+    if(self.compareControl.selectedSegmentIndex == 0) {
         return [NSPredicate predicateWithFormat:@"watched_status < 7 && user == %@", self.friend];
     }
     else {
@@ -198,28 +190,15 @@
                      }];
 }
 
-- (IBAction)animeButtonPressed:(id)sender {
-    if(self.animeButton.selected)
-        return;
-    
-    self.animeButton.selected = YES;
-    self.mangaButton.selected = NO;
-    
-    self.sectionHeaders = @[@"Watching", @"Completed", @"On Hold", @"Dropped", @"Plan To Watch"];
-    
-    [self reloadTable];
-}
-
-- (IBAction)mangaButtonPressed:(id)sender {
-    if(self.mangaButton.selected)
-        return;
-    
-    self.animeButton.selected = NO;
-    self.mangaButton.selected = YES;
-    
-    self.sectionHeaders = @[@"Reading", @"Completed", @"On Hold", @"Dropped", @"Plan To Read"];
-    
-    [self reloadTable];
+- (IBAction)compareControlPressed:(id)sender {
+    if(self.compareControl.selectedSegmentIndex == 0) {
+        self.sectionHeaders = @[@"Watching", @"Completed", @"On Hold", @"Dropped", @"Plan To Watch"];
+        [self reloadTable];
+    }
+    else {
+        self.sectionHeaders = @[@"Reading", @"Completed", @"On Hold", @"Dropped", @"Plan To Read"];
+        [self reloadTable];
+    }
 }
 
 - (IBAction)compareButtonPressed:(id)sender {
@@ -270,7 +249,7 @@
     
     UITableViewCell *cell;
     
-    if(self.animeButton.selected) {
+    if(self.compareControl.selectedSegmentIndex == 0) {
         cell = (AnimeCell *)[tableView dequeueReusableCellWithIdentifier:animeCellIdentifier];
         if(!cell) {
             NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"AnimeCell" owner:self options:nil];

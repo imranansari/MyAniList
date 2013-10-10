@@ -59,58 +59,42 @@
 }
 
 - (void)setStyleAttributes {
-    if(![UIApplication isiOS7]) {
-        [[UIBarButtonItem appearance] setBackgroundImage:[[UIImage alloc] init] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-        [[UIBarButtonItem appearance] setBackgroundImage:[[UIImage alloc] init] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
-        
-        UIImage *backButton = [UIImage imageNamed:@"back.png"];
-        backButton = [backButton resizableImageWithCapInsets:UIEdgeInsetsMake(0, backButton.size.width, 0, 0)];
-        [[UIBarButtonItem appearance] setBackButtonBackgroundImage:backButton forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-        [[UIBarButtonItem appearance] setBackButtonBackgroundImage:backButton forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
-    }
-    
     [UIApplication sharedApplication].statusBarStyle = [UIApplication isiOS7] ? UIStatusBarStyleLightContent : UIStatusBarStyleDefault;
 
     [[UIBarButtonItem appearance] setTitleTextAttributes:
                         @{
-                            UITextAttributeFont             : [UIFont fontWithName:@"HelveticaNeue-Light" size:0.0],
-                            UITextAttributeTextShadowOffset : [NSValue valueWithUIOffset:UIOffsetMake(0, -1)]
+                            NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Light" size:0.0]
                          }
                                                 forState: UIControlStateNormal];
     
     [[UINavigationBar appearance] setTitleTextAttributes:
                         @{
-                            UITextAttributeFont             : [UIFont fontWithName:@"HelveticaNeue-Light" size:0.0],
-                            UITextAttributeTextShadowOffset : [NSValue valueWithUIOffset:UIOffsetMake(0, -1)]
+                            NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Light" size:0.0]
                          }];
     
     NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-    [attributes setValue:[UIColor whiteColor] forKey:UITextAttributeTextColor];
-    [attributes setValue:[UIColor defaultShadowColor] forKey:UITextAttributeTextShadowColor];
-    [attributes setValue:[NSValue valueWithUIOffset:UIOffsetMake(0, 1)] forKey:UITextAttributeTextShadowOffset];
-    [attributes setValue:[UIFont fontWithName:@"HelveticaNeue-Light" size:0.0] forKey:UITextAttributeFont];
+    [attributes setValue:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
+    [attributes setValue:[UIFont fontWithName:@"HelveticaNeue-Light" size:0.0] forKey:NSFontAttributeName];
     
     [[UIBarButtonItem appearance] setTitleTextAttributes:attributes forState:UIControlStateNormal];
-
-    // Toolbar
-    [[UIToolbar appearance] setBackgroundImage:[[UIImage new] resizableImageWithCapInsets:UIEdgeInsetsMake(22, 5, 22, 5)] forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
     
-    if([UIApplication isiOS7]) {
-        [[UINavigationBar appearance] setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
-        [[UINavigationBar appearance] setShadowImage:[[UIImage alloc] init]];
-
-        [[UINavigationBar appearance] setTitleTextAttributes:@{
-                                                               UITextAttributeTextColor : [UIColor whiteColor],
-                                                               UITextAttributeFont      : [UIFont fontWithName:@"HelveticaNeue-Light" size:18.0],
-                                                               UITextAttributeTextShadowOffset : [NSValue valueWithUIOffset:UIOffsetMake(0, -1)]
-                                                               
-                                                               }];
-        
-        [[UIBarButtonItem appearance] setTitleTextAttributes:@{
-                                                               UITextAttributeFont      : [UIFont fontWithName:@"HelveticaNeue-Light" size:14.0],
-                                                               } forState:UIControlStateNormal];
-        self.window.tintColor = [UIColor whiteColor];
-    }
+    [[UISegmentedControl appearance] setTintColor:[UIColor whiteColor]];
+    
+    [[UINavigationBar appearance] setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
+    [[UINavigationBar appearance] setShadowImage:[[UIImage alloc] init]];
+    
+    [[UINavigationBar appearance] setTitleTextAttributes:@{
+                                                           NSForegroundColorAttributeName : [UIColor whiteColor],
+                                                           NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Light" size:18.0]
+                                                           
+                                                           }];
+    
+    [[UIBarButtonItem appearance] setTitleTextAttributes:@{
+                                                           NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Light" size:14.0],
+                                                           }
+                                                forState:UIControlStateNormal];
+    
+    self.window.tintColor = [UIColor whiteColor];
 }
 
 - (void)createDirectories {
