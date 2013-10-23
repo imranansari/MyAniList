@@ -11,7 +11,8 @@
 @implementation AniListSearchDisplayController
 
 - (void)setActive:(BOOL)visible animated:(BOOL)animated {
-    [super setActive: visible animated: animated];
+    [self.searchContentsController.navigationController setNavigationBarHidden:YES animated:NO];
+    [super setActive:visible animated:animated];
     [self.searchContentsController.navigationController setNavigationBarHidden:NO animated:NO];
     self.searchResultsTableView.backgroundColor = [UIColor clearColor];
 }

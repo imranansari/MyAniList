@@ -44,13 +44,8 @@
 {
     [super viewDidLoad];
     self.title = @"Search";
-    
     self.searchDisplayController.searchResultsTableView.backgroundColor = [UIColor clearColor];
     self.searchDisplayController.searchResultsTableView.separatorColor = [UIColor clearColor];
-//    self.searchDisplayController.searchBar.tintColor = [UIColor blackColor];
-    
-//    self.searchDisplayController.searchBar.backgroundImage = [UIImage new];
-//    self.searchDisplayController.searchBar.translucent = YES;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -284,6 +279,12 @@
 
 #pragma mark - UISearchDisplayDelegate Methods
 
+- (void)searchDisplayController:(UISearchDisplayController *)controller didShowSearchResultsTableView:(UITableView *)tableView {
+    [UIView animateWithDuration:0.3f animations:^{
+        tableView.alpha = 1.0f;
+    }];
+}
+
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchScope:(NSInteger)searchOption {
     
     [self filterContentForSearchText:[self.searchDisplayController.searchBar text]
@@ -311,7 +312,6 @@
 #pragma mark -
 #pragma mark Content Filtering
 
-#warning - how big of a performance cost is this?
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSInteger)scope {
     // update the filter, in this case just blow away the FRC and let lazy evaluation create another with the relevant search info
     self.fetchedResultsController.delegate = nil;
@@ -323,10 +323,17 @@
 
 #pragma mark -
 #pragma mark Search Bar
+
 - (void)searchDisplayController:(UISearchDisplayController *)controller willUnloadSearchResultsTableView:(UITableView *)tableView; {
     // search is done so get rid of the search FRC and reclaim memory
     self.fetchedResultsController.delegate = nil;
     self.fetchedResultsController = nil;
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    [UIView animateWithDuration:0.3f animations:^{
+        self.searchDisplayController.searchResultsTableView.alpha = 0.0f;
+    }];
 }
 
 @end
