@@ -16,5 +16,6 @@
 
 + (NSString *)progressTextForManga:(Manga *)manga withSpacing:(BOOL)spacing;
 - (void)addShadow;
+- (void)setDetailsForManga:(Manga *)manga;
 
 @end

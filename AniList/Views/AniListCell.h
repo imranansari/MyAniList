@@ -34,7 +34,6 @@ typedef enum {
 
 @property (nonatomic, weak) IBOutlet UIButton *plusButton;
 @property (nonatomic, weak) IBOutlet UIButton *minusButton;
-@property (nonatomic, weak) IBOutlet UIButton *deleteButton;
 
 @property (nonatomic, weak) Anime *editedAnime;
 @property (nonatomic, weak) Manga *editedManga;

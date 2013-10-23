@@ -247,6 +247,15 @@
     [actionSheet showInView:self.superview];
 }
 
+- (void)setDetailsForManga:(Manga *)manga {
+    self.title.text = manga.title;
+    [self.title sizeToFit];
+    self.progress.text = [MangaCell progressTextForManga:manga withSpacing:NO];
+    self.rank.text = [manga.user_score intValue] != -1 ? [NSString stringWithFormat:@"%d", [manga.user_score intValue]] : @"";
+    self.type.text = [Manga stringForMangaType:[manga.type intValue]];
+    
+    [self setImageWithItem:manga];
+}
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if(buttonIndex == actionSheet.destructiveButtonIndex) {

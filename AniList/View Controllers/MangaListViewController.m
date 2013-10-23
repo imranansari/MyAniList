@@ -109,10 +109,8 @@ static BOOL alreadyFetched = NO;
 }
 
 - (void)deleteManga {
-    Manga *manga = [self.fetchedResultsController objectAtIndexPath:self.editedIndexPath];
-    
-    if(manga) {
-        manga.read_status = @(MangaReadStatusNotReading);
+    if(self.editedManga) {
+        self.editedManga.read_status = @(MangaReadStatusNotReading);
     }
     
     self.editedIndexPath = nil;
@@ -140,17 +138,14 @@ static BOOL alreadyFetched = NO;
 
 - (void)didCancel:(UIGestureRecognizer *)gestureRecognizer {
     [super didCancel:gestureRecognizer];
-        
-//        if(([self.editedAnime.current_episode intValue] > 0 && [self.editedAnime.watched_status intValue] != AnimeWatchedStatusWatching)  &&
-//           ([self.editedAnime.current_episode intValue] > 0 && [self.editedAnime.watched_status intValue] != AnimeWatchedStatusCompleted)) {
-//            [self promptForBeginning:self.editedManga];
-//        }
-//        else {
-//            [self saveManga:self.editedManga];
-//        }
     
-    [self saveManga:self.editedManga];
-
+    if((([self.editedManga.current_chapter intValue] > 0 || [self.editedManga.current_volume intValue] > 0) && [self.editedManga.read_status intValue] != MangaReadStatusReading) &&
+       (([self.editedManga.current_chapter intValue] > 0 || [self.editedManga.current_volume intValue] > 0) && [self.editedManga.read_status intValue] != MangaReadStatusCompleted)) {
+        [self promptForBeginning:self.editedManga];
+    }
+    else {
+        [self saveManga:self.editedManga];
+    }
 }
 
 #pragma mark - Action Sheet Methods
@@ -218,6 +213,22 @@ static BOOL alreadyFetched = NO;
 
 #pragma mark - Table view delegate
 
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if(editingStyle == UITableViewCellEditingStyleDelete) {
+        
+        self.editedManga = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:[NSString stringWithFormat:@"Do you really want to delete '%@'?", self.editedManga.title]
+                                                                 delegate:self
+                                                        cancelButtonTitle:@"No"
+                                                   destructiveButtonTitle:@"Yes"
+                                                        otherButtonTitles:nil];
+        actionSheet.tag = ActionSheetPromptDeletion;
+        
+        [actionSheet showInView:self.view];
+    }
+}
+
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
        atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
       newIndexPath:(NSIndexPath *)newIndexPath {
@@ -268,13 +279,7 @@ static BOOL alreadyFetched = NO;
     
     Manga *manga = (Manga *)object;
     MangaCell *mangaCell = (MangaCell *)cell;
-    mangaCell.title.text = manga.title;
-    [mangaCell.title sizeToFit];
-    mangaCell.progress.text = [MangaCell progressTextForManga:manga withSpacing:NO];
-    mangaCell.rank.text = [manga.user_score intValue] != -1 ? [NSString stringWithFormat:@"%d", [manga.user_score intValue]] : @"";
-    mangaCell.type.text = [Manga stringForMangaType:[manga.type intValue]];
-    
-    [mangaCell setImageWithItem:manga];
+    [mangaCell setDetailsForManga:manga];
 }
 
 #pragma mark - UIScrollViewDelegate Methods
@@ -314,6 +319,9 @@ static BOOL alreadyFetched = NO;
             }
             break;
         case ActionSheetPromptDeletion:
+            if(buttonIndex == actionSheet.destructiveButtonIndex) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:kDeleteManga object:nil];
+            }
             break;
         default:
             break;
