@@ -16,5 +16,6 @@
 + (NSString *)progressTextForFriendAnime:(FriendAnime *)friendAnime;
 + (NSString *)progressTextForAnime:(Anime *)anime;
 - (void)addShadow;
+- (void)setDetailsForAnime:(Anime *)anime;
 
 @end

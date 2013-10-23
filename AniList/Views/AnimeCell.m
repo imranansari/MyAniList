@@ -144,6 +144,17 @@
     [actionSheet showInView:self.superview];
 }
 
+- (void)setDetailsForAnime:(Anime *)anime {
+    self.title.text = anime.title;
+    [self.title sizeToFit];
+    
+    self.progress.text = [AnimeCell progressTextForAnime:anime];
+    self.rank.text = [anime.user_score intValue] != -1 ? [NSString stringWithFormat:@"%d", [anime.user_score intValue]] : @"";
+    self.type.text = [Anime stringForAnimeType:[anime.type intValue]];
+    
+    [self setImageWithItem:anime];
+}
+
 #pragma mark - UIActionSheetDelegate Methods
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {

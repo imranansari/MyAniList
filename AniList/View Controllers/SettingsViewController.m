@@ -48,6 +48,14 @@
                              kOptionName    : @"Reset Manga Cache",
                              kAction        : @"resetMangaCache"
                              },
+                         @{
+                             kOptionName    : @"Official API Status: ",
+                             kAction        : @"checkOfficialAPIStatus"
+                             },
+                         @{
+                             kOptionName    : @"Unofficial API Status: ",
+                             kAction        : @"checkUnofficialAPIStatus"
+                             }
                          ];
     }
     return self;
@@ -141,7 +149,31 @@
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self enableGenreTagSupport];
+    
+    SEL selector = NSSelectorFromString(self.options[indexPath.row][kAction]);
+    
+    if([self canPerformAction:selector withSender:nil]) {
+        [self performSelector:selector];
+    }
+}
+
+- (void)checkOfficialAPIStatus {
+    
+//    NSDictionary *item = self.options[self.options.count - 2];
+    
+    [[MALHTTPClient sharedClient] officialAPIAvailable:^(id operation, id response) {
+        ALLog(@"Official API Status is available.");
+    } failure:^(id operation, NSError *error) {
+        ALLog(@"Official API Status is unavailable.");
+    }];
+}
+
+- (void)checkUnofficialAPIStatus {
+    [[MALHTTPClient sharedClient] unofficialAPIAvailable:^(id operation, id response) {
+        ALLog(@"Unofficial API Status is available.");
+    } failure:^(id operation, NSError *error) {
+        ALLog(@"Unofficial API Status is unavailable.");
+    }];
 }
 
 #pragma mark - Action Methods

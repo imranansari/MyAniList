@@ -29,9 +29,7 @@ static BOOL alreadyFetched = NO;
         self.title = @"Anime";
         self.sectionHeaders = @[@"Watching", @"Completed", @"On Hold", @"Dropped", @"Plan To Watch"];
         
-        
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchData) name:kUserLoggedIn object:nil];
-        
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deleteAnime) name:kDeleteAnime object:nil];
     }
     
@@ -61,66 +59,33 @@ static BOOL alreadyFetched = NO;
 }
 
 - (NSArray *)sortDescriptors {
-
-    if(self.viewTop) {
-        return @[[[NSSortDescriptor alloc] initWithKey:@"average_score" ascending:NO]];
-    }
-    else if(self.viewPopular) {
-        return @[[[NSSortDescriptor alloc] initWithKey:@"popularity_rank" ascending:YES]];
-    }
-    else {
-        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:YES];
-        NSSortDescriptor *primaryDescriptor = [[NSSortDescriptor alloc] initWithKey:@"watched_status" ascending:YES];
-        return @[primaryDescriptor, sortDescriptor];
-    }
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:YES];
+    NSSortDescriptor *primaryDescriptor = [[NSSortDescriptor alloc] initWithKey:@"watched_status" ascending:YES];
+    return @[primaryDescriptor, sortDescriptor];
 }
 
 - (NSPredicate *)predicate {
-    if(self.viewTop || self.viewPopular) {
-        return nil;
-    }
-    
     return [NSPredicate predicateWithFormat:@"watched_status < 7"];
 }
 
 - (NSString *)sectionKeyPathName {
-    if(self.viewTop || self.viewPopular) {
-        return nil;
-    }
-    
     return [super sectionKeyPathName];
 }
 
 - (void)fetchData {
     if([UserProfile userIsLoggedIn]) {
-        
-        if(self.viewTop) {
-            [[MALHTTPClient sharedClient] getTopAnimeForType:AnimeTypeTV atPage:@(1) success:^(id operation, id response) {
-                ALLog(@"Anime list found: %@", response);
-                for(NSDictionary *anime in response) {
-                    [AnimeService addAnime:anime fromList:NO];
-                }
-            } failure:^(id operation, NSError *error) {
-                ALLog(@"Could not fetch top.");
-            }];
-        }
-        else if(self.viewPopular) {
-            
-        }
-        else {
-            [[MALHTTPClient sharedClient] getAnimeListForUser:[[UserProfile profile] username]
-                                                 initialFetch:!alreadyFetched
-                                                      success:^(NSURLRequest *operation, id response) {
-                                                          [AnimeService addAnimeList:(NSDictionary *)response];
-                                                          alreadyFetched = YES;
-                                                          [super fetchData];
-                                                      }
-                                                      failure:^(NSURLRequest *operation, NSError *error) {
-                                                          // Derp.
-                                                          
-                                                          [super fetchData];
-                                                      }];
-        }
+        [[MALHTTPClient sharedClient] getAnimeListForUser:[[UserProfile profile] username]
+                                             initialFetch:!alreadyFetched
+                                                  success:^(NSURLRequest *operation, id response) {
+                                                      [AnimeService addAnimeList:(NSDictionary *)response];
+                                                      alreadyFetched = YES;
+                                                      [super fetchData];
+                                                  }
+                                                  failure:^(NSURLRequest *operation, NSError *error) {
+                                                      // Derp.
+                                                      
+                                                      [super fetchData];
+                                                  }];
     }
 }
 
@@ -133,7 +98,6 @@ static BOOL alreadyFetched = NO;
         }];
     }
     
-    self.tableView.editing = NO;
     self.editedIndexPath = nil;
     self.editedAnime = nil;
 }
@@ -145,7 +109,6 @@ static BOOL alreadyFetched = NO;
         anime.watched_status = @(AnimeWatchedStatusNotWatching);
     }
     
-    self.tableView.editing = NO;
     self.editedIndexPath = nil;
     self.editedAnime = nil;
 }
@@ -263,7 +226,7 @@ static BOOL alreadyFetched = NO;
             break;
             
         case NSFetchedResultsChangeUpdate:
-            if(self.tableView.editing) {
+            if(self.editedIndexPath) {
                 if([self.editedAnime.current_episode intValue] == [self.editedAnime.total_episodes intValue] &&
                    [self.editedAnime.watched_status intValue] != AnimeWatchedStatusCompleted &&
                    [self.editedAnime.total_episodes intValue] != 0) {
@@ -296,14 +259,7 @@ static BOOL alreadyFetched = NO;
 - (void)configureCell:(UITableViewCell *)cell withObject:(NSManagedObject *)object {
     Anime *anime = (Anime *)object;
     AnimeCell *animeCell = (AnimeCell *)cell;
-    animeCell.title.text = anime.title;
-    [animeCell.title sizeToFit];
-    
-    animeCell.progress.text = [AnimeCell progressTextForAnime:anime];
-    animeCell.rank.text = [anime.user_score intValue] != -1 ? [NSString stringWithFormat:@"%d", [anime.user_score intValue]] : @"";
-    animeCell.type.text = [Anime stringForAnimeType:[anime.type intValue]];
-    
-    [animeCell setImageWithItem:anime];
+    [animeCell setDetailsForAnime:anime];
 }
 
 #pragma mark - UIScrollViewDelegate Methods
@@ -335,7 +291,6 @@ static BOOL alreadyFetched = NO;
                 AnimeUserInfoEditViewController *vc = [[AnimeUserInfoEditViewController alloc] init];
                 vc.anime = self.editedAnime;
                 [self.navigationController pushViewController:vc animated:YES];
-                self.tableView.editing = NO;
                 self.editedIndexPath = nil;
                 self.editedAnime = nil;
             }

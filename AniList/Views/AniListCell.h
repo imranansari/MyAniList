@@ -29,7 +29,7 @@ typedef enum {
 @property (nonatomic, weak) IBOutlet UILabel *type;
 @property (nonatomic, weak) IBOutlet UILabel *rank;
 @property (nonatomic, weak) IBOutlet UIView *loadingView;
-@property (nonatomic, weak) IBOutlet UIView *editView;
+@property (nonatomic, strong) IBOutlet UIView *editView;
 @property (nonatomic, weak) IBOutlet UIView *detailView;
 
 @property (nonatomic, weak) IBOutlet UIButton *plusButton;

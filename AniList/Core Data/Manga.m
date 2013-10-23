@@ -25,6 +25,7 @@
 @dynamic enable_rereading;
 @dynamic favorited_count;
 @dynamic image;
+@dynamic image_tn;
 @dynamic image_url;
 @dynamic last_updated;
 @dynamic manga_id;
@@ -201,7 +202,7 @@
     
     switch (readStatus) {
         case MangaReadStatusReading:
-            return [NSString stringWithFormat:@"You are currently reading this %@.", seriesText];
+            return [NSString stringWithFormat:@"Currently reading this %@.", seriesText];
         case MangaReadStatusCompleted:
             return [NSString stringWithFormat:@"You finished this %@.", seriesText];
         case MangaReadStatusOnHold:
@@ -209,7 +210,7 @@
         case MangaReadStatusDropped:
             return [NSString stringWithFormat:@"You dropped this %@.", seriesText];
         case MangaReadStatusPlanToRead:
-            return [NSString stringWithFormat:@"You are planning to read this %@.", seriesText];
+            return [NSString stringWithFormat:@"Planning to read this %@.", seriesText];
         case MangaReadStatusNotReading:
             return [NSString stringWithFormat:@"Add this %@ to your list?", seriesText];
         case MangaReadStatusUnknown:
@@ -298,7 +299,7 @@
 
 - (UIImage *)imageForManga {
     NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString *cachedImageLocation = [NSString stringWithFormat:@"%@/%@", documentsDirectory, self.image];
+    NSString *cachedImageLocation = [NSString stringWithFormat:@"%@/%@", documentsDirectory, self.image_tn];
     UIImage *cachedImage = [UIImage imageWithContentsOfFile:cachedImageLocation];
     
     if(cachedImage) {
@@ -311,18 +312,27 @@
     return cachedImage;
 }
 
+- (NSString *)image_tn {
+    return [self.image stringByReplacingOccurrencesOfString:@".png" withString:@"_tn.png"];
+}
 
 - (void)saveImage:(UIImage *)image fromRequest:(NSURLRequest *)request {
     ALLog(@"Saving image to disk...");
     NSArray *segmentedURL = [[request.URL absoluteString] componentsSeparatedByString:@"/"];
     NSString *filename = [segmentedURL lastObject];
+    NSString *thumbnailName = [filename stringByReplacingOccurrencesOfString:@".png" withString:@"_tn.png"];
     NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     NSString *animeImagePath = [NSString stringWithFormat:@"%@/manga/%@", documentsDirectory, filename];
+    NSString *thumbnailImagePath = [NSString stringWithFormat:@"%@/manga/%@", documentsDirectory, thumbnailName];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
         BOOL saved = NO;
         saved = [UIImageJPEGRepresentation(image, 1.0) writeToFile:animeImagePath options:NSAtomicWrite error:nil];
         ALLog(@"Image %@", saved ? @"saved." : @"did not save.");
+        
+        UIImage *thumbnail = [UIImage imageWithImage:image scaledToSize:CGSizeMake(image.size.width/2, image.size.height/2)];
+        saved = [UIImageJPEGRepresentation(thumbnail, 1.0) writeToFile:thumbnailImagePath options:NSAtomicWrite error:nil];
+        ALLog(@"Thumbnail %@", saved ? @"saved." : @"did not save.");
     });
     
     // Only save relative URL since Documents URL can change on updates.

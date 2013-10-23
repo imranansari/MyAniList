@@ -20,6 +20,9 @@ typedef void (^HTTPFailureBlock)(id operation, NSError *error);
 
 + (MALHTTPClient *)sharedClient;
 
+- (void)officialAPIAvailable:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure;
+- (void)unofficialAPIAvailable:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure;
+
 - (void)loginWithUsername:(NSString *)username andPassword:(NSString *)password success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure;
 
 - (void)getAnimeListForUser:(NSString *)user initialFetch:(BOOL)initialFetch success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure;

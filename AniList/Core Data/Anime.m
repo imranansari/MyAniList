@@ -25,6 +25,7 @@
 @dynamic fansub_group;
 @dynamic favorited_count;
 @dynamic image;
+@dynamic image_tn;
 @dynamic image_url;
 @dynamic last_updated;
 @dynamic popularity_rank;
@@ -189,7 +190,7 @@
     
     switch (watchedStatus) {
         case AnimeWatchedStatusWatching:
-            return [NSString stringWithFormat:@"You are currently watching this %@.", seriesText];
+            return [NSString stringWithFormat:@"Currently watching this %@.", seriesText];
         case AnimeWatchedStatusCompleted:
             return [NSString stringWithFormat:@"You finished this %@.", seriesText];
         case AnimeWatchedStatusOnHold:
@@ -197,7 +198,7 @@
         case AnimeWatchedStatusDropped:
             return [NSString stringWithFormat:@"You dropped this %@.", seriesText];
         case AnimeWatchedStatusPlanToWatch:
-            return [NSString stringWithFormat:@"You are planning to watch this %@.", seriesText];
+            return [NSString stringWithFormat:@"Planning to watch this %@.", seriesText];
         case AnimeWatchedStatusNotWatching:
             return [NSString stringWithFormat:@"Add this %@ to your list?", seriesText];
         case AnimeWatchedStatusUnknown:
@@ -312,27 +313,39 @@
 
 - (UIImage *)imageForAnime {
     NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString *cachedImageLocation = [NSString stringWithFormat:@"%@/%@", documentsDirectory, self.image];
+    NSString *cachedImageLocation = [NSString stringWithFormat:@"%@/%@", documentsDirectory, self.image_tn];
     UIImage *cachedImage = [UIImage imageWithContentsOfFile:cachedImageLocation];
     
     if(cachedImage) {
-//        ALLog(@"Image on disk exists for %@.", self.title);
+        ALVLog(@"Image on disk exists for %@.", self.title);
     }
     else {
-//        ALLog(@"Image on disk does not exist for %@.", self.title);
+        ALVLog(@"Image on disk does not exist for %@.", self.title);
     }
     
     return cachedImage;
 }
 
+- (NSString *)image_tn {
+    return [self.image stringByReplacingOccurrencesOfString:@".png" withString:@"_tn.png"];
+}
+
 - (void)saveImage:(UIImage *)image fromRequest:(NSURLRequest *)request {
     NSArray *segmentedURL = [[request.URL absoluteString] componentsSeparatedByString:@"/"];
     NSString *filename = [segmentedURL lastObject];
+    NSString *thumbnailName = [filename stringByReplacingOccurrencesOfString:@".png" withString:@"_tn.png"];
     NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     NSString *animeImagePath = [NSString stringWithFormat:@"%@/anime/%@", documentsDirectory, filename];
+    NSString *thumbnailImagePath = [NSString stringWithFormat:@"%@/anime/%@", documentsDirectory, thumbnailName];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-        [UIImageJPEGRepresentation(image, 1.0) writeToFile:animeImagePath options:NSAtomicWrite error:nil];
+        BOOL saved = NO;
+        saved = [UIImageJPEGRepresentation(image, 1.0) writeToFile:animeImagePath options:NSAtomicWrite error:nil];
+        ALLog(@"Image %@", saved ? @"saved." : @"did not save.");
+        
+        UIImage *thumbnail = [UIImage imageWithImage:image scaledToSize:CGSizeMake(image.size.width/2, image.size.height/2)];
+        saved = [UIImageJPEGRepresentation(thumbnail, 1.0) writeToFile:thumbnailImagePath options:NSAtomicWrite error:nil];
+        ALLog(@"Thumbnail %@", saved ? @"saved." : @"did not save.");
     });
     
     // Only save relative URL since Documents URL can change on updates.

@@ -80,6 +80,31 @@
                                   }];
 }
 
+#pragma mark - Availability Methods
+
+- (void)officialAPIAvailable:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure {
+    [[MALHTTPClient sharedClient] searchForAnimeWithQuery:@"Steins;Gate" success:^(id operation, id response) {
+        success(operation, @(YES));
+    } failure:^(id operation, NSError *error) {
+        failure(operation, error);
+    }];
+}
+
+- (void)unofficialAPIAvailable:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure {
+    NSString *path = @"/anime/9253";
+    
+    [[UMALHTTPClient sharedClient] authenticate];
+    [[UMALHTTPClient sharedClient] getPath:path
+                                parameters:nil
+                                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                       success(operation, @(YES));
+                                   }
+                                   failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                       failure(operation, error);
+                                   }];
+}
+
+
 #pragma mark - User Authentication Methods
 
 - (void)loginWithUsername:(NSString *)username andPassword:(NSString *)password success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure {

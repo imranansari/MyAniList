@@ -13,8 +13,7 @@
 
 @interface AniListViewController ()
 @property (nonatomic, weak) IBOutlet CRTransitionLabel *topSectionLabel;
-@property (nonatomic, strong) EGORefreshTableHeaderView *refreshHeaderView;
-@property (nonatomic, assign) BOOL reloading;
+@property (nonatomic, strong) UIRefreshControl *refreshControl;
 @end
 
 @implementation AniListViewController
@@ -34,7 +33,6 @@
 }
 
 - (void)dealloc {
-    self.refreshHeaderView.delegate = nil;
     self.fetchedResultsController.delegate = nil;
     [NSFetchedResultsController deleteCacheWithName:[self entityName]];
     self.fetchedResultsController = nil;
@@ -45,6 +43,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(fetchData) forControlEvents:UIControlEventValueChanged];
+    self.refreshControl.tintColor = [UIColor whiteColor];
+    [self.tableView addSubview:self.refreshControl];
     
     SWRevealViewController *revealController = self.revealViewController;
     
@@ -87,16 +90,6 @@
     
     self.topSectionLabel.text = @"";
     self.topSectionLabel.alpha = 0.0f;
-    
-    // Set up Pull to Refresh view.
-    if(self.refreshHeaderView == nil) {
-        self.refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.tableView.bounds.size.height, self.view.frame.size.width, self.tableView.bounds.size.height)];
-        self.refreshHeaderView.delegate = self;
-        [self.tableView addSubview:self.refreshHeaderView];
-    }
-    
-    // Update the last update date.
-    [self.refreshHeaderView refreshLastUpdatedDate];
     
     UISwipeGestureRecognizer *swipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(didSwipe:)];
     [swipeGestureRecognizer setDirection:UISwipeGestureRecognizerDirectionLeft];
@@ -144,7 +137,6 @@
         [tapGestureRecognizer setNumberOfTapsRequired:1];
         [swipedCell addGestureRecognizer:tapGestureRecognizer];
         
-        self.tableView.editing = YES;
         self.editedIndexPath = swipedIndexPath;
     }
 }
@@ -165,8 +157,7 @@
 
 // Must call super after fetching is done!
 - (void)fetchData {
-    self.reloading = NO;
-    [self.refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
+    [self.refreshControl endRefreshing];
 }
 
 // Must override.
@@ -199,8 +190,6 @@
 #pragma mark - Table view data source
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    if(self.viewTop || self.viewPopular) return nil;
-    
     NSNumber *headerSection = [self.fetchedResultsController sectionIndexTitles][section];
     NSString *count = [NSString stringWithFormat:@"%d", [self.tableView numberOfRowsInSection:section]];
     UIView *headerView = [UIView tableHeaderWithPrimaryText:self.sectionHeaders[[headerSection intValue]] andSecondaryText:count];
@@ -248,14 +237,21 @@
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return YES if you want the specified item to be editable.
-    return NO;
+    return YES;
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return UITableViewCellEditingStyleDelete;
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if(editingStyle == UITableViewCellEditingStyleDelete) {
         
     }
+}
+
+- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath {
+    return NO;
 }
 
 #pragma mark - Table view delegate
@@ -358,8 +354,6 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
-    [self.refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
-    
 //    ALLog(@"content offset: %f", scrollView.contentOffset.y);
     
     if(scrollView.contentOffset.y > 36) {
@@ -399,31 +393,6 @@
             navigationController.imageView.frame = CGRectMake(navigationController.imageView.frame.origin.x, yOrigin, navigationController.imageView.frame.size.width, navigationController.imageView.frame.size.height);
         }
     }
-}
-
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-	[self.refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
-}
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    if(self.reloading) {
-        [self fetchData];
-    }
-}
-
-#pragma mark - EGOTableViewPullRefreshDelegate Methods
-
-- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view {
-    self.reloading = YES;
-}
-
-- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view {
-    return self.reloading; // should return if data source model is reloading
-}
-
-- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view {
-    return [NSDate date]; // should return date data source was last changed
 }
 
 @end

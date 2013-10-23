@@ -155,6 +155,11 @@ static BOOL fetching = NO;
             }];
         }
     }
+    else {
+        [UIView animateWithDuration:0.3f animations:^{
+            self.indicator.alpha = 0.0f;
+        }];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {

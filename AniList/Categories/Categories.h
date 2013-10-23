@@ -22,5 +22,6 @@
 #import "UIBarButtonItem+AniList.h"
 #import "UIButton+AniList.h"
 #import "UIApplication+AniList.h"
+#import "UIImage+AniList.h"
 
 #endif

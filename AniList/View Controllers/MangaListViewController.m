@@ -104,7 +104,6 @@ static BOOL alreadyFetched = NO;
         }];
     }
     
-    self.tableView.editing = NO;
     self.editedIndexPath = nil;
     self.editedManga = nil;
 }
@@ -116,7 +115,6 @@ static BOOL alreadyFetched = NO;
         manga.read_status = @(MangaReadStatusNotReading);
     }
     
-    self.tableView.editing = NO;
     self.editedIndexPath = nil;
     self.editedManga = nil;
 }
@@ -234,7 +232,7 @@ static BOOL alreadyFetched = NO;
             break;
             
         case NSFetchedResultsChangeUpdate:
-            if(self.tableView.editing) {
+            if(self.editedIndexPath) {
                 if((([self.editedManga.current_chapter intValue] == [self.editedManga.total_chapters intValue]) ||
                     ([self.editedManga.current_volume intValue] == [self.editedManga.total_volumes intValue])) &&
                      [self.editedManga.read_status intValue] != MangaReadStatusCompleted &&
@@ -311,7 +309,6 @@ static BOOL alreadyFetched = NO;
                 MangaUserInfoEditViewController *vc = [[MangaUserInfoEditViewController alloc] init];
                 vc.manga = self.editedManga;
                 [self.navigationController pushViewController:vc animated:YES];
-                self.tableView.editing = NO;
                 self.editedIndexPath = nil;
                 self.editedManga = nil;
             }

@@ -67,23 +67,13 @@
 }
 
 - (void)setupEditView {
-    [self.editTitle addShadow];
-    self.editTitle.text = self.title.text;
-    [self.editTitle sizeToFit];
-    self.editTitle.frame = CGRectMake(self.title.frame.origin.x,
-                                      self.title.frame.origin.y,
-                                      self.editTitle.frame.size.width,
-                                      self.editTitle.frame.size.height);
-    
-    [self.deleteButton setBackgroundImage:[UIImage imageNamed:@"red_bg_pressed.png"] forState:UIControlStateHighlighted];
     [self.plusButton setBackgroundImage:[UIImage imageNamed:@"white_bg_pressed.png"] forState:UIControlStateHighlighted];
     [self.minusButton setBackgroundImage:[UIImage imageNamed:@"white_bg_pressed.png"] forState:UIControlStateHighlighted];
     
     self.plusButton.userInteractionEnabled = YES;
     self.minusButton.userInteractionEnabled = YES;
-    self.deleteButton.userInteractionEnabled = YES;
     
-    self.plusButton.alpha = self.minusButton.alpha = self.deleteButton.alpha = 1.0f;
+    self.plusButton.alpha = self.minusButton.alpha = 1.0f;
 }
 
 - (void)setImageWithItem:(NSManagedObject *)object {
@@ -133,14 +123,14 @@
                         if(!anime.image) {
                             // Save the image onto disk if it doesn't exist or they aren't the same.
                             [anime saveImage:image fromRequest:request];
-                            [[ImageManager sharedManager] addImage:image forAnime:anime];
+//                            [[ImageManager sharedManager] addImage:[anime imageForAnime] forAnime:anime];
                         }
                     }
                     else {
                         if(!manga.image) {
                             // Save the image onto disk if it doesn't exist or they aren't the same.
                             [manga saveImage:image fromRequest:request];
-                            [[ImageManager sharedManager] addImage:image forManga:manga];
+//                            [[ImageManager sharedManager] addImage:[manga imageForManga] forManga:manga];
                         }
                     }
                     
@@ -179,6 +169,8 @@
     
     self.editView.alpha = 0.0f;
     self.editView.hidden = NO;
+    
+    [self addSubview:self.editView];
     
     self.detailView.alpha = 1.0f;
     
@@ -227,6 +219,8 @@
                      }
                      completion:^(BOOL finished) {
                          self.editView.hidden = YES;
+                         
+                         [self.editView removeFromSuperview];
 
                          for(UIGestureRecognizer *gesture in self.gestureRecognizers) {
                              [self removeGestureRecognizer:gesture];
