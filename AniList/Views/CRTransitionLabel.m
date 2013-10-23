@@ -51,8 +51,6 @@
         self.firstLabel.textAlignment = self.secondLabel.textAlignment = self.textAlignment;
         self.backgroundColor = [UIColor clearColor];
         
-        [self addShadow];
-        
         self.transitionRate = 0.3f;
         
         [self addSubview:self.firstLabel];

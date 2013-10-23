@@ -79,6 +79,10 @@ static BOOL alreadyFetched = NO;
 
 - (void)fetchData {
     if([UserProfile userIsLoggedIn]) {
+        
+        self.tableView.alpha = 0.0f;
+        self.indicator.alpha = 1.0f;
+        
         [[MALHTTPClient sharedClient] getMangaListForUser:[[UserProfile profile] username]
                                              initialFetch:!alreadyFetched
                                                   success:^(NSURLRequest *operation, id response) {

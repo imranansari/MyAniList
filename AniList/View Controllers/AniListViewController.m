@@ -101,6 +101,8 @@
     
     self.maskView.frame = CGRectMake(self.maskView.frame.origin.x, self.maskView.frame.origin.y + 2, self.maskView.frame.size.width, self.maskView.frame.size.height - 2);
     self.tableView.frame = CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y + 46, self.tableView.frame.size.width, self.tableView.frame.size.height - 46);
+    
+    self.indicator.alpha = 0.0f;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -158,6 +160,11 @@
 // Must call super after fetching is done!
 - (void)fetchData {
     [self.refreshControl endRefreshing];
+    
+    [UIView animateWithDuration:0.3f animations:^{
+        self.tableView.alpha = 1.0f;
+        self.indicator.alpha = 0.0f;
+    }];
 }
 
 // Must override.

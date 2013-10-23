@@ -49,8 +49,6 @@
     self.selectedBackgroundView = select;
     
     self.image.clipsToBounds = YES;
-    
-    [self addShadow];
 }
 
 + (CGFloat)cellHeight {

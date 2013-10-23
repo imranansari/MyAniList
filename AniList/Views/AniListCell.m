@@ -47,8 +47,6 @@
 
     self.editView.hidden = YES;
     self.editView.alpha = 0.0f;
-    
-    [self addShadow];
 }
 
 + (CGFloat)cellHeight {
