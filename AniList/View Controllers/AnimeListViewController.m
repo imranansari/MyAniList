@@ -103,10 +103,8 @@ static BOOL alreadyFetched = NO;
 }
 
 - (void)deleteAnime {
-    Anime *anime = [self.fetchedResultsController objectAtIndexPath:self.editedIndexPath];
-    
-    if(anime) {
-        anime.watched_status = @(AnimeWatchedStatusNotWatching);
+    if(self.editedAnime) {
+        self.editedAnime.watched_status = @(AnimeWatchedStatusNotWatching);
     }
     
     self.editedIndexPath = nil;
@@ -212,6 +210,22 @@ static BOOL alreadyFetched = NO;
 
 #pragma mark - Table view delegate
 
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if(editingStyle == UITableViewCellEditingStyleDelete) {
+        
+        self.editedAnime = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:[NSString stringWithFormat:@"Do you really want to delete '%@'?", self.editedAnime.title]
+                                                                 delegate:self
+                                                        cancelButtonTitle:@"No"
+                                                   destructiveButtonTitle:@"Yes"
+                                                        otherButtonTitles:nil];
+        actionSheet.tag = ActionSheetPromptDeletion;
+        
+        [actionSheet showInView:self.view];
+    }
+}
+
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
        atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
       newIndexPath:(NSIndexPath *)newIndexPath {
@@ -296,6 +310,9 @@ static BOOL alreadyFetched = NO;
             }
             break;
         case ActionSheetPromptDeletion:
+            if(buttonIndex == actionSheet.destructiveButtonIndex) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:kDeleteAnime object:nil];
+            }
             break;
         default:
             break;

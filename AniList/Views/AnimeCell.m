@@ -155,12 +155,4 @@
     [self setImageWithItem:anime];
 }
 
-#pragma mark - UIActionSheetDelegate Methods
-
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if(buttonIndex == actionSheet.destructiveButtonIndex) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kDeleteAnime object:nil];
-    }
-}
-
 @end
