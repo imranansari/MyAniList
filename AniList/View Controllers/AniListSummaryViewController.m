@@ -58,8 +58,6 @@
     gradient.endPoint = CGPointMake(0.0f, 0.10f);
     
     self.maskView.layer.mask = gradient;
-
-    [self.titleLabel addShadow];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -313,7 +311,6 @@
     else return;
     
     self.navigationItem.backBarButtonItem = [UIBarButtonItem customBackButtonWithTitle:@"Back"];
-    
     [self.navigationController pushViewController:vc animated:YES];
 }
 

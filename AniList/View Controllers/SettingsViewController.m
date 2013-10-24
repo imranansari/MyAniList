@@ -21,6 +21,7 @@
 @property (nonatomic, weak) IBOutlet UIView *maskView;
 @property (nonatomic, weak) IBOutlet AniListTableView *tableView;
 @property (nonatomic, strong) NSArray *options;
+@property (nonatomic, strong) NSArray *apiStatus;
 @property (nonatomic, weak) IBOutlet CRTransitionLabel *status;
 @property (nonatomic, weak) IBOutlet UIProgressView *progressView;
 @end
@@ -47,16 +48,21 @@
                          @{
                              kOptionName    : @"Reset Manga Cache",
                              kAction        : @"resetMangaCache"
-                             },
-                         @{
-                             kOptionName    : @"Official API Status: ",
-                             kAction        : @"checkOfficialAPIStatus"
-                             },
-                         @{
-                             kOptionName    : @"Unofficial API Status: ",
-                             kAction        : @"checkUnofficialAPIStatus"
                              }
                          ];
+        
+        self.apiStatus = @[
+                        @{
+                            kOptionName    : @"Checking API Status...",
+                            kAction        : @"checkOfficialAPIStatus"
+                            },
+                        @{
+                            kOptionName    : @"Checking Unofficial API Status...",
+                            kAction        : @"checkUnofficialAPIStatus"
+                            }
+                        ];
+        
+        
     }
     return self;
 }
@@ -103,6 +109,9 @@
     self.maskView.layer.mask = gradient;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"hamburger.png"] style:UIBarButtonItemStylePlain target:revealController action:@selector(revealToggle:)];
     
+    [self checkOfficialAPIStatus];
+    [self checkUnofficialAPIStatus];
+    
 }
 
 #pragma mark - Table view data source
@@ -120,11 +129,20 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.options.count;
+    switch (section) {
+        case 0:
+            return self.options.count;
+            break;
+        case 1:
+            return self.apiStatus.count;
+            break;
+    }
+    
+    return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -139,7 +157,21 @@
         [(SettingsCell *)cell setup];
     }
     
-    NSDictionary *item = self.options[indexPath.row];
+    NSArray *array;
+    
+    switch (indexPath.section) {
+        case 0:
+            array = self.options;
+            break;
+        case 1:
+            array = self.apiStatus;
+            break;
+        default:
+            array = nil;
+            break;
+    }
+    
+    NSDictionary *item = array[indexPath.row];
     
     cell.option.text = item[kOptionName];
     
@@ -159,20 +191,60 @@
 
 - (void)checkOfficialAPIStatus {
     
-//    NSDictionary *item = self.options[self.options.count - 2];
+    NSMutableArray *APIArray = [self.apiStatus mutableCopy];
+    NSMutableDictionary *item = nil;
+    int index = 0;
+    
+    for(NSDictionary *option in self.apiStatus) {
+        if([option[kAction] isEqualToString:@"checkOfficialAPIStatus"]) {
+            item = [option mutableCopy];
+            index = [self.apiStatus indexOfObject:option];
+            break;
+        }
+    }
     
     [[MALHTTPClient sharedClient] officialAPIAvailable:^(id operation, id response) {
         ALLog(@"Official API Status is available.");
+        item[kOptionName] = @"Official API is available.";
+        [APIArray replaceObjectAtIndex:index withObject:item];
+        self.apiStatus = [APIArray copy];
+        [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:1]] withRowAnimation:UITableViewRowAnimationFade];
     } failure:^(id operation, NSError *error) {
         ALLog(@"Official API Status is unavailable.");
+        item[kOptionName] = @"Official API is unavailable.";
+        [APIArray replaceObjectAtIndex:index withObject:item];
+        self.apiStatus = [APIArray copy];
+        [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:1]] withRowAnimation:UITableViewRowAnimationFade];
     }];
+
 }
 
 - (void)checkUnofficialAPIStatus {
+    
+    NSMutableArray *APIArray = [self.apiStatus mutableCopy];
+    NSMutableDictionary *item = nil;
+    int index = 0;
+    
+    for(NSDictionary *option in self.apiStatus) {
+        if([option[kAction] isEqualToString:@"checkUnofficialAPIStatus"]) {
+            item = [option mutableCopy];
+            index = [self.apiStatus indexOfObject:option];
+            break;
+        }
+    }
+    
     [[MALHTTPClient sharedClient] unofficialAPIAvailable:^(id operation, id response) {
         ALLog(@"Unofficial API Status is available.");
+        item[kOptionName] = @"Unofficial API is available.";
+        [APIArray replaceObjectAtIndex:index withObject:item];
+        self.apiStatus = [APIArray copy];
+        [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:1]] withRowAnimation:UITableViewRowAnimationFade];
     } failure:^(id operation, NSError *error) {
         ALLog(@"Unofficial API Status is unavailable.");
+        item[kOptionName] = @"Unofficial API is unavailable.";
+        [APIArray replaceObjectAtIndex:index withObject:item];
+        self.apiStatus = [APIArray copy];
+        [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:1]] withRowAnimation:UITableViewRowAnimationFade];
     }];
 }
 
@@ -191,6 +263,9 @@
 
 - (void)downloadInfo {
     
+    [AnimeService downloadInfo];
+    return;
+    
     self.status.text = @"Progress: 0%";
     self.progressView.progress = 0.0f;
     
@@ -203,32 +278,6 @@
     NSArray *mangaArray = [MangaService allManga];
     float total = animeArray.count + mangaArray.count;
     float __block counter = 0;
-    
-    for(Anime *anime in animeArray) {
-        double delayInSeconds = 1.0f;
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            [[MALHTTPClient sharedClient] getAnimeDetailsForID:anime.anime_id success:^(id operation, id response) {
-                counter++;
-                [AnimeService addAnime:response fromList:NO];
-                
-                ALLog(@"Recieved extra details for '%@.'", anime.title);
-                ALLog(@"Progress: %0.0f completed", (counter / total) * 100);
-                
-                self.status.text = [NSString stringWithFormat:@"Progress: %0.0f%%", (counter / total) * 100];
-                self.progressView.progress = counter / total;
-                
-            } failure:^(id operation, NSError *error) {
-                counter++;
-                
-                ALLog(@"Failed to get extra details for '%@.'", anime.title);
-                ALLog(@"Progress: %0.0f completed", (counter / total) * 100);
-                
-                self.status.text = [NSString stringWithFormat:@"Progress: %0.0f%%", (counter / total) * 100];
-                self.progressView.progress = counter / total;
-            }];
-        });
-    }
     
     for(Manga *manga in mangaArray) {
         double delayInSeconds = 2.0;

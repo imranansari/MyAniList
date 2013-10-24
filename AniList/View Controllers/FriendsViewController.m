@@ -59,6 +59,30 @@
     gradient.endPoint = CGPointMake(0.0f, 0.05f);
     
     self.maskView.layer.mask = gradient;
+    
+    if([self.fetchedResultsController.fetchedObjects count] > 0) {
+        for(Friend *friend in self.fetchedResultsController.fetchedObjects) {
+            [[MALHTTPClient sharedClient] getProfileForUser:friend.username success:^(id operation, id response) {
+                ALLog(@"Got info for friend %@.", friend.username);
+                NSDictionary *animeStats = response[kAnimeStats];
+                NSDictionary *mangaStats = response[kMangaStats];
+                NSDictionary *details = response[@"details"];
+                NSString *avatarURL = response[@"avatar_url"];
+                
+                friend.anime_completed = animeStats[@"completed"];
+                friend.anime_total_entries = animeStats[@"total_entries"];
+                
+                friend.manga_completed = mangaStats[@"completed"];
+                friend.manga_total_entries = mangaStats[@"total_entries"];
+                
+                friend.image_url = avatarURL;
+                
+                friend.last_seen = [details[@"last_online"] lowercaseString];
+            } failure:^(id operation, NSError *error) {
+                ALLog(@"Failure to get info for friend %@.", friend.username);
+            }];
+        }
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -222,8 +246,19 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
-    return ![self.tableView isEditing];
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return UITableViewCellEditingStyleDelete;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if(editingStyle == UITableViewCellEditingStyleDelete) {
+        Friend *friend = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        [friend.managedObjectContext deleteObject:friend];
+    }
 }
 
 - (void)configureCell:(UITableViewCell *)cell withObject:(NSManagedObject *)object {

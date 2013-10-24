@@ -132,11 +132,6 @@
     
 }
 
-- (UILabel *)progress {
-    ALLog(@"%@", [super progress].text);
-    return [super progress];
-}
-
 - (void)addShadow {
     for(UIView *view in self.subviews) {
         if([view isMemberOfClass:[UILabel class]]) {

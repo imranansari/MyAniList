@@ -70,6 +70,21 @@ static NSArray *cachedAnimeList = nil;
     return [[AnimeService managedObjectContext] executeFetchRequest:request error:&error];
 }
 
++ (void)downloadInfo {
+    NSArray *animeArray = [AnimeService allAnime];
+    
+    for(Anime *anime in animeArray) {
+        [[MALHTTPClient sharedClient] getAnimeDetailsForID:anime.anime_id success:^(id operation, id response) {
+            [AnimeService addAnime:response fromList:NO];
+            double index = [animeArray indexOfObject:anime];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kAnimeDownloadProgress object:@{ kDownloadProgress : @(index/(double)animeArray.count) }];
+        } failure:^(id operation, NSError *error) {
+            double index = [animeArray indexOfObject:anime];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kAnimeDownloadProgress object:@{ kDownloadProgress : @(index/(double)animeArray.count) }];
+        }];
+    }
+}
+
 + (Anime *)animeForID:(NSNumber *)ID {
     return [self animeForID:ID fromCache:NO];
 }

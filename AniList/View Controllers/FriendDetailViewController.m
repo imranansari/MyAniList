@@ -37,7 +37,6 @@
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView *indicator;
 @property (nonatomic, weak) IBOutlet UIView *maskView;
 @property (nonatomic, weak) IBOutlet UIImageView *avatar;
-
 @property (nonatomic, weak) IBOutlet UIButton *compareButton;
 @property (nonatomic, weak) IBOutlet UISegmentedControl *compareControl;
 
@@ -64,8 +63,16 @@
 - (void)viewDidLoad
 {
     self.hidesBackButton = NO;
+    
     [super viewDidLoad];
+    
     self.compareControl.selectedSegmentIndex = 0;
+    
+#warning - need to animate table in and such here.
+//    if(self.fetchedResultsController.fetchedObjects.count > 0) {
+        self.indicator.alpha = 0.0f;
+//    }
+    
     [self fetchData];
     
     self.title = [NSString stringWithFormat:@"%@'s List", self.friend.username];
@@ -123,9 +130,6 @@
 }
 
 - (NSPredicate *)predicate {
-#warning - may have to create FriendAnime entities for the current user in order to compare.
-    // For comparing, just remove user predicate to get all anime.
-    
     if(self.compareControl.selectedSegmentIndex == 0) {
         return [NSPredicate predicateWithFormat:@"watched_status < 7 && user == %@", self.friend];
     }

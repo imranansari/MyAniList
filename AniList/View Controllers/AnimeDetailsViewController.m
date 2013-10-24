@@ -54,8 +54,6 @@
         
         [operation start];
     }
-    
-    [self adjustLabels];
 }
 
 - (void)didReceiveMemoryWarning

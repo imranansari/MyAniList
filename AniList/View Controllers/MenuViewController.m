@@ -16,6 +16,7 @@
 #import "LoginViewController.h"
 #import "TopListViewController.h"
 #import "PopularListViewController.h"
+#import "CRTransitionLabel.h"
 
 #define kCellTitleKey @"kCellTitleKey"
 #define kCellViewControllerKey @"kCellViewControllerKey"
@@ -27,6 +28,9 @@
 @property (nonatomic, weak) IBOutlet UILabel *username;
 @property (nonatomic, weak) IBOutlet UILabel *animeStats;
 @property (nonatomic, weak) IBOutlet UILabel *mangaStats;
+@property (nonatomic, weak) IBOutlet UIView *statusView;
+@property (nonatomic, weak) IBOutlet UIProgressView *progress;
+@property (nonatomic, weak) IBOutlet CRTransitionLabel *statusText;
 @end
 
 @implementation MenuViewController
@@ -38,6 +42,8 @@ static NSString *CellIdentifier = @"Cell";
     self = [super init];
     if(self) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchProfile) name:kUserLoggedIn object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateProgress:) name:kAnimeDownloadProgress object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateProgress:) name:kMangaDownloadProgress object:nil];
     }
     
     return self;
@@ -55,11 +61,6 @@ static NSString *CellIdentifier = @"Cell";
     self.profileImage.contentMode = UIViewContentModeScaleAspectFill;
     self.profileImage.backgroundColor = [UIColor clearColor];
     self.profileImage.layer.borderColor = [UIColor colorWithWhite:1.0f alpha:0.4f].CGColor;
-    
-    
-    [self.username addShadow];
-    [self.animeStats addShadow];
-    [self.mangaStats addShadow];
     
     if(!items) {
         items = @[
@@ -119,7 +120,11 @@ static NSString *CellIdentifier = @"Cell";
     [self fetchProfile];
 }
 
-
+- (void)viewWillAppear:(BOOL)animated {
+    if(!self.profileImage.image) {
+        [self fetchProfile];
+    }
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -147,6 +152,26 @@ static NSString *CellIdentifier = @"Cell";
                                                   ALLog(@"image failed.");
                                               }];
         }];
+    }
+}
+
+- (void)updateProgress:(NSNotification *)notification {
+    NSDictionary *dictionary = notification.object;
+    
+    double value = [dictionary[kDownloadProgress] floatValue];
+    
+    self.statusText.text = [NSString stringWithFormat:@"Downloading Info (%0.00f%%)...", value*100];
+    [self.progress setProgress:value animated:YES];
+    
+    if(value == 1.0f) {
+        self.statusText.text = @"Download completed!";
+        
+        [UIView animateWithDuration:0.3f
+                              delay:2.0f
+                            options:UIViewAnimationOptionCurveEaseInOut animations:^{
+                                self.statusView.frame = CGRectMake(self.statusView.frame.origin.x, self.statusView.frame.origin.y + self.statusView.frame.size.height, self.statusView.frame.size.width, self.statusView.frame.size.height);
+                            }
+                         completion:nil];
     }
 }
 

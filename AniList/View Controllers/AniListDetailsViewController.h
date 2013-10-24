@@ -28,8 +28,6 @@
 
 - (void)displayDetailsViewAnimated:(BOOL)animated;
 - (void)displayErrorMessage;
-- (void)adjustLabels;
-
 - (void)updatePoster;
 
 @end

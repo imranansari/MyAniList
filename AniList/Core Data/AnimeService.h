@@ -15,6 +15,7 @@
 
 + (NSArray *)allAnime;
 + (NSArray *)myAnime;
++ (void)downloadInfo;
 + (Anime *)animeForID:(NSNumber *)ID;
 + (BOOL)addAnimeList:(NSDictionary *)data;
 + (BOOL)addAnimeList:(NSDictionary *)data forFriend:(Friend *)friend;

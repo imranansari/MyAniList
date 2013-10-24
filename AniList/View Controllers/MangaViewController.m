@@ -113,9 +113,9 @@
     self.relatedTableView.frame = CGRectMake(0, self.synopsisView.frame.origin.y + self.synopsisView.frame.size.height, self.relatedTableView.frame.size.width, tableViewFrame);
     
     
-    int defaultContentSize = self.mangaDetailsViewController.view.frame.size.height + self.userInfoView.view.frame.size.height + self.detailsLabel.frame.size.height + self.relatedTableView.frame.size.height + [UIScreen mainScreen].bounds.size.height - 90;
+    int defaultContentSize = self.mangaDetailsViewController.view.frame.size.height + self.userInfoView.view.frame.size.height + self.detailsLabel.frame.size.height + self.relatedTableView.frame.size.height;
     
-    int contentSizeWithSynopsis = self.mangaDetailsViewController.view.frame.size.height + self.userInfoView.view.frame.size.height + self.detailsLabel.frame.size.height + self.synopsisView.frame.size.height + self.relatedTableView.frame.size.height + 90;
+    int contentSizeWithSynopsis = self.mangaDetailsViewController.view.frame.size.height + self.userInfoView.view.frame.size.height + self.detailsLabel.frame.size.height + self.synopsisView.frame.size.height + self.relatedTableView.frame.size.height;
     
     self.scrollView.contentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width, MAX(contentSizeWithSynopsis, defaultContentSize));
 }

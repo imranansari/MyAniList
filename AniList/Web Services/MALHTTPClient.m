@@ -66,13 +66,12 @@
 
 - (void)getProfileForUser:(NSString *)user success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure {
     
-    ALLog(@"Getting user profile...");
+    ALLog(@"Getting profile info for user %@...", user);
     
     [[UMALHTTPClient sharedClient] authenticate];
     [[UMALHTTPClient sharedClient] getPath:[NSString stringWithFormat:@"/profile/%@", user]
                                parameters:@{}
                                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                      ALLog(@"Profile details fetched!");
                                       success(operation, responseObject);
                                   }
                                   failure:^(AFHTTPRequestOperation *operation, NSError *error) {

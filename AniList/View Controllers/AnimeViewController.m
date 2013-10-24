@@ -158,9 +158,9 @@
     
     self.genreTagView.frame = CGRectMake(0, self.tagView.frame.origin.y + self.tagView.frame.size.height, self.genreTagView.frame.size.width, self.genreTagView.frame.size.height);
     
-    int defaultContentSize = self.animeDetailsViewController.view.frame.size.height + self.userInfoView.view.frame.size.height + self.detailsLabel.frame.size.height + self.relatedTableView.frame.size.height + self.tagView.frame.size.height + self.genreTagView.frame.size.height + [UIScreen mainScreen].bounds.size.height - 90;
+    int defaultContentSize = self.animeDetailsViewController.view.frame.size.height + self.userInfoView.view.frame.size.height + self.detailsLabel.frame.size.height + self.relatedTableView.frame.size.height + self.tagView.frame.size.height + self.genreTagView.frame.size.height;
     
-    int contentSizeWithSynopsis = self.animeDetailsViewController.view.frame.size.height + self.userInfoView.view.frame.size.height + self.detailsLabel.frame.size.height + self.synopsisView.frame.size.height + self.relatedTableView.frame.size.height + self.tagView.frame.size.height + self.genreTagView.frame.size.height + 90;
+    int contentSizeWithSynopsis = self.animeDetailsViewController.view.frame.size.height + self.userInfoView.view.frame.size.height + self.detailsLabel.frame.size.height + self.synopsisView.frame.size.height + self.relatedTableView.frame.size.height + self.tagView.frame.size.height + self.genreTagView.frame.size.height;
     
     self.scrollView.contentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width, MAX(contentSizeWithSynopsis, defaultContentSize));
 }

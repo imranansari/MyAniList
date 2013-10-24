@@ -30,12 +30,7 @@ static BOOL alreadyFetched = NO;
         self.sectionHeaders = @[@"Reading", @"Completed", @"On Hold",
                                 @"Dropped", @"Plan To Read"];
         
-        for(int i = 0; i < self.sectionHeaders.count; i++) {
-            [self.sectionHeaderViews addObject:[[UIView alloc] init]];
-        }
-        
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchData) name:kUserLoggedIn object:nil];
-        
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deleteManga) name:kDeleteManga object:nil];
     }
     
@@ -50,12 +45,9 @@ static BOOL alreadyFetched = NO;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    if(!alreadyFetched)
+    if(!alreadyFetched) {
         [self fetchData];
-    
-    UISwipeGestureRecognizer* swipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(didSwipe:)];
-    [swipeGestureRecognizer setDirection:UISwipeGestureRecognizerDirectionLeft];
-    [self.tableView addGestureRecognizer:swipeGestureRecognizer];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -80,8 +72,10 @@ static BOOL alreadyFetched = NO;
 - (void)fetchData {
     if([UserProfile userIsLoggedIn]) {
         
-        self.tableView.alpha = 0.0f;
-        self.indicator.alpha = 1.0f;
+        if(!alreadyFetched) {
+            self.tableView.alpha = 0.0f;
+            self.indicator.alpha = 1.0f;
+        }
         
         [[MALHTTPClient sharedClient] getMangaListForUser:[[UserProfile profile] username]
                                              initialFetch:!alreadyFetched
@@ -280,7 +274,6 @@ static BOOL alreadyFetched = NO;
 }
 
 - (void)configureCell:(UITableViewCell *)cell withObject:(NSManagedObject *)object {
-    
     Manga *manga = (Manga *)object;
     MangaCell *mangaCell = (MangaCell *)cell;
     [mangaCell setDetailsForManga:manga];

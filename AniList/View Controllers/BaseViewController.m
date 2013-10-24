@@ -49,7 +49,7 @@
     }
     
     if(revealController) {
-        [self.view addGestureRecognizer:revealController.panGestureRecognizer];
+//        [self.view addGestureRecognizer:revealController.panGestureRecognizer];
         [self.menuButton addTarget:revealController action:@selector(revealToggle:) forControlEvents:UIControlEventTouchUpInside];
     }
     

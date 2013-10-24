@@ -121,14 +121,14 @@
                         if(!anime.image) {
                             // Save the image onto disk if it doesn't exist or they aren't the same.
                             [anime saveImage:image fromRequest:request];
-//                            [[ImageManager sharedManager] addImage:[anime imageForAnime] forAnime:anime];
+                            [[ImageManager sharedManager] addImage:image forAnime:anime];
                         }
                     }
                     else {
                         if(!manga.image) {
                             // Save the image onto disk if it doesn't exist or they aren't the same.
                             [manga saveImage:image fromRequest:request];
-//                            [[ImageManager sharedManager] addImage:[manga imageForManga] forManga:manga];
+                            [[ImageManager sharedManager] addImage:image forManga:manga];
                         }
                     }
                     

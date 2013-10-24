@@ -13,6 +13,9 @@
 #define kMangaDidUpdate @"kMangaDidUpdate"
 #define kRelatedAnimeDidUpdate @"kRelatedAnimeDidUpdate"
 #define kRelatedMangaDidUpdate @"kRelatedMangaDidUpdate"
+#define kAnimeDownloadProgress @"kAnimeDownloadProgress"
+#define kMangaDownloadProgress @"kMangaDownloadProgress"
+#define kDownloadProgress @"kDownloadProgress"
 
 // Defaults
 #define kNoSynopsisString @"Unable to get synopsis. Please try again later."

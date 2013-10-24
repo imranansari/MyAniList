@@ -86,15 +86,4 @@
     
 }
 
-- (void)adjustLabels {
-    [self.titleLabel addShadow];
-    [self.type addShadow];
-    [self.seriesStatus addShadow];
-    [self.score addShadow];
-    [self.totalPeopleScored addShadow];
-    [self.rank addShadow];
-    [self.popularity addShadow];
-    [self.errorMessageLabel addShadow];
-}
-
 @end

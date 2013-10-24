@@ -155,11 +155,6 @@ static BOOL fetching = NO;
             }];
         }
     }
-    else {
-        [UIView animateWithDuration:0.3f animations:^{
-            self.indicator.alpha = 0.0f;
-        }];
-    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -230,16 +225,16 @@ static BOOL fetching = NO;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSManagedObject *object = self.topItems[indexPath.row];
     
-#warning - back button can get pretty long here. Best solution?
-    
     if([object isMemberOfClass:[Anime class]]) {
         AnimeViewController *vc = [[AnimeViewController alloc] init];
         vc.anime = (Anime *)object;
+        self.navigationItem.backBarButtonItem = [UIBarButtonItem customBackButtonWithTitle:@"Anime"];
         [self.navigationController pushViewController:vc animated:YES];
     }
     else if([object isMemberOfClass:[Manga class]]) {
         MangaViewController *vc = [[MangaViewController alloc] init];
         vc.manga = (Manga *)object;
+        self.navigationItem.backBarButtonItem = [UIBarButtonItem customBackButtonWithTitle:@"Manga"];
         [self.navigationController pushViewController:vc animated:YES];
     }
     
