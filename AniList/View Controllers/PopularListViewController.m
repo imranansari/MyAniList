@@ -24,7 +24,9 @@
 @property (nonatomic, weak) IBOutlet UIView *maskView;
 @property (nonatomic, weak) IBOutlet AniListTableView *tableView;
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView *indicator;
+@property (nonatomic, weak) IBOutlet UILabel *errorLabel;
 @property (nonatomic, assign) int currentPage;
+@property (nonatomic, assign) int attempts;
 @end
 
 @implementation PopularListViewController
@@ -56,15 +58,19 @@
     self.topItems = [[NSMutableArray alloc] init];
     self.currentPage = 1;
     
+    self.indicator.alpha = 1.0f;
+    self.errorLabel.alpha = 0.0f;
+    
     [self fetchTopItemsAtPage:@(self.currentPage)];
 }
 
 static BOOL fetching = NO;
 
 - (void)fetchTopItemsAtPage:(NSNumber *)page {
-    if(!fetching) {
+    if(!fetching && self.attempts < MAX_ATTEMPTS) {
         ALLog(@"Fetching entity for page: %d", [page intValue]);
         fetching = YES;
+        self.attempts++;
         
         if([self.entityName isEqualToString:@"Anime"]) {
             [[MALHTTPClient sharedClient] getPopularAnimeForType:AnimeTypeTV atPage:page success:^(id operation, id response) {
@@ -150,6 +156,16 @@ static BOOL fetching = NO;
                 fetching = NO;
             }];
         }
+    }
+    else {
+        [UIView animateWithDuration:0.3f
+                         animations:^{
+                             self.indicator.alpha = 0.0f;
+                             if(self.topItems.count == 0) {
+                                 self.errorLabel.text = kPopularAnimeDownErrorMessage;
+                                 self.errorLabel.alpha = 1.0f;
+                             }
+                         }];
     }
 }
 
@@ -272,8 +288,10 @@ static BOOL fetching = NO;
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    if(scrollView.contentOffset.y + scrollView.frame.size.height + 100 > scrollView.contentSize.height) {
-        [self fetchTopItemsAtPage:@(self.currentPage)];
+    if(self.topItems.count > 0) {
+        if(scrollView.contentOffset.y + scrollView.frame.size.height + 100 > scrollView.contentSize.height) {
+            [self fetchTopItemsAtPage:@(self.currentPage)];
+        }
     }
 }
 

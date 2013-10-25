@@ -18,14 +18,13 @@
 #import "AnimeService.h"
 #import "MangaService.h"
 
-#define MAX_ATTEMPTS 5
-
 @interface TopListViewController ()
 @property (nonatomic, copy) NSArray *sectionHeaders;
 @property (nonatomic, strong) NSMutableArray *topItems;
 @property (nonatomic, weak) IBOutlet UIView *maskView;
 @property (nonatomic, weak) IBOutlet AniListTableView *tableView;
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView *indicator;
+@property (nonatomic, weak) IBOutlet UILabel *errorLabel;
 @property (nonatomic, assign) int currentPage;
 @property (nonatomic, assign) int attempts;
 @end
@@ -58,6 +57,9 @@
     self.tableView.alpha = 0.0f;
     self.topItems = [[NSMutableArray alloc] init];
     self.currentPage = 1;
+    
+    self.indicator.alpha = 1.0f;
+    self.errorLabel.alpha = 0.0f;
     
     [self fetchTopItemsAtPage:@(self.currentPage)];
 }
@@ -154,6 +156,16 @@ static BOOL fetching = NO;
                 fetching = NO;
             }];
         }
+    }
+    else {
+        [UIView animateWithDuration:0.3f
+                         animations:^{
+                             self.indicator.alpha = 0.0f;
+                             if(self.topItems.count == 0) {
+                                 self.errorLabel.text = kTopAnimeDownErrorMessage;
+                                 self.errorLabel.alpha = 1.0f;
+                             }
+                         }];
     }
 }
 
@@ -276,8 +288,10 @@ static BOOL fetching = NO;
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    if(scrollView.contentOffset.y + scrollView.frame.size.height + 100 > scrollView.contentSize.height) {
-        [self fetchTopItemsAtPage:@(self.currentPage)];
+    if(self.topItems.count > 0) {
+        if(scrollView.contentOffset.y + scrollView.frame.size.height + 100 > scrollView.contentSize.height) {
+            [self fetchTopItemsAtPage:@(self.currentPage)];
+        }
     }
 }
 
