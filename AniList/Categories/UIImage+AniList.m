@@ -20,4 +20,8 @@
     return newImage;
 }
 
++ (UIImage *)placeholderImage {
+    return [UIImage imageNamed:@"placeholder.png"];
+}
+
 @end

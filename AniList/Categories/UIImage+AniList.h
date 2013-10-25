@@ -11,5 +11,6 @@
 @interface UIImage (AniList)
 
 + (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize;
++ (UIImage *)placeholderImage;
 
 @end
