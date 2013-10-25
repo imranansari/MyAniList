@@ -18,7 +18,13 @@
 #define kDownloadProgress @"kDownloadProgress"
 
 // Defaults
+#define MAX_ATTEMPTS 5
+
 #define kNoSynopsisString @"Unable to get synopsis. Please try again later."
+#define kEnterUsernameString @"Enter a username..."
+
+#define kTopAnimeDownErrorMessage @"MyAnimeList's Top Anime service is currently down. Please try again later."
+#define kPopularAnimeDownErrorMessage @"MyAnimeList's Popular Anime service is currently down. Please try again later."
 
 // Dictionary values for fetching data
 #define kID                     @"id"
