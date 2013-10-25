@@ -197,15 +197,16 @@
 - (void)getUpcomingAnimeFromDate:(NSDate *)date atPage:(NSNumber *)page success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure {
     
     ALLog(@"Getting upcoming anime from date %@...", date);
-    
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    dateFormatter.dateFormat = @"yyyyMMdd";
-    NSString *dateString = [dateFormatter stringFromDate:date];
-    
+//    
+//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+//    dateFormatter.dateFormat = @"yyyyMMdd";
+//    NSString *dateString = [dateFormatter stringFromDate:date];
+//    
     NSString *path = @"/anime/upcoming";
-    
+
     NSDictionary *parameters = @{
-                                 @"start_date" : dateString
+                                 @"page" : page
+//                                 @"start_date" : dateString
                                  };
     
     [[UMALHTTPClient sharedClient] authenticate];

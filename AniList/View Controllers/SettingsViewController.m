@@ -255,8 +255,8 @@
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"This will download additional information for your anime and manga lists. This may take a while. Do you wish to continue?"
                                                              delegate:self
                                                     cancelButtonTitle:@"No"
-                                               destructiveButtonTitle:nil
-                                                    otherButtonTitles:@"Yes", nil];
+                                               destructiveButtonTitle:@"Yes"
+                                                    otherButtonTitles:nil, nil];
     
     [actionSheet showInView:self.view];
 }
@@ -277,7 +277,7 @@
     NSArray *animeArray = [AnimeService allAnime];
     NSArray *mangaArray = [MangaService allManga];
     float total = animeArray.count + mangaArray.count;
-    float __block counter = 0;
+    float __block counter = 1;
     
     for(Manga *manga in mangaArray) {
         double delayInSeconds = 2.0;

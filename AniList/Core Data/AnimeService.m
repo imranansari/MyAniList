@@ -72,16 +72,21 @@ static NSArray *cachedAnimeList = nil;
 
 + (void)downloadInfo {
     NSArray *animeArray = [AnimeService allAnime];
+    double __block counter = 1;
     
     for(Anime *anime in animeArray) {
-        [[MALHTTPClient sharedClient] getAnimeDetailsForID:anime.anime_id success:^(id operation, id response) {
-            [AnimeService addAnime:response fromList:NO];
-            double index = [animeArray indexOfObject:anime];
-            [[NSNotificationCenter defaultCenter] postNotificationName:kAnimeDownloadProgress object:@{ kDownloadProgress : @(index/(double)animeArray.count) }];
-        } failure:^(id operation, NSError *error) {
-            double index = [animeArray indexOfObject:anime];
-            [[NSNotificationCenter defaultCenter] postNotificationName:kAnimeDownloadProgress object:@{ kDownloadProgress : @(index/(double)animeArray.count) }];
-        }];
+        double delayInSeconds = 0.5f + (double)[animeArray indexOfObject:anime] / 5.0f;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [[MALHTTPClient sharedClient] getAnimeDetailsForID:anime.anime_id success:^(id operation, id response) {
+                [AnimeService addAnime:response fromList:NO];
+                ++counter;
+                [[NSNotificationCenter defaultCenter] postNotificationName:kAnimeDownloadProgress object:@{ kDownloadProgress : @(counter/(double)animeArray.count) }];
+            } failure:^(id operation, NSError *error) {
+                ++counter;
+                [[NSNotificationCenter defaultCenter] postNotificationName:kAnimeDownloadProgress object:@{ kDownloadProgress : @(counter/(double)animeArray.count) }];
+            }];
+        });
     }
 }
 

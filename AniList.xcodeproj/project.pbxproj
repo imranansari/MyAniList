@@ -346,6 +346,8 @@
 		63DB4E54179AD7CE00C20ECC /* Synonym.m in Sources */ = {isa = PBXBuildFile; fileRef = 63DB4E52179AD7CE00C20ECC /* Synonym.m */; };
 		63DB4E57179AD7D800C20ECC /* Genre.m in Sources */ = {isa = PBXBuildFile; fileRef = 63DB4E56179AD7D800C20ECC /* Genre.m */; };
 		63DB4E58179AD7D800C20ECC /* Genre.m in Sources */ = {isa = PBXBuildFile; fileRef = 63DB4E56179AD7D800C20ECC /* Genre.m */; };
+		63E76AFE181A1856009FC42F /* placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 63E76AFC181A1856009FC42F /* placeholder.png */; };
+		63E76AFF181A1856009FC42F /* placeholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63E76AFD181A1856009FC42F /* placeholder@2x.png */; };
 		63EFEC3D176966B8009CEAB3 /* UMALHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 63EFEC3C176966B7009CEAB3 /* UMALHTTPClient.m */; };
 		63EFEC3E176966B8009CEAB3 /* UMALHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 63EFEC3C176966B7009CEAB3 /* UMALHTTPClient.m */; };
 		63FC20A717920EB000DFD544 /* CRTransitionLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FC20A617920EB000DFD544 /* CRTransitionLabel.m */; };
@@ -665,6 +667,8 @@
 		63DB4E52179AD7CE00C20ECC /* Synonym.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Synonym.m; path = "Core Data/Synonym.m"; sourceTree = "<group>"; };
 		63DB4E55179AD7D800C20ECC /* Genre.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Genre.h; path = "Core Data/Genre.h"; sourceTree = "<group>"; };
 		63DB4E56179AD7D800C20ECC /* Genre.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Genre.m; path = "Core Data/Genre.m"; sourceTree = "<group>"; };
+		63E76AFC181A1856009FC42F /* placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = placeholder.png; path = Images/Background/placeholder.png; sourceTree = "<group>"; };
+		63E76AFD181A1856009FC42F /* placeholder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "placeholder@2x.png"; path = "Images/Background/placeholder@2x.png"; sourceTree = "<group>"; };
 		63EFEC3B176966B7009CEAB3 /* UMALHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UMALHTTPClient.h; path = "Web Services/UMALHTTPClient.h"; sourceTree = "<group>"; };
 		63EFEC3C176966B7009CEAB3 /* UMALHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UMALHTTPClient.m; path = "Web Services/UMALHTTPClient.m"; sourceTree = "<group>"; };
 		63FC20A517920EB000DFD544 /* CRTransitionLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CRTransitionLabel.h; path = Views/CRTransitionLabel.h; sourceTree = "<group>"; };
@@ -721,6 +725,8 @@
 		631898CC17222AD700758BE9 /* Placeholders */ = {
 			isa = PBXGroup;
 			children = (
+				63E76AFC181A1856009FC42F /* placeholder.png */,
+				63E76AFD181A1856009FC42F /* placeholder@2x.png */,
 				631898CD17222AE300758BE9 /* image_placeholder.png */,
 				631898CE17222AE300758BE9 /* image_placeholder@2x.png */,
 			);
@@ -1399,6 +1405,7 @@
 				6324CEB21799793400B308B0 /* grayArrow@2x.png in Resources */,
 				638E6B1A17A7F9B900A35FDB /* SettingsCell.xib in Resources */,
 				63C063AA17B5F735009C4FFE /* intro_background@2x.png in Resources */,
+				63E76AFF181A1856009FC42F /* placeholder@2x.png in Resources */,
 				635484B5171C2FA7003457CB /* Default@2x.png in Resources */,
 				63C8CD70179A4435003BB80C /* AniListMiniCell.xib in Resources */,
 				635484B7171C2FA7003457CB /* Default-568h@2x.png in Resources */,
@@ -1448,6 +1455,7 @@
 				63461A1B1778004D0053652C /* SettingsViewController.xib in Resources */,
 				639FA1DF17936ABF000AA0D1 /* back.png in Resources */,
 				633BBF6617B0BAEC00AE573D /* PopularListViewController.xib in Resources */,
+				63E76AFE181A1856009FC42F /* placeholder.png in Resources */,
 				6324CEAC1799793400B308B0 /* blueArrow.png in Resources */,
 				639FA1E117936ABF000AA0D1 /* back@2x.png in Resources */,
 				63D045B2179CEDFD006507D3 /* TagListViewController.xib in Resources */,

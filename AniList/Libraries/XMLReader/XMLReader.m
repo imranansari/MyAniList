@@ -86,7 +86,8 @@ NSString *const kXMLReaderAttributePrefix	= @"@";
     parser.delegate = self;
     BOOL success = [parser parse];
     
-    ALLog(@"error: %@", parser.parserError);
+    if(parser.parserError)
+        ALLog(@"error: %@", parser.parserError);
 	
     // Return the stack's root dictionary on success
     if (success)
