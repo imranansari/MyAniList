@@ -61,8 +61,11 @@
     gradient.endPoint = CGPointMake(0.0f, 0.05f);
     
     self.maskView.layer.mask = gradient;
-    [self.friendAvatar setImageWithURL:[NSURL URLWithString:self.friend.image_url]];
-    [self.myAvatar setImageWithURL:[[UserProfile profile] profileImageURL].URL];
+    [self.friendAvatar setImageWithURL:[NSURL URLWithString:self.friend.image_url] placeholderImage:[UIImage placeholderImage]];
+    [self.myAvatar setImageWithURL:[[UserProfile profile] profileImageURL].URL placeholderImage:[UIImage placeholderImage]];
+    
+    self.indicator.alpha = 1.0f;
+    self.tableView.alpha = 0.0f;
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
         [self createAnimeComparison];
@@ -281,6 +284,7 @@
                                              options:UIViewAnimationOptionCurveEaseInOut
                                           animations:^{
                                               self.tableView.alpha = 1.0f;
+                                              self.indicator.alpha = 0.0f;
                                           }
                                           completion:nil];
                      }];

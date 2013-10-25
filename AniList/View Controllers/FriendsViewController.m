@@ -51,6 +51,8 @@
     self.tableView.dataSource = self;
     self.tableView.alpha = 1.0f;
     
+    self.usernameField.text = kEnterUsernameString;
+    
     CAGradientLayer *gradient = [CAGradientLayer layer];
     gradient.frame = self.maskView.bounds;
     gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor colorWithRed:0 green:0 blue:0 alpha:0] CGColor], (id)[[UIColor colorWithRed:0 green:0 blue:0 alpha:1] CGColor], nil];
@@ -266,12 +268,15 @@
     ProfileCell *profileCell = (ProfileCell *)cell;
     
     profileCell.username.text = friend.username;
-    profileCell.animeStats.text = @"";
+    profileCell.animeStats.text = @"Retrieving stats...";
     profileCell.mangaStats.text = @"";
     profileCell.lastSeen.text = @"";
     
     if([friend.anime_total_entries intValue] > 0)
         profileCell.animeStats.text = [NSString stringWithFormat:@"%d anime watched, %d listed", [friend.anime_completed intValue], [friend.anime_total_entries intValue]];
+    else {
+        profileCell.animeStats.text = @"Unable to retrieve stats.";
+    }
     
     
     if([friend.manga_total_entries intValue] > 0)
@@ -280,7 +285,7 @@
     if(friend.last_seen.length > 0)
         profileCell.lastSeen.text = [NSString stringWithFormat:@"Last seen %@", friend.last_seen];
     
-    [profileCell.avatar setImageWithURL:[NSURL URLWithString:friend.image_url]];
+    [profileCell.avatar setImageWithURL:[NSURL URLWithString:friend.image_url] placeholderImage:[UIImage placeholderImage]];
 }
 
 - (IBAction)addButtonPressed:(id)sender {
@@ -316,9 +321,22 @@
 
 #pragma mark - UITextFieldDelegate Methods
 
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    if([textField.text isEqualToString:kEnterUsernameString]) {
+        textField.text = @"";
+    }
+    
+    return YES;
+}
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     if(textField == self.usernameField) {
         [self addButtonPressed:nil];
+        textField.text = @"";
+    }
+    
+    if(textField.text.length == 0) {
+        textField.text = kEnterUsernameString;
     }
     
     return YES;

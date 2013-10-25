@@ -16,7 +16,6 @@
 #import "LoginViewController.h"
 #import "TopListViewController.h"
 #import "PopularListViewController.h"
-#import "CRTransitionLabel.h"
 
 #define kCellTitleKey @"kCellTitleKey"
 #define kCellViewControllerKey @"kCellViewControllerKey"
@@ -30,7 +29,7 @@
 @property (nonatomic, weak) IBOutlet UILabel *mangaStats;
 @property (nonatomic, weak) IBOutlet UIView *statusView;
 @property (nonatomic, weak) IBOutlet UIProgressView *progress;
-@property (nonatomic, weak) IBOutlet CRTransitionLabel *statusText;
+@property (nonatomic, weak) IBOutlet UILabel *statusText;
 @end
 
 @implementation MenuViewController
@@ -61,6 +60,11 @@ static NSString *CellIdentifier = @"Cell";
     self.profileImage.contentMode = UIViewContentModeScaleAspectFill;
     self.profileImage.backgroundColor = [UIColor clearColor];
     self.profileImage.layer.borderColor = [UIColor colorWithWhite:1.0f alpha:0.4f].CGColor;
+    
+    self.progress.tintColor = [UIColor whiteColor];
+    self.progress.progress = 0.0f;
+    
+    self.statusText.text = @"";
     
     if(!items) {
         items = @[
@@ -121,9 +125,7 @@ static NSString *CellIdentifier = @"Cell";
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    if(!self.profileImage.image) {
-        [self fetchProfile];
-    }
+    [self fetchProfile];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -135,6 +137,9 @@ static NSString *CellIdentifier = @"Cell";
 
 - (void)fetchProfile {
     if([UserProfile userIsLoggedIn]) {
+        
+        self.profileImage.image = [UIImage placeholderImage];
+        
         [[UserProfile profile] fetchProfileWithCompletion:^{
             self.username.text = [[UserProfile profile] username];
             
@@ -143,7 +148,7 @@ static NSString *CellIdentifier = @"Cell";
             
             NSURLRequest *request = [[UserProfile profile] profileImageURL];
             [self.profileImage setImageWithURLRequest:request
-                                     placeholderImage:nil
+                                     placeholderImage:[UIImage placeholderImage]
                                               success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
                                                   ALLog(@"image found");
                                                   self.profileImage.image = image;
@@ -163,7 +168,9 @@ static NSString *CellIdentifier = @"Cell";
     self.statusText.text = [NSString stringWithFormat:@"Downloading Info (%0.00f%%)...", value*100];
     [self.progress setProgress:value animated:YES];
     
-    if(value == 1.0f) {
+    ALLog(@"Value: %f", value);
+    
+    if(value >= 1.0f) {
         self.statusText.text = @"Download completed!";
         
         [UIView animateWithDuration:0.3f

@@ -77,7 +77,9 @@
     
     self.title = [NSString stringWithFormat:@"%@'s List", self.friend.username];
     self.tableView.backgroundColor = [UIColor clearColor];
-    [self.avatar setImageWithURL:[NSURL URLWithString:self.friend.image_url]];
+
+    [self.avatar setImageWithURL:[NSURL URLWithString:self.friend.image_url]
+                placeholderImage:[UIImage placeholderImage]];
     
     CAGradientLayer *gradient = [CAGradientLayer layer];
     gradient.frame = self.maskView.bounds;
