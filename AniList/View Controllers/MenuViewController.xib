@@ -83,7 +83,7 @@
                     </connections>
                 </tableView>
                 <view contentMode="scaleToFill" id="Kwc-ON-rh4">
-                    <rect key="frame" x="0.0" y="528" width="320" height="40"/>
+                    <rect key="frame" x="0.0" y="571" width="320" height="40"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <subviews>
                         <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" id="NQn-Ad-c0O">

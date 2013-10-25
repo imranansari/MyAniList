@@ -262,48 +262,8 @@
 }
 
 - (void)downloadInfo {
-    
-    [AnimeService downloadInfo];
-    return;
-    
-    self.status.text = @"Progress: 0%";
-    self.progressView.progress = 0.0f;
-    
-    [UIView animateWithDuration:0.3f animations:^{
-        self.status.alpha = 1.0f;
-        self.progressView.alpha = 1.0f;
-    }];
-    
-    NSArray *animeArray = [AnimeService allAnime];
-    NSArray *mangaArray = [MangaService allManga];
-    float total = animeArray.count + mangaArray.count;
-    float __block counter = 1;
-    
-    for(Manga *manga in mangaArray) {
-        double delayInSeconds = 2.0;
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            [[MALHTTPClient sharedClient] getMangaDetailsForID:manga.manga_id success:^(id operation, id response) {
-                counter++;
-                [MangaService addManga:response fromList:NO];
-                
-                ALLog(@"Recieved extra details for '%@.'", manga.title);
-                ALLog(@"Progress: %0.0f completed", (counter / total) * 100);
-                
-                self.status.text = [NSString stringWithFormat:@"Progress: %0.0f%%", (counter / total) * 100];
-                self.progressView.progress = counter / total;
-                
-            } failure:^(id operation, NSError *error) {
-                counter++;
-                
-                ALLog(@"Failed to get extra details for '%@.'", manga.title);
-                ALLog(@"Progress: %0.0f completed", (counter / total) * 100);
-                
-                self.status.text = [NSString stringWithFormat:@"Progress: %0.0f%%", (counter / total) * 100];
-                self.progressView.progress = counter / total;
-            }];
-        });
-    }
+//    [AnimeService downloadInfo];
+    [MangaService downloadInfo];
 }
 
 #pragma mark - UIActionSheetDelegate Methods

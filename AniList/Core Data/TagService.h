@@ -12,6 +12,7 @@
 
 @interface TagService : NSObject
 
++ (NSArray *)allTags;
 + (NSArray *)animeWithTag:(NSString *)tagName;
 + (NSArray *)mangaWithTag:(NSString *)tagName;
 + (Tag *)addTag:(NSString *)title toAnime:(Anime *)anime;

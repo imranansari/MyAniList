@@ -41,6 +41,25 @@
     return [[MangaService managedObjectContext] executeFetchRequest:request error:&error];
 }
 
++ (void)downloadInfo {
+    NSArray *mangaArray = [MangaService allManga];
+    double __block counter = 1;
+    
+    for(Manga *manga in mangaArray) {
+        double delayInSeconds = 0.5f + (double)[mangaArray indexOfObject:manga] / 5.0f;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [[MALHTTPClient sharedClient] getMangaDetailsForID:manga.manga_id success:^(id operation, id response) {
+                [MangaService addManga:response fromList:NO];
+                ++counter;
+                [[NSNotificationCenter defaultCenter] postNotificationName:kMangaDownloadProgress object:@{ kDownloadProgress : @(counter/(double)mangaArray.count) }];
+            } failure:^(id operation, NSError *error) {
+                ++counter;
+                [[NSNotificationCenter defaultCenter] postNotificationName:kMangaDownloadProgress object:@{ kDownloadProgress : @(counter/(double)mangaArray.count) }];
+            }];
+        });
+    }
+}
 
 + (Manga *)mangaForID:(NSNumber *)ID {
     NSFetchRequest *request = [[NSFetchRequest alloc] init];

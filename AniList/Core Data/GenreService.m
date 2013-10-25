@@ -16,6 +16,20 @@
 
 @implementation GenreService
 
++ (NSArray *)allGenres {
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITY_NAME inManagedObjectContext:[GenreService managedObjectContext]];
+    request.entity = entity;
+    
+    NSError *error = nil;
+    NSArray *results = [[GenreService managedObjectContext] executeFetchRequest:request error:&error];
+    
+    if(results.count) {
+        return results;
+    }
+    else return nil;
+}
+
 + (NSArray *)animeWithGenre:(NSString *)genreName {
     Genre *genre = [GenreService genreWithName:genreName];
     if(genre) {

@@ -19,5 +19,6 @@
 
 - (void)createGenreTags:(NSSet *)genreTags;
 - (void)createTags:(NSSet *)tags;
+- (void)createTags:(NSSet *)tags withTitle:(BOOL)withTitle;
 
 @end

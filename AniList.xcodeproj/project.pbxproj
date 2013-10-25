@@ -348,6 +348,8 @@
 		63DB4E58179AD7D800C20ECC /* Genre.m in Sources */ = {isa = PBXBuildFile; fileRef = 63DB4E56179AD7D800C20ECC /* Genre.m */; };
 		63E76AFE181A1856009FC42F /* placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 63E76AFC181A1856009FC42F /* placeholder.png */; };
 		63E76AFF181A1856009FC42F /* placeholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63E76AFD181A1856009FC42F /* placeholder@2x.png */; };
+		63E76B06181A33CD009FC42F /* TagsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63E76B04181A33CD009FC42F /* TagsViewController.m */; };
+		63E76B07181A33CD009FC42F /* TagsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63E76B05181A33CD009FC42F /* TagsViewController.xib */; };
 		63EFEC3D176966B8009CEAB3 /* UMALHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 63EFEC3C176966B7009CEAB3 /* UMALHTTPClient.m */; };
 		63EFEC3E176966B8009CEAB3 /* UMALHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 63EFEC3C176966B7009CEAB3 /* UMALHTTPClient.m */; };
 		63FC20A717920EB000DFD544 /* CRTransitionLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FC20A617920EB000DFD544 /* CRTransitionLabel.m */; };
@@ -669,6 +671,9 @@
 		63DB4E56179AD7D800C20ECC /* Genre.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Genre.m; path = "Core Data/Genre.m"; sourceTree = "<group>"; };
 		63E76AFC181A1856009FC42F /* placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = placeholder.png; path = Images/Background/placeholder.png; sourceTree = "<group>"; };
 		63E76AFD181A1856009FC42F /* placeholder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "placeholder@2x.png"; path = "Images/Background/placeholder@2x.png"; sourceTree = "<group>"; };
+		63E76B03181A33CD009FC42F /* TagsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagsViewController.h; sourceTree = "<group>"; };
+		63E76B04181A33CD009FC42F /* TagsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagsViewController.m; sourceTree = "<group>"; };
+		63E76B05181A33CD009FC42F /* TagsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TagsViewController.xib; sourceTree = "<group>"; };
 		63EFEC3B176966B7009CEAB3 /* UMALHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UMALHTTPClient.h; path = "Web Services/UMALHTTPClient.h"; sourceTree = "<group>"; };
 		63EFEC3C176966B7009CEAB3 /* UMALHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UMALHTTPClient.m; path = "Web Services/UMALHTTPClient.m"; sourceTree = "<group>"; };
 		63FC20A517920EB000DFD544 /* CRTransitionLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CRTransitionLabel.h; path = Views/CRTransitionLabel.h; sourceTree = "<group>"; };
@@ -854,6 +859,9 @@
 				630FCD9018024B3A00D81EAF /* CompareViewController.h */,
 				630FCD9118024B3A00D81EAF /* CompareViewController.m */,
 				630FCD9218024B3A00D81EAF /* CompareViewController.xib */,
+				63E76B03181A33CD009FC42F /* TagsViewController.h */,
+				63E76B04181A33CD009FC42F /* TagsViewController.m */,
+				63E76B05181A33CD009FC42F /* TagsViewController.xib */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -1418,6 +1426,7 @@
 				630E0FE21768E9980061110A /* minus@2x.png in Resources */,
 				6324CEB41799793400B308B0 /* whiteArrow.png in Resources */,
 				633E697917C257F800477040 /* CompareCell.xib in Resources */,
+				63E76B07181A33CD009FC42F /* TagsViewController.xib in Resources */,
 				63C063BD17B67FD0009C4FFE /* FriendDetailViewController.xib in Resources */,
 				63D8791F17A20D8E002ACA13 /* white_bg_pressed.png in Resources */,
 				63C063A817B5F735009C4FFE /* intro_background.png in Resources */,
@@ -1617,6 +1626,7 @@
 				63BEA7371761859300432BED /* AniListPickerView.m in Sources */,
 				63BEA73E17619E0800432BED /* AniListUserInfoEditViewController.m in Sources */,
 				63D045A7179CDA5D006507D3 /* TagView.m in Sources */,
+				63E76B06181A33CD009FC42F /* TagsViewController.m in Sources */,
 				63BEA7441761A13400432BED /* AniListStepperView.m in Sources */,
 				6380F993179ADAD10090B66C /* GenreService.m in Sources */,
 				63BEA7481761A14400432BED /* AniListScoreView.m in Sources */,

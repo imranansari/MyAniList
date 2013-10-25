@@ -15,6 +15,7 @@
 
 + (NSArray *)allManga;
 + (NSArray *)myManga;
++ (void)downloadInfo;
 + (Manga *)mangaForID:(NSNumber *)ID;
 + (BOOL)addMangaList:(NSDictionary *)data;
 + (BOOL)addMangaList:(NSDictionary *)data forFriend:(Friend *)friend;

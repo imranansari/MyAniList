@@ -54,6 +54,10 @@
 }
 
 - (void)createTags:(NSSet *)tags {
+    [self createTags:tags withTitle:YES];
+}
+
+- (void)createTags:(NSSet *)tags withTitle:(BOOL)withTitle {
     // No tags = no view to create! Whomp whomp.
     if(tags.count == 0) return;
     
@@ -61,10 +65,12 @@
         [subview removeFromSuperview];
     }
     
-    UILabel *header = [UILabel whiteHeaderWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 60) andFontSize:18];
-    header.text = @"Tags";
-    
-    [self addSubview:header];
+    if(withTitle) {
+        UILabel *header = [UILabel whiteHeaderWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 60) andFontSize:18];
+        header.text = @"Tags";
+        
+        [self addSubview:header];
+    }
     
     NSMutableArray *tagViews = [NSMutableArray array];
     

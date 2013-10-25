@@ -16,6 +16,7 @@
 #import "LoginViewController.h"
 #import "TopListViewController.h"
 #import "PopularListViewController.h"
+#import "TagsViewController.h"
 
 #define kCellTitleKey @"kCellTitleKey"
 #define kCellViewControllerKey @"kCellViewControllerKey"
@@ -87,6 +88,16 @@ static NSString *CellIdentifier = @"Cell";
                       kCellTitleKey : @"- Upcoming",
                       kCellViewControllerKey : @"TopListViewController",
                       kCellActionKey : @"loadUpcomingAnimeViewController:"
+                      },
+                  @{
+                      kCellTitleKey : @"- Tags",
+                      kCellViewControllerKey : @"TagsViewController",
+                      kCellActionKey : @"loadAnimeTagViewController:"
+                      },
+                  @{
+                      kCellTitleKey : @"- Genres",
+                      kCellViewControllerKey : @"TagsViewController",
+                      kCellActionKey : @"loadAnimeGenreViewController:"
                       },
                   @{
                       kCellTitleKey : @"Manga",
@@ -165,6 +176,10 @@ static NSString *CellIdentifier = @"Cell";
     
     double value = [dictionary[kDownloadProgress] floatValue];
     
+    if(self.progress.progress == 0.0f) {
+        [self displayProgressBar];
+    }
+    
     self.statusText.text = [NSString stringWithFormat:@"Downloading Info (%0.00f%%)...", value*100];
     [self.progress setProgress:value animated:YES];
     
@@ -172,14 +187,29 @@ static NSString *CellIdentifier = @"Cell";
     
     if(value >= 1.0f) {
         self.statusText.text = @"Download completed!";
-        
-        [UIView animateWithDuration:0.3f
-                              delay:2.0f
-                            options:UIViewAnimationOptionCurveEaseInOut animations:^{
-                                self.statusView.frame = CGRectMake(self.statusView.frame.origin.x, self.statusView.frame.origin.y + self.statusView.frame.size.height, self.statusView.frame.size.width, self.statusView.frame.size.height);
-                            }
-                         completion:nil];
+        [self hideProgressBar];
     }
+}
+
+- (void)displayProgressBar {
+    [UIView animateWithDuration:0.3f
+                          delay:0.0f
+                        options:UIViewAnimationOptionCurveEaseInOut animations:^{
+                            self.statusView.frame = CGRectMake(self.statusView.frame.origin.x, [UIScreen mainScreen].bounds.size.height - self.statusView.frame.size.height, self.statusView.frame.size.width, self.statusView.frame.size.height);
+                        }
+                     completion:nil];
+}
+
+- (void)hideProgressBar {
+    [UIView animateWithDuration:0.3f
+                          delay:2.0f
+                        options:UIViewAnimationOptionCurveEaseInOut animations:^{
+                            self.statusView.frame = CGRectMake(self.statusView.frame.origin.x, self.statusView.frame.origin.y + self.statusView.frame.size.height, self.statusView.frame.size.width, self.statusView.frame.size.height);
+                        }
+                     completion:^(BOOL finished) {
+                         self.progress.progress = 0.0f;
+                         self.statusText.text = @"";
+                     }];
 }
 
 #pragma mark - Cell Action Methods
@@ -199,6 +229,20 @@ static NSString *CellIdentifier = @"Cell";
 
 - (void)loadUpcomingAnimeViewController:(UIViewController *)viewController {
 
+}
+
+- (void)loadAnimeTagViewController:(UIViewController *)viewController {
+    TagsViewController *tagsViewController = (TagsViewController *)viewController;
+    tagsViewController.tagType = TagTypeTags;
+    
+    [self loadViewController:tagsViewController];
+}
+
+- (void)loadAnimeGenreViewController:(UIViewController *)viewController {
+    TagsViewController *tagsViewController = (TagsViewController *)viewController;
+    tagsViewController.tagType = TagTypeGenres;
+
+    [self loadViewController:tagsViewController];
 }
 
 - (void)loadTopMangaViewController:(UIViewController *)viewController {
@@ -249,7 +293,7 @@ static NSString *CellIdentifier = @"Cell";
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if(indexPath.row > 0 && indexPath.row < 4) {
+    if(indexPath.row > 0 && indexPath.row < 6) {
         return 30;
     }
     
@@ -271,9 +315,7 @@ static NSString *CellIdentifier = @"Cell";
         cell = [[MenuCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
-//    [cell addGradient];
     cell.textLabel.text = items[indexPath.row][kCellTitleKey];
-    [cell.textLabel addShadow];
     
     return cell;
 }

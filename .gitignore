@@ -16,3 +16,6 @@ profile
 *.moved-aside
 DerivedData
 .idea/
+
+/AniList/Images/Background/placeholder@2x.psd
+/upcoming.txt

@@ -16,6 +16,20 @@
 
 @implementation TagService
 
++ (NSArray *)allTags {
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITY_NAME inManagedObjectContext:[TagService managedObjectContext]];
+    request.entity = entity;
+    
+    NSError *error = nil;
+    NSArray *results = [[TagService managedObjectContext] executeFetchRequest:request error:&error];
+    
+    if(results.count) {
+        return results;
+    }
+    else return nil;
+}
+
 + (NSArray *)animeWithTag:(NSString *)tagName {
     Tag *tag = [TagService tagWithName:tagName];
     if(tag) {
