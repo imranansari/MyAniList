@@ -51,14 +51,9 @@
     FICImageCache *sharedImageCache = [FICImageCache sharedImageCache];
     [sharedImageCache retrieveImageForEntity:object withFormatName:PosterImageFormatName completionBlock:^(id<FICEntity> entity, NSString *formatName, UIImage *image) {
         [UIView animateWithDuration:0.3f animations:^{
+            self.poster.image = image;
             self.poster.alpha = 1.0f;
         }];
-    }];
-}
-
-- (void)updatePoster {
-    [UIView animateWithDuration:0.3f animations:^{
-        self.poster.alpha = 1.0f;
     }];
 }
 

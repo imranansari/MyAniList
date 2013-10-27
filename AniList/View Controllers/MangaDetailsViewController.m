@@ -41,13 +41,7 @@
             [self displayDetailsViewAnimated:NO];
         }
         
-        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:self.manga.image_url]];
-        
-        AFImageRequestOperation *operation = [AFImageRequestOperation imageRequestOperationWithRequest:request success:^(UIImage *image) {
-            self.poster.image = image;
-        }];
-        
-        [operation start];
+        [self setupPosterForObject:self.manga];
     }
 }
 

@@ -29,7 +29,6 @@
 
 - (void)displayDetailsViewAnimated:(BOOL)animated;
 - (void)displayErrorMessage;
-- (void)updatePoster __deprecated_msg("Deprecated in favor for setupPosterForObject:");
 - (void)setupPosterForObject:(NSManagedObject<FICEntity> *)object;
 
 @end
