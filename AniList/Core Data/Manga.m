@@ -8,6 +8,17 @@
 
 #import "Manga.h"
 #import "Anime.h"
+#import "FICUtilities.h"
+
+@interface Manga() {
+    NSURL *_sourceImageURL;
+    NSString *_UUID;
+    NSString *_thumbnailFilePath;
+    BOOL _thumbnailFileExists;
+    BOOL _didCheckForThumbnailFile;
+}
+
+@end
 
 
 @implementation Manga
@@ -55,6 +66,8 @@
 @dynamic synonyms;
 @dynamic tags;
 @dynamic userlist;
+
+@synthesize sourceImageURL = _sourceImageURL;
 
 - (void)awakeFromInsert {
     self.read_status = @(MangaReadStatusNotReading);
@@ -340,6 +353,127 @@
         self.image = [NSString stringWithFormat:@"manga/%@", filename];
     });
 
+}
+
+#pragma mark - Property Accessors
+
+- (UIImage *)sourceImage {
+    UIImage *sourceImage = [UIImage imageWithContentsOfFile:[self.sourceImageURL path]];
+    
+    return sourceImage;
+}
+
+- (UIImage *)thumbnailImage {
+    UIImage *thumbnailImage = [UIImage imageWithContentsOfFile:[self _thumbnailFilePath]];
+    
+    return thumbnailImage;
+}
+
+- (BOOL)thumbnailImageExists {
+    BOOL thumbnailImageExists = [[NSFileManager defaultManager] fileExistsAtPath:[self _thumbnailFilePath]];
+    
+    return thumbnailImageExists;
+}
+
+- (NSURL *)sourceImageURL {
+    return [NSURL URLWithString:self.image_url];
+}
+
+#pragma mark - Conventional Image Caching Techniques
+
+- (NSString *)_thumbnailFilePath {
+    if (!_thumbnailFilePath) {
+        NSURL *photoURL = [self sourceImageURL];
+        _thumbnailFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[[photoURL absoluteString] lastPathComponent]];
+    }
+    
+    return _thumbnailFilePath;
+}
+
+- (void)generateThumbnail {
+    NSString *thumbnailFilePath = [self _thumbnailFilePath];
+    if (!_didCheckForThumbnailFile) {
+        _didCheckForThumbnailFile = YES;
+        _thumbnailFileExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
+    }
+    
+    if (_thumbnailFileExists == NO) {
+        CGFloat screenScale = [[UIScreen mainScreen] scale];
+        CGRect contextBounds = CGRectZero;
+        contextBounds.size = CGSizeMake(ThumbnailPosterImageSize.width * screenScale, ThumbnailPosterImageSize.height * screenScale);
+        
+        UIImage *sourceImage = [self sourceImage];
+        
+        UIGraphicsBeginImageContext(contextBounds.size);
+        
+        [sourceImage drawInRect:contextBounds];
+        UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
+        NSData *scaledImageJPEGRepresentation = UIImageJPEGRepresentation(scaledImage, 0.8);
+        
+        [scaledImageJPEGRepresentation writeToFile:thumbnailFilePath atomically:NO];
+        
+        UIGraphicsEndImageContext();
+        _thumbnailFileExists = YES;
+    }
+}
+
+- (void)deleteThumbnail {
+    [[NSFileManager defaultManager] removeItemAtPath:[self _thumbnailFilePath] error:NULL];
+    _thumbnailFileExists = NO;
+}
+
+
+static UIImage * _ThumbnailImageFromImage(UIImage *image) {
+    UIGraphicsBeginImageContextWithOptions(ThumbnailPosterImageSize, NO, 0.0);
+    [image drawInRect:CGRectMake(0, 0, ThumbnailPosterImageSize.width, ThumbnailPosterImageSize.height)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return newImage;
+}
+
+#pragma mark - Protocol Implementations
+
+#pragma mark - FICImageCacheEntity
+
+- (NSString *)UUID {
+    if (_UUID == nil) {
+        // MD5 hashing is expensive enough that we only want to do it once
+        CFUUIDBytes UUIDBytes = FICUUIDBytesFromMD5HashOfString([self.sourceImageURL absoluteString]);
+        _UUID = FICStringWithUUIDBytes(UUIDBytes);
+    }
+    
+    return _UUID;
+}
+
+- (NSString *)sourceImageUUID {
+    return [self UUID];
+}
+
+- (NSURL *)sourceImageURLWithFormatName:(NSString *)formatName {
+    return self.sourceImageURL;
+}
+
+- (FICEntityImageDrawingBlock)drawingBlockForImage:(UIImage *)image withFormatName:(NSString *)formatName {
+    FICEntityImageDrawingBlock drawingBlock = ^(CGContextRef contextRef, CGSize contextSize) {
+        CGRect contextBounds = CGRectZero;
+        contextBounds.size = contextSize;
+        CGContextClearRect(contextRef, contextBounds);
+        
+        if ([formatName isEqualToString:PosterImageFormatName]) {
+            UIGraphicsPushContext(contextRef);
+            [image drawInRect:contextBounds];
+            UIGraphicsPopContext();
+        }
+        else if([formatName isEqualToString:ThumbnailPosterImageFormatName]) {
+            UIImage *thumbnail = _ThumbnailImageFromImage(image);
+            UIGraphicsPushContext(contextRef);
+            [thumbnail drawInRect:contextBounds];
+            UIGraphicsPopContext();
+        }
+    };
+    
+    return drawingBlock;
 }
 
 @end

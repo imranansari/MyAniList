@@ -244,7 +244,7 @@
 }
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-    NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    NSManagedObject<FICEntity> *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
     AniListCell *anilistCell = (AniListCell *)cell;
     NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     NSURLRequest *imageRequest;

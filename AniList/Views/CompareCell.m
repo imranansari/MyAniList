@@ -78,87 +78,24 @@
     }
 }
 
-- (void)setImageWithItem:(NSManagedObject *)object {
-    Anime *anime;
-    Manga *manga;
-    
-    NSURLRequest *imageRequest = nil;
-    UIImage __block *cachedImage = nil;
-    
-    if([object isKindOfClass:[Anime class]]) {
-        anime = (Anime *)object;
-        imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:anime.image_url]];
-        cachedImage = [[ImageManager sharedManager] imageForAnime:anime];
-    }
-    else {
-        manga = (Manga *)object;
-        imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:manga.image_url]];
-        cachedImage = [[ImageManager sharedManager] imageForManga:manga];
-    }
-    
-    // If the image hasn't been cached in memory, fetch from disk.
-    if(!cachedImage) {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            
-            // Fetch image from disk.
-            if([object isKindOfClass:[Anime class]]) {
-                cachedImage = [anime imageForAnime];
-            }
-            else {
-                cachedImage = [manga imageForManga];
-            }
-            
-            // If we don't have it stored on disk, fetch and save both to disk and in memory.
-            if(!cachedImage) {
-                [self.image setImageWithURLRequest:imageRequest placeholderImage:cachedImage success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-                    
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        self.image.alpha = 0.0f;
-                        self.image.image = image;
-                        
-                        [UIView animateWithDuration:0.3f animations:^{
-                            self.image.alpha = 1.0f;
-                        }];
-                    });
-                    
-                    if([object isKindOfClass:[Anime class]]) {
-                        if(!anime.image) {
-                            // Save the image onto disk if it doesn't exist or they aren't the same.
-                            [anime saveImage:image fromRequest:request];
-                            [[ImageManager sharedManager] addImage:image forAnime:anime];
-                        }
-                    }
-                    else {
-                        if(!manga.image) {
-                            // Save the image onto disk if it doesn't exist or they aren't the same.
-                            [manga saveImage:image fromRequest:request];
-                            [[ImageManager sharedManager] addImage:image forManga:manga];
-                        }
-                    }
-                    
-                } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-                    // Log failure.
-                    ALLog(@"Couldn't fetch image at URL %@.", [request.URL absoluteString]);
-                }];
-            }
-            else {
-                if([object isKindOfClass:[Anime class]]) {
-                    [[ImageManager sharedManager] addImage:cachedImage forAnime:anime];
-                }
-                else {
-                    [[ImageManager sharedManager] addImage:cachedImage forManga:manga];
-                }
-                
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    self.image.image = cachedImage;
-                });
-            }
-            
-        });
-    }
-    else {
-        self.image.image = cachedImage;
-    }
+- (void)setImageWithItem:(NSManagedObject<FICEntity> *)object {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        FICImageCache *sharedImageCache = [FICImageCache sharedImageCache];
+        FICImageCacheCompletionBlock completionBlock = ^(id <FICEntity> entity, NSString *formatName, UIImage *image) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.image.image = image;
+                [self.indicator removeFromSuperview];
+            });
+        };
+        
+        BOOL imageExists = [sharedImageCache retrieveImageForEntity:object
+                                                     withFormatName:ThumbnailPosterImageFormatName
+                                                    completionBlock:completionBlock];
+        
+        if (imageExists == NO) {
+            ALVLog(@"image does not exist.");
+        }
+    });
 }
 
 @end

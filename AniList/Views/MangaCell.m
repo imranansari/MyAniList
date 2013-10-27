@@ -249,13 +249,23 @@
     self.rank.text = [manga.user_score intValue] != -1 ? [NSString stringWithFormat:@"%d", [manga.user_score intValue]] : @"";
     self.type.text = [Manga stringForMangaType:[manga.type intValue]];
     
-    [self setImageWithItem:manga];
-}
-
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if(buttonIndex == actionSheet.destructiveButtonIndex) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kDeleteManga object:nil];
-    }
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        FICImageCache *sharedImageCache = [FICImageCache sharedImageCache];
+        FICImageCacheCompletionBlock completionBlock = ^(id <FICEntity> entity, NSString *formatName, UIImage *image) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.image.image = image;
+                [self.indicator removeFromSuperview];
+            });
+        };
+        
+        BOOL imageExists = [sharedImageCache retrieveImageForEntity:manga
+                                                     withFormatName:ThumbnailPosterImageFormatName
+                                                    completionBlock:completionBlock];
+        
+        if (imageExists == NO) {
+            ALVLog(@"image does not exist.");
+        }
+    });
 }
 
 

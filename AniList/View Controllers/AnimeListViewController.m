@@ -15,6 +15,8 @@
 #import "AniListAppDelegate.h"
 #import "AnimeUserInfoEditViewController.h"
 
+#import "FICImageCache.h"
+
 static BOOL alreadyFetched = NO;
 
 @interface AnimeListViewController ()

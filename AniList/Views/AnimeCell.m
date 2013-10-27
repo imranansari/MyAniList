@@ -1,4 +1,4 @@
-//
+
 //  AnimeCell.m
 //  AniList
 //
@@ -9,6 +9,7 @@
 #import "AnimeCell.h"
 #import "FriendAnime.h"
 #import "Anime.h"
+#import "FICImageCache.h"
 
 @implementation AnimeCell
 
@@ -152,7 +153,23 @@
     self.rank.text = [anime.user_score intValue] != -1 ? [NSString stringWithFormat:@"%d", [anime.user_score intValue]] : @"";
     self.type.text = [Anime stringForAnimeType:[anime.type intValue]];
     
-    [self setImageWithItem:anime];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        FICImageCache *sharedImageCache = [FICImageCache sharedImageCache];
+        FICImageCacheCompletionBlock completionBlock = ^(id <FICEntity> entity, NSString *formatName, UIImage *image) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.image.image = image;
+                [self.indicator removeFromSuperview];
+            });
+        };
+        
+        BOOL imageExists = [sharedImageCache retrieveImageForEntity:anime
+                                                     withFormatName:ThumbnailPosterImageFormatName
+                                                    completionBlock:completionBlock];
+        
+        if (imageExists == NO) {
+            ALVLog(@"image does not exist.");
+        }
+    });
 }
 
 @end

@@ -18,8 +18,9 @@
 @property (nonatomic, weak) IBOutlet UILabel *average_rank;
 @property (nonatomic, weak) IBOutlet UILabel *stat;
 @property (nonatomic, weak) IBOutlet UIView *loadingView;
+@property (nonatomic, weak) IBOutlet UIActivityIndicatorView *indicator;
 
 + (CGFloat)cellHeight;
-- (void)setImageWithItem:(NSManagedObject *)object;
+- (void)setImageWithItem:(NSManagedObject<FICEntity> *)object;
 
 @end

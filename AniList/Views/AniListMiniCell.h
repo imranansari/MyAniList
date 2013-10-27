@@ -16,10 +16,10 @@
 @property (nonatomic, weak) IBOutlet UILabel *type;
 @property (nonatomic, weak) IBOutlet UILabel *rank;
 @property (nonatomic, weak) IBOutlet UIView *loadingView;
+@property (nonatomic, weak) IBOutlet UIActivityIndicatorView *indicator;
 
 - (void)setup;
 + (CGFloat)cellHeight;
-- (void)addShadow;
-- (void)setImageWithItem:(NSManagedObject *)object;
+- (void)setImageWithItem:(NSManagedObject<FICEntity> *)object;
 
 @end

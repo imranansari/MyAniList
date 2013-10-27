@@ -19,7 +19,7 @@ typedef enum {
     ActionSheetPromptDeletion
 } ActionSheetPrompts;
 
-@interface AniListCell : UITableViewCell<UIActionSheetDelegate>
+@interface AniListCell : UITableViewCell<UIActionSheetDelegate, FICImageCacheDelegate>
 
 @property (nonatomic, weak) IBOutlet UIImageView *image;
 @property (nonatomic, weak) IBOutlet UILabel *title;
@@ -31,7 +31,7 @@ typedef enum {
 @property (nonatomic, weak) IBOutlet UIView *loadingView;
 @property (nonatomic, strong) IBOutlet UIView *editView;
 @property (nonatomic, weak) IBOutlet UIView *detailView;
-
+@property (nonatomic, weak) IBOutlet UIActivityIndicatorView *indicator;
 @property (nonatomic, weak) IBOutlet UIButton *plusButton;
 @property (nonatomic, weak) IBOutlet UIButton *minusButton;
 
@@ -42,7 +42,8 @@ typedef enum {
 - (void)addShadow __deprecated;
 - (void)showEditScreen;
 - (void)revokeEditScreen;
-- (void)setImageWithItem:(NSManagedObject *)object;
+- (void)setImageWithItem:(NSManagedObject<FICEntity> *)object;
+- (void)setImageWithItem:(NSManagedObject<FICEntity> *)object withFormatName:(NSString *)formatName;
 
 - (void)showEditScreenForAnime:(Anime *)anime;
 - (void)showEditScreenForManga:(Manga *)manga;

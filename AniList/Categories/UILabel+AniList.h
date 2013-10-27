@@ -12,6 +12,6 @@
 
 + (UILabel *)whiteLabelWithFrame:(CGRect)frame andFontSize:(int)size;
 + (UILabel *)whiteHeaderWithFrame:(CGRect)frame andFontSize:(int)size;
-- (void)addShadow __deprecated;
+- (void)addShadow __deprecated_msg("does not conform to iOS 7 standards.");
 
 @end

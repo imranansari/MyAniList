@@ -64,8 +64,6 @@
 		631693471760C56300D526C0 /* NSDate+AniList.m in Sources */ = {isa = PBXBuildFile; fileRef = 631693451760C56300D526C0 /* NSDate+AniList.m */; };
 		631898CF17222AE300758BE9 /* image_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 631898CD17222AE300758BE9 /* image_placeholder.png */; };
 		631898D017222AE300758BE9 /* image_placeholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 631898CE17222AE300758BE9 /* image_placeholder@2x.png */; };
-		6324CEA61799793400B308B0 /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6324CE9C1799793400B308B0 /* EGORefreshTableHeaderView.m */; };
-		6324CEA71799793400B308B0 /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6324CE9C1799793400B308B0 /* EGORefreshTableHeaderView.m */; };
 		6324CEA81799793400B308B0 /* blackArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 6324CE9E1799793400B308B0 /* blackArrow.png */; };
 		6324CEA91799793400B308B0 /* blackArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 6324CE9E1799793400B308B0 /* blackArrow.png */; };
 		6324CEAA1799793400B308B0 /* blackArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6324CE9F1799793400B308B0 /* blackArrow@2x.png */; };
@@ -350,10 +348,17 @@
 		63E76AFF181A1856009FC42F /* placeholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63E76AFD181A1856009FC42F /* placeholder@2x.png */; };
 		63E76B06181A33CD009FC42F /* TagsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63E76B04181A33CD009FC42F /* TagsViewController.m */; };
 		63E76B07181A33CD009FC42F /* TagsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63E76B05181A33CD009FC42F /* TagsViewController.xib */; };
+		63E76B0E181A3A5A009FC42F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63E76B0D181A3A5A009FC42F /* Images.xcassets */; };
 		63EFEC3D176966B8009CEAB3 /* UMALHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 63EFEC3C176966B7009CEAB3 /* UMALHTTPClient.m */; };
 		63EFEC3E176966B8009CEAB3 /* UMALHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 63EFEC3C176966B7009CEAB3 /* UMALHTTPClient.m */; };
 		63FC20A717920EB000DFD544 /* CRTransitionLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FC20A617920EB000DFD544 /* CRTransitionLabel.m */; };
 		63FC20A817920EB000DFD544 /* CRTransitionLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FC20A617920EB000DFD544 /* CRTransitionLabel.m */; };
+		63FE5B24181C1D5B0090D147 /* FICImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FE5B18181C1D5B0090D147 /* FICImageCache.m */; };
+		63FE5B25181C1D5B0090D147 /* FICImageFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FE5B1A181C1D5B0090D147 /* FICImageFormat.m */; };
+		63FE5B26181C1D5B0090D147 /* FICImageTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FE5B1C181C1D5B0090D147 /* FICImageTable.m */; };
+		63FE5B27181C1D5B0090D147 /* FICImageTableChunk.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FE5B1E181C1D5B0090D147 /* FICImageTableChunk.m */; };
+		63FE5B28181C1D5B0090D147 /* FICImageTableEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FE5B20181C1D5B0090D147 /* FICImageTableEntry.m */; };
+		63FE5B29181C1D5B0090D147 /* FICUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FE5B23181C1D5B0090D147 /* FICUtilities.m */; };
 		KIYDQKWBMRKIEYEVRWSLKUDQ /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = HYXIFWTDXJPPRRMDCEPMDTJH /* libz.dylib */; };
 /* End PBXBuildFile section */
 
@@ -390,8 +395,6 @@
 		631693451760C56300D526C0 /* NSDate+AniList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDate+AniList.m"; path = "Categories/NSDate+AniList.m"; sourceTree = "<group>"; };
 		631898CD17222AE300758BE9 /* image_placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = image_placeholder.png; path = Images/Placeholders/image_placeholder.png; sourceTree = "<group>"; };
 		631898CE17222AE300758BE9 /* image_placeholder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "image_placeholder@2x.png"; path = "Images/Placeholders/image_placeholder@2x.png"; sourceTree = "<group>"; };
-		6324CE9B1799793400B308B0 /* EGORefreshTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGORefreshTableHeaderView.h; sourceTree = "<group>"; };
-		6324CE9C1799793400B308B0 /* EGORefreshTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGORefreshTableHeaderView.m; sourceTree = "<group>"; };
 		6324CE9E1799793400B308B0 /* blackArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blackArrow.png; sourceTree = "<group>"; };
 		6324CE9F1799793400B308B0 /* blackArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blackArrow@2x.png"; sourceTree = "<group>"; };
 		6324CEA01799793400B308B0 /* blueArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blueArrow.png; sourceTree = "<group>"; };
@@ -674,10 +677,26 @@
 		63E76B03181A33CD009FC42F /* TagsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagsViewController.h; sourceTree = "<group>"; };
 		63E76B04181A33CD009FC42F /* TagsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagsViewController.m; sourceTree = "<group>"; };
 		63E76B05181A33CD009FC42F /* TagsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TagsViewController.xib; sourceTree = "<group>"; };
+		63E76B0D181A3A5A009FC42F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		63EFEC3B176966B7009CEAB3 /* UMALHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UMALHTTPClient.h; path = "Web Services/UMALHTTPClient.h"; sourceTree = "<group>"; };
 		63EFEC3C176966B7009CEAB3 /* UMALHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UMALHTTPClient.m; path = "Web Services/UMALHTTPClient.m"; sourceTree = "<group>"; };
 		63FC20A517920EB000DFD544 /* CRTransitionLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CRTransitionLabel.h; path = Views/CRTransitionLabel.h; sourceTree = "<group>"; };
 		63FC20A617920EB000DFD544 /* CRTransitionLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CRTransitionLabel.m; path = Views/CRTransitionLabel.m; sourceTree = "<group>"; };
+		63FE5B15181C1D5B0090D147 /* FICEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FICEntity.h; sourceTree = "<group>"; };
+		63FE5B16181C1D5B0090D147 /* FICImageCache+FICErrorLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FICImageCache+FICErrorLogging.h"; sourceTree = "<group>"; };
+		63FE5B17181C1D5B0090D147 /* FICImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FICImageCache.h; sourceTree = "<group>"; };
+		63FE5B18181C1D5B0090D147 /* FICImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FICImageCache.m; sourceTree = "<group>"; };
+		63FE5B19181C1D5B0090D147 /* FICImageFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FICImageFormat.h; sourceTree = "<group>"; };
+		63FE5B1A181C1D5B0090D147 /* FICImageFormat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FICImageFormat.m; sourceTree = "<group>"; };
+		63FE5B1B181C1D5B0090D147 /* FICImageTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FICImageTable.h; sourceTree = "<group>"; };
+		63FE5B1C181C1D5B0090D147 /* FICImageTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FICImageTable.m; sourceTree = "<group>"; };
+		63FE5B1D181C1D5B0090D147 /* FICImageTableChunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FICImageTableChunk.h; sourceTree = "<group>"; };
+		63FE5B1E181C1D5B0090D147 /* FICImageTableChunk.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FICImageTableChunk.m; sourceTree = "<group>"; };
+		63FE5B1F181C1D5B0090D147 /* FICImageTableEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FICImageTableEntry.h; sourceTree = "<group>"; };
+		63FE5B20181C1D5B0090D147 /* FICImageTableEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FICImageTableEntry.m; sourceTree = "<group>"; };
+		63FE5B21181C1D5B0090D147 /* FICImports.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FICImports.h; sourceTree = "<group>"; };
+		63FE5B22181C1D5B0090D147 /* FICUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FICUtilities.h; sourceTree = "<group>"; };
+		63FE5B23181C1D5B0090D147 /* FICUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FICUtilities.m; sourceTree = "<group>"; };
 		HYXIFWTDXJPPRRMDCEPMDTJH /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		THBDITSPYVFDWQYYBDCIDIXG /* SparkInspector.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SparkInspector.framework; path = "/Applications/Spark Inspector.app/Contents/Resources/Frameworks/SparkInspector.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -758,8 +777,6 @@
 		6324CE9A1799793400B308B0 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				6324CE9B1799793400B308B0 /* EGORefreshTableHeaderView.h */,
-				6324CE9C1799793400B308B0 /* EGORefreshTableHeaderView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -997,9 +1014,9 @@
 				632F4388171CDA0000A5B43A /* AnimeCell.h */,
 				632F4389171CDA0000A5B43A /* AnimeCell.m */,
 				635027AC171E601E0004C106 /* AnimeCell.xib */,
-				63B386B21777B91C001A7E31 /* MangaCell.xib */,
 				632F438B171CDA0E00A5B43A /* MangaCell.h */,
 				632F438C171CDA0E00A5B43A /* MangaCell.m */,
+				63B386B21777B91C001A7E31 /* MangaCell.xib */,
 				63C8CD6B179A441E003BB80C /* AniListMiniCell.h */,
 				63C8CD6C179A441E003BB80C /* AniListMiniCell.m */,
 				63C8CD6F179A442C003BB80C /* AniListMiniCell.xib */,
@@ -1088,6 +1105,7 @@
 		6353C03D171C457C0060F062 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				63FE5B14181C1D5B0090D147 /* FastImageCache */,
 				6324CEC717997F1800B308B0 /* AnalyticsManager */,
 				6324CEBB17997EEE00B308B0 /* GoogleAnalytics */,
 				6324CE981799793400B308B0 /* EGOTableViewPullRefresh */,
@@ -1197,6 +1215,7 @@
 				632F4368171CD6FA00A5B43A /* View Controllers */,
 				635484AF171C2FA7003457CB /* AniListAppDelegate.h */,
 				635484B0171C2FA7003457CB /* AniListAppDelegate.m */,
+				63E76B0D181A3A5A009FC42F /* Images.xcassets */,
 				635484A7171C2FA7003457CB /* Supporting Files */,
 			);
 			path = AniList;
@@ -1327,6 +1346,28 @@
 			path = RSSGlowLabel;
 			sourceTree = "<group>";
 		};
+		63FE5B14181C1D5B0090D147 /* FastImageCache */ = {
+			isa = PBXGroup;
+			children = (
+				63FE5B15181C1D5B0090D147 /* FICEntity.h */,
+				63FE5B16181C1D5B0090D147 /* FICImageCache+FICErrorLogging.h */,
+				63FE5B17181C1D5B0090D147 /* FICImageCache.h */,
+				63FE5B18181C1D5B0090D147 /* FICImageCache.m */,
+				63FE5B19181C1D5B0090D147 /* FICImageFormat.h */,
+				63FE5B1A181C1D5B0090D147 /* FICImageFormat.m */,
+				63FE5B1B181C1D5B0090D147 /* FICImageTable.h */,
+				63FE5B1C181C1D5B0090D147 /* FICImageTable.m */,
+				63FE5B1D181C1D5B0090D147 /* FICImageTableChunk.h */,
+				63FE5B1E181C1D5B0090D147 /* FICImageTableChunk.m */,
+				63FE5B1F181C1D5B0090D147 /* FICImageTableEntry.h */,
+				63FE5B20181C1D5B0090D147 /* FICImageTableEntry.m */,
+				63FE5B21181C1D5B0090D147 /* FICImports.h */,
+				63FE5B22181C1D5B0090D147 /* FICUtilities.h */,
+				63FE5B23181C1D5B0090D147 /* FICUtilities.m */,
+			);
+			path = FastImageCache;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1421,6 +1462,7 @@
 				6324CEB01799793400B308B0 /* grayArrow.png in Resources */,
 				632F4372171CD74400A5B43A /* ProfileCell.xib in Resources */,
 				632F4396171CDC7600A5B43A /* hamburger.png in Resources */,
+				63E76B0E181A3A5A009FC42F /* Images.xcassets in Resources */,
 				632F4397171CDC7600A5B43A /* hamburger@2x.png in Resources */,
 				630E0FE01768E9980061110A /* minus.png in Resources */,
 				630E0FE21768E9980061110A /* minus@2x.png in Resources */,
@@ -1574,6 +1616,7 @@
 				632F4384171CD9E100A5B43A /* AniListCell.m in Sources */,
 				632F438A171CDA0000A5B43A /* AnimeCell.m in Sources */,
 				632F438D171CDA0E00A5B43A /* MangaCell.m in Sources */,
+				63FE5B27181C1D5B0090D147 /* FICImageTableChunk.m in Sources */,
 				632F439B171CDDED00A5B43A /* AniListViewController.m in Sources */,
 				63BFB1D917CB876B0041BEA1 /* ImageManager.m in Sources */,
 				63C8CD6D179A441E003BB80C /* AniListMiniCell.m in Sources */,
@@ -1598,12 +1641,13 @@
 				636F8662175A5F53007E1FB6 /* AFHTTPRequestOperation.m in Sources */,
 				636F8664175A5F53007E1FB6 /* AFImageRequestOperation.m in Sources */,
 				636F8666175A5F53007E1FB6 /* AFJSONRequestOperation.m in Sources */,
-				6324CEA61799793400B308B0 /* EGORefreshTableHeaderView.m in Sources */,
+				63FE5B26181C1D5B0090D147 /* FICImageTable.m in Sources */,
 				636F8668175A5F53007E1FB6 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				636F866A175A5F53007E1FB6 /* AFPropertyListRequestOperation.m in Sources */,
 				63C063BB17B67FD0009C4FFE /* FriendDetailViewController.m in Sources */,
 				636F866C175A5F53007E1FB6 /* AFURLConnectionOperation.m in Sources */,
 				636F866E175A5F53007E1FB6 /* AFXMLRequestOperation.m in Sources */,
+				63FE5B25181C1D5B0090D147 /* FICImageFormat.m in Sources */,
 				636F8670175A5F53007E1FB6 /* UIImageView+AFNetworking.m in Sources */,
 				636F8676175A7AB8007E1FB6 /* XMLReader.m in Sources */,
 				636F867A175A7D17007E1FB6 /* MALUserClient.m in Sources */,
@@ -1615,6 +1659,7 @@
 				63BF35671816BC7300486F19 /* UIImage+AniList.m in Sources */,
 				636F869C175B117D007E1FB6 /* AnimeDetailsViewController.m in Sources */,
 				636F86A2175B1232007E1FB6 /* SynopsisView.m in Sources */,
+				63FE5B28181C1D5B0090D147 /* FICImageTableEntry.m in Sources */,
 				636F86B0175BA1E3007E1FB6 /* UILabel+AniList.m in Sources */,
 				636F86B4175BA3B8007E1FB6 /* UIView+AniList.m in Sources */,
 				6301D94B175D66AF00163160 /* AniListSummaryViewController.m in Sources */,
@@ -1627,12 +1672,14 @@
 				63BEA73E17619E0800432BED /* AniListUserInfoEditViewController.m in Sources */,
 				63D045A7179CDA5D006507D3 /* TagView.m in Sources */,
 				63E76B06181A33CD009FC42F /* TagsViewController.m in Sources */,
+				63FE5B24181C1D5B0090D147 /* FICImageCache.m in Sources */,
 				63BEA7441761A13400432BED /* AniListStepperView.m in Sources */,
 				6380F993179ADAD10090B66C /* GenreService.m in Sources */,
 				63BEA7481761A14400432BED /* AniListScoreView.m in Sources */,
 				63BEA74D176213B600432BED /* RRSGlowLabel.m in Sources */,
 				63859E8B1763F28C0029397C /* AnimeUserInfoEditViewController.m in Sources */,
 				63047A4217656CE10039D795 /* AniListDatePickerView.m in Sources */,
+				63FE5B29181C1D5B0090D147 /* FICUtilities.m in Sources */,
 				6331027B176605DF00097658 /* UIColor+AniList.m in Sources */,
 				633E697217BFD16D00477040 /* Manga.m in Sources */,
 				63EFEC3D176966B8009CEAB3 /* UMALHTTPClient.m in Sources */,
@@ -1729,7 +1776,6 @@
 				633E696F17BFC32600477040 /* FriendMangaService.m in Sources */,
 				6301D93F175D632500163160 /* UIFont+AniList.m in Sources */,
 				6301D940175D632C00163160 /* main.m in Sources */,
-				6324CEA71799793400B308B0 /* EGORefreshTableHeaderView.m in Sources */,
 				6301D94C175D66AF00163160 /* AniListSummaryViewController.m in Sources */,
 				6301D956175D729600163160 /* NSString+AniList.m in Sources */,
 				63892577175F7ACC00C8489A /* BaseViewController.m in Sources */,
@@ -1883,7 +1929,9 @@
 		635484D4171C2FA7003457CB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Corey Roberts (8E236WJF76)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Corey Roberts (8E236WJF76)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1905,8 +1953,8 @@
 					SparkInspector,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "440B58D0-A1BE-4897-A253-57B8D6B42288";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "440B58D0-A1BE-4897-A253-57B8D6B42288";
+				PROVISIONING_PROFILE = "C58EE964-D1F7-4B3E-B1BF-E28DD33B370A";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C58EE964-D1F7-4B3E-B1BF-E28DD33B370A";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/AFNetworking/AFNetworking";
 				WRAPPER_EXTENSION = app;
@@ -1916,8 +1964,10 @@
 		635484D5171C2FA7003457CB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Corey Roberts (8E236WJF76)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Corey Roberts (QYFSMCG7FR)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Corey Roberts (QYFSMCG7FR)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
@@ -1933,8 +1983,8 @@
 					"$(SRCROOT)/AniList/Libraries/GoogleAnalytics",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "440B58D0-A1BE-4897-A253-57B8D6B42288";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "440B58D0-A1BE-4897-A253-57B8D6B42288";
+				PROVISIONING_PROFILE = "F5A21E66-D4DE-458D-AE19-BFEDE5AEAA54";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F5A21E66-D4DE-458D-AE19-BFEDE5AEAA54";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/AFNetworking/AFNetworking";
 				WRAPPER_EXTENSION = app;

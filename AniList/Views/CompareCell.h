@@ -16,9 +16,10 @@
 @property (nonatomic, weak) IBOutlet UILabel *myScore;
 @property (nonatomic, weak) IBOutlet UILabel *difference;
 @property (nonatomic, weak) IBOutlet UIView *loadingView;
+@property (nonatomic, weak) IBOutlet UIActivityIndicatorView *indicator;
 
 + (CGFloat)cellHeight;
 - (void)setUserScore:(int)userScore andFriendScore:(int)friendScore;
-- (void)setImageWithItem:(NSManagedObject *)object;
+- (void)setImageWithItem:(NSManagedObject<FICEntity> *)object;
 
 @end

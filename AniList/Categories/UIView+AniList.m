@@ -18,7 +18,6 @@
     label.backgroundColor = [UIColor clearColor];
     label.textColor = [UIColor whiteColor];
     label.text = [NSString stringWithFormat:@"%@ (%@)", primaryString, secondaryString];
-    [label addShadow];
     
     [view addSubview:label];
     

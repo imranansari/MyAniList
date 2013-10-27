@@ -15,8 +15,6 @@
     label.textColor = [UIColor whiteColor];
     label.font = [UIFont defaultFontWithSize:size];
     label.backgroundColor = [UIColor clearColor];
-    [label addShadow];
-    label.shadowOffset = CGSizeMake(0, 1);
     
     return label;
 }
@@ -26,7 +24,6 @@
     label.textColor = [UIColor whiteColor];
     label.font = [UIFont defaultFontWithSize:size];
     label.backgroundColor = [UIColor clearColor];
-    [label addShadow];
     label.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"header_bg.png"]];
     label.textAlignment = NSTextAlignmentCenter;
     

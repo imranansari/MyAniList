@@ -37,22 +37,7 @@
             [self displayDetailsViewAnimated:NO];
         }
         
-        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:self.anime.image_url]];
-
-        UIImage *poster = [self.anime imageForAnime];
-        
-        if(!poster) {
-            self.poster.alpha = 0.0f;
-        }
-        
-        self.poster.image = poster;
-        
-        AFImageRequestOperation *operation = [AFImageRequestOperation imageRequestOperationWithRequest:request success:^(UIImage *image) {
-            self.poster.image = image;
-            [self updatePoster];
-        }];
-        
-        [operation start];
+        [self setupPosterForObject:self.anime];
     }
 }
 

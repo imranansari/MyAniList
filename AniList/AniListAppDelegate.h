@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import <Crashlytics/Crashlytics.h>
+#import "FICImageCache.h"
 
-@interface AniListAppDelegate : UIResponder <UIApplicationDelegate>
+@interface AniListAppDelegate : UIResponder <UIApplicationDelegate, FICImageCacheDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 

@@ -13,6 +13,7 @@
 @interface ImageManager()
 @property (nonatomic, strong) NSMutableDictionary *animeImages;
 @property (nonatomic, strong) NSMutableDictionary *mangaImages;
+@property (nonatomic, strong) FICImageCache *sharedImageCache;
 @end
 
 @implementation ImageManager
@@ -34,14 +35,42 @@
     self = [super init];
     
     if(self) {
-        self.animeImages = [[NSMutableDictionary alloc] init];
-        self.mangaImages = [[NSMutableDictionary alloc] init];
+        self.sharedImageCache = [FICImageCache sharedImageCache];
+        self.sharedImageCache.delegate = self;
+        self.sharedImageCache.formats = [self createFormats];
     }
     
     return self;
 }
 
+- (NSArray *)createFormats {
+    FICImageFormat *thumbnailFormat = [FICImageFormat formatWithName:ThumbnailPosterImageFormatName
+                                                              family:PosterImageFormatFamily
+                                                           imageSize:ThumbnailPosterImageSize
+                                                               style:FICImageFormatStyle32BitBGR
+                                                        maximumCount:500
+                                                             devices:FICImageFormatDevicePhone];
+    
+    
+    FICImageFormat *standardFormat = [FICImageFormat formatWithName:PosterImageFormatName
+                                                               family:PosterImageFormatFamily
+                                                            imageSize:PosterImageSize
+                                                              style:FICImageFormatStyle32BitBGR
+                                                       maximumCount:500
+                                                            devices:FICImageFormatDevicePhone];
+    
+    return @[thumbnailFormat, standardFormat];
+}
+
+- (void)imageForAnime:(Anime *)anime withFormat:(NSString *)formatName {
+    [self.sharedImageCache asynchronouslyRetrieveImageForEntity:anime
+                                                 withFormatName:formatName
+                                                completionBlock:^(id<FICEntity> entity, NSString *formatName, UIImage *image) {
+    }];
+}
+
 - (UIImage *)imageForAnime:(Anime *)anime {
+
     return self.animeImages[[anime.anime_id stringValue]];
 }
 
@@ -55,6 +84,10 @@
 
 - (void)addImage:(UIImage *)image forManga:(Manga *)manga {
     [self.mangaImages addEntriesFromDictionary:@{ [manga.manga_id stringValue] : image }];
+}
+
+- (void)imageCache:(FICImageCache *)imageCache wantsSourceImageForEntity:(id<FICEntity>)entity withFormatName:(NSString *)formatName completionBlock:(FICImageRequestCompletionBlock)completionBlock {
+    
 }
 
 @end

@@ -172,7 +172,7 @@
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
-- (void)configureCell:(UITableViewCell *)cell withObject:(NSManagedObject *)object {
+- (void)configureCell:(UITableViewCell *)cell withObject:(NSManagedObject<FICEntity> *)object {
     AniListCell *anilistCell = (AniListCell *)cell;
     NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     NSURLRequest *imageRequest;

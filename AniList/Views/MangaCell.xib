@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4510" systemVersion="13A598" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment defaultVersion="1552" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3746"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -74,6 +74,7 @@
                 <outlet property="editProgress" destination="nVN-so-WOU" id="pQc-R6-G3P"/>
                 <outlet property="editView" destination="0MI-d1-JF7" id="lm9-ti-sUh"/>
                 <outlet property="image" destination="7" id="8"/>
+                <outlet property="indicator" destination="uXQ-MU-JOu" id="2Dt-p4-wLj"/>
                 <outlet property="loadingView" destination="eHw-hV-SUZ" id="A2i-ge-yLD"/>
                 <outlet property="plusButton" destination="ibA-Gg-lhd" id="e9A-Fx-SPY"/>
                 <outlet property="plusChapterButton" destination="hLS-mO-fKc" id="JuB-nx-Nyr"/>

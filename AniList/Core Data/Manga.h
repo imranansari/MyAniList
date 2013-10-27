@@ -77,7 +77,7 @@ typedef enum {
 
 @class Anime, Genre, Synonym, Tag, FriendManga;
 
-@interface Manga : NSManagedObject
+@interface Manga : NSManagedObject<FICEntity>
 
 @property (nonatomic, retain) NSNumber * average_count;
 @property (nonatomic, retain) NSNumber * average_score;
@@ -123,6 +123,12 @@ typedef enum {
 @property (nonatomic, retain) NSSet *tags;
 @property (nonatomic, retain) NSSet *userlist;
 
+// Not part of core data.
+@property (nonatomic, copy) NSURL *sourceImageURL;
+@property (nonatomic, strong, readonly) UIImage *sourceImage;
+@property (nonatomic, strong, readonly) UIImage *thumbnailImage;
+@property (nonatomic, assign, readonly) BOOL thumbnailImageExists;
+
 + (MangaType)mangaTypeForValue:(NSString *)value;
 + (NSString *)stringForMangaType:(MangaType)mangaType;
 + (MangaPublishStatus)mangaPublishStatusForValue:(NSString *)value;
@@ -135,10 +141,9 @@ typedef enum {
 + (MangaPublishStatus)unofficialMangaPublishStatusForValue:(NSString *)value;
 + (MangaReadStatus)unofficialMangaReadStatusForValue:(NSString *)value;
 
+- (BOOL)hasAdditionalDetails;
 - (UIImage *)imageForManga;
 - (void)saveImage:(UIImage *)image fromRequest:(NSURLRequest *)request;
-
-- (BOOL)hasAdditionalDetails;
 
 @end
 

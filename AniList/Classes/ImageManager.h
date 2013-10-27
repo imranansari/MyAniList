@@ -7,10 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "FICImageCache.h"
 
 @class Anime, Manga;
 
-@interface ImageManager : NSObject
+@interface ImageManager : NSObject<FICImageCacheDelegate>
 
 + (ImageManager *)sharedManager;
 - (UIImage *)imageForAnime:(Anime *)anime;

@@ -51,11 +51,4 @@
     return 60;
 }
 
-#pragma mark - Text Methods
-
-- (void)addShadow {
-    [self.option addShadow];
-}
-
-
 @end

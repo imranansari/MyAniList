@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 #import "CRTransitionLabel.h"
+#import "FICImageCache.h"
 
 @interface AniListDetailsViewController : UIViewController
 
@@ -28,6 +29,7 @@
 
 - (void)displayDetailsViewAnimated:(BOOL)animated;
 - (void)displayErrorMessage;
-- (void)updatePoster;
+- (void)updatePoster __deprecated_msg("Deprecated in favor for setupPosterForObject:");
+- (void)setupPosterForObject:(NSManagedObject<FICEntity> *)object;
 
 @end

@@ -11,10 +11,9 @@
 #import "BaseViewController.h"
 #import "AniListTableView.h"
 #import "AniListNavigationController.h"
-#import "EGORefreshTableHeaderView.h"
 #import "ImageManager.h"
 
-@interface AniListViewController : BaseViewController<UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, EGORefreshTableHeaderDelegate, UIActionSheetDelegate>
+@interface AniListViewController : BaseViewController<UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, UIActionSheetDelegate>
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;

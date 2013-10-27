@@ -14,6 +14,7 @@
 #import "LoginViewController.h"
 #import "UserProfile.h"
 #import "AniListNavigationController.h"
+#import "FICImageCache.h"
 
 #if TARGET_IPHONE_SIMULATOR
 #import <SparkInspector/SparkInspector.h>
@@ -55,7 +56,31 @@
     
     [self createDirectories];
     
+    [self setupImageCache];
+    
     return YES;
+}
+
+- (void)setupImageCache {
+    FICImageCache *sharedImageCache = [FICImageCache sharedImageCache];
+    sharedImageCache.delegate = self;
+    
+    FICImageFormat *thumbnailFormat = [FICImageFormat formatWithName:ThumbnailPosterImageFormatName
+                                                              family:PosterImageFormatFamily
+                                                           imageSize:ThumbnailPosterImageSize
+                                                               style:FICImageFormatStyle32BitBGR
+                                                        maximumCount:500
+                                                             devices:FICImageFormatDevicePhone];
+    
+    
+    FICImageFormat *standardFormat = [FICImageFormat formatWithName:PosterImageFormatName
+                                                             family:PosterImageFormatFamily
+                                                          imageSize:PosterImageSize
+                                                              style:FICImageFormatStyle32BitBGR
+                                                       maximumCount:500
+                                                            devices:FICImageFormatDevicePhone];
+    
+    sharedImageCache.formats = @[thumbnailFormat, standardFormat];
 }
 
 - (void)setStyleAttributes {
@@ -272,6 +297,20 @@
     NSString *absoluteURL = [[self applicationDocumentsDirectory] absoluteString];
     
     return [NSURL URLWithString:[NSString stringWithFormat:@"%@manga/", absoluteURL]];
+}
+
+#pragma mark - FICImageCacheDelegate Methods
+
+- (void)imageCache:(FICImageCache *)imageCache wantsSourceImageForEntity:(id<FICEntity>)entity withFormatName:(NSString *)formatName completionBlock:(FICImageRequestCompletionBlock)completionBlock {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        // Fetch the desired source image by making a network request
+        NSURL *requestURL = [entity sourceImageURLWithFormatName:formatName];
+        UIImage *sourceImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:requestURL]];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            completionBlock(sourceImage);
+        });
+    });
 }
 
 @end

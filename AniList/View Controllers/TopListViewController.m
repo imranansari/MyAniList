@@ -253,7 +253,7 @@ static BOOL fetching = NO;
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
-- (void)configureCell:(UITableViewCell *)cell withObject:(NSManagedObject *)object {
+- (void)configureCell:(UITableViewCell *)cell withObject:(NSManagedObject<FICEntity> *)object {
     AniListStatCell *anilistCell = (AniListStatCell *)cell;
     NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     NSURLRequest *imageRequest;

@@ -30,6 +30,7 @@
 @property (nonatomic, copy) NSArray *userExclusiveItems;
 
 @property (nonatomic, weak) IBOutlet UIView *maskView;
+@property (nonatomic, strong) IBOutlet UIView *compareView;
 @property (nonatomic, weak) IBOutlet AniListTableView *tableView;
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView *indicator;
 @property (nonatomic, weak) IBOutlet UIImageView *myAvatar;
@@ -419,7 +420,7 @@
     }
 }
 
-- (void)configureCell:(UITableViewCell *)cell withObject:(NSManagedObject *)object {
+- (void)configureCell:(UITableViewCell *)cell withObject:(NSManagedObject<FICEntity> *)object {
     CompareCell *anilistCell = (CompareCell *)cell;
     NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     NSURLRequest *imageRequest;

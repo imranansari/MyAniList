@@ -8,6 +8,19 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
+#import "FICEntity.h"
+
+extern NSString *const ThumbnailPosterImageFormatFamily;
+extern NSString *const ThumbnailPosterImageFormatName;
+extern CGSize const ThumbnailPosterImageSize;
+
+extern NSString *const PosterImageFormatFamily;
+extern NSString *const PosterImageFormatName;
+extern CGSize const PosterImageSize;
+
+extern NSString *const MiniPosterImageFormatFamily;
+extern NSString *const MiniPosterImageFormatName;
+extern CGSize const MiniPosterImageSize;
 
 #pragma mark - Official typedefs
 
@@ -80,7 +93,7 @@ typedef enum {
 
 @class Anime, Manga, Synonym, Genre, Tag, FriendAnime;
 
-@interface Anime : NSManagedObject
+@interface Anime : NSManagedObject<FICEntity>
 
 @property (nonatomic, retain) NSNumber * anime_id;
 @property (nonatomic, retain) NSNumber * average_count;
@@ -131,6 +144,12 @@ typedef enum {
 @property (nonatomic, retain) NSSet *synonyms;
 @property (nonatomic, retain) NSSet *tags;
 @property (nonatomic, retain) NSSet *userlist;
+
+// Not part of core data.
+@property (nonatomic, copy) NSURL *sourceImageURL;
+@property (nonatomic, strong, readonly) UIImage *sourceImage;
+@property (nonatomic, strong, readonly) UIImage *thumbnailImage;
+@property (nonatomic, assign, readonly) BOOL thumbnailImageExists;
 
 + (AnimeType)animeTypeForValue:(NSString *)value;
 + (NSString *)stringForAnimeType:(AnimeType)animeType;
