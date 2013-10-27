@@ -29,8 +29,14 @@
 @property (nonatomic, copy) NSArray *friendExclusiveItems;
 @property (nonatomic, copy) NSArray *userExclusiveItems;
 
-@property (nonatomic, weak) IBOutlet UIView *maskView;
 @property (nonatomic, strong) IBOutlet UIView *compareView;
+@property (nonatomic, strong) IBOutlet UILabel *friendNameLabel;
+@property (nonatomic, strong) IBOutlet UILabel *userNameLabel;
+@property (nonatomic, strong) IBOutlet UILabel *friendAverageLabel;
+@property (nonatomic, strong) IBOutlet UILabel *userAverageLabel;
+@property (nonatomic, strong) IBOutlet UILabel *compatibilityLabel;
+
+@property (nonatomic, weak) IBOutlet UIView *maskView;
 @property (nonatomic, weak) IBOutlet AniListTableView *tableView;
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView *indicator;
 @property (nonatomic, weak) IBOutlet UIImageView *myAvatar;
@@ -60,6 +66,9 @@
     
     gradient.startPoint = CGPointMake(0.0, 0.015f);
     gradient.endPoint = CGPointMake(0.0f, 0.05f);
+    
+    self.friendNameLabel.text = [NSString stringWithFormat:@"%@'s", self.friend.username];
+    self.userNameLabel.text = [NSString stringWithFormat:@"%@'s", [UserProfile profile].username];
     
     self.maskView.layer.mask = gradient;
     [self.friendAvatar setImageWithURL:[NSURL URLWithString:self.friend.image_url] placeholderImage:[UIImage placeholderImage]];
@@ -94,6 +103,35 @@
     
     ALLog(@"Number of anime for friend '%@': %d", self.friend.username, friendItemsArray.count);
     ALLog(@"Number of anime for user: %d", myItemsArray.count);
+    
+    double counter = 0;
+    double totalScore = 0;
+    
+    // Calculate average ratings for friend.
+    for(Anime *anime in friendItemsArray) {
+        FriendAnime *friendAnime = [FriendAnimeService anime:anime forFriend:self.friend];
+        if([friendAnime.score intValue] > 0) {
+            counter++;
+            totalScore += [friendAnime.score doubleValue];
+        }
+    }
+    
+    double friendAverageRating = counter > 0 ? totalScore / counter : 0;
+    ALLog(@"Average anime rating for friend: %0.02f", friendAverageRating);
+    
+    counter = 0;
+    totalScore = 0;
+    
+    // Calculate average ratings for user.
+    for(Anime *anime in myItemsArray) {
+        if([anime.user_score intValue] > 0) {
+            counter++;
+            totalScore += [anime.user_score doubleValue];
+        }
+    }
+    
+    double userAverageRating = counter > 0 ? totalScore / counter : 0;
+    ALLog(@"Average anime rating for user: %0.02f", userAverageRating);
     
     NSMutableSet *userItems = [NSMutableSet setWithArray:myItemsArray];
     NSSet *friendItems = [NSSet setWithArray:friendItemsArray];
@@ -157,6 +195,10 @@
         self.mutualItems = [mutualItems copy];
         self.userExclusiveItems = [exclusiveUserItems copy];
         self.friendExclusiveItems = [exclusiveFriendItems copy];
+        
+        self.friendAverageLabel.text = [NSString stringWithFormat:@"%0.02f", friendAverageRating];
+        self.userAverageLabel.text = [NSString stringWithFormat:@"%0.02f", userAverageRating];
+        [self setCompatibilityWithFriendScore:friendAverageRating andUserScore:userAverageRating];
     });
     
     ALLog(@"Anime count: %d", intersectedSet.count);
@@ -171,6 +213,35 @@
     
     ALLog(@"Number of manga for friend '%@': %d", self.friend.username, friendItemsArray.count);
     ALLog(@"Number of manga for user: %d", myItemsArray.count);
+    
+    double counter = 0;
+    double totalScore = 0;
+    
+    // Calculate average ratings for friend.
+    for(Manga *manga in friendItemsArray) {
+        FriendManga *friendManga = [FriendMangaService manga:manga forFriend:self.friend];
+        if([friendManga.score intValue] > 0) {
+            counter++;
+            totalScore += [friendManga.score doubleValue];
+        }
+    }
+    
+    double friendAverageRating = counter > 0 ? totalScore / counter : 0;
+    ALLog(@"Average manga rating for friend: %0.02f", friendAverageRating);
+    
+    counter = 0;
+    totalScore = 0;
+    
+    // Calculate average ratings for user.
+    for(Manga *manga in myItemsArray) {
+        if([manga.user_score intValue] > 0) {
+            counter++;
+            totalScore += [manga.user_score doubleValue];
+        }
+    }
+    
+    double userAverageRating = counter > 0 ? totalScore / counter : 0;
+    ALLog(@"Average manga rating for user: %0.02f", userAverageRating);
     
     NSMutableSet *userItems = [NSMutableSet setWithArray:myItemsArray];
     NSSet *friendItems = [NSSet setWithArray:friendItemsArray];
@@ -234,6 +305,10 @@
         self.mutualItems = [mutualItems copy];
         self.userExclusiveItems = [exclusiveUserItems copy];
         self.friendExclusiveItems = [exclusiveFriendItems copy];
+        
+        self.friendAverageLabel.text = [NSString stringWithFormat:@"%0.02f", friendAverageRating];
+        self.userAverageLabel.text = [NSString stringWithFormat:@"%0.02f", userAverageRating];
+        [self setCompatibilityWithFriendScore:friendAverageRating andUserScore:userAverageRating];
     });
     
     ALLog(@"Manga count: %d", intersectedSet.count);
@@ -266,6 +341,21 @@
 }
 
 #pragma mark - UI Methods
+
+- (void)setCompatibilityWithFriendScore:(double)friendScore andUserScore:(double)userScore {
+    self.compatibilityLabel.text = [NSString stringWithFormat:@"%0.02f", userScore - friendScore];
+    
+    if(userScore > friendScore) {
+        self.compatibilityLabel.text = [NSString stringWithFormat:@"+%0.02f", userScore - friendScore];
+        self.compatibilityLabel.textColor = [UIColor greenColor];
+    }
+    else if(friendScore > userScore) {
+        self.compatibilityLabel.textColor = [UIColor redColor];
+    }
+    else {
+        self.compatibilityLabel.textColor = [UIColor whiteColor];
+    }
+}
 
 - (void)reloadTable {
     [UIView animateWithDuration:0.15f
@@ -317,10 +407,28 @@
     
     NSString *count = [NSString stringWithFormat:@"%d", data.count];
     
-    return [UIView tableHeaderWithPrimaryText:title andSecondaryText:count];
+    UIView *headerView;
+    
+    if(section == ComparisonSectionMutual) {
+        UIView *sectionHeader = [UIView tableHeaderWithPrimaryText:title andSecondaryText:count];
+        headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.compareView.frame.size.width, self.compareView.frame.size.height + sectionHeader.frame.size.height)];
+        [headerView addSubview:self.compareView];
+        [headerView addSubview:sectionHeader];
+        
+        sectionHeader.frame = CGRectMake(sectionHeader.frame.origin.x - 10, sectionHeader.frame.origin.y + self.compareView.frame.size.height, sectionHeader.frame.size.width, sectionHeader.frame.size.height);
+    }
+    else {
+        headerView = [UIView tableHeaderWithPrimaryText:title andSecondaryText:count];
+    }
+    
+    return headerView;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if (section == ComparisonSectionMutual) {
+        return 44 + self.compareView.frame.size.height;
+    }
+    
     return 44;
 }
 
@@ -381,7 +489,7 @@
             break;
     }
     
-    NSManagedObject *item = data[indexPath.row];
+    NSManagedObject<FICEntity> *item = data[indexPath.row];
     [self configureCell:cell withObject:item];
     
     return cell;

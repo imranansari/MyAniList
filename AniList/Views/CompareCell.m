@@ -67,6 +67,7 @@
         self.difference.text = [NSString stringWithFormat:@"%d", userScore - friendScore];
         
         if(userScore > friendScore) {
+            self.difference.text = [NSString stringWithFormat:@"+%d", userScore - friendScore];
             self.difference.textColor = [UIColor greenColor];
         }
         else if(friendScore > userScore) {
