@@ -410,7 +410,7 @@
         Manga *manga = friendManga.manga;
         MangaCell *mangaCell = (MangaCell *)cell;
         mangaCell.title.text = manga.title;
-        mangaCell.progress.text = [Manga stringForMangaReadStatus:[friendManga.read_status intValue]];
+        mangaCell.progress.text = [MangaCell progressTextForFriendManga:friendManga];
         mangaCell.rank.text = [friendManga.score intValue] != -1 ? [NSString stringWithFormat:@"%d", [friendManga.score intValue]] : @"";
         mangaCell.type.text = [Manga stringForMangaType:[manga.type intValue]];
         [mangaCell setImageWithItem:manga];

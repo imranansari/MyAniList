@@ -14,6 +14,7 @@
 
 + (CGFloat)cellHeight;
 
++ (NSString *)progressTextForFriendManga:(FriendManga *)friendManga;
 + (NSString *)progressTextForManga:(Manga *)manga withSpacing:(BOOL)spacing;
 - (void)addShadow;
 - (void)setDetailsForManga:(Manga *)manga;

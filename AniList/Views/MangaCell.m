@@ -8,6 +8,7 @@
 
 #import "MangaCell.h"
 #import "Manga.h"
+#import "FriendManga.h"
 
 @interface MangaCell()
 @property (nonatomic, weak) IBOutlet UILabel *editChapterProgress;
@@ -38,6 +39,79 @@
 
 + (CGFloat)cellHeight {
     return 90;
+}
+
++ (NSString *)progressTextForFriendManga:(FriendManga *)friendManga {
+    
+    Manga *manga = friendManga.manga;
+    
+    if([friendManga.current_chapter intValue] == [manga.total_chapters intValue] &&
+       [friendManga.current_volume intValue] == [manga.total_volumes intValue]) {
+        return @"";
+    }
+    
+    NSString *progressString = @"";
+    
+    // If we've yet to watch it, or the current episode we're on is 0, then list how many episodes exist.
+    if([friendManga.read_status intValue] == MangaReadStatusPlanToRead || ([friendManga.current_chapter intValue] == 0 && [friendManga.current_volume intValue] == 0)) {
+        if([manga.total_volumes intValue] > 0) {
+            progressString = [NSString stringWithFormat:@"%d %@", [manga.total_volumes intValue], [manga.total_volumes intValue] > 1 ? @"volumes" : @"volume"];
+        }
+        
+        if(progressString.length > 0 && [manga.total_chapters intValue] > 0) {
+            progressString = [NSString stringWithFormat:@"%@,", progressString];
+        }
+        
+        if([manga.total_chapters intValue] > 0) {
+            if(progressString.length == 0)
+                progressString = [NSString stringWithFormat:@"%d %@", [manga.total_chapters intValue], [manga.total_chapters intValue] > 1 ? @"chapters" : @"chapter"];
+            else {
+                progressString = [NSString stringWithFormat:@"%@ %d %@", progressString, [manga.total_chapters intValue], [manga.total_chapters intValue] > 1 ? @"chapters" : @"chapter"];
+            }
+        }
+        
+        return progressString;
+    }
+    else {
+        if([friendManga.current_volume intValue] > 0) {
+            progressString = [NSString stringWithFormat:@"Volume %d", [friendManga.current_volume intValue]];
+        }
+        
+        if(progressString.length > 0 && [friendManga.current_chapter intValue] > 0) {
+            progressString = [NSString stringWithFormat:@"%@,", progressString];
+        }
+        
+        if([friendManga.current_chapter intValue] > 0) {
+            
+            NSString *chapter = @"chapter";
+            
+            if(progressString.length == 0) {
+                progressString = @"On";
+            }
+            
+            if([manga.total_chapters intValue] > 0) {
+                if(progressString.length == 0) {
+                    progressString = [NSString stringWithFormat:@"Chapter %d of %d", [friendManga.current_chapter intValue], [manga.total_chapters intValue]];
+                }
+                else {
+                    progressString = [NSString stringWithFormat:@"%@ %@ %d of %d", progressString, chapter, [friendManga.current_chapter intValue], [manga.total_chapters intValue]];
+                }
+            }
+            else {
+                if(progressString.length == 0) {
+                    progressString = [NSString stringWithFormat:@"Chapter %d", [friendManga.current_chapter intValue]];
+                }
+                else {
+                    progressString = [NSString stringWithFormat:@"%@ %@ %d", progressString, chapter, [friendManga.current_chapter intValue]];
+                }
+            }
+        }
+        
+        return progressString;
+        
+    }
+
+    return [NSString stringWithFormat:@"Volume %d, chapter %d of %d", [friendManga.current_volume intValue], [friendManga.current_chapter intValue], [manga.total_chapters intValue]];
 }
 
 + (NSString *)progressTextForManga:(Manga *)manga withSpacing:(BOOL)spacing {
