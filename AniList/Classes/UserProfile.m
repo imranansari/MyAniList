@@ -51,8 +51,8 @@ static UserProfile *profile = nil;
 #pragma mark - Public Methods
 
 - (void)logout {
-    self.username = @"";
-    self.password = @"";
+    self.username = nil;
+    self.password = nil;
 }
 
 + (BOOL)userIsLoggedIn {
