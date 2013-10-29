@@ -25,9 +25,17 @@
 
 @interface CompareViewController ()
 
-@property (nonatomic, copy) NSArray *mutualItems;
-@property (nonatomic, copy) NSArray *friendExclusiveItems;
-@property (nonatomic, copy) NSArray *userExclusiveItems;
+@property (nonatomic, copy) NSArray *mutualMangaItems;
+@property (nonatomic, copy) NSArray *friendExclusiveMangaItems;
+@property (nonatomic, copy) NSArray *userExclusiveMangaItems;
+@property (nonatomic, assign) double userAverageMangaRating;
+@property (nonatomic, assign) double friendAverageMangaRating;
+
+@property (nonatomic, copy) NSArray *mutualAnimeItems;
+@property (nonatomic, copy) NSArray *friendExclusiveAnimeItems;
+@property (nonatomic, copy) NSArray *userExclusiveAnimeItems;
+@property (nonatomic, assign) double userAverageAnimeRating;
+@property (nonatomic, assign) double friendAverageAnimeRating;
 
 @property (nonatomic, strong) IBOutlet UIView *compareView;
 @property (nonatomic, strong) IBOutlet UILabel *friendNameLabel;
@@ -42,6 +50,8 @@
 @property (nonatomic, weak) IBOutlet UIImageView *myAvatar;
 @property (nonatomic, weak) IBOutlet UIImageView *friendAvatar;
 @property (nonatomic, weak) IBOutlet UISegmentedControl *compareControl;
+
+@property (nonatomic, assign) BOOL isAnimeSection;
 
 @end
 
@@ -77,6 +87,8 @@
     self.indicator.alpha = 1.0f;
     self.tableView.alpha = 0.0f;
     
+    self.isAnimeSection = YES;
+    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
         [self createAnimeComparison];
         
@@ -97,7 +109,17 @@
 #pragma mark - Data Methods
 
 - (void)createAnimeComparison {
-
+    
+    // If we've already created the arrays, no need to do it again.
+    if(self.userExclusiveAnimeItems) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.friendAverageLabel.text = [NSString stringWithFormat:@"%0.02f", self.friendAverageAnimeRating];
+            self.userAverageLabel.text = [NSString stringWithFormat:@"%0.02f", self.userAverageAnimeRating];
+            [self setCompatibilityWithFriendScore:self.friendAverageAnimeRating andUserScore:self.userAverageAnimeRating];
+        });
+        return;
+    }
+    
     NSArray *friendItemsArray = [FriendAnimeService animeForFriend:self.friend];
     NSArray *myItemsArray = [AnimeService myAnime];
     
@@ -116,8 +138,8 @@
         }
     }
     
-    double friendAverageRating = counter > 0 ? totalScore / counter : 0;
-    ALLog(@"Average anime rating for friend: %0.02f", friendAverageRating);
+    self.friendAverageAnimeRating = counter > 0 ? totalScore / counter : 0;
+    ALLog(@"Average anime rating for friend: %0.02f", self.friendAverageAnimeRating);
     
     counter = 0;
     totalScore = 0;
@@ -130,8 +152,8 @@
         }
     }
     
-    double userAverageRating = counter > 0 ? totalScore / counter : 0;
-    ALLog(@"Average anime rating for user: %0.02f", userAverageRating);
+    self.userAverageAnimeRating = counter > 0 ? totalScore / counter : 0;
+    ALLog(@"Average anime rating for user: %0.02f", self.userAverageAnimeRating);
     
     NSMutableSet *userItems = [NSMutableSet setWithArray:myItemsArray];
     NSSet *friendItems = [NSSet setWithArray:friendItemsArray];
@@ -192,22 +214,34 @@
     [exclusiveFriendItems sortUsingDescriptors:@[sortDescriptor]];
     
     dispatch_async(dispatch_get_main_queue(), ^{
-        self.mutualItems = [mutualItems copy];
-        self.userExclusiveItems = [exclusiveUserItems copy];
-        self.friendExclusiveItems = [exclusiveFriendItems copy];
+        self.mutualAnimeItems = [mutualItems copy];
+        self.userExclusiveAnimeItems = [exclusiveUserItems copy];
+        self.friendExclusiveAnimeItems = [exclusiveFriendItems copy];
         
-        self.friendAverageLabel.text = [NSString stringWithFormat:@"%0.02f", friendAverageRating];
-        self.userAverageLabel.text = [NSString stringWithFormat:@"%0.02f", userAverageRating];
-        [self setCompatibilityWithFriendScore:friendAverageRating andUserScore:userAverageRating];
+        self.friendAverageLabel.text = [NSString stringWithFormat:@"%0.02f", self.friendAverageAnimeRating];
+        self.userAverageLabel.text = [NSString stringWithFormat:@"%0.02f", self.userAverageAnimeRating];
+        [self setCompatibilityWithFriendScore:self.friendAverageAnimeRating andUserScore:self.userAverageAnimeRating];
     });
     
     ALLog(@"Anime count: %d", intersectedSet.count);
-    ALLog(@"Mutual items: %d", self.mutualItems.count);
-    ALLog(@"Friend-exclusive items: %d", self.friendExclusiveItems.count);
-    ALLog(@"User-exclusive items: %d", self.userExclusiveItems.count);
+    ALLog(@"Mutual items: %d", self.mutualAnimeItems.count);
+    ALLog(@"Friend-exclusive items: %d", self.friendExclusiveAnimeItems.count);
+    ALLog(@"User-exclusive items: %d", self.userExclusiveAnimeItems.count);
 }
 
 - (void)createMangaComparison {
+    
+    // If we've already created the arrays, no need to do it again.
+    if(self.userExclusiveMangaItems) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.friendAverageLabel.text = [NSString stringWithFormat:@"%0.02f", self.friendAverageMangaRating];
+            self.userAverageLabel.text = [NSString stringWithFormat:@"%0.02f", self.userAverageMangaRating];
+            [self setCompatibilityWithFriendScore:self.friendAverageMangaRating andUserScore:self.userAverageMangaRating];
+            
+        });
+        return;
+    }
+    
     NSArray *friendItemsArray = [FriendMangaService mangaForFriend:self.friend];
     NSArray *myItemsArray = [MangaService myManga];
     
@@ -226,8 +260,8 @@
         }
     }
     
-    double friendAverageRating = counter > 0 ? totalScore / counter : 0;
-    ALLog(@"Average manga rating for friend: %0.02f", friendAverageRating);
+    self.friendAverageMangaRating = counter > 0 ? totalScore / counter : 0;
+    ALLog(@"Average manga rating for friend: %0.02f", self.friendAverageMangaRating);
     
     counter = 0;
     totalScore = 0;
@@ -240,8 +274,8 @@
         }
     }
     
-    double userAverageRating = counter > 0 ? totalScore / counter : 0;
-    ALLog(@"Average manga rating for user: %0.02f", userAverageRating);
+    self.userAverageMangaRating = counter > 0 ? totalScore / counter : 0;
+    ALLog(@"Average manga rating for user: %0.02f", self.userAverageMangaRating);
     
     NSMutableSet *userItems = [NSMutableSet setWithArray:myItemsArray];
     NSSet *friendItems = [NSSet setWithArray:friendItemsArray];
@@ -302,42 +336,47 @@
     [exclusiveFriendItems sortUsingDescriptors:@[sortDescriptor]];
     
     dispatch_async(dispatch_get_main_queue(), ^{
-        self.mutualItems = [mutualItems copy];
-        self.userExclusiveItems = [exclusiveUserItems copy];
-        self.friendExclusiveItems = [exclusiveFriendItems copy];
+        self.mutualMangaItems = [mutualItems copy];
+        self.userExclusiveMangaItems = [exclusiveUserItems copy];
+        self.friendExclusiveMangaItems = [exclusiveFriendItems copy];
         
-        self.friendAverageLabel.text = [NSString stringWithFormat:@"%0.02f", friendAverageRating];
-        self.userAverageLabel.text = [NSString stringWithFormat:@"%0.02f", userAverageRating];
-        [self setCompatibilityWithFriendScore:friendAverageRating andUserScore:userAverageRating];
+        self.friendAverageLabel.text = [NSString stringWithFormat:@"%0.02f", self.friendAverageMangaRating];
+        self.userAverageLabel.text = [NSString stringWithFormat:@"%0.02f", self.userAverageMangaRating];
+        [self setCompatibilityWithFriendScore:self.friendAverageMangaRating andUserScore:self.userAverageMangaRating];
     });
     
     ALLog(@"Manga count: %d", intersectedSet.count);
-    ALLog(@"Mutual items: %d", self.mutualItems.count);
-    ALLog(@"Friend-exclusive items: %d", self.friendExclusiveItems.count);
-    ALLog(@"User-exclusive items: %d", self.userExclusiveItems.count);
+    ALLog(@"Mutual items: %d", self.mutualMangaItems.count);
+    ALLog(@"Friend-exclusive items: %d", self.friendExclusiveMangaItems.count);
+    ALLog(@"User-exclusive items: %d", self.userExclusiveMangaItems.count);
 }
 
 #pragma mark - IBAction Methods
 
 - (IBAction)compareControlPressed:(id)sender {
-    if(self.compareControl.selectedSegmentIndex == 0) {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-            [self createAnimeComparison];
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self reloadTable];
+    [self hideTable];
+    double delayInSeconds = 0.15f;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        if(self.compareControl.selectedSegmentIndex == 0) {
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+                [self createAnimeComparison];
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self reloadTable];
+                });
             });
-        });
-    }
-    else {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-            [self createMangaComparison];
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self reloadTable];
+        }
+        else {
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+                [self createMangaComparison];
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self reloadTable];
+                });
             });
-        });
-    }
+        }
+    });
 }
 
 #pragma mark - UI Methods
@@ -357,28 +396,33 @@
     }
 }
 
-- (void)reloadTable {
+- (void)hideTable {
     [UIView animateWithDuration:0.15f
                           delay:0.0f
                         options:UIViewAnimationOptionCurveEaseInOut
                      animations:^{
                          self.tableView.alpha = 0.0f;
+                         self.indicator.alpha = 1.0f;
                      }
-                     completion:^(BOOL finished) {
-                         [self.tableView setContentOffset:self.tableView.contentOffset animated:NO];
-                         [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
-                         
-                         [self.tableView reloadData];
-                         
-                         [UIView animateWithDuration:0.15f
-                                               delay:0.0f
-                                             options:UIViewAnimationOptionCurveEaseInOut
-                                          animations:^{
-                                              self.tableView.alpha = 1.0f;
-                                              self.indicator.alpha = 0.0f;
-                                          }
-                                          completion:nil];
-                     }];
+                     completion:nil];
+}
+
+- (void)reloadTable {
+    [self.tableView setContentOffset:self.tableView.contentOffset animated:NO];
+    [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
+    
+    self.isAnimeSection = self.compareControl.selectedSegmentIndex == 0;
+    
+    [self.tableView reloadData];
+    
+    [UIView animateWithDuration:0.15f
+                          delay:0.0f
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         self.tableView.alpha = 1.0f;
+                         self.indicator.alpha = 0.0f;
+                     }
+                     completion:nil];
 }
 
 #pragma mark - Table view data source
@@ -391,15 +435,15 @@
     switch (section) {
         case ComparisonSectionMutual:
             title = @"Shared";
-            data = self.mutualItems;
+            data = self.isAnimeSection ? self.mutualAnimeItems : self.mutualMangaItems;
             break;
         case ComparisonSectionFriend:
             title = [NSString stringWithFormat:@"Unique to %@", self.friend.username];
-            data = self.friendExclusiveItems;
+            data = self.isAnimeSection ? self.friendExclusiveAnimeItems : self.friendExclusiveMangaItems;
             break;
         case ComparisonSectionUser:
             title = [NSString stringWithFormat:@"Unique to %@", [UserProfile profile].username];
-            data = self.userExclusiveItems;
+            data = self.isAnimeSection ? self.userExclusiveAnimeItems : self.userExclusiveMangaItems;
             break;
         default:
             return nil;
@@ -447,13 +491,13 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     switch (section) {
         case ComparisonSectionMutual:
-            return [self.mutualItems count];
+            return self.isAnimeSection ? self.mutualAnimeItems.count : self.mutualMangaItems.count;
             break;
         case ComparisonSectionFriend:
-            return [self.friendExclusiveItems count];
+            return self.isAnimeSection ? self.friendExclusiveAnimeItems.count : self.friendExclusiveMangaItems.count;
             break;
         case ComparisonSectionUser:
-            return [self.userExclusiveItems count];
+            return self.isAnimeSection ? self.userExclusiveAnimeItems.count : self.userExclusiveMangaItems.count;
             break;
         default:
             break;
@@ -473,16 +517,17 @@
     }
     
     NSArray *data;
-    
+#warning - we'll crash here if we are moving the table and we tap on the segmented control.
+#warning - need to either freeze the table or don't adjust the animeSection BOOL until we have successfully transitioned.
     switch (indexPath.section) {
         case ComparisonSectionMutual:
-            data = self.mutualItems;
+            data = self.isAnimeSection ? self.mutualAnimeItems : self.mutualMangaItems;
             break;
         case ComparisonSectionFriend:
-            data = self.friendExclusiveItems;
+            data = self.isAnimeSection ? self.friendExclusiveAnimeItems : self.friendExclusiveMangaItems;
             break;
         case ComparisonSectionUser:
-            data = self.userExclusiveItems;
+            data = self.isAnimeSection ? self.userExclusiveAnimeItems : self.userExclusiveMangaItems;
             break;
         default:
             NSAssert(nil, @"");
@@ -502,13 +547,13 @@
     
     switch (indexPath.section) {
         case ComparisonSectionMutual:
-            data = self.mutualItems;
+            data = self.isAnimeSection ? self.mutualAnimeItems : self.mutualMangaItems;
             break;
         case ComparisonSectionFriend:
-            data = self.friendExclusiveItems;
+            data = self.isAnimeSection ? self.friendExclusiveAnimeItems : self.friendExclusiveMangaItems;
             break;
         case ComparisonSectionUser:
-            data = self.userExclusiveItems;
+            data = self.isAnimeSection ? self.userExclusiveAnimeItems : self.userExclusiveMangaItems;
             break;
         default:
             NSAssert(nil, @"");

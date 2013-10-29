@@ -268,7 +268,7 @@
     ProfileCell *profileCell = (ProfileCell *)cell;
     
     profileCell.username.text = friend.username;
-    profileCell.animeStats.text = @"Retrieving stats...";
+    profileCell.animeStats.text = @"";
     profileCell.mangaStats.text = @"";
     profileCell.lastSeen.text = @"";
     
