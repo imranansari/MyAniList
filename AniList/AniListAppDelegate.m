@@ -32,7 +32,8 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
-
+    [self setupImageCache];
+    
     MenuViewController *menuVC = [[MenuViewController alloc] init];
     AnimeListViewController *animeVC = [[AnimeListViewController alloc] init];
     LoginViewController *loginVC = [[LoginViewController alloc] init];
@@ -56,8 +57,6 @@
     
     [self createDirectories];
     
-    [self setupImageCache];
-    
     return YES;
 }
 
@@ -80,7 +79,14 @@
                                                        maximumCount:500
                                                             devices:FICImageFormatDevicePhone];
     
-    sharedImageCache.formats = @[thumbnailFormat, standardFormat];
+    FICImageFormat *miniFormat = [FICImageFormat formatWithName:MiniPosterImageFormatName
+                                                             family:PosterImageFormatFamily
+                                                          imageSize:MiniPosterImageSize
+                                                              style:FICImageFormatStyle32BitBGR
+                                                       maximumCount:500
+                                                            devices:FICImageFormatDevicePhone];
+    
+    sharedImageCache.formats = @[thumbnailFormat, standardFormat, miniFormat];
 }
 
 - (void)setStyleAttributes {
