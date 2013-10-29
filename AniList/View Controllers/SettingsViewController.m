@@ -200,8 +200,18 @@
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSArray *options = nil;
     
-    SEL selector = NSSelectorFromString(self.options[indexPath.row][kAction]);
+    switch (indexPath.section) {
+        case 0:
+            options = self.options;
+            break;
+        case 1:
+            options = self.apiStatus;
+            break;
+    }
+    
+    SEL selector = NSSelectorFromString(options[indexPath.row][kAction]);
     
     if([self canPerformAction:selector withSender:nil]) {
         [self performSelector:selector];
