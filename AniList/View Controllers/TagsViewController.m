@@ -15,6 +15,7 @@
 
 @interface TagsViewController ()
 @property (nonatomic, strong) TagView *tagView;
+@property (nonatomic, weak) IBOutlet UILabel *errorLabel;
 @end
 
 @implementation TagsViewController
@@ -30,17 +31,23 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.errorLabel.text = @"";
+    self.errorLabel.alpha = 0.0f;
+    
     self.tagView = [[TagView alloc] init];
     NSArray *tags = [NSArray array];
     NSString *title = @"";
+    NSString *errorText = @"";
     
     switch (self.tagType) {
         case TagTypeTags:
             title = @"Tags";
+            errorText = @"There don't seem to be any tags available. MyAnimeList's Tag Service may be down. Please try again later.";
             tags = [TagService allTags];
             break;
         case TagTypeGenres:
             title = @"Genres";
+            errorText = @"There don't seem to be any genres available. MyAnimeList's Genre Service may be down. Please try again later.";
             tags = [GenreService allGenres];
             break;
         default:
@@ -55,6 +62,14 @@
     
     self.tagView.frame = CGRectMake(self.tagView.frame.origin.x, self.tagView.frame.origin.y + 20, self.tagView.frame.size.width, self.tagView.frame.size.height);
     self.tagView.delegate = self;
+    
+    if(tags.count == 0) {
+        self.errorLabel.text = errorText;
+        [UIView animateWithDuration:0.3f
+                         animations:^{
+                             self.errorLabel.alpha = 1.0f;
+                         }];
+    }
 }
 
 - (void)dealloc {
