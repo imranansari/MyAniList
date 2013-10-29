@@ -70,6 +70,13 @@ static BOOL alreadyFetched = NO;
 }
 
 - (void)fetchData {
+    
+    [UIView animateWithDuration:0.15f animations:^{
+        self.tableView.tableFooterView.alpha = 0.0f;
+    } completion:^(BOOL finished) {
+        self.tableView.tableFooterView = nil;
+    }];
+    
     if([UserProfile userIsLoggedIn]) {
         
         if(!alreadyFetched) {
@@ -85,7 +92,18 @@ static BOOL alreadyFetched = NO;
                                                       [super fetchData];
                                                   }
                                                   failure:^(NSURLRequest *operation, NSError *error) {
-                                                      // Derp.
+                                                      alreadyFetched = YES;
+                                                      if(self.fetchedResultsController.fetchedObjects.count == 0) {
+                                                          double delayInSeconds = 0.25f;
+                                                          dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+                                                          dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                                                              self.tableView.tableFooterView = [UIView tableFooterWithError];
+                                                              self.tableView.tableFooterView.alpha = 0.0f;
+                                                              [UIView animateWithDuration:0.15 animations:^{
+                                                                  self.tableView.tableFooterView.alpha = 1.0f;
+                                                              }];
+                                                          });
+                                                      }
                                                       
                                                       [super fetchData];
                                                   }];

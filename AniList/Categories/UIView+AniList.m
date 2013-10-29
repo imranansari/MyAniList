@@ -27,11 +27,13 @@
 }
 
 + (UIView *)tableFooterWithError {
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(10, 0, 320, 44)];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
     view.backgroundColor = [UIColor clearColor];
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, 300, 44)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 330, 44)];
     label.backgroundColor = [UIColor clearColor];
     label.textColor = [UIColor whiteColor];
+    label.font = [UIFont defaultFontWithSize:15];
+    label.textAlignment = NSTextAlignmentCenter;
     label.text = [NSString stringWithFormat:@"Couldn't load list. Pull to try again."];
     
     [view addSubview:label];

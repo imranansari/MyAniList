@@ -68,10 +68,7 @@
     
     self.compareControl.selectedSegmentIndex = 0;
     
-#warning - need to animate table in and such here.
-//    if(self.fetchedResultsController.fetchedObjects.count > 0) {
-        self.indicator.alpha = 0.0f;
-//    }
+    self.indicator.alpha = 1.0f;
     
     [self fetchData];
     
@@ -149,21 +146,20 @@
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         [[MALHTTPClient sharedClient] getAnimeListForUser:self.friend.username initialFetch:YES success:^(NSURLRequest *operation, id response) {
-            ALLog(@"Got dat list!");
-//            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                [AnimeService addAnimeList:(NSDictionary *)response forFriend:self.friend];
-//            });
+            ALLog(@"Got %@'s animelist!", self.friend.username);
+            [AnimeService addAnimeList:(NSDictionary *)response forFriend:self.friend];
+            [self dissolveIndicator];
         } failure:^(NSURLRequest *operation, NSError *error) {
-            ALLog(@"Couldn't fetch list!");
+            ALLog(@"Couldn't fetch %@'s animelist!", self.friend.username);
+            [self dissolveIndicator];
+            self.tableView.tableFooterView = [UIView tableFooterWithError];
         }];
         
         [[MALHTTPClient sharedClient] getMangaListForUser:self.friend.username initialFetch:YES success:^(NSURLRequest *operation, id response) {
-            ALLog(@"Got dat list!");
-//            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                [MangaService addMangaList:(NSDictionary *)response forFriend:self.friend];
-//            });
+            ALLog(@"Got %@'s mangalist!", self.friend.username);
+            [MangaService addMangaList:(NSDictionary *)response forFriend:self.friend];
         } failure:^(NSURLRequest *operation, NSError *error) {
-            ALLog(@"Couldn't fetch list!");
+            ALLog(@"Couldn't fetch %@'s mangalist!", self.friend.username);
         }];
     });
 }
@@ -193,6 +189,16 @@
                                               self.tableView.alpha = 1.0f;
                                           }
                                           completion:nil];
+                     }];
+}
+
+- (void)dissolveIndicator {
+    [UIView animateWithDuration:0.15f
+                     animations:^{
+                         self.indicator.alpha = 0.0f;
+                     }
+                     completion:^(BOOL finished) {
+                         [self.indicator removeFromSuperview];
                      }];
 }
 
