@@ -16,9 +16,9 @@
 #import "AniListNavigationController.h"
 #import "FICImageCache.h"
 
-#if TARGET_IPHONE_SIMULATOR
-#import <SparkInspector/SparkInspector.h>
-#endif
+//#if TARGET_IPHONE_SIMULATOR
+//#import <SparkInspector/SparkInspector.h>
+//#endif
 
 @implementation AniListAppDelegate
 

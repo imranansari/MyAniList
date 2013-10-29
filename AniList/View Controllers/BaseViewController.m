@@ -21,8 +21,18 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.hidesBackButton = YES;
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideKeyboard:) name:kMenuButtonTapped object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(enableScreen:) name:kMenuButtonTapped object:nil];
     }
     return self;
+}
+
+- (void)hideKeyboard:(NSNotification *)notification {
+    // Override if necessary.
+}
+
+- (void)enableScreen:(NSNotification *)notification {
+//    self.revealViewController.frontViewController.view.userInteractionEnabled = !self.revealViewController.frontViewController.view.userInteractionEnabled;
 }
 
 - (void)viewDidLoad

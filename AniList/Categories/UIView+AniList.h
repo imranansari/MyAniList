@@ -11,6 +11,7 @@
 @interface UIView (AniList)
 
 + (UIView *)tableHeaderWithPrimaryText:(NSString *)primaryString andSecondaryText:(NSString *)secondaryString;
++ (UIView *)tableFooterWithError;
 - (void)animateOut;
 - (void)animateIn;
 

@@ -342,5 +342,8 @@
     return YES;
 }
 
+- (void)hideKeyboard:(NSNotification *)notification {
+    [self.usernameField resignFirstResponder];
+}
 
 @end

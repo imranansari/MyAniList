@@ -24,8 +24,6 @@
 
 @end
 
-static NSArray *cachedAnimeList = nil;
-
 @implementation AnimeService
 
 /* Need to cover:
@@ -95,39 +93,20 @@ static NSArray *cachedAnimeList = nil;
 }
 
 + (Anime *)animeForID:(NSNumber *)ID fromCache:(BOOL)fromCache {
-    if(fromCache) {
-        if(!cachedAnimeList) {
-            NSFetchRequest *request = [[NSFetchRequest alloc] init];
-            NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITY_NAME inManagedObjectContext:[AnimeService managedObjectContext]];
-            request.entity = entity;
-            
-            NSError *error = nil;
-            cachedAnimeList = [[AnimeService managedObjectContext] executeFetchRequest:request error:&error];
-        }
-        
-        for(Anime *anime in cachedAnimeList) {
-            if([anime.anime_id intValue] == [ID intValue])
-                return anime;
-        }
-        
-        return nil;
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITY_NAME inManagedObjectContext:[AnimeService managedObjectContext]];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"anime_id == %d", [ID intValue]];
+    request.entity = entity;
+    request.predicate = predicate;
+    request.fetchLimit = 1;
+    
+    NSError *error = nil;
+    NSArray *results = [[AnimeService managedObjectContext] executeFetchRequest:request error:&error];
+    
+    if(results.count) {
+        return (Anime *)results[0];
     }
-    else {
-        NSFetchRequest *request = [[NSFetchRequest alloc] init];
-        NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITY_NAME inManagedObjectContext:[AnimeService managedObjectContext]];
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"anime_id == %d", [ID intValue]];
-        request.entity = entity;
-        request.predicate = predicate;
-        request.fetchLimit = 1;
-        
-        NSError *error = nil;
-        NSArray *results = [[AnimeService managedObjectContext] executeFetchRequest:request error:&error];
-        
-        if(results.count) {
-            return (Anime *)results[0];
-        }
-        else return nil;
-    }
+    else return nil;
 }
 
 + (BOOL)addAnimeListFromSearch:(NSArray *)data {
@@ -149,8 +128,6 @@ static NSArray *cachedAnimeList = nil;
         NSDictionary *soloAnime = (NSDictionary *)animes;
         animes = @[soloAnime];
     }
-    
-    cachedAnimeList = nil;
     
     MVComputeTimeWithNameAndBlock((const char *)"animelist", ^{
         for(NSDictionary *animeItem in animes) {
@@ -188,7 +165,7 @@ static NSArray *cachedAnimeList = nil;
             [animeDictionary removeObjectForKey:kUserWatchedEpisodes];
             [animeDictionary removeObjectForKey:kUserWatchedStatus];
             
-            Anime *anime = [AnimeService addAnime:animeDictionary fromList:NO];
+            Anime *anime = [AnimeService addAnime:animeDictionary fromList:YES];
             FriendAnime *friendAnime = [FriendAnimeService addFriend:friend toAnime:anime];
             
             if(friendScore && ![friendScore isNull])
@@ -338,6 +315,16 @@ static NSArray *cachedAnimeList = nil;
     }
     
     return relatedAnime;
+}
+
++ (Anime *)addAnimeFromFriend:(NSDictionary *)data {
+    Anime *existingAnime = [AnimeService animeForID:data[kID] fromCache:NO];
+    
+    if(existingAnime) {
+        return existingAnime;
+    }
+    
+    return [self addAnime:data fromList:YES];
 }
 
 + (Anime *)addAnime:(NSDictionary *)data fromList:(BOOL)fromList {

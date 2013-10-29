@@ -643,7 +643,8 @@ static NSString * const SWSegueRightIdentifier = @"sw_right";
 #pragma mark - Provided acction methods
 
 - (void)revealToggle:(id)sender
-{    
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kMenuButtonTapped object:nil];
     [self revealToggleAnimated:YES];
 }
 

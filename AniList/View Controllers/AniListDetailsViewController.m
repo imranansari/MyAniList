@@ -39,6 +39,7 @@
     
     self.poster.layer.borderColor = [UIColor colorWithWhite:1.0f alpha:0.2f].CGColor;
     self.poster.layer.borderWidth = 1.0f;
+    self.poster.alpha = 0.0f;
 }
 
 - (void)didReceiveMemoryWarning

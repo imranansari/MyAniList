@@ -11,6 +11,7 @@
 
 #define kAnimeDidUpdate @"kAnimeDidUpdate"
 #define kMangaDidUpdate @"kMangaDidUpdate"
+#define kMenuButtonTapped @"kMenuButtonTapped"
 #define kRelatedAnimeDidUpdate @"kRelatedAnimeDidUpdate"
 #define kRelatedMangaDidUpdate @"kRelatedMangaDidUpdate"
 #define kAnimeDownloadProgress @"kAnimeDownloadProgress"

@@ -26,6 +26,19 @@
     return view;
 }
 
++ (UIView *)tableFooterWithError {
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(10, 0, 320, 44)];
+    view.backgroundColor = [UIColor clearColor];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, 300, 44)];
+    label.backgroundColor = [UIColor clearColor];
+    label.textColor = [UIColor whiteColor];
+    label.text = [NSString stringWithFormat:@"Couldn't load list. Pull to try again."];
+    
+    [view addSubview:label];
+    
+    return view;
+}
+
 
 + (void)setAttributesForLabel:(TTTAttributedLabel *)label withPrimaryText:(NSString *)primaryText andSecondaryText:(NSString *)secondaryText {
     NSString *text = [NSString stringWithFormat:@"%@ %@", primaryText, secondaryText];

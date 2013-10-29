@@ -90,6 +90,10 @@
     return self.searchDisplayController.searchBar.selectedScopeButtonIndex == 0 ? @"Anime" : @"Manga";
 }
 
+- (void)hideKeyboard:(NSNotification *)notification {
+    [self.searchDisplayController.searchBar resignFirstResponder];
+}
+
 #pragma mark - Table view data sourceu
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
