@@ -453,7 +453,10 @@
                                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
                                       NSError *parseError = nil;
                                       NSDictionary *xmlDictionary = [XMLReader dictionaryForXMLData:operation.responseData error:&parseError];
-                                      success(operation, xmlDictionary);
+                                      if(xmlDictionary)
+                                          success(operation, xmlDictionary);
+                                      else
+                                          failure(operation, parseError);
                                   }
                                   failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                       failure(operation, error);

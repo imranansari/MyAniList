@@ -85,7 +85,7 @@ static BOOL alreadyFetched = NO;
         }
         
         [[MALHTTPClient sharedClient] getMangaListForUser:[[UserProfile profile] username]
-                                             initialFetch:!alreadyFetched
+                                             initialFetch:YES
                                                   success:^(NSURLRequest *operation, id response) {
                                                       [MangaService addMangaList:(NSDictionary *)response];
                                                       alreadyFetched = YES;
@@ -189,14 +189,6 @@ static BOOL alreadyFetched = NO;
 }
 
 #pragma mark - Table view data source
-
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    return [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 0)];
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return 1;
-}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return [MangaCell cellHeight];
