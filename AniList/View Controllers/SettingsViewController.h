@@ -8,6 +8,13 @@
 
 #import "BaseViewController.h"
 
+typedef enum {
+    EnableGenreTagSupportTag = 0,
+    ClearImageCacheTag,
+    ClearAnimeListTag,
+    ClearMangaListTag
+} ActionSheetTags;
+
 @interface SettingsViewController : BaseViewController<UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate>
 
 @end

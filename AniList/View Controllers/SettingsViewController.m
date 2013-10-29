@@ -13,6 +13,7 @@
 #import "MALHTTPClient.h"
 #import "CRTransitionLabel.h"
 #import "SettingsCell.h"
+#import "FICImageCache.h"
 
 #define kOptionName @"kOptionName"
 #define kAction     @"kAction"
@@ -24,6 +25,9 @@
 @property (nonatomic, strong) NSArray *apiStatus;
 @property (nonatomic, weak) IBOutlet CRTransitionLabel *status;
 @property (nonatomic, weak) IBOutlet UIProgressView *progressView;
+
+@property (nonatomic, assign) BOOL apiStatusFetched;
+@property (nonatomic, assign) BOOL unofficialApiStatusFetched;
 @end
 
 @implementation SettingsViewController
@@ -39,15 +43,15 @@
                              },
                          @{
                              kOptionName    : @"Clear Local Images",
-                             kAction        : @"clearLocalImages"
+                             kAction        : @"confirmClearImageCache"
                              },
                          @{
-                             kOptionName    : @"Reset Anime Cache",
-                             kAction        : @"resetAnimeCache"
+                             kOptionName    : @"Reset Local Anime Cache",
+                             kAction        : @"confirmClearAnimeList"
                              },
                          @{
-                             kOptionName    : @"Reset Manga Cache",
-                             kAction        : @"resetMangaCache"
+                             kOptionName    : @"Reset Local Manga Cache",
+                             kAction        : @"confirmClearMangaList"
                              }
                          ];
         
@@ -160,12 +164,27 @@
     NSArray *array;
     
     switch (indexPath.section) {
-        case 0:
+        case 0: {
+            cell.accessoryView = nil;
             array = self.options;
             break;
-        case 1:
+        }
+        case 1: {
+            if((indexPath.row == 0 && self.apiStatusFetched) || (indexPath.row == 1 && self.unofficialApiStatusFetched)) {
+                [UIView animateWithDuration:0.3f
+                                 animations:^{
+                                     cell.accessoryView.alpha = 0.0f;
+                                 }];
+            }
+            else {
+                UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+                cell.accessoryView = indicator;
+                [indicator startAnimating];
+            }
+            
             array = self.apiStatus;
             break;
+        }
         default:
             array = nil;
             break;
@@ -187,6 +206,8 @@
     if([self canPerformAction:selector withSender:nil]) {
         [self performSelector:selector];
     }
+    
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (void)checkOfficialAPIStatus {
@@ -208,12 +229,14 @@
         item[kOptionName] = @"Official API is available.";
         [APIArray replaceObjectAtIndex:index withObject:item];
         self.apiStatus = [APIArray copy];
+        self.apiStatusFetched = YES;
         [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:1]] withRowAnimation:UITableViewRowAnimationFade];
     } failure:^(id operation, NSError *error) {
         ALLog(@"Official API Status is unavailable.");
         item[kOptionName] = @"Official API is unavailable.";
         [APIArray replaceObjectAtIndex:index withObject:item];
         self.apiStatus = [APIArray copy];
+        self.apiStatusFetched = YES;
         [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:1]] withRowAnimation:UITableViewRowAnimationFade];
     }];
 
@@ -238,39 +261,103 @@
         item[kOptionName] = @"Unofficial API is available.";
         [APIArray replaceObjectAtIndex:index withObject:item];
         self.apiStatus = [APIArray copy];
+        self.unofficialApiStatusFetched = YES;
         [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:1]] withRowAnimation:UITableViewRowAnimationFade];
     } failure:^(id operation, NSError *error) {
         ALLog(@"Unofficial API Status is unavailable.");
         item[kOptionName] = @"Unofficial API is unavailable.";
         [APIArray replaceObjectAtIndex:index withObject:item];
         self.apiStatus = [APIArray copy];
+        self.unofficialApiStatusFetched = YES;
         [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:1]] withRowAnimation:UITableViewRowAnimationFade];
     }];
 }
 
 #pragma mark - Action Methods
 
+- (void)confirmClearAnimeList {
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"This will clear your local anime list. Use this only if you or your friend's anime list doesn't look right or updated. Proceed?"
+                                                             delegate:self
+                                                    cancelButtonTitle:@"No"
+                                               destructiveButtonTitle:@"Yes"
+                                                    otherButtonTitles:nil, nil];
+    
+    actionSheet.tag = ClearAnimeListTag;
+    [actionSheet showInView:self.view];
+}
+
+- (void)confirmClearMangaList {
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"This will clear your local manga list. Use this only if you or your friend's manga list doesn't look right or updated. Proceed?"
+                                                             delegate:self
+                                                    cancelButtonTitle:@"No"
+                                               destructiveButtonTitle:@"Yes"
+                                                    otherButtonTitles:nil, nil];
+    
+    actionSheet.tag = ClearMangaListTag;
+    [actionSheet showInView:self.view];
+}
+
+- (void)confirmClearImageCache {
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"This will clear all anime and manga posters. These will have to be downloaded again. Do you wish to continue?"
+                                                             delegate:self
+                                                    cancelButtonTitle:@"No"
+                                               destructiveButtonTitle:@"Yes"
+                                                    otherButtonTitles:nil, nil];
+    
+    actionSheet.tag = ClearImageCacheTag;
+    [actionSheet showInView:self.view];
+}
+
 - (void)enableGenreTagSupport {
-    // Confirm to the user that this will take a while.
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"This will download additional information for your anime and manga lists. This may take a while. Do you wish to continue?"
                                                              delegate:self
                                                     cancelButtonTitle:@"No"
                                                destructiveButtonTitle:@"Yes"
                                                     otherButtonTitles:nil, nil];
     
+    actionSheet.tag = EnableGenreTagSupportTag;
     [actionSheet showInView:self.view];
 }
 
 - (void)downloadInfo {
-//    [AnimeService downloadInfo];
+    [AnimeService downloadInfo];
     [MangaService downloadInfo];
+}
+
+- (void)clearImageCache {
+    [[FICImageCache sharedImageCache] reset];
+}
+
+- (void)clearAnimeList {
+    
+}
+
+- (void)clearMangaList {
+    
 }
 
 #pragma mark - UIActionSheetDelegate Methods
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if(buttonIndex == 0) {
-        [self downloadInfo];
+    switch (actionSheet.tag) {
+        case EnableGenreTagSupportTag:
+            if(buttonIndex == 0)
+                [self downloadInfo];
+            break;
+        case ClearImageCacheTag:
+            if(buttonIndex == 0)
+                [self clearImageCache];
+            break;
+        case ClearAnimeListTag:
+            if(buttonIndex == 0)
+                [self clearAnimeList];
+            break;
+        case ClearMangaListTag:
+            if(buttonIndex == 0)
+                [self clearMangaList];
+            break;
+        default:
+            break;
     }
 }
 
