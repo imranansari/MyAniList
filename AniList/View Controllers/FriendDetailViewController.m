@@ -41,6 +41,7 @@
 @property (nonatomic, weak) IBOutlet UISegmentedControl *compareControl;
 
 @property (nonatomic, copy) NSArray *sectionHeaders;
+@property (nonatomic, strong) UIRefreshControl *refreshControl;
 
 - (IBAction)compareButtonPressed:(id)sender;
 - (IBAction)compareControlPressed:(id)sender;
@@ -86,6 +87,11 @@
     gradient.endPoint = CGPointMake(0.0f, 0.05f);
     
     self.maskView.layer.mask = gradient;
+    
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(fetchData) forControlEvents:UIControlEventValueChanged];
+    self.refreshControl.tintColor = [UIColor whiteColor];
+    [self.tableView addSubview:self.refreshControl];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -193,6 +199,8 @@
 }
 
 - (void)dissolveIndicator {
+    [self.refreshControl endRefreshing];
+    
     [UIView animateWithDuration:0.15f
                      animations:^{
                          self.indicator.alpha = 0.0f;
