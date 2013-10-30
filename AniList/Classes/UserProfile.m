@@ -88,6 +88,22 @@ static UserProfile *profile = nil;
     return [NSURLRequest requestWithURL:[NSURL URLWithString:profileImageURL]];
 }
 
+- (NSString *)animeCellStats {
+    if(self.animeStats) {
+        return [NSString stringWithFormat:@"%@ finished, %@ total (%@ days)", self.animeStats[kStatsCompleted], self.animeStats[kStatsTotalEntries], self.animeStats[kStatsTotalTimeInDays]];
+    }
+    
+    return @"-";
+}
+
+- (NSString *)mangaCellStats {
+    if(self.mangaStats) {
+        return [NSString stringWithFormat:@"%@ finished, %@ total (%@ days)", self.mangaStats[kStatsCompleted], self.mangaStats[kStatsTotalEntries], self.mangaStats[kStatsTotalTimeInDays]];
+    }
+    
+    return @"-";
+}
+
 - (void)createAnimeStats:(NSDictionary *)data {
     self.animeStats = @{
                         kStatsTotalTimeInDays   : data[kStatsTotalTimeInDays],

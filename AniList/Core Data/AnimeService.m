@@ -123,6 +123,27 @@
     NSArray *animes = animeDetails[@"anime"];
     NSDictionary *animeUserInfo = animeDetails[@"myinfo"];
     
+    if(animeUserInfo && [UserProfile userIsLoggedIn]) {
+        
+        int totalEntries = [animeUserInfo[kUserWatching][@"text"] intValue] +
+        [animeUserInfo[kUserCompleted][@"text"] intValue] +
+        [animeUserInfo[kUserOnHold][@"text"] intValue] +
+        [animeUserInfo[kUserDropped][@"text"] intValue] +
+        [animeUserInfo[kUserPlanToWatch][@"text"] intValue];
+        
+        NSDictionary *stats = @{
+                                kStatsTotalTimeInDays   : animeUserInfo[kUserDaysSpentWatching][@"text"],
+                                kStatsWatching          : animeUserInfo[kUserWatching][@"text"],
+                                kStatsCompleted         : animeUserInfo[kUserCompleted][@"text"],
+                                kStatsOnHold            : animeUserInfo[kUserOnHold][@"text"],
+                                kStatsDropped           : animeUserInfo[kUserDropped][@"text"],
+                                kStatsPlanToWatch       : animeUserInfo[kUserPlanToWatch][@"text"],
+                                kStatsTotalEntries      : [NSString stringWithFormat:@"%d", totalEntries]
+                                };
+        
+        [[UserProfile profile] setAnimeStats:stats];
+    }
+    
     // This is just one anime.
     if([animes isKindOfClass:[NSDictionary class]]) {
         NSDictionary *soloAnime = (NSDictionary *)animes;

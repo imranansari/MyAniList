@@ -42,6 +42,10 @@
 
 - (NSURLRequest *)getUserImageURL:(NSDictionary *)data;
 - (void)createUserProfile:(NSDictionary *)data;
+
+- (NSString *)animeCellStats;
+- (NSString *)mangaCellStats;
+
 - (void)createAnimeStats:(NSDictionary *)data;
 - (void)createMangaStats:(NSDictionary *)data;
 

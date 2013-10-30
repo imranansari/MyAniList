@@ -84,6 +84,14 @@
 #define kSynonyms               @"synonyms"
 #define kEnglishTitles          @"english"
 #define kJapaneseTitles         @"japanese"
+#define kUserCompleted          @"user_completed"
+#define kUserDaysSpentWatching  @"user_days_spent_watching"
+#define kUserDropped            @"user_dropped"
+#define kUserOnHold             @"user_onhold"
+#define kUserPlanToWatch        @"user_plantowatch"
+#define kUserWatching           @"user_watching"
+#define kUserPlanToRead         @"user_plantoread"
+#define kUserReading            @"user_reading"
 
 static const BOOL UI_DEBUG = NO;
 

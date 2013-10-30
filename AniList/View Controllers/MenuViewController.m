@@ -26,11 +26,15 @@
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
 @property (nonatomic, weak) IBOutlet UIImageView *profileImage;
 @property (nonatomic, weak) IBOutlet UILabel *username;
+@property (nonatomic, weak) IBOutlet UILabel *animeStatsLabel;
 @property (nonatomic, weak) IBOutlet UILabel *animeStats;
+@property (nonatomic, weak) IBOutlet UILabel *mangaStatsLabel;
 @property (nonatomic, weak) IBOutlet UILabel *mangaStats;
 @property (nonatomic, weak) IBOutlet UIView *statusView;
 @property (nonatomic, weak) IBOutlet UIProgressView *progress;
 @property (nonatomic, weak) IBOutlet UILabel *statusText;
+
+@property (nonatomic, assign) BOOL profileFetched;
 @end
 
 @implementation MenuViewController
@@ -64,6 +68,16 @@ static NSString *CellIdentifier = @"Cell";
     
     self.progress.tintColor = [UIColor whiteColor];
     self.progress.progress = 0.0f;
+    
+    self.animeStatsLabel.text = @"Anime Stats";
+    self.mangaStatsLabel.text = @"Manga Stats";
+    
+    self.animeStats.text = self.mangaStats.text = @"-";
+    
+    self.animeStatsLabel.font = self.mangaStatsLabel.font = [UIFont defaultFontWithSize:12];
+    self.animeStats.font = self.mangaStats.font = [UIFont defaultFontWithSize:11];
+    self.animeStatsLabel.textColor = self.mangaStatsLabel.textColor = [UIColor grayColor];
+    self.animeStats.textColor = self.mangaStats.textColor = [UIColor lightGrayColor];
     
     self.statusText.text = @"";
     
@@ -141,7 +155,11 @@ static NSString *CellIdentifier = @"Cell";
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [self fetchProfile];
+    if(!self.profileFetched)
+        [self fetchProfile];
+    
+    self.animeStats.text = [[UserProfile profile] animeCellStats];
+    self.mangaStats.text = [[UserProfile profile] mangaCellStats];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -158,6 +176,7 @@ static NSString *CellIdentifier = @"Cell";
         self.username.text = [[UserProfile profile] username];
         
         [[UserProfile profile] fetchProfileWithSuccess:^{
+            self.profileFetched = YES;
             self.animeStats.text = [NSString stringWithFormat:@"Anime time in days: %@", [[UserProfile profile] animeStats][kStatsTotalTimeInDays]];
             self.mangaStats.text = [NSString stringWithFormat:@"Manga time in days: %@", [[UserProfile profile] mangaStats][kStatsTotalTimeInDays]];
             
@@ -172,8 +191,7 @@ static NSString *CellIdentifier = @"Cell";
                                                   ALLog(@"image failed.");
                                               }];
         } failure:^{
-            self.animeStats.text = @"";
-            self.mangaStats.text = @"";
+            ALLog(@"Failed to get user profile information.");
         }];
     }
 }

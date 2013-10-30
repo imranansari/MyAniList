@@ -91,6 +91,27 @@
     NSDictionary *mangaDictionary = mangaDetails[@"manga"];
     NSDictionary *mangaUserInfo = mangaDetails[@"myinfo"];
     
+    if(mangaUserInfo && [UserProfile userIsLoggedIn]) {
+        
+        int totalEntries = [mangaUserInfo[kUserReading][@"text"] intValue] +
+        [mangaUserInfo[kUserCompleted][@"text"] intValue] +
+        [mangaUserInfo[kUserOnHold][@"text"] intValue] +
+        [mangaUserInfo[kUserDropped][@"text"] intValue] +
+        [mangaUserInfo[kUserPlanToRead][@"text"] intValue];
+        
+        NSDictionary *stats = @{
+                                kStatsTotalTimeInDays   : mangaUserInfo[kUserDaysSpentWatching][@"text"],
+                                kStatsReading           : mangaUserInfo[kUserReading][@"text"],
+                                kStatsCompleted         : mangaUserInfo[kUserCompleted][@"text"],
+                                kStatsOnHold            : mangaUserInfo[kUserOnHold][@"text"],
+                                kStatsDropped           : mangaUserInfo[kUserDropped][@"text"],
+                                kStatsPlanToRead        : mangaUserInfo[kUserPlanToRead][@"text"],
+                                kStatsTotalEntries      : [NSString stringWithFormat:@"%d", totalEntries]
+                                };
+        
+        [[UserProfile profile] setMangaStats:stats];
+    }
+    
     for(NSDictionary *mangaItem in mangaDictionary) {
         NSMutableDictionary *manga = [MangaService createDictionaryForManga:mangaItem];
         [MangaService addManga:manga fromList:YES];
