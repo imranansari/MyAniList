@@ -84,11 +84,11 @@ static NSString *CellIdentifier = @"Cell";
                       kCellViewControllerKey : @"PopularListViewController",
                       kCellActionKey : @"loadPopularAnimeViewController:"
                       },
-                  @{
-                      kCellTitleKey : @"- Upcoming",
-                      kCellViewControllerKey : @"TopListViewController",
-                      kCellActionKey : @"loadUpcomingAnimeViewController:"
-                      },
+//                  @{
+//                      kCellTitleKey : @"- Upcoming",
+//                      kCellViewControllerKey : @"TopListViewController",
+//                      kCellActionKey : @"loadUpcomingAnimeViewController:"
+//                      },
                   @{
                       kCellTitleKey : @"- Tags",
                       kCellViewControllerKey : @"TagsViewController",
@@ -132,6 +132,11 @@ static NSString *CellIdentifier = @"Cell";
                   ];
     }
     
+    [self.tableView reloadData];
+    
+    // Set default highlight to Anime.
+    [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:NO scrollPosition:UITableViewScrollPositionNone];
+    
     [self fetchProfile];
 }
 
@@ -150,10 +155,9 @@ static NSString *CellIdentifier = @"Cell";
     if([UserProfile userIsLoggedIn]) {
         
         self.profileImage.image = [UIImage placeholderImage];
+        self.username.text = [[UserProfile profile] username];
         
-        [[UserProfile profile] fetchProfileWithCompletion:^{
-            self.username.text = [[UserProfile profile] username];
-            
+        [[UserProfile profile] fetchProfileWithSuccess:^{
             self.animeStats.text = [NSString stringWithFormat:@"Anime time in days: %@", [[UserProfile profile] animeStats][kStatsTotalTimeInDays]];
             self.mangaStats.text = [NSString stringWithFormat:@"Manga time in days: %@", [[UserProfile profile] mangaStats][kStatsTotalTimeInDays]];
             
@@ -167,6 +171,9 @@ static NSString *CellIdentifier = @"Cell";
                                               failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
                                                   ALLog(@"image failed.");
                                               }];
+        } failure:^{
+            self.animeStats.text = @"";
+            self.mangaStats.text = @"";
         }];
     }
 }
@@ -293,7 +300,7 @@ static NSString *CellIdentifier = @"Cell";
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if(indexPath.row > 0 && indexPath.row < 6) {
+    if(indexPath.row > 0 && indexPath.row < 5) {
         return 30;
     }
     
