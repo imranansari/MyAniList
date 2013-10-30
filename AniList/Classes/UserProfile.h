@@ -38,7 +38,7 @@
 - (void)setUsername:(NSString *)username andPassword:(NSString *)password;
 - (void)logout;
 + (BOOL)userIsLoggedIn;
-- (void)fetchProfileWithCompletion:(void (^)(void))completionBlock;
+- (void)fetchProfileWithSuccess:(void (^)(void))success failure:(void (^)(void))failure;
 
 - (NSURLRequest *)getUserImageURL:(NSDictionary *)data;
 - (void)createUserProfile:(NSDictionary *)data;
