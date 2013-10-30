@@ -16,9 +16,9 @@
 #import "AniListNavigationController.h"
 #import "FICImageCache.h"
 
-//#if TARGET_IPHONE_SIMULATOR
-//#import <SparkInspector/SparkInspector.h>
-//#endif
+#if TARGET_IPHONE_SIMULATOR
+#import <SparkInspector/SparkInspector.h>
+#endif
 
 @implementation AniListAppDelegate
 
@@ -42,6 +42,7 @@
     
     SWRevealViewController *vc = [[SWRevealViewController alloc] initWithRearViewController:menuVC
                                                                         frontViewController:navigationController];
+    vc.delegate = self;
     
     self.window.rootViewController = vc;
     
@@ -284,6 +285,19 @@
     if(!error) {
         ALLog(@"Persistent store removed.");
     }
+}
+
+#pragma mark - SVRevealControllerDelegate Method
+
+- (void)revealController:(SWRevealViewController *)revealController didMoveToPosition:(FrontViewPosition)position {
+	BaseViewController *vc = (BaseViewController *)revealController.frontViewController;
+    
+	if (vc && ([vc isKindOfClass:[BaseViewController class]])) {
+		if (position == FrontViewPositionLeft)
+			[vc enable:YES];
+		else if (position == FrontViewPositionRight)
+			[vc enable:NO];
+	}
 }
 
 #pragma mark - Application's Documents directory

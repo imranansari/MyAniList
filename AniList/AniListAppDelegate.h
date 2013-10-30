@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import <Crashlytics/Crashlytics.h>
 #import "FICImageCache.h"
+#import "SWRevealViewController.h"
 
-@interface AniListAppDelegate : UIResponder <UIApplicationDelegate, FICImageCacheDelegate>
+@interface AniListAppDelegate : UIResponder <UIApplicationDelegate, FICImageCacheDelegate, SWRevealViewControllerDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
