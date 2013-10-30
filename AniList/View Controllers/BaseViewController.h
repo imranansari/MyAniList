@@ -10,8 +10,10 @@
 #import <QuartzCore/QuartzCore.h>
 #import "SWRevealViewController.h"
 
-@interface BaseViewController : UIViewController
+@interface BaseViewController : UIViewController<UIGestureRecognizerDelegate>
 
 @property (nonatomic, assign) BOOL hidesBackButton;
+
+- (void)enable:(BOOL)enable;
 
 @end

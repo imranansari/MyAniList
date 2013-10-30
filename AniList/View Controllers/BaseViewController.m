@@ -12,35 +12,29 @@
 @interface BaseViewController ()
 @property (nonatomic, strong) UIView *maskView;
 @property (nonatomic, strong) UIButton *menuButton;
+@property (nonatomic, assign) BOOL navigationChangedByGesture;
 @end
 
 @implementation BaseViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.hidesBackButton = YES;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideKeyboard:) name:kMenuButtonTapped object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(enableScreen:) name:kMenuButtonTapped object:nil];
     }
     return self;
 }
 
-- (void)hideKeyboard:(NSNotification *)notification {
-    // Override if necessary.
-}
-
-- (void)enableScreen:(NSNotification *)notification {
-//    self.revealViewController.frontViewController.view.userInteractionEnabled = !self.revealViewController.frontViewController.view.userInteractionEnabled;
-}
-
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
 	
-    SWRevealViewController *revealController = self.revealViewController;
+    if(NO) {
+        self.navigationController.interactivePopGestureRecognizer.delegate = self;
+        [self.navigationController.interactivePopGestureRecognizer addTarget:self action:@selector(viewPanned:)];
+    }
     
+    SWRevealViewController *revealController = self.revealViewController;
     AniListNavigationController *nvc = ((AniListNavigationController *)self.revealViewController.frontViewController);
     
     // This value is implicitly set to YES in iOS 7.0.
@@ -58,10 +52,9 @@
         [nvc.navigationBar setBackgroundImage:maskedImage forBarMetrics:UIBarMetricsDefault];
     }
     
-    if(revealController) {
-//        [self.view addGestureRecognizer:revealController.panGestureRecognizer];
-        [self.menuButton addTarget:revealController action:@selector(revealToggle:) forControlEvents:UIControlEventTouchUpInside];
-    }
+    [self.menuButton addTarget:revealController action:@selector(revealToggle:) forControlEvents:UIControlEventTouchUpInside];
+    [self.navigationController.view addGestureRecognizer:revealController.panGestureRecognizer];
+    [self.navigationController.navigationBar addGestureRecognizer:revealController.panGestureRecognizer];
     
     self.view.backgroundColor = [UIColor clearColor];
     
@@ -80,18 +73,54 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self.view animateIn];
+    
+    if(!self.navigationChangedByGesture) {
+        [self.view animateIn];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [self.view animateOut];
+    
+    if(!self.navigationChangedByGesture) {
+        [self.view animateOut];
+    }
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)hideKeyboard:(NSNotification *)notification {
+    
+}
+
+- (void)enable:(BOOL)enable {
+	if ([self.view isKindOfClass:[UIScrollView class]])
+		((UIScrollView*)self.view).scrollEnabled = enable;
+    
+	for (UIView *v in self.view.subviews) {
+		v.userInteractionEnabled = enable;
+	}
+}
+
+#pragma mark - UIGestureRecognizerDelegate Methods
+
+- (void)viewPanned:(UIGestureRecognizer *)gestureRecognizer {
+    if(gestureRecognizer.state == UIGestureRecognizerStateEnded) {
+        ALLog(@"Gesture stopped.");
+        self.navigationChangedByGesture = NO;
+    }
+    else {
+        self.navigationChangedByGesture = YES;
+    }
+}
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+    self.navigationChangedByGesture = YES;
+    return YES;
 }
 
 @end
