@@ -13,5 +13,6 @@
 @property (nonatomic, weak) IBOutlet UILabel *option;
 
 - (void)setup;
++ (CGFloat)cellHeight;
 
 @end

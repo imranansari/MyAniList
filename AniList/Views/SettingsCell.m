@@ -45,10 +45,13 @@
     UIView *select = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 340, 90)];
     select.backgroundColor = [UIColor colorWithWhite:1.0f alpha:0.1f];
     self.selectedBackgroundView = select;
+    
+    self.option.font = [UIFont defaultFontWithSize:14];
+    
 }
 
 + (CGFloat)cellHeight {
-    return 60;
+    return 50;
 }
 
 @end

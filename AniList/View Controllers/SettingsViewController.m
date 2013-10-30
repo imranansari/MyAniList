@@ -28,6 +28,9 @@
 
 @property (nonatomic, assign) BOOL apiStatusFetched;
 @property (nonatomic, assign) BOOL unofficialApiStatusFetched;
+
+@property (nonatomic, assign) BOOL unofficialApiAvailable;
+
 @end
 
 @implementation SettingsViewController
@@ -79,6 +82,9 @@
     self.progressView.alpha = 0.0f;
     
     self.title = @"Settings";
+    self.tableView.separatorColor = [UIColor colorWithWhite:1.0f alpha:0.2f];
+    self.tableView.separatorInset = UIEdgeInsetsZero;
+    self.tableView.scrollEnabled = NO;
     
     SWRevealViewController *revealController = self.revealViewController;
     
@@ -120,16 +126,12 @@
 
 #pragma mark - Table view data source
 
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    return [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 0)];
-}
-
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return 1;
+    return 40;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 44;
+    return [SettingsCell cellHeight];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -153,8 +155,7 @@
     
     static NSString *CellIdentifier = @"Cell";
     
-    SettingsCell *cell;
-    cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    SettingsCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if(!cell) {
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SettingsCell" owner:self options:nil];
         cell = (SettingsCell *)nib[0];
@@ -234,15 +235,21 @@
         }
     }
     
+    item[kOptionName] = @"Checking API status...";
+    [APIArray replaceObjectAtIndex:index withObject:item];
+    self.apiStatus = [APIArray copy];
+    self.apiStatusFetched = NO;
+    [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:1]] withRowAnimation:UITableViewRowAnimationFade];
+    
     [[MALHTTPClient sharedClient] officialAPIAvailable:^(id operation, id response) {
-        ALLog(@"Official API Status is available.");
+        ALLog(@"Official API is available.");
         item[kOptionName] = @"Official API is available.";
         [APIArray replaceObjectAtIndex:index withObject:item];
         self.apiStatus = [APIArray copy];
         self.apiStatusFetched = YES;
         [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:1]] withRowAnimation:UITableViewRowAnimationFade];
     } failure:^(id operation, NSError *error) {
-        ALLog(@"Official API Status is unavailable.");
+        ALLog(@"Official API is unavailable.");
         item[kOptionName] = @"Official API is unavailable.";
         [APIArray replaceObjectAtIndex:index withObject:item];
         self.apiStatus = [APIArray copy];
@@ -266,12 +273,19 @@
         }
     }
     
+    item[kOptionName] = @"Checking Unofficial API...";
+    [APIArray replaceObjectAtIndex:index withObject:item];
+    self.apiStatus = [APIArray copy];
+    self.unofficialApiStatusFetched = NO;
+    [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:1]] withRowAnimation:UITableViewRowAnimationFade];
+    
     [[MALHTTPClient sharedClient] unofficialAPIAvailable:^(id operation, id response) {
         ALLog(@"Unofficial API Status is available.");
         item[kOptionName] = @"Unofficial API is available.";
         [APIArray replaceObjectAtIndex:index withObject:item];
         self.apiStatus = [APIArray copy];
         self.unofficialApiStatusFetched = YES;
+        self.unofficialApiAvailable = YES;
         [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:1]] withRowAnimation:UITableViewRowAnimationFade];
     } failure:^(id operation, NSError *error) {
         ALLog(@"Unofficial API Status is unavailable.");
@@ -279,6 +293,7 @@
         [APIArray replaceObjectAtIndex:index withObject:item];
         self.apiStatus = [APIArray copy];
         self.unofficialApiStatusFetched = YES;
+        self.unofficialApiAvailable = NO;
         [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:1]] withRowAnimation:UITableViewRowAnimationFade];
     }];
 }
@@ -319,14 +334,27 @@
 }
 
 - (void)enableGenreTagSupport {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"This will download additional information for your anime and manga lists. This may take a while. Do you wish to continue?"
-                                                             delegate:self
-                                                    cancelButtonTitle:@"No"
-                                               destructiveButtonTitle:@"Yes"
-                                                    otherButtonTitles:nil, nil];
-    
-    actionSheet.tag = EnableGenreTagSupportTag;
-    [actionSheet showInView:self.view];
+    if(self.unofficialApiStatusFetched) {
+        if(self.unofficialApiAvailable) {
+            UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"This will download additional information for your anime and manga lists. This may take a while. Do you wish to continue?"
+                                                                     delegate:self
+                                                            cancelButtonTitle:@"No"
+                                                       destructiveButtonTitle:@"Yes"
+                                                            otherButtonTitles:nil, nil];
+            
+            actionSheet.tag = EnableGenreTagSupportTag;
+            [actionSheet showInView:self.view];
+        }
+        else {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Unofficial API Required"
+                                                            message:@"Sorry, this feature requires the unofficial server to be available. Please try again later."
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"Okay"
+                                                  otherButtonTitles:nil, nil];
+            
+            [alert show];
+        }
+    }
 }
 
 - (void)downloadInfo {
