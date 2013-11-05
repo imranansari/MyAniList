@@ -292,7 +292,7 @@
     [self.usernameField resignFirstResponder];
     NSString *username = [self.usernameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     
-    if(username.length > 0) {
+    if(username.length > 0 && ![username isEqualToString:kEnterUsernameString]) {
         Friend *friend = [FriendService addFriend:username];
         [[MALHTTPClient sharedClient] getProfileForUser:friend.username success:^(id operation, id response) {
             ALLog(@"result: %@", response);
