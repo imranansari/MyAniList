@@ -14,6 +14,7 @@
 #import "CRTransitionLabel.h"
 #import "SettingsCell.h"
 #import "FICImageCache.h"
+#import "ReportProblemViewController.h"
 
 #define kOptionName @"kOptionName"
 #define kAction     @"kAction"
@@ -55,6 +56,10 @@
                          @{
                              kOptionName    : @"Reset Local Manga Cache",
                              kAction        : @"confirmClearMangaList"
+                             },
+                         @{
+                             kOptionName    : @"Report an Issue",
+                             kAction        : @"reportProblem"
                              }
                          ];
         
@@ -249,8 +254,8 @@
         self.apiStatusFetched = YES;
         [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:1]] withRowAnimation:UITableViewRowAnimationFade];
     } failure:^(id operation, NSError *error) {
-        ALLog(@"Official API is unavailable.");
-        item[kOptionName] = @"Official API is unavailable.";
+        ALLog(@"Official API is currently unavailable.");
+        item[kOptionName] = @"Official API is currently unavailable.";
         [APIArray replaceObjectAtIndex:index withObject:item];
         self.apiStatus = [APIArray copy];
         self.apiStatusFetched = YES;
@@ -288,14 +293,19 @@
         self.unofficialApiAvailable = YES;
         [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:1]] withRowAnimation:UITableViewRowAnimationFade];
     } failure:^(id operation, NSError *error) {
-        ALLog(@"Unofficial API Status is unavailable.");
-        item[kOptionName] = @"Unofficial API is unavailable.";
+        ALLog(@"Unofficial API Status is currently unavailable.");
+        item[kOptionName] = @"Unofficial API is currently unavailable.";
         [APIArray replaceObjectAtIndex:index withObject:item];
         self.apiStatus = [APIArray copy];
         self.unofficialApiStatusFetched = YES;
         self.unofficialApiAvailable = NO;
         [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:1]] withRowAnimation:UITableViewRowAnimationFade];
     }];
+}
+
+- (void)reportProblem {
+    ReportProblemViewController *vc = [[ReportProblemViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - Action Methods

@@ -18,4 +18,32 @@
     #import "AnalyticsManager.h"
     #import "ImageManager.h"
     #import "MALHTTPClient.h"
+    #import "Logger.h"
 #endif
+
+#define VERBOSE_DEBUGGING YES
+
+#ifdef DEBUG
+#define ALLog( s, ... ) [[Logger sharedInstance] log:[NSString stringWithFormat:@"<%p %@:(%d)> %s: %@", self, [[NSString stringWithUTF8String:__FILE__] lastPathComponent], __LINE__, __PRETTY_FUNCTION__, [NSString stringWithFormat:(s), ##__VA_ARGS__]]]
+#else
+#define ALLog( s, ... ) do {} while (0)
+#endif
+
+#if VERBOSE_DEBUGGING
+#define ALVLog( s, ...) ALLog( s, ... )
+#else
+#define ALVLog( s, ... ) do {} while (0)
+#endif
+
+NS_INLINE void MVComputeTimeWithNameAndBlock(const char *caller, void (^block)()) {
+    CFTimeInterval startTimeInterval = CACurrentMediaTime();
+    block();
+    CFTimeInterval nowTimeInterval = CACurrentMediaTime();
+    
+#ifdef DEBUG
+    NSLog(@"%s - total: %f", caller, nowTimeInterval - startTimeInterval);
+#endif
+    
+}
+
+#define MVComputeTime(...) MVComputeTimeWithNameAndBlock(__PRETTY_FUNCTION__, (__VA_ARGS__))

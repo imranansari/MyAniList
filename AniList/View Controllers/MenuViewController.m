@@ -139,6 +139,11 @@ static NSString *CellIdentifier = @"Cell";
                       kCellActionKey : @"loadViewController:"
                       },
                   @{
+                      kCellTitleKey : @"Notifications",
+                      kCellViewControllerKey : @"NewsViewController",
+                      kCellActionKey : @"loadViewController:"
+                      },
+                  @{
                       kCellTitleKey : @"Log Out",
                       kCellViewControllerKey : @"LoginViewController",
                       kCellActionKey : @"logout:"
@@ -177,18 +182,16 @@ static NSString *CellIdentifier = @"Cell";
         
         [[UserProfile profile] fetchProfileWithSuccess:^{
             self.profileFetched = YES;
-            self.animeStats.text = [NSString stringWithFormat:@"Anime time in days: %@", [[UserProfile profile] animeStats][kStatsTotalTimeInDays]];
-            self.mangaStats.text = [NSString stringWithFormat:@"Manga time in days: %@", [[UserProfile profile] mangaStats][kStatsTotalTimeInDays]];
             
             NSURLRequest *request = [[UserProfile profile] profileImageURL];
             [self.profileImage setImageWithURLRequest:request
                                      placeholderImage:[UIImage placeholderImage]
                                               success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-                                                  ALLog(@"image found");
+                                                  ALLog(@"Profile image found (%@).", [request.URL absoluteString]);
                                                   self.profileImage.image = image;
                                               }
                                               failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-                                                  ALLog(@"image failed.");
+                                                  ALLog(@"Profile image failed to load (%@).", [request.URL absoluteString]);
                                               }];
         } failure:^{
             ALLog(@"Failed to get user profile information.");
