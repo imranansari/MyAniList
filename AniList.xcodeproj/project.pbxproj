@@ -233,6 +233,9 @@
 		6372893C17542D110032F425 /* MALHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 6372893A17542D110032F425 /* MALHTTPClient.m */; };
 		6374DB4C179CF016003D7264 /* TagListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6374DB4B179CF016003D7264 /* TagListViewController.m */; };
 		6374DB4D179CF016003D7264 /* TagListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6374DB4B179CF016003D7264 /* TagListViewController.m */; };
+		637C76B11828930800DD1DC6 /* ReportProblemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 637C76AF1828930800DD1DC6 /* ReportProblemViewController.m */; };
+		637C76B21828930800DD1DC6 /* ReportProblemViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 637C76B01828930800DD1DC6 /* ReportProblemViewController.xib */; };
+		637C76B9182897B200DD1DC6 /* Logger.m in Sources */ = {isa = PBXBuildFile; fileRef = 637C76B8182897B200DD1DC6 /* Logger.m */; };
 		637CF6EC175986840009ADF3 /* NSObject+AniList.m in Sources */ = {isa = PBXBuildFile; fileRef = 637CF6EB175986840009ADF3 /* NSObject+AniList.m */; };
 		637CF6ED175986840009ADF3 /* NSObject+AniList.m in Sources */ = {isa = PBXBuildFile; fileRef = 637CF6EB175986840009ADF3 /* NSObject+AniList.m */; };
 		637CF6F31759940E0009ADF3 /* test_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 637CF6F21759940E0009ADF3 /* test_background@2x.png */; };
@@ -573,6 +576,11 @@
 		6372893A17542D110032F425 /* MALHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MALHTTPClient.m; path = "Web Services/MALHTTPClient.m"; sourceTree = "<group>"; };
 		6374DB4A179CF016003D7264 /* TagListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagListViewController.h; sourceTree = "<group>"; };
 		6374DB4B179CF016003D7264 /* TagListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagListViewController.m; sourceTree = "<group>"; };
+		637C76AE1828930800DD1DC6 /* ReportProblemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportProblemViewController.h; sourceTree = "<group>"; };
+		637C76AF1828930800DD1DC6 /* ReportProblemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReportProblemViewController.m; sourceTree = "<group>"; };
+		637C76B01828930800DD1DC6 /* ReportProblemViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReportProblemViewController.xib; sourceTree = "<group>"; };
+		637C76B7182897B200DD1DC6 /* Logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Logger.h; path = Classes/Logger.h; sourceTree = "<group>"; };
+		637C76B8182897B200DD1DC6 /* Logger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Logger.m; path = Classes/Logger.m; sourceTree = "<group>"; };
 		637CF6EA175986840009ADF3 /* NSObject+AniList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+AniList.h"; path = "Categories/NSObject+AniList.h"; sourceTree = "<group>"; };
 		637CF6EB175986840009ADF3 /* NSObject+AniList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+AniList.m"; path = "Categories/NSObject+AniList.m"; sourceTree = "<group>"; };
 		637CF6EE175986B20009ADF3 /* Categories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Categories.h; path = Categories/Categories.h; sourceTree = "<group>"; };
@@ -879,6 +887,9 @@
 				63E76B03181A33CD009FC42F /* TagsViewController.h */,
 				63E76B04181A33CD009FC42F /* TagsViewController.m */,
 				63E76B05181A33CD009FC42F /* TagsViewController.xib */,
+				637C76AE1828930800DD1DC6 /* ReportProblemViewController.h */,
+				637C76AF1828930800DD1DC6 /* ReportProblemViewController.m */,
+				637C76B01828930800DD1DC6 /* ReportProblemViewController.xib */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -920,6 +931,8 @@
 				63B551131792F0B1001D74A3 /* Settings.m */,
 				63BFB1D717CB876B0041BEA1 /* ImageManager.h */,
 				63BFB1D817CB876B0041BEA1 /* ImageManager.m */,
+				637C76B7182897B200DD1DC6 /* Logger.h */,
+				637C76B8182897B200DD1DC6 /* Logger.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -1450,6 +1463,7 @@
 				63D8791C17A20C89002ACA13 /* red_bg_pressed.png in Resources */,
 				630E0FE41768E9980061110A /* plus.png in Resources */,
 				635484B3171C2FA7003457CB /* Default.png in Resources */,
+				637C76B21828930800DD1DC6 /* ReportProblemViewController.xib in Resources */,
 				633BBF7117B1358400AE573D /* FriendsViewController.xib in Resources */,
 				6324CEB21799793400B308B0 /* grayArrow@2x.png in Resources */,
 				638E6B1A17A7F9B900A35FDB /* SettingsCell.xib in Resources */,
@@ -1621,6 +1635,7 @@
 				63BFB1D917CB876B0041BEA1 /* ImageManager.m in Sources */,
 				63C8CD6D179A441E003BB80C /* AniListMiniCell.m in Sources */,
 				632F43A1171CDE2100A5B43A /* AniListTableView.m in Sources */,
+				637C76B9182897B200DD1DC6 /* Logger.m in Sources */,
 				632F43A4171CDE2F00A5B43A /* AnimeTableView.m in Sources */,
 				632F43A7171CDE3900A5B43A /* MangaTableView.m in Sources */,
 				632F43AB171D7DF100A5B43A /* AnimeListViewController.m in Sources */,
@@ -1698,6 +1713,7 @@
 				63461A141777FA620053652C /* MangaUserInfoEditViewController.m in Sources */,
 				6380F98F179ADAC60090B66C /* SynonymService.m in Sources */,
 				63461A191778004D0053652C /* SettingsViewController.m in Sources */,
+				637C76B11828930800DD1DC6 /* ReportProblemViewController.m in Sources */,
 				63B0DFA31789C3F7006F0868 /* NSString+HTML.m in Sources */,
 				63B0DFA71789C529006F0868 /* GTMNSString+HTML.m in Sources */,
 				63FC20A717920EB000DFD544 /* CRTransitionLabel.m in Sources */,

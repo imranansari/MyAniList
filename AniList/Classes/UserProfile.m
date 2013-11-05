@@ -23,6 +23,23 @@ static UserProfile *profile = nil;
     return profile;
 }
 
+- (id)init {
+    self = [super init];
+    if(self) {
+        NSDictionary *animeStats = [[NSUserDefaults standardUserDefaults] dictionaryForKey:kUserAnimeStats];
+        if(animeStats) {
+            self.animeStats = animeStats;
+        }
+        
+        NSDictionary *mangaStats = [[NSUserDefaults standardUserDefaults] dictionaryForKey:kUserMangaStats];
+        if(mangaStats) {
+            self.mangaStats = mangaStats;
+        }
+    }
+    
+    return self;
+}
+
 - (void)setUsername:(NSString *)username andPassword:(NSString *)password {
     profile.username = username;
     profile.password = password;
@@ -53,6 +70,9 @@ static UserProfile *profile = nil;
 - (void)logout {
     self.username = nil;
     self.password = nil;
+    
+    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kUserAnimeStats];
+    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kUserMangaStats];
 }
 
 + (BOOL)userIsLoggedIn {
@@ -114,6 +134,9 @@ static UserProfile *profile = nil;
                         kStatsPlanToWatch       : data[kStatsPlanToWatch],
                         kStatsTotalEntries      : data[kStatsTotalEntries]
                         };
+    
+    [[NSUserDefaults standardUserDefaults] setObject:self.animeStats forKey:kUserAnimeStats];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (void)createMangaStats:(NSDictionary *)data {
@@ -126,6 +149,9 @@ static UserProfile *profile = nil;
                         kStatsPlanToRead        : data[kStatsPlanToRead],
                         kStatsTotalEntries      : data[kStatsTotalEntries]
                         };
+    
+    [[NSUserDefaults standardUserDefaults] setObject:self.mangaStats forKey:kUserMangaStats];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 @end

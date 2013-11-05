@@ -11,6 +11,9 @@
 #define kUsernameKey @"kUsernameKey"
 #define kPasswordKey @"kPasswordKey"
 
+#define kUserAnimeStats @"kUserAnimeStats"
+#define kUserMangaStats @"kUserMangaStats"
+
 // Stats
 #define kStatsTotalTimeInDays @"time_days"
 #define kStatsWatching @"watching"

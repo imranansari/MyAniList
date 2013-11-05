@@ -109,7 +109,7 @@
                                 kStatsTotalEntries      : [NSString stringWithFormat:@"%d", totalEntries]
                                 };
         
-        [[UserProfile profile] setMangaStats:stats];
+        [[UserProfile profile] createMangaStats:stats];
     }
     
     for(NSDictionary *mangaItem in mangaDictionary) {

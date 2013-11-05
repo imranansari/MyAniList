@@ -141,7 +141,7 @@
                                 kStatsTotalEntries      : [NSString stringWithFormat:@"%d", totalEntries]
                                 };
         
-        [[UserProfile profile] setAnimeStats:stats];
+        [[UserProfile profile] createAnimeStats:stats];
     }
     
     // This is just one anime.
