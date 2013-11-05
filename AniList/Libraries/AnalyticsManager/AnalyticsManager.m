@@ -51,7 +51,6 @@ static AnalyticsManager *sharedInstance = nil;
     eventCategories = @[
                           @"Feature",
                           @"Action",
-                          @"Ads"
                         ];
     
     timingCategories = @[

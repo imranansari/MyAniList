@@ -8,6 +8,7 @@
 
 #import "UserProfile.h"
 #import "MALHTTPClient.h"
+#import <Crashlytics/Crashlytics.h>
 
 @implementation UserProfile
 
@@ -43,6 +44,8 @@ static UserProfile *profile = nil;
 - (void)setUsername:(NSString *)username andPassword:(NSString *)password {
     profile.username = username;
     profile.password = password;
+    
+    [[Crashlytics sharedInstance] setUserName:username];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedIn object:nil];
 }

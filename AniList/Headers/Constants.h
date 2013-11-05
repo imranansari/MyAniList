@@ -93,6 +93,34 @@
 #define kUserPlanToRead         @"user_plantoread"
 #define kUserReading            @"user_reading"
 
+// Google Analytics
+
+// Screens
+#define kLoginScreen                @"Login"
+#define kAnimeListScreen            @"Anime_List"
+#define kMangaListScreen            @"Manga_List"
+#define kAnimeDetailsScreen         @"Anime_Details"
+#define kMangaDetailsScreen         @"Manga_Details"
+#define kAnimeEditUserInfoScreen    @"Anime_Edit_User_Info"
+#define kMangaEditUserInfoScreen    @"Manga_Edit_User_Info"
+#define kTopAnimeScreen             @"Top_Anime"
+#define kPopularAnimeScreen         @"Popular_Anime"
+#define kAnimeTagsScreen            @"Anime_Tags"
+#define kAnimeGenresScreen          @"Anime_Genres"
+#define kFriendsScreen              @"Friends"
+#define kFriendDetailsScreen        @"Friend_Details"
+#define kCompareDetailsScreen       @"Compare_Details"
+#define kSearchScreen               @"Search"
+#define kSettingsScreen             @"Settings"
+#define kNotificationsScreen        @"Notifications"
+#define kReportIssueScreen          @"Report_Issue"
+
+// Actions
+#define kLoginButtonPressed     @"Login_Button_Pressed"
+#define kSaveAnimeDetailsPressed    @"Save_Anime"
+
+
+
 static const BOOL UI_DEBUG = NO;
 
 
