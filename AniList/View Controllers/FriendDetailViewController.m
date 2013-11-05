@@ -71,7 +71,8 @@
     
     self.indicator.alpha = 1.0f;
     
-    [self fetchData];
+    [self fetchAnime];
+    [self fetchManga];
     
     self.title = [NSString stringWithFormat:@"%@'s List", self.friend.username];
     self.tableView.backgroundColor = [UIColor clearColor];
@@ -148,26 +149,38 @@
 }
 
 - (void)fetchData {
-    double delayInSeconds = 0.5f;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        [[MALHTTPClient sharedClient] getAnimeListForUser:self.friend.username initialFetch:YES success:^(NSURLRequest *operation, id response) {
-            ALLog(@"Got %@'s animelist!", self.friend.username);
-            [AnimeService addAnimeList:(NSDictionary *)response forFriend:self.friend];
+    self.tableView.tableFooterView = nil;
+    self.compareControl.selectedSegmentIndex == 0 ? [self fetchAnime] : [self fetchManga];
+}
+
+- (void)fetchAnime {
+    [[MALHTTPClient sharedClient] getAnimeListForUser:self.friend.username initialFetch:YES success:^(NSURLRequest *operation, id response) {
+        ALLog(@"Got %@'s animelist!", self.friend.username);
+        [AnimeService addAnimeList:(NSDictionary *)response forFriend:self.friend];
+        if(self.compareControl.selectedSegmentIndex == 0)
             [self dissolveIndicator];
-        } failure:^(NSURLRequest *operation, NSError *error) {
-            ALLog(@"Couldn't fetch %@'s animelist!", self.friend.username);
+    } failure:^(NSURLRequest *operation, NSError *error) {
+        ALLog(@"Couldn't fetch %@'s animelist!", self.friend.username);
+        if(self.compareControl.selectedSegmentIndex == 0) {
             [self dissolveIndicator];
             self.tableView.tableFooterView = [UIView tableFooterWithError];
-        }];
-        
-        [[MALHTTPClient sharedClient] getMangaListForUser:self.friend.username initialFetch:YES success:^(NSURLRequest *operation, id response) {
-            ALLog(@"Got %@'s mangalist!", self.friend.username);
-            [MangaService addMangaList:(NSDictionary *)response forFriend:self.friend];
-        } failure:^(NSURLRequest *operation, NSError *error) {
-            ALLog(@"Couldn't fetch %@'s mangalist!", self.friend.username);
-        }];
-    });
+        }
+    }];
+}
+
+- (void)fetchManga {
+    [[MALHTTPClient sharedClient] getMangaListForUser:self.friend.username initialFetch:YES success:^(NSURLRequest *operation, id response) {
+        ALLog(@"Got %@'s mangalist!", self.friend.username);
+        [MangaService addMangaList:(NSDictionary *)response forFriend:self.friend];
+        if(self.compareControl.selectedSegmentIndex == 1)
+            [self dissolveIndicator];
+    } failure:^(NSURLRequest *operation, NSError *error) {
+        ALLog(@"Couldn't fetch %@'s mangalist!", self.friend.username);
+        if(self.compareControl.selectedSegmentIndex == 1) {
+            [self dissolveIndicator];
+            self.tableView.tableFooterView = [UIView tableFooterWithError];
+        }
+    }];
 }
 
 #pragma mark - IBAction methods
@@ -186,6 +199,11 @@
                          NSError *error = nil;
                          if (![[self fetchedResultsController] performFetch:&error]) {}
                          
+                         if(self.fetchedResultsController.fetchedObjects.count == 0) {
+                             [self displayIndicator];
+                             [self fetchData];
+                         }
+                         
                          [self.tableView reloadData];
                          
                          [UIView animateWithDuration:0.15f
@@ -198,15 +216,21 @@
                      }];
 }
 
+- (void)displayIndicator {
+    [self.refreshControl beginRefreshing];
+    
+    [UIView animateWithDuration:0.15f
+                     animations:^{
+                         self.indicator.alpha = 1.0f;
+                     }];
+}
+
 - (void)dissolveIndicator {
     [self.refreshControl endRefreshing];
     
     [UIView animateWithDuration:0.15f
                      animations:^{
                          self.indicator.alpha = 0.0f;
-                     }
-                     completion:^(BOOL finished) {
-                         [self.indicator removeFromSuperview];
                      }];
 }
 
