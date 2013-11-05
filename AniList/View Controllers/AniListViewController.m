@@ -13,7 +13,6 @@
 
 @interface AniListViewController ()
 @property (nonatomic, weak) IBOutlet CRTransitionLabel *topSectionLabel;
-@property (nonatomic, strong) UIRefreshControl *refreshControl;
 @end
 
 @implementation AniListViewController
@@ -159,6 +158,8 @@
 
 // Must call super after fetching is done!
 - (void)fetchData {
+    self.requestAttempts = 0;
+    
     [self.refreshControl endRefreshing];
     
     [UIView animateWithDuration:0.3f animations:^{

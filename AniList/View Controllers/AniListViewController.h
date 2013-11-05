@@ -13,6 +13,8 @@
 #import "AniListNavigationController.h"
 #import "ImageManager.h"
 
+#define MAX_ATTEMPTS 10
+
 @interface AniListViewController : BaseViewController<UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, UIActionSheetDelegate>
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
@@ -24,13 +26,14 @@
 @property (nonatomic, weak) IBOutlet UIButton *menuButton;
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView *indicator;
 @property (nonatomic, strong) NSIndexPath *editedIndexPath;
+@property (nonatomic, assign) int requestAttempts;
+@property (nonatomic, strong) UIRefreshControl *refreshControl;
 
 - (void)fetchData;
 - (NSString *)entityName;
 - (NSArray *)sortDescriptors;
 - (NSString *)sectionKeyPathName;
 - (void)configureCell:(UITableViewCell *)cell withObject:(NSManagedObject *)object;
-- (void)updateHeaders;
 
 - (void)didSwipe:(UIGestureRecognizer *)gestureRecognizer;
 - (void)didCancel:(UIGestureRecognizer *)gestureRecognizer;

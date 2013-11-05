@@ -46,6 +46,10 @@ static BOOL alreadyFetched = NO;
     [super viewDidLoad];
     
     if(!alreadyFetched) {
+        if(self.fetchedResultsController.fetchedObjects.count > 0) {
+            alreadyFetched = YES;
+        }
+        
         [self fetchData];
     }
 }
@@ -78,6 +82,8 @@ static BOOL alreadyFetched = NO;
     }];
     
     if([UserProfile userIsLoggedIn]) {
+       
+        self.requestAttempts++;
         
         if(!alreadyFetched) {
             self.tableView.alpha = 0.0f;
@@ -93,19 +99,31 @@ static BOOL alreadyFetched = NO;
                                                   }
                                                   failure:^(NSURLRequest *operation, NSError *error) {
                                                       alreadyFetched = YES;
-                                                      if(self.fetchedResultsController.fetchedObjects.count == 0) {
-                                                          double delayInSeconds = 0.25f;
+                                                      if(self.requestAttempts < MAX_ATTEMPTS) {
+                                                          ALLog(@"Could not fetch, trying attempt %d of %d...", self.requestAttempts, MAX_ATTEMPTS);
+                                                          
+                                                          // Try again.
+                                                          double delayInSeconds = 1.0;
                                                           dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
                                                           dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                                                              self.tableView.tableFooterView = [UIView tableFooterWithError];
-                                                              self.tableView.tableFooterView.alpha = 0.0f;
-                                                              [UIView animateWithDuration:0.15 animations:^{
-                                                                  self.tableView.tableFooterView.alpha = 1.0f;
-                                                              }];
+                                                              [self fetchData];
                                                           });
                                                       }
-                                                      
-                                                      [super fetchData];
+                                                      else {
+                                                          if(self.fetchedResultsController.fetchedObjects.count == 0) {
+                                                              double delayInSeconds = 0.25f;
+                                                              dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+                                                              dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                                                                  self.tableView.tableFooterView = [UIView tableFooterWithError];
+                                                                  self.tableView.tableFooterView.alpha = 0.0f;
+                                                                  [UIView animateWithDuration:0.15 animations:^{
+                                                                      self.tableView.tableFooterView.alpha = 1.0f;
+                                                                  }];
+                                                              });
+                                                          }
+                                                          
+                                                          [super fetchData];
+                                                      }
                                                   }];
     }
 }
