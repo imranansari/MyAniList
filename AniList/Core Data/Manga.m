@@ -460,13 +460,21 @@ static UIImage * _ThumbnailImageFromImage(UIImage *image) {
         contextBounds.size = contextSize;
         CGContextClearRect(contextRef, contextBounds);
         
+        UIGraphicsBeginImageContextWithOptions(contextSize, NO, 0.0f);
+        
+        CGFloat newWidth = image.size.width * (contextSize.height / image.size.height);
+        [image drawInRect:CGRectMake((contextSize.width - newWidth) / 2, 0.0f, newWidth, contextSize.height)];
+        
+        UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        
         if ([formatName isEqualToString:PosterImageFormatName]) {
             UIGraphicsPushContext(contextRef);
-            [image drawInRect:contextBounds];
+            [newImage drawInRect:contextBounds];
             UIGraphicsPopContext();
         }
         else if([formatName isEqualToString:ThumbnailPosterImageFormatName]) {
-            UIImage *thumbnail = _ThumbnailImageFromImage(image);
+            UIImage *thumbnail = _ThumbnailImageFromImage(newImage);
             UIGraphicsPushContext(contextRef);
             [thumbnail drawInRect:contextBounds];
             UIGraphicsPopContext();
