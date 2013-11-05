@@ -140,7 +140,7 @@ static NSString *CellIdentifier = @"Cell";
                       },
                   @{
                       kCellTitleKey : @"Notifications",
-                      kCellViewControllerKey : @"NewsViewController",
+                      kCellViewControllerKey : @"NotificationsViewController",
                       kCellActionKey : @"loadViewController:"
                       },
                   @{

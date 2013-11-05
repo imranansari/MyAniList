@@ -13,9 +13,6 @@
 #import "Anime.h"
 #import "Manga.h"
 
-typedef void (^HTTPSuccessBlock)(id operation, id response);
-typedef void (^HTTPFailureBlock)(id operation, NSError *error);
-
 @interface MALHTTPClient : AFHTTPClient<NSXMLParserDelegate>
 
 + (MALHTTPClient *)sharedClient;

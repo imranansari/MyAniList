@@ -236,6 +236,9 @@
 		637C76B11828930800DD1DC6 /* ReportProblemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 637C76AF1828930800DD1DC6 /* ReportProblemViewController.m */; };
 		637C76B21828930800DD1DC6 /* ReportProblemViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 637C76B01828930800DD1DC6 /* ReportProblemViewController.xib */; };
 		637C76B9182897B200DD1DC6 /* Logger.m in Sources */ = {isa = PBXBuildFile; fileRef = 637C76B8182897B200DD1DC6 /* Logger.m */; };
+		637C76BE1829407C00DD1DC6 /* CRHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 637C76BD1829407C00DD1DC6 /* CRHTTPClient.m */; };
+		637C76C21829414A00DD1DC6 /* NotificationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 637C76C01829414A00DD1DC6 /* NotificationsViewController.m */; };
+		637C76C31829414A00DD1DC6 /* NotificationsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 637C76C11829414A00DD1DC6 /* NotificationsViewController.xib */; };
 		637CF6EC175986840009ADF3 /* NSObject+AniList.m in Sources */ = {isa = PBXBuildFile; fileRef = 637CF6EB175986840009ADF3 /* NSObject+AniList.m */; };
 		637CF6ED175986840009ADF3 /* NSObject+AniList.m in Sources */ = {isa = PBXBuildFile; fileRef = 637CF6EB175986840009ADF3 /* NSObject+AniList.m */; };
 		637CF6F31759940E0009ADF3 /* test_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 637CF6F21759940E0009ADF3 /* test_background@2x.png */; };
@@ -581,6 +584,11 @@
 		637C76B01828930800DD1DC6 /* ReportProblemViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReportProblemViewController.xib; sourceTree = "<group>"; };
 		637C76B7182897B200DD1DC6 /* Logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Logger.h; path = Classes/Logger.h; sourceTree = "<group>"; };
 		637C76B8182897B200DD1DC6 /* Logger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Logger.m; path = Classes/Logger.m; sourceTree = "<group>"; };
+		637C76BC1829407C00DD1DC6 /* CRHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CRHTTPClient.h; path = "Web Services/CRHTTPClient.h"; sourceTree = "<group>"; };
+		637C76BD1829407C00DD1DC6 /* CRHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CRHTTPClient.m; path = "Web Services/CRHTTPClient.m"; sourceTree = "<group>"; };
+		637C76BF1829414A00DD1DC6 /* NotificationsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationsViewController.h; sourceTree = "<group>"; };
+		637C76C01829414A00DD1DC6 /* NotificationsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationsViewController.m; sourceTree = "<group>"; };
+		637C76C11829414A00DD1DC6 /* NotificationsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationsViewController.xib; sourceTree = "<group>"; };
 		637CF6EA175986840009ADF3 /* NSObject+AniList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+AniList.h"; path = "Categories/NSObject+AniList.h"; sourceTree = "<group>"; };
 		637CF6EB175986840009ADF3 /* NSObject+AniList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+AniList.m"; path = "Categories/NSObject+AniList.m"; sourceTree = "<group>"; };
 		637CF6EE175986B20009ADF3 /* Categories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Categories.h; path = Categories/Categories.h; sourceTree = "<group>"; };
@@ -890,6 +898,9 @@
 				637C76AE1828930800DD1DC6 /* ReportProblemViewController.h */,
 				637C76AF1828930800DD1DC6 /* ReportProblemViewController.m */,
 				637C76B01828930800DD1DC6 /* ReportProblemViewController.xib */,
+				637C76BF1829414A00DD1DC6 /* NotificationsViewController.h */,
+				637C76C01829414A00DD1DC6 /* NotificationsViewController.m */,
+				637C76C11829414A00DD1DC6 /* NotificationsViewController.xib */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -1295,6 +1306,8 @@
 				63EFEC3C176966B7009CEAB3 /* UMALHTTPClient.m */,
 				630CC0921792532D0029D021 /* TVDBHTTPClient.h */,
 				630CC0931792532D0029D021 /* TVDBHTTPClient.m */,
+				637C76BC1829407C00DD1DC6 /* CRHTTPClient.h */,
+				637C76BD1829407C00DD1DC6 /* CRHTTPClient.m */,
 			);
 			name = Requests;
 			sourceTree = "<group>";
@@ -1487,6 +1500,7 @@
 				63D8791F17A20D8E002ACA13 /* white_bg_pressed.png in Resources */,
 				63C063A817B5F735009C4FFE /* intro_background.png in Resources */,
 				632F439C171CDDED00A5B43A /* AniListViewController.xib in Resources */,
+				637C76C31829414A00DD1DC6 /* NotificationsViewController.xib in Resources */,
 				63922CED171D82C800D41BCE /* spacepyro.jpg in Resources */,
 				63502795171E4D430004C106 /* bg.png in Resources */,
 				63502798171E4D760004C106 /* bg@2x.png in Resources */,
@@ -1639,7 +1653,9 @@
 				632F43A4171CDE2F00A5B43A /* AnimeTableView.m in Sources */,
 				632F43A7171CDE3900A5B43A /* MangaTableView.m in Sources */,
 				632F43AB171D7DF100A5B43A /* AnimeListViewController.m in Sources */,
+				637C76C21829414A00DD1DC6 /* NotificationsViewController.m in Sources */,
 				633E696E17BFC32600477040 /* FriendMangaService.m in Sources */,
+				637C76BE1829407C00DD1DC6 /* CRHTTPClient.m in Sources */,
 				632F43AE171D7DFB00A5B43A /* MangaListViewController.m in Sources */,
 				6350279C171E4EA20004C106 /* UIFont+AniList.m in Sources */,
 				635027A0171E51450004C106 /* AnimeViewController.m in Sources */,
