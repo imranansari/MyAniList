@@ -313,12 +313,8 @@ static NSString *CellIdentifier = @"Cell";
 }
 
 - (void)logout:(UIViewController *)viewController {
-    // wipe all cached data.
-    AniListAppDelegate *delegate = (AniListAppDelegate *)[UIApplication sharedApplication].delegate;
-    [delegate clearDatabase];
-    [[UserProfile profile] logout];
-    
-    [self loadModalViewController:viewController];
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"Are you sure you want to log out?" delegate:self cancelButtonTitle:@"No" destructiveButtonTitle:@"Yes" otherButtonTitles:nil, nil];
+    [sheet showInView:self.view];
 }
 
 #pragma mark - Table view data source
@@ -372,6 +368,20 @@ static NSString *CellIdentifier = @"Cell";
     if([class isSubclassOfClass:[UIViewController class]]) {
         UIViewController *viewController = [[class alloc] init];
         [self performSelector:selector withObject:viewController];
+    }
+}
+
+#pragma mark - UIActionSheetDelegate Methods
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if(buttonIndex == actionSheet.destructiveButtonIndex) {
+        // wipe all cached data.
+        AniListAppDelegate *delegate = (AniListAppDelegate *)[UIApplication sharedApplication].delegate;
+        [delegate clearDatabase];
+        [[UserProfile profile] logout];
+        
+        LoginViewController *vc = [[LoginViewController alloc] init];
+        [self loadModalViewController:vc];
     }
 }
 

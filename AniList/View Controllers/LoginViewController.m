@@ -26,6 +26,7 @@
 @property (nonatomic, weak) IBOutlet UILabel *statusLabel;
 @property (nonatomic, weak) IBOutlet UIButton *skipToLoginButton;
 @property (nonatomic, weak) IBOutlet UIButton *loginButton;
+@property (nonatomic, weak) IBOutlet UIPageControl *pageControl;
 @property (nonatomic, strong) UIView *backgroundView;
 
 - (IBAction)skipToLoginButtonPressed:(id)sender;
@@ -43,6 +44,10 @@
         // Custom initialization
     }
     return self;
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
 }
 
 - (void)viewDidLoad {
@@ -116,11 +121,9 @@
     topOverlay.layer.mask = topGradient;
     
     nvc.navigationBar.hidden = YES;
-    if([[UIDevice currentDevice].systemVersion compare:@"7.0" options:NSNumericSearch] != NSOrderedAscending) {
-        //        nvc.navigationBar.barTintColor = [UIColor clearColor];
-    }
-    else {
-
+    
+    if(![[NSUserDefaults standardUserDefaults] boolForKey:kShowSkipToLoginButton]) {
+        self.skipToLoginButton.hidden = YES;
     }
 }
 
@@ -180,6 +183,10 @@
 
 - (void)revokeLoginScreen {
     if([UserProfile userIsLoggedIn]) {
+        
+        // Set this default to YES so the user can just skip to login next time, in the event they log out.
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kShowSkipToLoginButton];
+        
         AniListAppDelegate *delegate = (AniListAppDelegate *)[UIApplication sharedApplication].delegate;
         SWRevealViewController *rvc = (SWRevealViewController *)delegate.window.rootViewController;
         AniListNavigationController *nvc = (AniListNavigationController *)rvc.frontViewController;
@@ -225,6 +232,23 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     // Since we know this background will fit the screen height, we can use this value.
     float width = [UIScreen mainScreen].bounds.size.width;
+    
+    // Determine what page we're on.
+    CGFloat pageWidth = self.scrollView.frame.size.width;
+    int page = floor((self.scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
+
+    self.pageControl.currentPage = page;
+    
+    float alpha = 1.0f;
+    
+    if(page == 4) {
+        alpha = 0.0f;
+    }
+    
+    [UIView animateWithDuration:0.15f
+                     animations:^{
+                         self.pageControl.alpha = alpha;
+                     }];
     
     if(scrollView.contentSize.width > 400) {
         float xOrigin = -((self.backgroundView.frame.size.width - width) * (scrollView.contentOffset.x / scrollView.contentSize.width));

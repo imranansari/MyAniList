@@ -10,6 +10,7 @@
 
 #define kUserLoggedIn @"kUserLoggedIn"
 #define kUserLoggedOut @"kUserLoggedOut"
+#define kShowSkipToLoginButton @"kShowSkipToLoginButton"
 
 @interface LoginViewController : UIViewController<UITextFieldDelegate, UINavigationControllerDelegate, UIScrollViewDelegate>
 

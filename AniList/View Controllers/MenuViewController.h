@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "SWRevealViewController.h"
 
-@interface MenuViewController : UIViewController
+@interface MenuViewController : UIViewController<UIActionSheetDelegate>
 
 @end
