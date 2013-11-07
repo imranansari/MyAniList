@@ -173,6 +173,10 @@
 		635484C5171C2FA7003457CB /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 635484A4171C2FA7003457CB /* CoreData.framework */; };
 		635484CD171C2FA7003457CB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 635484CB171C2FA7003457CB /* InfoPlist.strings */; };
 		635484D0171C2FA7003457CB /* AniListTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 635484CF171C2FA7003457CB /* AniListTests.m */; };
+		635CF866182B28650032E7FA /* NotificationsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 635CF865182B28650032E7FA /* NotificationsCell.m */; };
+		635CF868182B28B90032E7FA /* NotificationsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 635CF867182B28B90032E7FA /* NotificationsCell.xib */; };
+		635CF86C182B2F6F0032E7FA /* NotificationDisplayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 635CF86A182B2F6F0032E7FA /* NotificationDisplayViewController.m */; };
+		635CF86D182B2F6F0032E7FA /* NotificationDisplayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 635CF86B182B2F6F0032E7FA /* NotificationDisplayViewController.xib */; };
 		636691DA17A2B2E70013B0F6 /* TopListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 636691D817A2B2E70013B0F6 /* TopListViewController.m */; };
 		636691DB17A2B2E70013B0F6 /* TopListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 636691D817A2B2E70013B0F6 /* TopListViewController.m */; };
 		636691DC17A2B2E70013B0F6 /* TopListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 636691D917A2B2E70013B0F6 /* TopListViewController.xib */; };
@@ -281,6 +285,8 @@
 		639FA1EA17937006000AA0D1 /* UINavigationController+AniList.m in Sources */ = {isa = PBXBuildFile; fileRef = 639FA1E817937006000AA0D1 /* UINavigationController+AniList.m */; };
 		639FA1F317937896000AA0D1 /* UIBarButtonItem+AniList.m in Sources */ = {isa = PBXBuildFile; fileRef = 639FA1F217937896000AA0D1 /* UIBarButtonItem+AniList.m */; };
 		639FA1F417937896000AA0D1 /* UIBarButtonItem+AniList.m in Sources */ = {isa = PBXBuildFile; fileRef = 639FA1F217937896000AA0D1 /* UIBarButtonItem+AniList.m */; };
+		63AC56431829D1F0008FFB47 /* Notification.m in Sources */ = {isa = PBXBuildFile; fileRef = 63AC56421829D1F0008FFB47 /* Notification.m */; };
+		63AC5647182A8F77008FFB47 /* NotificationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 63AC5646182A8F77008FFB47 /* NotificationService.m */; };
 		63B0DFA31789C3F7006F0868 /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B0DFA21789C3F7006F0868 /* NSString+HTML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		63B0DFA41789C3F7006F0868 /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B0DFA21789C3F7006F0868 /* NSString+HTML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		63B0DFA71789C529006F0868 /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B0DFA61789C529006F0868 /* GTMNSString+HTML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -523,6 +529,12 @@
 		635484CC171C2FA7003457CB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		635484CE171C2FA7003457CB /* AniListTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AniListTests.h; sourceTree = "<group>"; };
 		635484CF171C2FA7003457CB /* AniListTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AniListTests.m; sourceTree = "<group>"; };
+		635CF864182B28650032E7FA /* NotificationsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NotificationsCell.h; path = Views/NotificationsCell.h; sourceTree = "<group>"; };
+		635CF865182B28650032E7FA /* NotificationsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NotificationsCell.m; path = Views/NotificationsCell.m; sourceTree = "<group>"; };
+		635CF867182B28B90032E7FA /* NotificationsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NotificationsCell.xib; path = Views/NotificationsCell.xib; sourceTree = "<group>"; };
+		635CF869182B2F6F0032E7FA /* NotificationDisplayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationDisplayViewController.h; sourceTree = "<group>"; };
+		635CF86A182B2F6F0032E7FA /* NotificationDisplayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationDisplayViewController.m; sourceTree = "<group>"; };
+		635CF86B182B2F6F0032E7FA /* NotificationDisplayViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationDisplayViewController.xib; sourceTree = "<group>"; };
 		636691D717A2B2E70013B0F6 /* TopListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopListViewController.h; sourceTree = "<group>"; };
 		636691D817A2B2E70013B0F6 /* TopListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopListViewController.m; sourceTree = "<group>"; };
 		636691D917A2B2E70013B0F6 /* TopListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TopListViewController.xib; sourceTree = "<group>"; };
@@ -624,6 +636,10 @@
 		639FA1E817937006000AA0D1 /* UINavigationController+AniList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UINavigationController+AniList.m"; path = "Categories/UINavigationController+AniList.m"; sourceTree = "<group>"; };
 		639FA1F117937896000AA0D1 /* UIBarButtonItem+AniList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIBarButtonItem+AniList.h"; path = "Categories/UIBarButtonItem+AniList.h"; sourceTree = "<group>"; };
 		639FA1F217937896000AA0D1 /* UIBarButtonItem+AniList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIBarButtonItem+AniList.m"; path = "Categories/UIBarButtonItem+AniList.m"; sourceTree = "<group>"; };
+		63AC56411829D1F0008FFB47 /* Notification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Notification.h; path = "Core Data/Notification.h"; sourceTree = "<group>"; };
+		63AC56421829D1F0008FFB47 /* Notification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Notification.m; path = "Core Data/Notification.m"; sourceTree = "<group>"; };
+		63AC5645182A8F77008FFB47 /* NotificationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NotificationService.h; path = "Core Data/NotificationService.h"; sourceTree = "<group>"; };
+		63AC5646182A8F77008FFB47 /* NotificationService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NotificationService.m; path = "Core Data/NotificationService.m"; sourceTree = "<group>"; };
 		63B0DFA11789C3F7006F0868 /* NSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+HTML.h"; path = "Categories/NSString+HTML.h"; sourceTree = "<group>"; };
 		63B0DFA21789C3F7006F0868 /* NSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+HTML.m"; path = "Categories/NSString+HTML.m"; sourceTree = "<group>"; };
 		63B0DFA51789C529006F0868 /* GTMNSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "GTMNSString+HTML.h"; path = "Categories/GTMNSString+HTML.h"; sourceTree = "<group>"; };
@@ -901,6 +917,9 @@
 				637C76BF1829414A00DD1DC6 /* NotificationsViewController.h */,
 				637C76C01829414A00DD1DC6 /* NotificationsViewController.m */,
 				637C76C11829414A00DD1DC6 /* NotificationsViewController.xib */,
+				635CF869182B2F6F0032E7FA /* NotificationDisplayViewController.h */,
+				635CF86A182B2F6F0032E7FA /* NotificationDisplayViewController.m */,
+				635CF86B182B2F6F0032E7FA /* NotificationDisplayViewController.xib */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -956,6 +975,8 @@
 				63C063B017B67C51009C4FFE /* FriendAnime.h */,
 				63C063B117B67C51009C4FFE /* FriendAnime.m */,
 				635484B8171C2FA7003457CB /* AniList_1.0.xcdatamodeld */,
+				63AC56411829D1F0008FFB47 /* Notification.h */,
+				63AC56421829D1F0008FFB47 /* Notification.m */,
 				633E697017BFD16D00477040 /* Manga.h */,
 				633E697117BFD16D00477040 /* Manga.m */,
 				633E696817BFC04900477040 /* Friend.h */,
@@ -984,6 +1005,8 @@
 				63C063C017B68845009C4FFE /* FriendAnimeService.m */,
 				633E696C17BFC32600477040 /* FriendMangaService.h */,
 				633E696D17BFC32600477040 /* FriendMangaService.m */,
+				63AC5645182A8F77008FFB47 /* NotificationService.h */,
+				63AC5646182A8F77008FFB47 /* NotificationService.m */,
 			);
 			name = "Core Data";
 			sourceTree = "<group>";
@@ -1053,6 +1076,9 @@
 				633E697417C257DF00477040 /* CompareCell.h */,
 				633E697517C257DF00477040 /* CompareCell.m */,
 				633E697817C257F800477040 /* CompareCell.xib */,
+				635CF864182B28650032E7FA /* NotificationsCell.h */,
+				635CF865182B28650032E7FA /* NotificationsCell.m */,
+				635CF867182B28B90032E7FA /* NotificationsCell.xib */,
 			);
 			name = "Table Cells";
 			sourceTree = "<group>";
@@ -1488,6 +1514,7 @@
 				632F436D171CD6FA00A5B43A /* MenuViewController.xib in Resources */,
 				6324CEB01799793400B308B0 /* grayArrow.png in Resources */,
 				632F4372171CD74400A5B43A /* ProfileCell.xib in Resources */,
+				635CF868182B28B90032E7FA /* NotificationsCell.xib in Resources */,
 				632F4396171CDC7600A5B43A /* hamburger.png in Resources */,
 				63E76B0E181A3A5A009FC42F /* Images.xcassets in Resources */,
 				632F4397171CDC7600A5B43A /* hamburger@2x.png in Resources */,
@@ -1495,6 +1522,7 @@
 				630E0FE21768E9980061110A /* minus@2x.png in Resources */,
 				6324CEB41799793400B308B0 /* whiteArrow.png in Resources */,
 				633E697917C257F800477040 /* CompareCell.xib in Resources */,
+				635CF86D182B2F6F0032E7FA /* NotificationDisplayViewController.xib in Resources */,
 				63E76B07181A33CD009FC42F /* TagsViewController.xib in Resources */,
 				63C063BD17B67FD0009C4FFE /* FriendDetailViewController.xib in Resources */,
 				63D8791F17A20D8E002ACA13 /* white_bg_pressed.png in Resources */,
@@ -1638,6 +1666,7 @@
 				632F436C171CD6FA00A5B43A /* MenuViewController.m in Sources */,
 				632F4370171CD72F00A5B43A /* ProfileCell.m in Sources */,
 				633BBF7917B139AD00AE573D /* FriendService.m in Sources */,
+				635CF866182B28650032E7FA /* NotificationsCell.m in Sources */,
 				632F4381171CD9C900A5B43A /* MenuCell.m in Sources */,
 				638E6B1E17A7FD1F00A35FDB /* AniListStatCell.m in Sources */,
 				63C063B217B67C51009C4FFE /* FriendAnime.m in Sources */,
@@ -1650,6 +1679,7 @@
 				63C8CD6D179A441E003BB80C /* AniListMiniCell.m in Sources */,
 				632F43A1171CDE2100A5B43A /* AniListTableView.m in Sources */,
 				637C76B9182897B200DD1DC6 /* Logger.m in Sources */,
+				63AC5647182A8F77008FFB47 /* NotificationService.m in Sources */,
 				632F43A4171CDE2F00A5B43A /* AnimeTableView.m in Sources */,
 				632F43A7171CDE3900A5B43A /* MangaTableView.m in Sources */,
 				632F43AB171D7DF100A5B43A /* AnimeListViewController.m in Sources */,
@@ -1682,6 +1712,7 @@
 				636F8670175A5F53007E1FB6 /* UIImageView+AFNetworking.m in Sources */,
 				636F8676175A7AB8007E1FB6 /* XMLReader.m in Sources */,
 				636F867A175A7D17007E1FB6 /* MALUserClient.m in Sources */,
+				63AC56431829D1F0008FFB47 /* Notification.m in Sources */,
 				633BBF6417B0BAEC00AE573D /* PopularListViewController.m in Sources */,
 				636F8687175B1091007E1FB6 /* AniListUserInfoViewController.m in Sources */,
 				636F868E175B10A6007E1FB6 /* AnimeUserInfoViewController.m in Sources */,
@@ -1731,6 +1762,7 @@
 				63461A191778004D0053652C /* SettingsViewController.m in Sources */,
 				637C76B11828930800DD1DC6 /* ReportProblemViewController.m in Sources */,
 				63B0DFA31789C3F7006F0868 /* NSString+HTML.m in Sources */,
+				635CF86C182B2F6F0032E7FA /* NotificationDisplayViewController.m in Sources */,
 				63B0DFA71789C529006F0868 /* GTMNSString+HTML.m in Sources */,
 				63FC20A717920EB000DFD544 /* CRTransitionLabel.m in Sources */,
 				630CC0941792532D0029D021 /* TVDBHTTPClient.m in Sources */,

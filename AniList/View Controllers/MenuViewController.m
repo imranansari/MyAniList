@@ -17,6 +17,7 @@
 #import "TopListViewController.h"
 #import "PopularListViewController.h"
 #import "TagsViewController.h"
+#import "NotificationService.h"
 
 #define kCellTitleKey @"kCellTitleKey"
 #define kCellViewControllerKey @"kCellViewControllerKey"
@@ -344,6 +345,10 @@ static NSString *CellIdentifier = @"Cell";
     }
     
     cell.textLabel.text = items[indexPath.row][kCellTitleKey];
+    
+    if([cell.textLabel.text isEqualToString:@"Notifications"]) {
+        [cell setCellValue:[NotificationService unreadNotifications]];
+    }
     
     return cell;
 }

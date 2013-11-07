@@ -7,6 +7,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NotificationsViewController">
             <connections>
+                <outlet property="maskView" destination="xL8-pX-Egu" id="gOF-fB-Taw"/>
+                <outlet property="tableView" destination="PQZ-P9-3a2" id="VN4-8P-77n"/>
                 <outlet property="view" destination="dPE-MC-9we" id="6qb-PA-c8s"/>
             </connections>
         </placeholder>
@@ -23,6 +25,10 @@
                             <rect key="frame" x="-10" y="0.0" width="340" height="568"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <outlet property="dataSource" destination="-1" id="O2G-c0-bam"/>
+                                <outlet property="delegate" destination="-1" id="ssH-XO-yqB"/>
+                            </connections>
                         </tableView>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>

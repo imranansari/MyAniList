@@ -8,6 +8,9 @@
 
 #import "BaseViewController.h"
 
-@interface NotificationsViewController : BaseViewController
+@interface NotificationsViewController : BaseViewController<NSFetchedResultsControllerDelegate>
+
+@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 @end

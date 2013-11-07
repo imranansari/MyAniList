@@ -14,6 +14,10 @@
     return [UIColor colorWithWhite:1.0f alpha:0.1f];
 }
 
++ (UIColor *)subtleBlueColor {
+    return [UIColor colorWithRed:0.0f green:0.0f blue:1.0f alpha:0.05f];
+}
+
 + (UIColor *)defaultShadowColor {
     return [UIColor colorWithWhite:0.0f alpha:0.5f];
 }

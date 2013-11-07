@@ -11,8 +11,9 @@
 
 @interface MenuCell : UITableViewCell
 
-+ (CGFloat)cellHeight;
+@property (nonatomic, assign) NSInteger cellValue;
 
++ (CGFloat)cellHeight;
 - (void)addGradient;
 
 @end

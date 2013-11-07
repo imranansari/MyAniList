@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3396" systemVersion="13A598" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3400" systemVersion="13A603" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Anime" representedClassName="Anime" syncable="YES">
         <attribute name="anime_id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="average_count" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
@@ -129,6 +129,14 @@
         <relationship name="tags" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Tag" inverseName="manga" inverseEntity="Tag" syncable="YES"/>
         <relationship name="userlist" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="FriendManga" inverseName="manga" inverseEntity="FriendManga" syncable="YES"/>
     </entity>
+    <entity name="Notification" representedClassName="Notification" syncable="YES">
+        <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="imageURL" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="read" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="sticky" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="timestamp" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="Synonym" representedClassName="Synonym" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
@@ -144,6 +152,7 @@
         <element name="FriendManga" positionX="0" positionY="0" width="0" height="0"/>
         <element name="Genre" positionX="0" positionY="0" width="0" height="0"/>
         <element name="Manga" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Notification" positionX="0" positionY="0" width="0" height="0"/>
         <element name="Synonym" positionX="0" positionY="0" width="0" height="0"/>
         <element name="Tag" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
