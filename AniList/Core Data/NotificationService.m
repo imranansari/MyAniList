@@ -72,6 +72,8 @@
         notification.sticky = @(NO);
         notification.read = @(NO);
         
+        [[NotificationService managedObjectContext] save:nil];
+        
         return notification;
     }
     else return nil;

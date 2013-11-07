@@ -8,6 +8,8 @@
 
 #import "CRHTTPClient.h"
 
+#import "NotificationService.h"
+
 @implementation CRHTTPClient
 
 #pragma mark - Initialization
@@ -53,7 +55,20 @@
     NSString *path = [NSString stringWithFormat:@"update.php?timestamp=%0.0f", timestamp];
     
     [[CRHTTPClient sharedClient] getPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        success(operation, responseObject);
+        @try {
+            for(NSDictionary *dictionary in (NSArray *)responseObject) {
+                [NotificationService addNotification:dictionary];
+            }
+            
+            [[UserProfile profile] setNotificationTimestamp:[[NSDate date] timeIntervalSince1970]];
+            
+            success(operation, responseObject);
+        }
+        @catch (NSException *exception) {
+            ALLog(@"An exception occurred while adding notifications: %@", exception);
+            
+            failure(operation, nil);
+        }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         failure(operation, error);
     }];

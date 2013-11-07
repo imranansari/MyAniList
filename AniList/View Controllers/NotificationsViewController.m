@@ -63,13 +63,8 @@
 }
 
 - (void)fetchNotifications {
-    [[CRHTTPClient sharedClient] getNewsFromTimestamp:0 success:^(NSURLRequest *operation, id response) {
+    [[CRHTTPClient sharedClient] getNewsFromTimestamp:[[UserProfile profile] lastFetchedNotificationTimestamp] success:^(NSURLRequest *operation, id response) {
         ALLog(@"Received data: %@", response);
-        
-        for(NSDictionary *dictionary in (NSArray *)response) {
-            [NotificationService addNotification:dictionary];
-        }
-        
         [self.refreshControl endRefreshing];
         
     } failure:^(NSURLRequest *operation, NSError *error) {

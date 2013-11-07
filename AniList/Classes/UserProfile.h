@@ -13,6 +13,7 @@
 
 #define kUserAnimeStats @"kUserAnimeStats"
 #define kUserMangaStats @"kUserMangaStats"
+#define kNotificationTimestampKey @"kNotificationTimestampKey"
 
 // Stats
 #define kStatsTotalTimeInDays @"time_days"
@@ -51,5 +52,8 @@
 
 - (void)createAnimeStats:(NSDictionary *)data;
 - (void)createMangaStats:(NSDictionary *)data;
+
+- (NSTimeInterval)lastFetchedNotificationTimestamp;
+- (void)setNotificationTimestamp:(NSTimeInterval)timestamp;
 
 @end

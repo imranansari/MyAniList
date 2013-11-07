@@ -9,8 +9,8 @@
 #ifndef AniList_Constants_h
 #define AniList_Constants_h
 
-typedef void (^HTTPSuccessBlock)(NSURLRequest *operation, id response);
-typedef void (^HTTPFailureBlock)(NSURLRequest *operation, NSError *error);
+typedef void (^HTTPSuccessBlock)(id operation, id response);
+typedef void (^HTTPFailureBlock)(id operation, NSError *error);
 
 #define kAnimeDidUpdate @"kAnimeDidUpdate"
 #define kMangaDidUpdate @"kMangaDidUpdate"

@@ -18,6 +18,7 @@
 #import "PopularListViewController.h"
 #import "TagsViewController.h"
 #import "NotificationService.h"
+#import "CRHTTPClient.h"
 
 #define kCellTitleKey @"kCellTitleKey"
 #define kCellViewControllerKey @"kCellViewControllerKey"
@@ -166,6 +167,8 @@ static NSString *CellIdentifier = @"Cell";
     
     self.animeStats.text = [[UserProfile profile] animeCellStats];
     self.mangaStats.text = [[UserProfile profile] mangaCellStats];
+    
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -176,6 +179,13 @@ static NSString *CellIdentifier = @"Cell";
 #pragma mark - Data Methods
 
 - (void)fetchProfile {
+    
+    [[CRHTTPClient sharedClient] getNewsFromTimestamp:[[UserProfile profile] lastFetchedNotificationTimestamp] success:^(NSURLRequest *operation, id response) {
+        ALLog(@"Received data: %@", response);
+    } failure:^(NSURLRequest *operation, NSError *error) {
+        ALLog(@"Failed to receive news. Error was: %@", error);
+    }];
+    
     if([UserProfile userIsLoggedIn]) {
         
         self.profileImage.image = [UIImage placeholderImage];

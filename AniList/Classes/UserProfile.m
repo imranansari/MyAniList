@@ -76,6 +76,7 @@ static UserProfile *profile = nil;
     
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kUserAnimeStats];
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kUserMangaStats];
+    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kNotificationTimestampKey];
 }
 
 + (BOOL)userIsLoggedIn {
@@ -155,6 +156,14 @@ static UserProfile *profile = nil;
     
     [[NSUserDefaults standardUserDefaults] setObject:self.mangaStats forKey:kUserMangaStats];
     [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (NSTimeInterval)lastFetchedNotificationTimestamp {
+    return [[NSUserDefaults standardUserDefaults] integerForKey:kNotificationTimestampKey];
+}
+
+- (void)setNotificationTimestamp:(NSTimeInterval)timestamp {
+    [[NSUserDefaults standardUserDefaults] setInteger:timestamp forKey:kNotificationTimestampKey];
 }
 
 @end
