@@ -24,7 +24,7 @@
 + (Manga *)addManga:(NSDictionary *)data fromList:(BOOL)fromList;
 + (Manga *)editManga:(NSDictionary *)data fromList:(BOOL)fromList;
 + (void)deleteManga:(Manga *)manga;
-
++ (void)deleteAllManga;
 + (NSString *)mangaToXML:(NSNumber *)mangaID;
 
 @end

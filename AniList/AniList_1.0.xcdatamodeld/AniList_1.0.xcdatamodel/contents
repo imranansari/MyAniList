@@ -35,21 +35,21 @@
         <attribute name="user_date_start" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="user_score" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="watched_status" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <relationship name="alternative_versions" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Anime" syncable="YES"/>
-        <relationship name="character_anime" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Anime" syncable="YES"/>
-        <relationship name="english_titles" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Synonym" syncable="YES"/>
-        <relationship name="genres" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="Genre" inverseName="anime" inverseEntity="Genre" syncable="YES"/>
-        <relationship name="japanese_titles" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Synonym" syncable="YES"/>
-        <relationship name="manga_adaptations" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Manga" inverseName="anime_adaptations" inverseEntity="Manga" syncable="YES"/>
-        <relationship name="parent_story" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Anime" syncable="YES"/>
-        <relationship name="prequels" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Anime" syncable="YES"/>
-        <relationship name="sequels" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Anime" syncable="YES"/>
-        <relationship name="side_stories" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Anime" syncable="YES"/>
-        <relationship name="spin_offs" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Anime" syncable="YES"/>
-        <relationship name="summaries" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Anime" syncable="YES"/>
-        <relationship name="synonyms" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Synonym" syncable="YES"/>
-        <relationship name="tags" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Tag" inverseName="anime" inverseEntity="Tag" syncable="YES"/>
-        <relationship name="userlist" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="FriendAnime" inverseName="anime" inverseEntity="FriendAnime" syncable="YES"/>
+        <relationship name="alternative_versions" optional="YES" toMany="YES" minCount="1" deletionRule="Cascade" destinationEntity="Anime" syncable="YES"/>
+        <relationship name="character_anime" optional="YES" toMany="YES" minCount="1" deletionRule="Cascade" destinationEntity="Anime" syncable="YES"/>
+        <relationship name="english_titles" optional="YES" toMany="YES" minCount="1" deletionRule="Cascade" destinationEntity="Synonym" syncable="YES"/>
+        <relationship name="genres" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Genre" inverseName="anime" inverseEntity="Genre" syncable="YES"/>
+        <relationship name="japanese_titles" optional="YES" toMany="YES" minCount="1" deletionRule="Cascade" destinationEntity="Synonym" syncable="YES"/>
+        <relationship name="manga_adaptations" optional="YES" toMany="YES" minCount="1" deletionRule="Cascade" destinationEntity="Manga" inverseName="anime_adaptations" inverseEntity="Manga" syncable="YES"/>
+        <relationship name="parent_story" optional="YES" toMany="YES" minCount="1" deletionRule="Cascade" destinationEntity="Anime" syncable="YES"/>
+        <relationship name="prequels" optional="YES" toMany="YES" minCount="1" deletionRule="Cascade" destinationEntity="Anime" syncable="YES"/>
+        <relationship name="sequels" optional="YES" toMany="YES" minCount="1" deletionRule="Cascade" destinationEntity="Anime" syncable="YES"/>
+        <relationship name="side_stories" optional="YES" toMany="YES" minCount="1" deletionRule="Cascade" destinationEntity="Anime" syncable="YES"/>
+        <relationship name="spin_offs" optional="YES" toMany="YES" minCount="1" deletionRule="Cascade" destinationEntity="Anime" syncable="YES"/>
+        <relationship name="summaries" optional="YES" toMany="YES" minCount="1" deletionRule="Cascade" destinationEntity="Anime" syncable="YES"/>
+        <relationship name="synonyms" optional="YES" toMany="YES" minCount="1" deletionRule="Cascade" destinationEntity="Synonym" syncable="YES"/>
+        <relationship name="tags" optional="YES" toMany="YES" minCount="1" deletionRule="Cascade" destinationEntity="Tag" inverseName="anime" inverseEntity="Tag" syncable="YES"/>
+        <relationship name="userlist" optional="YES" toMany="YES" minCount="1" deletionRule="Cascade" destinationEntity="FriendAnime" inverseName="anime" inverseEntity="FriendAnime" syncable="YES"/>
     </entity>
     <entity name="Friend" representedClassName="Friend" syncable="YES">
         <attribute name="anime_completed" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
@@ -119,15 +119,15 @@
         <attribute name="user_date_finish" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="user_date_start" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="user_score" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <relationship name="alternative_versions" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Manga" syncable="YES"/>
-        <relationship name="anime_adaptations" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Anime" inverseName="manga_adaptations" inverseEntity="Anime" syncable="YES"/>
-        <relationship name="english_titles" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Synonym" syncable="YES"/>
-        <relationship name="genres" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Genre" inverseName="manga" inverseEntity="Genre" syncable="YES"/>
-        <relationship name="japanese_titles" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Synonym" syncable="YES"/>
-        <relationship name="related_manga" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Manga" syncable="YES"/>
-        <relationship name="synonyms" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Synonym" syncable="YES"/>
-        <relationship name="tags" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Tag" inverseName="manga" inverseEntity="Tag" syncable="YES"/>
-        <relationship name="userlist" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="FriendManga" inverseName="manga" inverseEntity="FriendManga" syncable="YES"/>
+        <relationship name="alternative_versions" optional="YES" toMany="YES" minCount="1" deletionRule="Cascade" destinationEntity="Manga" syncable="YES"/>
+        <relationship name="anime_adaptations" optional="YES" toMany="YES" minCount="1" deletionRule="Cascade" destinationEntity="Anime" inverseName="manga_adaptations" inverseEntity="Anime" syncable="YES"/>
+        <relationship name="english_titles" optional="YES" toMany="YES" minCount="1" deletionRule="Cascade" destinationEntity="Synonym" syncable="YES"/>
+        <relationship name="genres" optional="YES" toMany="YES" minCount="1" deletionRule="Cascade" destinationEntity="Genre" inverseName="manga" inverseEntity="Genre" syncable="YES"/>
+        <relationship name="japanese_titles" optional="YES" toMany="YES" minCount="1" deletionRule="Cascade" destinationEntity="Synonym" syncable="YES"/>
+        <relationship name="related_manga" optional="YES" toMany="YES" minCount="1" deletionRule="Cascade" destinationEntity="Manga" syncable="YES"/>
+        <relationship name="synonyms" optional="YES" toMany="YES" minCount="1" deletionRule="Cascade" destinationEntity="Synonym" syncable="YES"/>
+        <relationship name="tags" optional="YES" toMany="YES" minCount="1" deletionRule="Cascade" destinationEntity="Tag" inverseName="manga" inverseEntity="Tag" syncable="YES"/>
+        <relationship name="userlist" optional="YES" toMany="YES" minCount="1" deletionRule="Cascade" destinationEntity="FriendManga" inverseName="manga" inverseEntity="FriendManga" syncable="YES"/>
     </entity>
     <entity name="Notification" representedClassName="Notification" syncable="YES">
         <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>

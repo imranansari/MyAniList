@@ -368,7 +368,7 @@
 
 - (void)downloadInfo {
     [AnimeService downloadInfo];
-    [MangaService downloadInfo];
+//    [MangaService downloadInfo];
 }
 
 - (void)clearImageCache {
@@ -376,11 +376,11 @@
 }
 
 - (void)clearAnimeList {
-    
+    [AnimeService deleteAllAnime];
 }
 
 - (void)clearMangaList {
-    
+    [MangaService deleteAllManga];
 }
 
 #pragma mark - UIActionSheetDelegate Methods

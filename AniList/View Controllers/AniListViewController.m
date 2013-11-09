@@ -102,6 +102,19 @@
     self.tableView.frame = CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y + 46, self.tableView.frame.size.width, self.tableView.frame.size.height - 46);
     
     self.indicator.alpha = 0.0f;
+    self.errorLabel.alpha = 0.0f;
+    
+    if(![UIApplication is4Inch]) {
+        self.indicator.frame = CGRectMake(self.indicator.frame.origin.x,
+                                          self.indicator.frame.origin.y - 60,
+                                          self.indicator.frame.size.width,
+                                          self.indicator.frame.size.height);
+        
+        self.errorLabel.frame = CGRectMake(self.errorLabel.frame.origin.x,
+                                           self.errorLabel.frame.origin.y - 60,
+                                           self.errorLabel.frame.size.width,
+                                           self.errorLabel.frame.size.height);
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -165,6 +178,10 @@
     [UIView animateWithDuration:0.3f animations:^{
         self.tableView.alpha = 1.0f;
         self.indicator.alpha = 0.0f;
+        
+        if(self.fetchedResultsController.fetchedObjects.count == 0) {
+            self.errorLabel.alpha = 1.0f;
+        }
     }];
 }
 

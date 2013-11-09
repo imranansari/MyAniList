@@ -48,6 +48,15 @@
  altenative_versions
  */
 
++ (void)deleteAllAnime {
+    NSArray *allAnime = [AnimeService allAnime];
+    
+    for(Anime *anime in allAnime)
+        [[AnimeService managedObjectContext] deleteObject:anime];
+    
+    [[AnimeService managedObjectContext] save:nil];
+}
+
 + (NSArray *)allAnime {
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITY_NAME inManagedObjectContext:[AnimeService managedObjectContext]];

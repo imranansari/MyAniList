@@ -22,6 +22,15 @@
 
 @implementation MangaService
 
++ (void)deleteAllManga {
+    NSArray *allManga = [MangaService allManga];
+    
+    for(Manga *manga in allManga)
+        [[MangaService managedObjectContext] deleteObject:manga];
+    
+    [[MangaService managedObjectContext] save:nil];
+}
+
 + (NSArray *)allManga {
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITY_NAME inManagedObjectContext:[MangaService managedObjectContext]];
@@ -220,21 +229,21 @@
         [manga addEntriesFromDictionary:otherTitles];
     }
     
-    NSString *tags = mangaItem[@"my_tags"][@"text"];
-    NSArray *tagsArray = [tags componentsSeparatedByString:@","];
-    NSMutableArray *tagResults = [NSMutableArray array];
-    
-    for(int i = 0; i < tagsArray.count; i++) {
-        NSString *tag = tagsArray[i];
-        tag = [tag stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        if(tag.length > 0)
-            [tagResults addObject:tag];
-    }
-    
-    if(tagResults.count > 0) {
-        NSDictionary *mangaTags = @{ kTag : tagResults };
-        [manga addEntriesFromDictionary:mangaTags];
-    }
+//    NSString *tags = mangaItem[@"my_tags"][@"text"];
+//    NSArray *tagsArray = [tags componentsSeparatedByString:@","];
+//    NSMutableArray *tagResults = [NSMutableArray array];
+//    
+//    for(int i = 0; i < tagsArray.count; i++) {
+//        NSString *tag = tagsArray[i];
+//        tag = [tag stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+//        if(tag.length > 0)
+//            [tagResults addObject:tag];
+//    }
+//    
+//    if(tagResults.count > 0) {
+//        NSDictionary *mangaTags = @{ kTag : tagResults };
+//        [manga addEntriesFromDictionary:mangaTags];
+//    }
     
     return manga;
 }

@@ -145,7 +145,7 @@
         cell = (AniListCell *)nib[0];
     }
     
-    NSManagedObject *item = self.taggedItems[indexPath.row];
+    NSManagedObject<FICEntity> *item = self.taggedItems[indexPath.row];
     [self configureCell:cell withObject:item];
     
     return cell;
@@ -155,8 +155,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSManagedObject *object = self.taggedItems[indexPath.row];
-    
-#warning - back button can get pretty long here. Best solution?
     
     if([object isMemberOfClass:[Anime class]]) {
         AnimeViewController *vc = [[AnimeViewController alloc] init];

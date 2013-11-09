@@ -62,6 +62,18 @@
     self.errorLabel.alpha = 0.0f;
     
     [self fetchTopItemsAtPage:@(self.currentPage)];
+    
+    if(![UIApplication is4Inch]) {
+        self.indicator.frame = CGRectMake(self.indicator.frame.origin.x,
+                                          self.indicator.frame.origin.y - 60,
+                                          self.indicator.frame.size.width,
+                                          self.indicator.frame.size.height);
+        
+        self.errorLabel.frame = CGRectMake(self.errorLabel.frame.origin.x,
+                                           self.errorLabel.frame.origin.y - 60,
+                                           self.errorLabel.frame.size.width,
+                                           self.errorLabel.frame.size.height);
+    }
 }
 
 static BOOL fetching = NO;

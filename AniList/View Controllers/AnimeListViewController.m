@@ -45,14 +45,22 @@ static BOOL alreadyFetched = NO;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.errorLabel.text = @"Looks like you don't have any anime on your list! Why not do a search for some?";
 
     if(!alreadyFetched) {
         if(self.fetchedResultsController.fetchedObjects.count > 0) {
             alreadyFetched = YES;
         }
-        
-        [self fetchData];
     }
+    else {
+        // Can happen if a user clears his/her cache.
+        if(self.fetchedResultsController.fetchedObjects.count == 0) {
+            alreadyFetched = NO;
+        }
+    }
+    
+    [self fetchData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -91,7 +99,7 @@ static BOOL alreadyFetched = NO;
         self.requestAttempts++;
         
         if(!alreadyFetched) {
-            self.tableView.alpha = 0.0f;
+            self.tableView.alpha = 1.0f;
             self.indicator.alpha = 1.0f;
         }
         

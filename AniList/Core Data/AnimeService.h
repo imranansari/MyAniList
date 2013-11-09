@@ -25,6 +25,7 @@
 + (Anime *)addAnime:(NSDictionary *)data fromList:(BOOL)fromList;
 + (Anime *)editAnime:(NSDictionary *)data fromList:(BOOL)fromList;
 + (void)deleteAnime:(Anime *)anime;
++ (void)deleteAllAnime;
 
 + (NSString *)animeToXML:(NSNumber *)animeID;
 

@@ -28,6 +28,7 @@
 @property (nonatomic, strong) NSIndexPath *editedIndexPath;
 @property (nonatomic, assign) int requestAttempts;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
+@property (nonatomic, weak) IBOutlet UILabel *errorLabel;
 
 - (void)fetchData;
 - (NSString *)entityName;

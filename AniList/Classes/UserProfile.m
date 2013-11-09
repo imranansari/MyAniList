@@ -87,7 +87,7 @@ static UserProfile *profile = nil;
     
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kUserAnimeStats];
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kUserMangaStats];
-    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kNotificationTimestampKey];
+    [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:kNotificationTimestampKey];
 }
 
 + (BOOL)userIsLoggedIn {

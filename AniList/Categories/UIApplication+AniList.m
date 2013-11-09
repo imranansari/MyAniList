@@ -21,5 +21,9 @@
     return [UIScreen mainScreen].scale == 2;
 }
 
++ (BOOL)is4Inch {
+    return [UIScreen mainScreen].bounds.size.height > 480;
+}
+
 
 @end

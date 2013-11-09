@@ -12,5 +12,6 @@
 
 + (BOOL)isiOS7;
 + (BOOL)isRetinaDevice;
++ (BOOL)is4Inch;
 
 @end

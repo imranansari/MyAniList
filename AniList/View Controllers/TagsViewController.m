@@ -70,6 +70,13 @@
                              self.errorLabel.alpha = 1.0f;
                          }];
     }
+    
+    if(![UIApplication is4Inch]) {
+        self.errorLabel.frame = CGRectMake(self.errorLabel.frame.origin.x,
+                                           self.errorLabel.frame.origin.y - 60,
+                                           self.errorLabel.frame.size.width,
+                                           self.errorLabel.frame.size.height);
+    }
 }
 
 - (void)dealloc {
