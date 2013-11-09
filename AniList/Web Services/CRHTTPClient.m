@@ -74,5 +74,35 @@
     }];
 }
 
+#pragma mark - Post Methods
+
+- (void)submitFeedbackForUser:(NSString *)user withEmail:(NSString *)email andFeedback:(NSString *)feedback success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure {
+    
+    NSString *path = [NSString stringWithFormat:@"submit_feedback.php"];
+    
+    NSDictionary *parameters = @{
+                                 @"username" : user,
+                                 @"email" : email,
+                                 @"feedback" : feedback
+                                 };
+    
+//    double delayInSeconds = 2.0;
+//    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+//    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+//        failure(nil, nil);
+//    });
+//
+//    return;
+    
+    [[CRHTTPClient sharedClient] postPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        ALLog(@"Success");
+        success(operation, responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        ALLog(@"Failure");
+        failure(operation, error);
+    }];
+    
+}
+
 
 @end

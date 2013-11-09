@@ -8,6 +8,6 @@
 
 #import "BaseViewController.h"
 
-@interface ReportProblemViewController : BaseViewController<UITextViewDelegate>
+@interface ReportProblemViewController : BaseViewController<UITextViewDelegate, UITextFieldDelegate>
 
 @end

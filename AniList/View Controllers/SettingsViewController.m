@@ -58,7 +58,7 @@
                              kAction        : @"confirmClearMangaList"
                              },
                          @{
-                             kOptionName    : @"Report an Issue",
+                             kOptionName    : @"Submit Feedback",
                              kAction        : @"reportProblem"
                              }
                          ];
@@ -126,13 +126,12 @@
     
     [self checkOfficialAPIStatus];
     [self checkUnofficialAPIStatus];
-    
 }
 
 #pragma mark - Table view data source
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return 40;
+    return 20;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

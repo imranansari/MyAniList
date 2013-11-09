@@ -159,6 +159,10 @@ static NSString *CellIdentifier = @"Cell";
     [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:NO scrollPosition:UITableViewScrollPositionNone];
     
     [self fetchProfile];
+    
+    if([UIScreen mainScreen].bounds.size.height <= 480) {
+        self.tableView.scrollEnabled = YES;
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {

@@ -10,6 +10,7 @@
 
 #define kUsernameKey @"kUsernameKey"
 #define kPasswordKey @"kPasswordKey"
+#define kEmailKey @"kEmailKey"
 
 #define kUserAnimeStats @"kUserAnimeStats"
 #define kUserMangaStats @"kUserMangaStats"
@@ -33,6 +34,7 @@
 
 @property (nonatomic, copy) NSString *username;
 @property (nonatomic, copy) NSString *password;
+@property (nonatomic, copy) NSString *email;
 @property (nonatomic, strong) NSDictionary *animeStats;
 @property (nonatomic, strong) NSDictionary *mangaStats;
 @property (nonatomic, strong) NSURLRequest *profileImageURL;

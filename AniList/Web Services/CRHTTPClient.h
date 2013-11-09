@@ -12,5 +12,6 @@
 
 + (CRHTTPClient *)sharedClient;
 - (void)getNewsFromTimestamp:(NSTimeInterval)timestamp success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure;
+- (void)submitFeedbackForUser:(NSString *)user withEmail:(NSString *)email andFeedback:(NSString *)feedback success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure;
 
 @end

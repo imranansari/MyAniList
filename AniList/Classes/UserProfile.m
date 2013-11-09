@@ -58,6 +58,10 @@ static UserProfile *profile = nil;
     return [[NSUserDefaults standardUserDefaults] stringForKey:kPasswordKey];
 }
 
+- (NSString *)email {
+    return [[NSUserDefaults standardUserDefaults] stringForKey:kEmailKey];
+}
+
 - (void)setUsername:(NSString *)username {
     [[NSUserDefaults standardUserDefaults] setValue:username forKey:kUsernameKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -68,11 +72,18 @@ static UserProfile *profile = nil;
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
+- (void)setEmail:(NSString *)email {
+    [[NSUserDefaults standardUserDefaults] setValue:email forKey:kEmailKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+
 #pragma mark - Public Methods
 
 - (void)logout {
     self.username = nil;
     self.password = nil;
+    self.email = nil;
     
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kUserAnimeStats];
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kUserMangaStats];

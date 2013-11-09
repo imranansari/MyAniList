@@ -29,7 +29,7 @@
             <subviews>
                 <view contentMode="scaleToFill" id="UBO-vI-13K">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="112"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <view contentMode="scaleToFill" id="doP-6J-4Iz">
                             <rect key="frame" x="168" y="20" width="46" height="46"/>

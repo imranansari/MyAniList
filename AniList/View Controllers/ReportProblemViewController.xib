@@ -7,6 +7,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ReportProblemViewController">
             <connections>
+                <outlet property="emailField" destination="m00-fd-JNU" id="qQp-ej-y5w"/>
+                <outlet property="errorLabel" destination="JoG-3X-h3L" id="puE-P7-cYu"/>
                 <outlet property="feedbackButton" destination="rKO-4Z-SxX" id="ykp-2o-bfc"/>
                 <outlet property="indicator" destination="ZCT-8m-ka4" id="Dcd-bk-3FZ"/>
                 <outlet property="textView" destination="HEk-fM-0Kc" id="UZO-PR-VRS"/>
@@ -46,6 +48,31 @@
                         <outlet property="delegate" destination="-1" id="g95-ob-Rf6"/>
                     </connections>
                 </textView>
+                <view contentMode="scaleToFill" id="cI1-0E-G5m">
+                    <rect key="frame" x="20" y="102" width="280" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Email (optional)" minimumFontSize="17" clearButtonMode="whileEditing" id="m00-fd-JNU">
+                            <rect key="frame" x="6" y="0.0" width="268" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress" returnKeyType="next"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="qPm-oS-Rhw"/>
+                            </connections>
+                        </textField>
+                    </subviews>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.20000000000000001" colorSpace="calibratedRGB"/>
+                </view>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="JoG-3X-h3L">
+                    <rect key="frame" x="20" y="322" width="280" height="43"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="16"/>
+                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>

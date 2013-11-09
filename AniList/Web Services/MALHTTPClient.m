@@ -265,7 +265,13 @@
                                        [[MALHTTPClient sharedClient] searchForAnimeWithQuery:anime.title success:^(id operation, id response) {
                                            dispatch_async(dispatch_get_main_queue(), ^{
                                                if([response isKindOfClass:[NSArray class]] && ((NSArray *)response).count > 0) {
-                                                   success(operation, (NSArray *)response[0]);
+                                                   for(NSDictionary *data in (NSArray *)response) {
+                                                       if(data && [data[kTitle] isEqualToString:anime.title]) {
+                                                           success(operation, data);
+                                                           break;
+                                                       }
+                                                   }
+
                                                }
                                            });
                                        } failure:^(id operation, NSError *error) {
@@ -524,7 +530,12 @@
                                        [[MALHTTPClient sharedClient] searchForMangaWithQuery:manga.title success:^(id operation, id response) {
                                            dispatch_async(dispatch_get_main_queue(), ^{
                                                if([response isKindOfClass:[NSArray class]] && ((NSArray *)response).count > 0) {
-                                                   success(operation, (NSArray *)response[0]);
+                                                   for(NSDictionary *data in (NSArray *)response) {
+                                                       if(data && [data[kTitle] isEqualToString:manga.title]) {
+                                                           success(operation, data);
+                                                           break;
+                                                       }
+                                                   }
                                                }
                                            });
                                        } failure:^(id operation, NSError *error) {
