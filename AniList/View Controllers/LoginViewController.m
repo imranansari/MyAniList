@@ -173,7 +173,10 @@
     self.friendRatingLabel.alpha = 0.0f;
     self.differenceLabel.alpha = 0.0f;
     
-    self.ratingView.frame = CGRectMake(self.ratingView.frame.origin.x, self.organizeLabel.frame.origin.y - 97, self.ratingView.frame.size.width, self.ratingView.frame.size.height);
+    self.ratingView.frame = CGRectMake(self.ratingView.frame.origin.x,
+                                       self.compareCell.frame.origin.y + self.compareCell.frame.size.height + 20,
+                                       self.ratingView.frame.size.width,
+                                       self.ratingView.frame.size.height);
     self.ratingView.alpha = 0.0f;
     
     self.myRatingLabel.frame = CGRectMake(self.myRatingLabel.frame.origin.x,
@@ -282,11 +285,17 @@
                                             self.compareCell.frame.size.width,
                                             self.compareCell.frame.size.height);
         
+        self.ratingView.frame = CGRectMake(self.ratingView.frame.origin.x,
+                                           self.compareCell.frame.origin.y + self.compareCell.frame.size.height + 20,
+                                           self.ratingView.frame.size.width,
+                                           self.ratingView.frame.size.height);
+        
         self.compareCell.alpha = 1.0f;
     } completion:nil];
     
     [UIView animateWithDuration:1.0f delay:0.5f options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.ratingView.alpha = 1.0f;
+        
     } completion:^(BOOL finished) {
         [UIView animateWithDuration:1.0f delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
             self.myRatingLabel.alpha = 1.0f;
