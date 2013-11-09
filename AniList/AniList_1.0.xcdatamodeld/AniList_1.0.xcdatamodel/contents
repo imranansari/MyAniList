@@ -76,8 +76,8 @@
         <attribute name="current_volume" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="read_status" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="score" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <relationship name="manga" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="Manga" inverseName="userlist" inverseEntity="Manga" syncable="YES"/>
-        <relationship name="user" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="Friend" inverseName="sharedManga" inverseEntity="Friend" syncable="YES"/>
+        <relationship name="manga" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Manga" inverseName="userlist" inverseEntity="Manga" syncable="YES"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Friend" inverseName="sharedManga" inverseEntity="Friend" syncable="YES"/>
     </entity>
     <entity name="Genre" representedClassName="Genre" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
@@ -146,14 +146,14 @@
         <relationship name="manga" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Manga" inverseName="tags" inverseEntity="Manga" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Anime" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Friend" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="FriendAnime" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="FriendManga" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Genre" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Manga" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Notification" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Synonym" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Tag" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Anime" positionX="-351" positionY="-153" width="128" height="780"/>
+        <element name="Friend" positionX="-153" positionY="-540" width="128" height="180"/>
+        <element name="FriendAnime" positionX="-335" positionY="-522" width="128" height="135"/>
+        <element name="FriendManga" positionX="18" positionY="-519" width="128" height="150"/>
+        <element name="Genre" positionX="-155" positionY="162" width="128" height="90"/>
+        <element name="Manga" positionX="34" positionY="-153" width="128" height="690"/>
+        <element name="Notification" positionX="-531" positionY="198" width="128" height="135"/>
+        <element name="Synonym" positionX="-162" positionY="345" width="128" height="60"/>
+        <element name="Tag" positionX="-155" positionY="603" width="128" height="90"/>
     </elements>
 </model>

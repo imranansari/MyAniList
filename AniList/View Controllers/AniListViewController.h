@@ -13,8 +13,6 @@
 #import "AniListNavigationController.h"
 #import "ImageManager.h"
 
-#define MAX_ATTEMPTS 10
-
 @interface AniListViewController : BaseViewController<UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, UIActionSheetDelegate>
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;

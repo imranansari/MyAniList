@@ -146,7 +146,6 @@
 // 1/reading, 2/completed, 3/onhold, 4/dropped, 6/plantoread
     int status = [value intValue];
     
-#warning - unit tests.
     if(status == 1 || ([value isKindOfClass:[NSString class]] && [value isEqualToString:@"reading"]))
         return MangaReadStatusReading;
     if(status == 2 || ([value isKindOfClass:[NSString class]] && [value isEqualToString:@"completed"]))
@@ -248,7 +247,7 @@
 //    if([value isEqualToString:@"Music"])
 //        return AnimeTypeMusic;
 //    
-//    return AnimeTypeUnknown;
+    return MangaTypeUnknown;
 }
 
 + (MangaPublishStatus)unofficialMangaPublishStatusForValue:(NSString *)value {
@@ -259,7 +258,7 @@
 //    if([value isEqualToString:@"not yet aired"])
 //        return AnimeAirStatusNotYetAired;
 //    
-//    return AnimeAirStatusUnknown;
+    return MangaPublishStatusUnknown;
 }
 
 + (MangaReadStatus)unofficialMangaReadStatusForValue:(NSString *)value {
@@ -274,7 +273,7 @@
 //    if([value isEqualToString:@"plan to watch"])
 //        return AnimeWatchedStatusPlanToWatch;
 //    
-//    return AnimeWatchedStatusUnknown;
+    return MangaReadStatusUnknown;
 }
 
 - (void)setRead_status:(NSNumber *)read_status {

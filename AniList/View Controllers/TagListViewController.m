@@ -212,8 +212,6 @@
         //        ALLog(@"visible sections: %@", visibleSections);
         
         if(visibleSections.count > 0) {
-            int topSection = [visibleSections[0] intValue];
-            
             NSNumber *headerSection = @(0);//[self.fetchedResultsController sectionIndexTitles][topSection];
             
             self.topSectionLabel.text = self.sectionHeaders[[headerSection intValue]];

@@ -42,6 +42,9 @@
     else return nil;
 }
 
++ (Friend *)deleteFriend:(Friend *)username {
+    return nil;
+}
 
 + (NSManagedObjectContext *)managedObjectContext {
     AniListAppDelegate *delegate = (AniListAppDelegate *)[UIApplication sharedApplication].delegate;

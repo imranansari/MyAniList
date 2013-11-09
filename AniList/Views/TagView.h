@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @protocol TagViewDelegate <NSObject>
+@optional
 - (void)tagTappedWithTitle:(NSString *)title;
 - (void)genreTappedWithTitle:(NSString *)title;
 @end

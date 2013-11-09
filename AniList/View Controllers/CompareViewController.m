@@ -530,8 +530,7 @@
     }
     
     NSArray *data;
-#warning - we'll crash here if we are moving the table and we tap on the segmented control.
-#warning - need to either freeze the table or don't adjust the animeSection BOOL until we have successfully transitioned.
+
     switch (indexPath.section) {
         case ComparisonSectionMutual:
             data = self.isAnimeSection ? self.mutualAnimeItems : self.mutualMangaItems;

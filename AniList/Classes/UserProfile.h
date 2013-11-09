@@ -47,7 +47,6 @@
 - (void)fetchProfileWithSuccess:(void (^)(void))success failure:(void (^)(void))failure;
 
 - (NSURLRequest *)getUserImageURL:(NSDictionary *)data;
-- (void)createUserProfile:(NSDictionary *)data;
 
 - (NSString *)animeCellStats;
 - (NSString *)mangaCellStats;

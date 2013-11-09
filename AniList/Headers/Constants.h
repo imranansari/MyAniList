@@ -22,7 +22,7 @@ typedef void (^HTTPFailureBlock)(id operation, NSError *error);
 #define kDownloadProgress @"kDownloadProgress"
 
 // Defaults
-#define MAX_ATTEMPTS 5
+#define MAX_ATTEMPTS 10
 
 #define kNoSynopsisString @"Unable to get synopsis. Please try again later."
 #define kEnterUsernameString @"Enter a username..."

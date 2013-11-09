@@ -240,7 +240,7 @@ static BOOL fetching = NO;
         cell = (AniListStatCell *)nib[0];
     }
     
-    NSManagedObject *item = self.topItems[indexPath.row];
+    NSManagedObject<FICEntity> *item = self.topItems[indexPath.row];
     [self configureCell:cell withObject:item];
     
     return cell;
