@@ -128,6 +128,11 @@
     [self checkUnofficialAPIStatus];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [[AnalyticsManager sharedInstance] trackView:kSettingsScreen];
+}
+
 #pragma mark - Table view data source
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {

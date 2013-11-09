@@ -85,6 +85,11 @@ static NSArray *animeStatusOrder;
     [self updateLabels];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [[AnalyticsManager sharedInstance] trackView:kAnimeEditUserInfoScreen];
+}
+
 #pragma mark - NSString Methods
 
 - (NSString *)startDateStringWithDate:(NSDate *)date {

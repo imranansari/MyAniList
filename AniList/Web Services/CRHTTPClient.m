@@ -62,14 +62,17 @@
             
             [[UserProfile profile] setNotificationTimestamp:[[NSDate date] timeIntervalSince1970]];
             
+            [[AnalyticsManager sharedInstance] trackEvent:kNotificationsFetchSucceeded forCategory:EventCategoryWebService];
+            
             success(operation, responseObject);
         }
         @catch (NSException *exception) {
             ALLog(@"An exception occurred while adding notifications: %@", exception);
-            
+            [[AnalyticsManager sharedInstance] trackEvent:kNotificationsFetchFailed forCategory:EventCategoryWebService];
             failure(operation, nil);
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [[AnalyticsManager sharedInstance] trackEvent:kNotificationsFetchFailed forCategory:EventCategoryWebService];
         failure(operation, error);
     }];
 }
@@ -86,19 +89,11 @@
                                  @"feedback" : feedback
                                  };
     
-//    double delayInSeconds = 2.0;
-//    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-//    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-//        failure(nil, nil);
-//    });
-//
-//    return;
-    
     [[CRHTTPClient sharedClient] postPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        ALLog(@"Success");
+        [[AnalyticsManager sharedInstance] trackEvent:kSendFeedbackSucceeded forCategory:EventCategoryWebService];
         success(operation, responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        ALLog(@"Failure");
+        [[AnalyticsManager sharedInstance] trackEvent:kSendFeedbackFailed forCategory:EventCategoryWebService];
         failure(operation, error);
     }];
     

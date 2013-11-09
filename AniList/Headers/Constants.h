@@ -100,6 +100,7 @@ typedef void (^HTTPFailureBlock)(id operation, NSError *error);
 
 // Screens
 #define kLoginScreen                @"Login"
+#define kMenuScreen                 @"Menu"
 #define kAnimeListScreen            @"Anime_List"
 #define kMangaListScreen            @"Manga_List"
 #define kAnimeDetailsScreen         @"Anime_Details"
@@ -116,13 +117,82 @@ typedef void (^HTTPFailureBlock)(id operation, NSError *error);
 #define kSearchScreen               @"Search"
 #define kSettingsScreen             @"Settings"
 #define kNotificationsScreen        @"Notifications"
-#define kReportIssueScreen          @"Report_Issue"
+#define kNotificationDisplayScreen  @"Notification_Display"
+#define kReportIssueScreen          @"Submit_Feedback"
+#define kTagListScreen              @"Tag_List"
+#define kGenreListScreen            @"Genre_List"
 
 // Actions
-#define kLoginButtonPressed     @"Login_Button_Pressed"
-#define kSaveAnimeDetailsPressed    @"Save_Anime"
+#define kLoginButtonPressed         @"login_button_pressed"
+#define kSaveAnimeDetailsPressed    @"save_anime_pressed"
+#define kSaveMangaDetailsPressed    @"save_manga_pressed"
+#define kAnimeAdded                 @"anime_added"
+#define kMangaAdded                 @"manga_added"
+#define kAnimeUpdated               @"anime_updated"
+#define kMangaUpdated               @"manga_updated"
+#define kAnimeDeleted               @"anime_deleted"
+#define kMangaDeleted               @"manga_deleted"
+#define kAnimeQuickEditUsed         @"anime_quick_edit_used"
+#define kMangaQuickEditUsed         @"manga_quick_edit_used"
 
+// Web Services
 
+#define kLoginSucceeded                 @"login_succeeded"
+#define kLoginFailed                    @"login_failed"
+
+#define kProfileFetchSucceeded          @"profile_fetch_succeeded"
+#define kProfileFetchFailed             @"profile_fetch_failed"
+
+#define kAnimeListFetchSucceeded        @"anime_list_fetch_succeeded"
+#define kAnimeListFetchFailed           @"anime_list_fetch_failed"
+
+#define kTopAnimeListFetchSucceeded     @"top_anime_list_fetch_succeeded"
+#define kTopAnimeListFetchFailed        @"top_anime_list_fetch_failed"
+
+#define kPopularAnimeListFetchSucceeded @"popular_anime_list_fetch_succeeded"
+#define kPopularAnimeListFetchFailed    @"popular_anime_list_fetch_failed"
+
+#define kUpcomingAnimeListFetchSucceeded @"upcoming_anime_list_fetch_succeeded"
+#define kUpcomingAnimeListFetchFailed    @"upcoming_anime_list_fetch_failed"
+
+#define kAnimeDetailsFetchSucceeded     @"anime_details_fetch_succeeded"
+#define kAnimeDetailsFetchFailed        @"anime_details_fetch_failed"
+
+#define kAddAnimeSucceeded              @"add_anime_succeeded"
+#define kAddAnimeFailed                 @"add_anime_failed"
+
+#define kUpdateAnimeSucceeded           @"update_anime_succeeded"
+#define kUpdateAnimeFailed              @"update_anime_failed"
+
+#define kDeleteAnimeSucceeded           @"delete_anime_succeeded"
+#define kDeleteAnimeFailed              @"delete_anime_failed"
+
+#define kSearchAnimeSucceeded           @"search_anime_succeeded"
+#define kSearchAnimeFailed              @"search_anime_failed"
+
+#define kMangaListFetchSucceeded        @"manga_list_fetch_succeeded"
+#define kMangaListFetchFailed           @"manga_list_fetch_succeeded"
+
+#define kMangaDetailsFetchSucceeded     @"manga_details_fetch_succeeded"
+#define kMangaDetailsFetchFailed        @"manga_details_fetch_failed"
+
+#define kAddMangaSucceeded              @"add_manga_succeeded"
+#define kAddMangaFailed                 @"add_manga_failed"
+
+#define kUpdateMangaSucceeded           @"update_manga_succeeded"
+#define kUpdateMangaFailed              @"update_manga_failed"
+
+#define kDeleteMangaSucceeded           @"delete_manga_succeeded"
+#define kDeleteMangaFailed              @"delete_manga_failed"
+
+#define kSearchMangaSucceeded           @"search_manga_succeeded"
+#define kSearchMangaFailed              @"search_manga_failed"
+
+#define kSendFeedbackSucceeded          @"send_feedback_succeeded"
+#define kSendFeedbackFailed             @"send_feedback_failed"
+
+#define kNotificationsFetchSucceeded    @"notifications_fetch_succeeded"
+#define kNotificationsFetchFailed       @"notifications_fetch_failed"
 
 static const BOOL UI_DEBUG = NO;
 

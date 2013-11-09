@@ -63,6 +63,11 @@ static BOOL alreadyFetched = NO;
     [self fetchData];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [[AnalyticsManager sharedInstance] trackView:kAnimeListScreen];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -157,6 +162,16 @@ static BOOL alreadyFetched = NO;
 - (void)deleteAnime {
     if(self.editedAnime) {
         self.editedAnime.watched_status = @(AnimeWatchedStatusNotWatching);
+        
+        if(self.editedAnime.anime_id) {
+            NSNumber *ID = self.editedAnime.anime_id;
+            [[MALHTTPClient sharedClient] deleteAnimeWithID:ID success:^(id operation, id response) {
+                ALLog(@"Anime successfully deleted.");
+                [[AnalyticsManager sharedInstance] trackEvent:kAnimeDeleted forCategory:EventCategoryAction withMetadata:[ID stringValue]];
+            } failure:^(id operation, NSError *error) {
+                ALLog(@"Anime failed to delete.");
+            }];
+        }
     }
     
     self.editedIndexPath = nil;

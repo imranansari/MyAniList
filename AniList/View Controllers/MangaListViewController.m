@@ -62,6 +62,11 @@ static BOOL alreadyFetched = NO;
     [self fetchData];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [[AnalyticsManager sharedInstance] trackView:kMangaListScreen];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -153,6 +158,15 @@ static BOOL alreadyFetched = NO;
 - (void)deleteManga {
     if(self.editedManga) {
         self.editedManga.read_status = @(MangaReadStatusNotReading);
+        
+        if(self.editedManga.manga_id) {
+            NSNumber *ID = self.editedManga.manga_id;
+            [[MALHTTPClient sharedClient] deleteMangaWithID:ID success:^(id operation, id response) {
+                ALLog(@"Manga successfully deleted.");
+            } failure:^(id operation, NSError *error) {
+                ALLog(@"Manga failed to delete.");
+            }];
+        }
     }
     
     self.editedIndexPath = nil;

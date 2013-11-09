@@ -55,6 +55,11 @@
     self.errorLabel.numberOfLines = 2;
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [[AnalyticsManager sharedInstance] trackView:kReportIssueScreen];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

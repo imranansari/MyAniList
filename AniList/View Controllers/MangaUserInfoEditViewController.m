@@ -78,6 +78,11 @@ static NSArray *mangaStatusOrder;
     [self updateLabels];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [[AnalyticsManager sharedInstance] trackView:kMangaEditUserInfoScreen];
+}
+
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     

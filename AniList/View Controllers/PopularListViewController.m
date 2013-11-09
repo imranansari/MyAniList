@@ -188,6 +188,8 @@ static BOOL fetching = NO;
     if(indexPath) {
         [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
+    
+    [[AnalyticsManager sharedInstance] trackView:kPopularAnimeScreen];
 }
 
 - (void)didReceiveMemoryWarning {

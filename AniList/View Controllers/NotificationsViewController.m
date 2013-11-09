@@ -38,6 +38,8 @@
     if(indexPath) {
         [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
+    
+    [[AnalyticsManager sharedInstance] trackView:kNotificationsScreen];
 }
 
 - (void)viewDidLoad {

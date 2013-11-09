@@ -114,6 +114,11 @@
         [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [[AnalyticsManager sharedInstance] trackView:kCompareDetailsScreen];
+}
+
 #pragma mark - Data Methods
 
 - (void)createAnimeComparison {

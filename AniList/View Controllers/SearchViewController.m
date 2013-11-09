@@ -54,10 +54,14 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
     if(self.fromMenu) {
         [self.searchDisplayController.searchBar becomeFirstResponder];
         self.fromMenu = NO;
     }
+    
+    [[AnalyticsManager sharedInstance] trackView:kSearchScreen];
 }
 
 - (void)didReceiveMemoryWarning

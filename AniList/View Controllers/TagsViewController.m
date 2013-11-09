@@ -79,6 +79,20 @@
     }
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    switch (self.tagType) {
+        case TagTypeTags:
+            [[AnalyticsManager sharedInstance] trackView:kTagListScreen];
+            break;
+        case TagTypeGenres:
+            [[AnalyticsManager sharedInstance] trackView:kGenreListScreen];
+            break;
+        default:
+            break;
+    }
+}
+
 - (void)dealloc {
     self.tagView.delegate = nil;
 }

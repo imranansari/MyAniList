@@ -94,6 +94,8 @@
     if(indexPath) {
         [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
+    
+    [[AnalyticsManager sharedInstance] trackView:kFriendsScreen];
 }
 
 - (void)didReceiveMemoryWarning {

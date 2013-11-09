@@ -44,7 +44,11 @@
     gradient.endPoint = CGPointMake(0.0f, 0.15f);
     
     self.maskView.layer.mask = gradient;
+}
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [[AnalyticsManager sharedInstance] trackView:kNotificationDisplayScreen];
 }
 
 - (void)didReceiveMemoryWarning {

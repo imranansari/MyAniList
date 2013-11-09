@@ -59,7 +59,7 @@
 - (void)authenticate {
     if([UserProfile userIsLoggedIn])
         [self setUsername:[[UserProfile profile] username] andPassword:[[UserProfile profile] password]];
-    else NSAssert(nil, @"Username and password must be valid!");
+//    else NSAssert(nil, @"Username and password must be valid!");
 }
 
 #pragma mark - Profile Methods
@@ -72,9 +72,11 @@
     [[UMALHTTPClient sharedClient] getPath:[NSString stringWithFormat:@"/profile/%@", user]
                                parameters:@{}
                                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                      [[AnalyticsManager sharedInstance] trackEvent:kProfileFetchSucceeded forCategory:EventCategoryWebService withMetadata:user];
                                       success(operation, responseObject);
                                   }
                                   failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                      [[AnalyticsManager sharedInstance] trackEvent:kProfileFetchFailed forCategory:EventCategoryWebService withMetadata:user];
                                       failure(operation, error);
                                   }];
 }
@@ -115,9 +117,11 @@
                                parameters:@{}
                                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
                                       ALLog(@"Logged in successfully!");
+                                      [[AnalyticsManager sharedInstance] trackEvent:kLoginSucceeded forCategory:EventCategoryWebService withMetadata:username];
                                       success(operation, responseObject);
                                   }
                                   failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                      [[AnalyticsManager sharedInstance] trackEvent:kLoginFailed forCategory:EventCategoryWebService withMetadata:username];
                                       failure(operation, error);
                                   }];
 }
@@ -140,12 +144,17 @@
                                       NSError *parseError = nil;
 //                                      NSString *string = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
                                       NSDictionary *xmlDictionary = [XMLReader dictionaryForXMLData:operation.responseData error:&parseError];
-                                      if(xmlDictionary)
+                                      if(xmlDictionary) {
+                                          [[AnalyticsManager sharedInstance] trackEvent:kAnimeListFetchSucceeded forCategory:EventCategoryWebService withMetadata:user];
                                           success(operation, xmlDictionary);
-                                      else
+                                      }
+                                      else {
+                                          [[AnalyticsManager sharedInstance] trackEvent:kAnimeListFetchFailed forCategory:EventCategoryWebService withMetadata:user];
                                           failure(operation, parseError);
+                                      }
                                   }
                                   failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                      [[AnalyticsManager sharedInstance] trackEvent:kAnimeListFetchFailed forCategory:EventCategoryWebService withMetadata:user];
                                       failure(operation, error);
                                   }];
 }
@@ -165,9 +174,11 @@
     [[UMALHTTPClient sharedClient] getPath:path
                                 parameters:parameters
                                    success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                       [[AnalyticsManager sharedInstance] trackEvent:kTopAnimeListFetchSucceeded forCategory:EventCategoryWebService];
                                        success(operation, responseObject);
                                    }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                       [[AnalyticsManager sharedInstance] trackEvent:kTopAnimeListFetchFailed forCategory:EventCategoryWebService];
                                        failure(operation, error);
                                    }];
 }
@@ -188,10 +199,14 @@
                                 parameters:parameters
                                    success:^(AFHTTPRequestOperation *operation, id responseObject) {
                                        // If no objects come back, consider the response as failed.
-                                       if(((NSArray *)responseObject).count == 0)
+                                       if(((NSArray *)responseObject).count == 0) {
+                                           [[AnalyticsManager sharedInstance] trackEvent:kPopularAnimeListFetchFailed forCategory:EventCategoryWebService];
                                            failure(operation, nil);
-                                       else
+                                       }
+                                       else {
+                                           [[AnalyticsManager sharedInstance] trackEvent:kPopularAnimeListFetchSucceeded forCategory:EventCategoryWebService];
                                            success(operation, responseObject);
+                                       }
                                    }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        failure(operation, error);
@@ -217,9 +232,11 @@
     [[UMALHTTPClient sharedClient] getPath:path
                                 parameters:parameters
                                    success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                       [[AnalyticsManager sharedInstance] trackEvent:kUpcomingAnimeListFetchSucceeded forCategory:EventCategoryWebService];
                                        success(operation, responseObject);
                                    }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                       [[AnalyticsManager sharedInstance] trackEvent:kUpcomingAnimeListFetchFailed forCategory:EventCategoryWebService];
                                        failure(operation, error);
                                    }];
 }
@@ -257,6 +274,7 @@
     [[UMALHTTPClient sharedClient] getPath:path
                                 parameters:parameters
                                    success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                       [[AnalyticsManager sharedInstance] trackEvent:kAnimeDetailsFetchSucceeded forCategory:EventCategoryWebService withMetadata:[animeID stringValue]];
                                        success(operation, responseObject);
                                    }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -267,6 +285,7 @@
                                                if([response isKindOfClass:[NSArray class]] && ((NSArray *)response).count > 0) {
                                                    for(NSDictionary *data in (NSArray *)response) {
                                                        if(data && [data[kTitle] isEqualToString:anime.title]) {
+                                                           [[AnalyticsManager sharedInstance] trackEvent:kAnimeDetailsFetchSucceeded forCategory:EventCategoryWebService withMetadata:[animeID stringValue]];
                                                            success(operation, data);
                                                            break;
                                                        }
@@ -276,6 +295,7 @@
                                            });
                                        } failure:^(id operation, NSError *error) {
                                            dispatch_async(dispatch_get_main_queue(), ^{
+                                               [[AnalyticsManager sharedInstance] trackEvent:kAnimeDetailsFetchFailed forCategory:EventCategoryWebService withMetadata:[animeID stringValue]];
                                                failure(operation, error);
                                            });
                                        }];
@@ -293,9 +313,11 @@
                                 parameters:parameters
                                    success:^(AFHTTPRequestOperation *operation, id responseObject) {
                                        ALLog(@"response: %@", operation.responseString);
+                                       [[AnalyticsManager sharedInstance] trackEvent:kAddAnimeSucceeded forCategory:EventCategoryWebService withMetadata:[animeID stringValue]];
                                        success(operation, responseObject);
                                    }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                       [[AnalyticsManager sharedInstance] trackEvent:kAddAnimeFailed forCategory:EventCategoryWebService withMetadata:[animeID stringValue]];
                                        ALLog(@"failed response: %@", operation.responseString);
                                        failure(operation, error);
                                    }];
@@ -313,9 +335,11 @@
                                 parameters:parameters
                                    success:^(AFHTTPRequestOperation *operation, id responseObject) {
                                        ALLog(@"response: %@", operation.responseString);
+                                       [[AnalyticsManager sharedInstance] trackEvent:kUpdateAnimeSucceeded forCategory:EventCategoryWebService withMetadata:[animeID stringValue]];
                                        success(operation, responseObject);
                                    }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                       [[AnalyticsManager sharedInstance] trackEvent:kUpdateAnimeFailed forCategory:EventCategoryWebService withMetadata:[animeID stringValue]];
                                        failure(operation, error);
                                    }];
     
@@ -329,10 +353,12 @@
                                   parameters:nil
                                      success:^(AFHTTPRequestOperation *operation, id responseObject) {
                                          ALLog(@"Anime deleted: %@", operation.responseString);
+                                         [[AnalyticsManager sharedInstance] trackEvent:kDeleteAnimeSucceeded forCategory:EventCategoryWebService withMetadata:[animeID stringValue]];
                                          success(operation, responseObject);
                                      }
                                      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                          ALLog(@"Anime failed to delete. Please try again later.");
+                                         [[AnalyticsManager sharedInstance] trackEvent:kDeleteAnimeFailed forCategory:EventCategoryWebService withMetadata:[animeID stringValue]];
                                          failure(operation, error);
                                      }];
 }
@@ -383,11 +409,13 @@
                                           }
                                           
                                           dispatch_async(dispatch_get_main_queue(), ^{
+                                              [[AnalyticsManager sharedInstance] trackEvent:kSearchAnimeSucceeded forCategory:EventCategoryWebService withMetadata:query];
                                               success(operation, cleanedList);
                                           });
                                       });
                                   }
                                   failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                      [[AnalyticsManager sharedInstance] trackEvent:kSearchAnimeFailed forCategory:EventCategoryWebService withMetadata:query];
                                       failure(operation, error);
                                   }];
 }
@@ -436,10 +464,12 @@
                                               [cleanedList addObject:cleanedManga];
                                           }
                                           
+                                          [[AnalyticsManager sharedInstance] trackEvent:kSearchMangaSucceeded forCategory:EventCategoryWebService withMetadata:query];
                                           success(operation, cleanedList);
                                       });
                                   }
                                   failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                      [[AnalyticsManager sharedInstance] trackEvent:kSearchMangaFailed forCategory:EventCategoryWebService withMetadata:query];
                                       failure(operation, error);
                                   }];
 }
@@ -459,14 +489,19 @@
                                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
                                       NSError *parseError = nil;
                                       NSDictionary *xmlDictionary = [XMLReader dictionaryForXMLData:operation.responseData error:&parseError];
-                                      if(xmlDictionary)
+                                      if(xmlDictionary) {
+                                          [[AnalyticsManager sharedInstance] trackEvent:kMangaListFetchSucceeded forCategory:EventCategoryWebService withMetadata:user];
                                           success(operation, xmlDictionary);
-                                      else
+                                      }
+                                      else {
+                                          [[AnalyticsManager sharedInstance] trackEvent:kMangaListFetchFailed forCategory:EventCategoryWebService withMetadata:user];
                                           failure(operation, parseError);
+                                      }
                                   }
                                   failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                      [[AnalyticsManager sharedInstance] trackEvent:kMangaListFetchFailed forCategory:EventCategoryWebService withMetadata:user];
                                       failure(operation, error);
-    }];
+                                  }];
 }
 
 - (void)getTopMangaForType:(MangaType)mangaType atPage:(NSNumber *)page success:(HTTPSuccessBlock)success failure:(HTTPFailureBlock)failure {
@@ -522,6 +557,7 @@
     [[UMALHTTPClient sharedClient] getPath:path
                                 parameters:parameters
                                    success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                       [[AnalyticsManager sharedInstance] trackEvent:kMangaDetailsFetchSucceeded forCategory:EventCategoryWebService withMetadata:[mangaID stringValue]];
                                        success(operation, responseObject);
                                    }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -532,6 +568,7 @@
                                                if([response isKindOfClass:[NSArray class]] && ((NSArray *)response).count > 0) {
                                                    for(NSDictionary *data in (NSArray *)response) {
                                                        if(data && [data[kTitle] isEqualToString:manga.title]) {
+                                                           [[AnalyticsManager sharedInstance] trackEvent:kMangaDetailsFetchSucceeded forCategory:EventCategoryWebService withMetadata:[mangaID stringValue]];
                                                            success(operation, data);
                                                            break;
                                                        }
@@ -540,6 +577,7 @@
                                            });
                                        } failure:^(id operation, NSError *error) {
                                            dispatch_async(dispatch_get_main_queue(), ^{
+                                               [[AnalyticsManager sharedInstance] trackEvent:kMangaDetailsFetchFailed forCategory:EventCategoryWebService withMetadata:[mangaID stringValue]];
                                                failure(operation, error);
                                            });
                                        }];
@@ -557,10 +595,12 @@
                                 parameters:parameters
                                    success:^(AFHTTPRequestOperation *operation, id responseObject) {
                                        ALLog(@"response: %@", operation.responseString);
+                                       [[AnalyticsManager sharedInstance] trackEvent:kAddMangaSucceeded forCategory:EventCategoryWebService withMetadata:[mangaID stringValue]];
                                        success(operation, responseObject);
                                    }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        ALLog(@"failed response: %@", operation.responseString);
+                                       [[AnalyticsManager sharedInstance] trackEvent:kAddMangaFailed forCategory:EventCategoryWebService withMetadata:[mangaID stringValue]];
                                        failure(operation, error);
                                    }];
     
@@ -577,9 +617,11 @@
                                  parameters:parameters
                                     success:^(AFHTTPRequestOperation *operation, id responseObject) {
                                         ALLog(@"response: %@", operation.responseString);
+                                        [[AnalyticsManager sharedInstance] trackEvent:kUpdateMangaSucceeded forCategory:EventCategoryWebService withMetadata:[mangaID stringValue]];
                                         success(operation, responseObject);
                                     }
                                     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                        [[AnalyticsManager sharedInstance] trackEvent:kUpdateMangaFailed forCategory:EventCategoryWebService withMetadata:[mangaID stringValue]];
                                         failure(operation, error);
                                     }];
     
@@ -593,10 +635,12 @@
                                   parameters:nil
                                      success:^(AFHTTPRequestOperation *operation, id responseObject) {
                                          ALLog(@"Manga deleted: %@", operation.responseString);
+                                         [[AnalyticsManager sharedInstance] trackEvent:kDeleteMangaSucceeded forCategory:EventCategoryAction withMetadata:[mangaID stringValue]];
                                          success(operation, responseObject);
                                      }
                                      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                          ALLog(@"Manga failed to delete. Please try again later.");
+                                         [[AnalyticsManager sharedInstance] trackEvent:kDeleteMangaFailed forCategory:EventCategoryAction withMetadata:[mangaID stringValue]];
                                          failure(operation, error);
                                      }];
 }

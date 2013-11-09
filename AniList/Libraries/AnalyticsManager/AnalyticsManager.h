@@ -11,7 +11,8 @@
 typedef enum {
     EventCategoryFeature = 0,
     EventCategoryAction,
-    EventCategoryAds
+    EventCategoryWebService,
+	EventCategoryError
 } EventCategory;
 
 typedef enum {
@@ -29,8 +30,14 @@ typedef enum {
 
 - (void)trackView:(NSString *)view;
 - (void)trackEvent:(NSString *)event forCategory:(EventCategory)category;
+- (void)trackEvent:(NSString *)event forCategory:(EventCategory)category withMetadata:(NSString *)metadata;
 - (void)trackEvent:(NSString *)event forCategory:(EventCategory)category withValue:(NSNumber *)value;
+- (void)trackEvent:(NSString *)event forCategory:(EventCategory)category withMetadata:(NSString *)metadata andValue:(NSNumber *)value;
 - (void)trackTiming:(NSString *)timingEvent forCategory:(TimingCategory)category withTimeInterval:(NSTimeInterval)timeInterval;
 - (void)trackSocial:(NSString *)socialEvent forNetwork:(SocialNetwork)socialNetwork;
+- (void)trackSocial:(NSString *)socialEvent forNetwork:(SocialNetwork)socialNetwork withTarget:(NSString *)target;
+- (void)trackExceptionDescription:(NSString *)description;
+- (void)trackExceptionDescription:(NSString *)description isFatal:(NSNumber *)fatal;
+
 
 @end

@@ -127,7 +127,7 @@
     gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor colorWithWhite:1.0f alpha:0.25] CGColor], (id)[[UIColor colorWithWhite:0.0f alpha:1.0] CGColor], nil];
     
     gradient.startPoint = CGPointMake(0.0, 0.15f);
-    gradient.endPoint = CGPointMake(0.0f, 0.30f);
+    gradient.endPoint = CGPointMake(0.0f, 0.40f);
     
     overlay.layer.mask = gradient;
     
@@ -193,7 +193,16 @@
                                             self.differenceLabel.frame.origin.y + 15,
                                             self.differenceLabel.frame.size.width,
                                             self.differenceLabel.frame.size.height);
-    
+ 
+    if(![UIApplication is4Inch]) {
+        self.indicator.frame = CGRectMake(self.indicator.frame.origin.x, self.indicator.frame.origin.y + 20, self.indicator.frame.size.width, self.indicator.frame.size.height);
+        self.statusLabel.frame = CGRectMake(self.statusLabel.frame.origin.x, self.statusLabel.frame.origin.y + 20, self.statusLabel.frame.size.width, self.statusLabel.frame.size.height);
+    }
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [[AnalyticsManager sharedInstance] trackView:kLoginScreen];
 }
 
 - (void)didReceiveMemoryWarning
