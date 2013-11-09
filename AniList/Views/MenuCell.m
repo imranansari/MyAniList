@@ -22,7 +22,7 @@
         self.textLabel.font = [UIFont defaultFontWithSize:18];
         self.textLabel.highlightedTextColor = [UIColor whiteColor];
         
-        UIView *select = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 340, 44)];
+        UIView *select = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 340, [MenuCell cellHeight])];
         select.backgroundColor = [UIColor colorWithWhite:1.0f alpha:0.05f];
         self.selectedBackgroundView = select;
         
@@ -55,7 +55,7 @@
 }
 
 + (CGFloat)cellHeight {
-    return 44;
+    return 40;
 }
 
 - (void)addGradient {

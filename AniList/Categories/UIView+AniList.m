@@ -41,6 +41,25 @@
     return view;
 }
 
++ (UIView *)versionFooter {
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 270, 20)];
+    view.backgroundColor = [UIColor clearColor];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, view.frame.size.width, 20)];
+    label.backgroundColor = [UIColor clearColor];
+    label.textColor = [UIColor darkGrayColor];
+    label.alpha = 0.4f;
+    label.font = [UIFont defaultFontWithSize:13];
+    label.textAlignment = NSTextAlignmentCenter;
+    
+    NSString *version = [NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"];
+    
+    label.text = [NSString stringWithFormat:@"AniList %@", version];
+    
+    [view addSubview:label];
+    
+    return view;
+}
+
 
 + (void)setAttributesForLabel:(TTTAttributedLabel *)label withPrimaryText:(NSString *)primaryText andSecondaryText:(NSString *)secondaryText {
     NSString *text = [NSString stringWithFormat:@"%@ %@", primaryText, secondaryText];

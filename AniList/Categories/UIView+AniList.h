@@ -12,6 +12,7 @@
 
 + (UIView *)tableHeaderWithPrimaryText:(NSString *)primaryString andSecondaryText:(NSString *)secondaryString;
 + (UIView *)tableFooterWithError;
++ (UIView *)versionFooter;
 - (void)animateOut;
 - (void)animateIn;
 

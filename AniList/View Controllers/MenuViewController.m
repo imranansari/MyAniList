@@ -174,7 +174,13 @@ static NSString *CellIdentifier = @"Cell";
     self.animeStats.text = [[UserProfile profile] animeCellStats];
     self.mangaStats.text = [[UserProfile profile] mangaCellStats];
     
+    NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+    
     [self.tableView reloadData];
+    
+    if(indexPath) {
+        [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -330,16 +336,16 @@ static NSString *CellIdentifier = @"Cell";
 #pragma mark - Table view data source
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    return [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 0)];
+    return [UIView versionFooter];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return 1;
+    return 20;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if(indexPath.row > 0 && indexPath.row < 5) {
-        return 30;
+        return 26;
     }
     
     return [MenuCell cellHeight];
