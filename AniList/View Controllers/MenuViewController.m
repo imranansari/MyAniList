@@ -396,6 +396,13 @@ static NSString *CellIdentifier = @"Cell";
         [delegate clearDatabase];
         [[UserProfile profile] logout];
         
+        double delayInSeconds = 1.0;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:NO scrollPosition:UITableViewScrollPositionNone];
+        });
+
+        
         LoginViewController *vc = [[LoginViewController alloc] init];
         [self loadModalViewController:vc];
     }
