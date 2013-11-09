@@ -15,6 +15,7 @@
 #define kUserAnimeStats @"kUserAnimeStats"
 #define kUserMangaStats @"kUserMangaStats"
 #define kNotificationTimestampKey @"kNotificationTimestampKey"
+#define kProTipNotification @"kProTipNotification"
 
 // Stats
 #define kStatsTotalTimeInDays @"time_days"
@@ -56,5 +57,8 @@
 
 - (NSTimeInterval)lastFetchedNotificationTimestamp;
 - (void)setNotificationTimestamp:(NSTimeInterval)timestamp;
+
+- (BOOL)shouldShowProTip;
+- (void)setProTip;
 
 @end

@@ -114,6 +114,9 @@ static BOOL alreadyFetched = NO;
                                                       [AnimeService addAnimeList:(NSDictionary *)response];
                                                       alreadyFetched = YES;
                                                       [super fetchData];
+                                                      
+                                                      // Display Pro Tip if necessary.
+                                                      [self displayProTip];
                                                   }
                                                   failure:^(NSURLRequest *operation, NSError *error) {
                                                       alreadyFetched = YES;
@@ -179,6 +182,19 @@ static BOOL alreadyFetched = NO;
     
     self.editedIndexPath = nil;
     self.editedAnime = nil;
+}
+
+- (void)displayProTip {
+    if([[UserProfile profile] shouldShowProTip]) {
+        [[UserProfile profile] setProTip];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Pro Tip!"
+                                                        message:@"To update your anime/manga easily, just hold your finger on an item to bring up a quick edit screen."
+                                                       delegate:nil
+                                              cancelButtonTitle:@"Sweet!"
+                                              otherButtonTitles:nil, nil];
+        
+        [alert show];
+    }
 }
 
 #pragma mark - Gesture Management Methods

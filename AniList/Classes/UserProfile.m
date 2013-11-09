@@ -177,4 +177,12 @@ static UserProfile *profile = nil;
     [[NSUserDefaults standardUserDefaults] setInteger:timestamp forKey:kNotificationTimestampKey];
 }
 
+- (BOOL)shouldShowProTip {
+    return ![[NSUserDefaults standardUserDefaults] boolForKey:kProTipNotification];
+}
+
+- (void)setProTip {
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kProTipNotification];
+}
+
 @end
