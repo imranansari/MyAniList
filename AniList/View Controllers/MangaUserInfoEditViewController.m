@@ -273,11 +273,16 @@ static NSArray *mangaStatusOrder;
 - (void)save:(id)sender {
     ALLog(@"Saving...");
     
+    [[AnalyticsManager sharedInstance] trackEvent:kSaveMangaDetailsPressed forCategory:EventCategoryAction withMetadata:[self.manga.manga_id stringValue]];
+    
     self.saving = YES;
     
     [self.manga.managedObjectContext save:nil];
     
     if(self.addMangaToList) {
+        
+        [[AnalyticsManager sharedInstance] trackEvent:kMangaAdded forCategory:EventCategoryAction withMetadata:[self.manga.manga_id stringValue]];
+        
         [[MALHTTPClient sharedClient] addMangaToListWithID:self.manga.manga_id success:^(id operation, id response) {
             ALLog(@"Added manga to list! Returning to manga details view.");
         } failure:^(id operation, NSError *error) {
@@ -285,6 +290,9 @@ static NSArray *mangaStatusOrder;
         }];
     }
     else {
+        
+        [[AnalyticsManager sharedInstance] trackEvent:kMangaUpdated forCategory:EventCategoryAction withMetadata:[self.manga.manga_id stringValue]];
+        
         [[MALHTTPClient sharedClient] updateDetailsForMangaWithID:self.manga.manga_id success:^(id operation, id response) {
             ALLog(@"Updated. Returning to manga details view.");
         } failure:^(id operation, NSError *error) {

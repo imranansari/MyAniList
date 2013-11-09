@@ -241,11 +241,15 @@ static NSArray *animeStatusOrder;
 - (void)save:(id)sender {
     ALLog(@"Saving...");
     
+    [[AnalyticsManager sharedInstance] trackEvent:kSaveAnimeDetailsPressed forCategory:EventCategoryAction withMetadata:[self.anime.anime_id stringValue]];
+    
     self.saving = YES;
     
     [self.anime.managedObjectContext save:nil];
     
     if(self.addAnimeToList) {
+        [[AnalyticsManager sharedInstance] trackEvent:kAnimeAdded forCategory:EventCategoryAction withMetadata:[self.anime.anime_id stringValue]];
+        
         [[MALHTTPClient sharedClient] addAnimeToListWithID:self.anime.anime_id success:^(id operation, id response) {
             ALLog(@"Added anime to list! Returning to anime details view.");
         } failure:^(id operation, NSError *error) {
@@ -253,6 +257,7 @@ static NSArray *animeStatusOrder;
         }];
     }
     else {
+        [[AnalyticsManager sharedInstance] trackEvent:kAnimeUpdated forCategory:EventCategoryAction withMetadata:[self.anime.anime_id stringValue]];
         [[MALHTTPClient sharedClient] updateDetailsForAnimeWithID:self.anime.anime_id success:^(id operation, id response) {
             ALLog(@"Updated. Returning to anime details view.");
         } failure:^(id operation, NSError *error) {

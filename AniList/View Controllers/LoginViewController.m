@@ -345,6 +345,9 @@
 }
 
 - (IBAction)loginButtonPressed:(id)sender {
+    
+    [[AnalyticsManager sharedInstance] trackEvent:kLoginButtonPressed forCategory:EventCategoryAction];
+    
     [UIView animateWithDuration:0.3f animations:^{
         self.indicator.alpha = 1.0f;
         self.statusLabel.alpha = 0.0f;

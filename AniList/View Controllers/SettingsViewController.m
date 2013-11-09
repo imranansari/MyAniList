@@ -18,6 +18,7 @@
 
 #define kOptionName @"kOptionName"
 #define kAction     @"kAction"
+#define kGATag      @"kGATag"
 
 @interface SettingsViewController ()
 @property (nonatomic, weak) IBOutlet UIView *maskView;
@@ -43,34 +44,41 @@
         self.options = @[
                          @{
                              kOptionName    : @"Enable Genre/Tag Support",
-                             kAction        : @"enableGenreTagSupport"
+                             kAction        : @"enableGenreTagSupport",
+                             kGATag         : kGenreTagSupportPressed
                              },
                          @{
                              kOptionName    : @"Clear Local Images",
-                             kAction        : @"confirmClearImageCache"
+                             kAction        : @"confirmClearImageCache",
+                             kGATag         : kClearLocalImagesPressed
                              },
                          @{
                              kOptionName    : @"Reset Local Anime Cache",
-                             kAction        : @"confirmClearAnimeList"
+                             kAction        : @"confirmClearAnimeList",
+                             kGATag         : kClearAnimeCachePressed
                              },
                          @{
                              kOptionName    : @"Reset Local Manga Cache",
-                             kAction        : @"confirmClearMangaList"
+                             kAction        : @"confirmClearMangaList",
+                             kGATag         : kClearMangaCachePressed
                              },
                          @{
                              kOptionName    : @"Submit Feedback",
-                             kAction        : @"reportProblem"
+                             kAction        : @"reportProblem",
+                             kGATag         : kSubmitFeedbackPressed
                              }
                          ];
         
         self.apiStatus = @[
                         @{
                             kOptionName    : @"Checking API Status...",
-                            kAction        : @"checkOfficialAPIStatus"
+                            kAction        : @"checkOfficialAPIStatus",
+                            kGATag         : kOfficialAPICheckPressed
                             },
                         @{
                             kOptionName    : @"Checking Unofficial API Status...",
-                            kAction        : @"checkUnofficialAPIStatus"
+                            kAction        : @"checkUnofficialAPIStatus",
+                            kGATag         : kUnofficialAPICheckPressed
                             }
                         ];
         

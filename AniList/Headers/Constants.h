@@ -132,8 +132,19 @@ typedef void (^HTTPFailureBlock)(id operation, NSError *error);
 #define kMangaUpdated               @"manga_updated"
 #define kAnimeDeleted               @"anime_deleted"
 #define kMangaDeleted               @"manga_deleted"
+#define kFriendAdded                @"friend_added"
+#define kFriendDeleted              @"friend_deleted"
+#define kFriendComparePressed       @"friend_compare_pressed"
 #define kAnimeQuickEditUsed         @"anime_quick_edit_used"
 #define kMangaQuickEditUsed         @"manga_quick_edit_used"
+
+#define kGenreTagSupportPressed     @"genre_tag_support_pressed"
+#define kClearLocalImagesPressed    @"clear_local_images_pressed"
+#define kClearAnimeCachePressed     @"clear_anime_cache_pressed"
+#define kClearMangaCachePressed     @"clear_manga_cache_pressed"
+#define kSubmitFeedbackPressed      @"submit_feedback_pressed"
+#define kOfficialAPICheckPressed    @"official_api_check_pressed"
+#define kUnofficialAPICheckPressed  @"unofficial_api_check_pressed"
 
 // Web Services
 

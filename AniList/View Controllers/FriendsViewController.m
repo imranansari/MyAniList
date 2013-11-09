@@ -261,6 +261,7 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if(editingStyle == UITableViewCellEditingStyleDelete) {
         Friend *friend = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        [[AnalyticsManager sharedInstance] trackEvent:kFriendDeleted forCategory:EventCategoryAction withMetadata:friend.username];
         [friend.managedObjectContext deleteObject:friend];
     }
 }
@@ -291,10 +292,13 @@
 }
 
 - (IBAction)addButtonPressed:(id)sender {
+    
     [self.usernameField resignFirstResponder];
     NSString *username = [self.usernameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     
     if(username.length > 0 && ![username isEqualToString:kEnterUsernameString]) {
+        [[AnalyticsManager sharedInstance] trackEvent:kFriendAdded forCategory:EventCategoryAction withMetadata:self.usernameField.text];
+        
         Friend *friend = [FriendService addFriend:username];
         [[MALHTTPClient sharedClient] getProfileForUser:friend.username success:^(id operation, id response) {
             ALLog(@"result: %@", response);

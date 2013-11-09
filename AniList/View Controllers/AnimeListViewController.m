@@ -147,7 +147,10 @@ static BOOL alreadyFetched = NO;
 }
 
 - (void)saveAnime:(Anime *)anime {
+    
     if(anime) {
+        [[AnalyticsManager sharedInstance] trackEvent:kAnimeQuickEditUsed forCategory:EventCategoryAction withMetadata:[anime.anime_id stringValue]];
+        
         [[MALHTTPClient sharedClient] updateDetailsForAnimeWithID:anime.anime_id success:^(id operation, id response) {
             ALLog(@"Updated '%@'.", anime.title);
         } failure:^(id operation, NSError *error) {

@@ -250,6 +250,7 @@
 }
 
 - (IBAction)compareButtonPressed:(id)sender {
+    [[AnalyticsManager sharedInstance] trackEvent:kFriendComparePressed forCategory:EventCategoryAction withMetadata:self.friend.username];
     CompareViewController *vc = [[CompareViewController alloc] init];
     vc.friend = self.friend;
     [self.navigationController pushViewController:vc animated:YES];

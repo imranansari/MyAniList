@@ -144,6 +144,9 @@ static BOOL alreadyFetched = NO;
 
 - (void)saveManga:(Manga *)manga {
     if(manga) {
+        
+        [[AnalyticsManager sharedInstance] trackEvent:kMangaQuickEditUsed forCategory:EventCategoryAction withMetadata:[manga.manga_id stringValue]];
+        
         [[MALHTTPClient sharedClient] updateDetailsForMangaWithID:manga.manga_id success:^(id operation, id response) {
             ALLog(@"Updated '%@'.", manga.title);
         } failure:^(id operation, NSError *error) {
