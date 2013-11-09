@@ -31,6 +31,7 @@
 #import "AnimeViewController.h"
 #import "MangaViewController.h"
 #import "CompareViewController.h"
+#import "AniListNavigationController.h"
 
 @interface FriendDetailViewController ()
 @property (nonatomic, weak) IBOutlet AniListTableView *tableView;
@@ -455,6 +456,33 @@
     }
     
     [anilistCell.title sizeToFit];
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    
+    AniListNavigationController *navigationController = (AniListNavigationController *)self.navigationController;
+    
+    // Since we know this background will fit the screen height, we can use this value.
+    float height = [UIScreen mainScreen].bounds.size.height;
+    
+    if(scrollView.contentSize.height > 400) {
+        if(scrollView.contentOffset.y == 0) {
+            [UIView animateWithDuration:0.75f
+                                  delay:0.0f
+                                options:UIViewAnimationOptionCurveEaseInOut
+                             animations:^{
+                                 navigationController.imageView.frame = CGRectMake(navigationController.imageView.frame.origin.x, 0, navigationController.imageView.frame.size.width, navigationController.imageView.frame.size.height);
+                             }
+                             completion:nil];
+        }
+        else if(scrollView.contentOffset.y <= 0) {
+            navigationController.imageView.frame = CGRectMake(navigationController.imageView.frame.origin.x, 0, navigationController.imageView.frame.size.width, navigationController.imageView.frame.size.height);
+        }
+        else {
+            float yOrigin = -((navigationController.imageView.frame.size.height - height) * (scrollView.contentOffset.y / scrollView.contentSize.height));
+            navigationController.imageView.frame = CGRectMake(navigationController.imageView.frame.origin.x, yOrigin, navigationController.imageView.frame.size.width, navigationController.imageView.frame.size.height);
+        }
+    }
 }
 
 @end

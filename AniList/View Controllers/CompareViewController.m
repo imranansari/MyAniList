@@ -40,6 +40,8 @@
 @property (nonatomic, strong) IBOutlet UIView *compareView;
 @property (nonatomic, strong) IBOutlet UILabel *friendNameLabel;
 @property (nonatomic, strong) IBOutlet UILabel *userNameLabel;
+@property (nonatomic, strong) IBOutlet UILabel *friendMiniNameLabel;
+@property (nonatomic, strong) IBOutlet UILabel *userMiniNameLabel;
 @property (nonatomic, strong) IBOutlet UILabel *friendAverageLabel;
 @property (nonatomic, strong) IBOutlet UILabel *userAverageLabel;
 @property (nonatomic, strong) IBOutlet UILabel *compatibilityLabel;
@@ -76,6 +78,12 @@
     
     gradient.startPoint = CGPointMake(0.0, 0.015f);
     gradient.endPoint = CGPointMake(0.0f, 0.05f);
+   
+    self.friendMiniNameLabel.text = self.friend.username;
+    self.userMiniNameLabel.text = [UserProfile profile].username;
+    
+    self.friendMiniNameLabel.alpha = 0.6f;
+    self.userMiniNameLabel.alpha = 0.6f;
     
     self.friendNameLabel.text = [NSString stringWithFormat:@"%@'s", self.friend.username];
     self.userNameLabel.text = [NSString stringWithFormat:@"%@'s", [UserProfile profile].username];

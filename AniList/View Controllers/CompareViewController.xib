@@ -12,12 +12,14 @@
                 <outlet property="compatibilityLabel" destination="RpK-cB-80D" id="iHl-k4-KRJ"/>
                 <outlet property="friendAvatar" destination="c9j-es-fSn" id="AbR-gB-ZGv"/>
                 <outlet property="friendAverageLabel" destination="Od8-Xc-2vg" id="e4x-4p-5ty"/>
+                <outlet property="friendMiniNameLabel" destination="fXp-br-GKB" id="ehC-AH-gfG"/>
                 <outlet property="friendNameLabel" destination="TNQ-2i-sTV" id="Abg-gV-BZh"/>
                 <outlet property="indicator" destination="nBb-cJ-Rjv" id="aNG-cv-Iny"/>
                 <outlet property="maskView" destination="pZv-Lg-eQx" id="Xpj-Ad-eZm"/>
                 <outlet property="myAvatar" destination="40i-Ud-q3L" id="235-6J-pXC"/>
                 <outlet property="tableView" destination="c63-TT-htv" id="M2x-iv-tg9"/>
                 <outlet property="userAverageLabel" destination="rru-Z3-yZO" id="Ntw-fI-DNl"/>
+                <outlet property="userMiniNameLabel" destination="4d2-GJ-bNy" id="a24-Vm-g0S"/>
                 <outlet property="userNameLabel" destination="O5J-e0-5xG" id="gfu-WA-9vP"/>
                 <outlet property="view" destination="ksL-BP-ctT" id="6Te-2a-sl8"/>
             </connections>
@@ -70,6 +72,22 @@
                             <rect key="frame" x="223" y="32" width="34" height="21"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="16"/>
+                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                            <color key="shadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        </label>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="vs." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" id="fXp-br-GKB">
+                            <rect key="frame" x="247" y="52" width="80" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                            <color key="shadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        </label>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="vs." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" id="4d2-GJ-bNy">
+                            <rect key="frame" x="151" y="52" width="80" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                             <color key="shadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
