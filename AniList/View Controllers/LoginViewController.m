@@ -453,6 +453,10 @@
         nvc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
         
         [nvc dismissViewControllerAnimated:YES completion:nil];
+        
+        [UIView animateWithDuration:0.4f delay:0.1f options:UIViewAnimationOptionCurveEaseInOut animations:^{
+            self.view.alpha = 0.0f;
+        } completion:nil];
     }
 }
 
