@@ -77,7 +77,7 @@
     
     UIImage *backgroundImage = [UIImage imageNamed:@"intro_background.png"];
 
-    UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(-30, 0, backgroundImage.size.width, backgroundImage.size.height)];
+    UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(-30, -20, backgroundImage.size.width, backgroundImage.size.height)];
     
     backgroundImageView.image = backgroundImage;
     
@@ -88,6 +88,7 @@
     topOverlay.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.75f];
     
     self.backgroundView = [[UIView alloc] initWithFrame:backgroundImageView.frame];
+    
     
     [self.backgroundView addSubview:backgroundImageView];
     [self.backgroundView addSubview:overlay];
@@ -198,6 +199,8 @@
         self.indicator.frame = CGRectMake(self.indicator.frame.origin.x, self.indicator.frame.origin.y + 20, self.indicator.frame.size.width, self.indicator.frame.size.height);
         self.statusLabel.frame = CGRectMake(self.statusLabel.frame.origin.x, self.statusLabel.frame.origin.y + 20, self.statusLabel.frame.size.width, self.statusLabel.frame.size.height);
     }
+    
+    [self setupMotionEffects];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -211,11 +214,66 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)setupMotionEffects {
+    int motionValue = 20;
+    
+    UIInterpolatingMotionEffect *verticalTilt = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"center.y"
+                                                                                                type:UIInterpolatingMotionEffectTypeTiltAlongVerticalAxis];
+    
+    verticalTilt.maximumRelativeValue = @(motionValue);
+    verticalTilt.minimumRelativeValue = @(-motionValue);
+    
+    UIInterpolatingMotionEffect *horizontalTilt = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"center.x"
+                                                                                                  type:UIInterpolatingMotionEffectTypeTiltAlongHorizontalAxis];
+    
+    horizontalTilt.maximumRelativeValue = @(motionValue);
+    horizontalTilt.minimumRelativeValue = @(-motionValue);
+    
+    [self.pageControl addMotionEffect:verticalTilt];
+    [self.pageControl addMotionEffect:horizontalTilt];
+    
+    for(UIView *view in self.welcomeView.subviews) {
+        [view addMotionEffect:verticalTilt];
+        [view addMotionEffect:horizontalTilt];
+    }
+    
+    for(UIView *view in self.organizeView.subviews) {
+        [view addMotionEffect:verticalTilt];
+        [view addMotionEffect:horizontalTilt];
+    }
+    
+    for(UIView *view in self.discoverView.subviews) {
+        [view addMotionEffect:verticalTilt];
+        [view addMotionEffect:horizontalTilt];
+    }
+    
+    for(UIView *view in self.compareView.subviews) {
+        [view addMotionEffect:verticalTilt];
+        [view addMotionEffect:horizontalTilt];
+    }
+    
+    // Background Tilting
+    verticalTilt = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"center.y"
+                                                                   type:UIInterpolatingMotionEffectTypeTiltAlongVerticalAxis];
+    
+    verticalTilt.maximumRelativeValue = @(-motionValue-10);
+    verticalTilt.minimumRelativeValue = @(+motionValue+10);
+    
+    horizontalTilt = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"center.x"
+                                                                     type:UIInterpolatingMotionEffectTypeTiltAlongHorizontalAxis];
+    
+    horizontalTilt.maximumRelativeValue = @(-motionValue);
+    horizontalTilt.minimumRelativeValue = @(+motionValue);
+    
+    [self.backgroundView addMotionEffect:verticalTilt];
+    [self.backgroundView addMotionEffect:horizontalTilt];
+}
+
 // cell is off origin by 34
 - (void)animateOrganizeScreen {
     self.presentedOrganizationAnimation = YES;
     
-    [UIView animateWithDuration:1.0f delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
+    [UIView animateWithDuration:0.8f delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.organizeCell2.frame = CGRectMake(self.organizeCell2.frame.origin.x,
                                               self.organizeLabel.frame.origin.y - 34,
                                               self.organizeCell2.frame.size.width,
@@ -242,7 +300,7 @@
 - (void)animateDiscoverScreen {
     self.presentedDiscoverAnimation = YES;
     
-    [UIView animateWithDuration:1.0f delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
+    [UIView animateWithDuration:0.8f delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.discoverParentCell.frame = CGRectMake(self.discoverParentCell.frame.origin.x,
                                                    self.organizeLabel.frame.origin.y - 174,
                                                    self.discoverParentCell.frame.size.width,
@@ -288,7 +346,7 @@
 - (void)animateCompareScreen {
     self.presentedComparisonAnimation = YES;
     
-    [UIView animateWithDuration:1.0f delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
+    [UIView animateWithDuration:0.8f delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.compareCell.frame = CGRectMake(self.compareCell.frame.origin.x,
                                             self.organizeLabel.frame.origin.y - 174,
                                             self.compareCell.frame.size.width,
@@ -446,22 +504,6 @@
         alpha = 0.0f;
     }
     
-    [UIView animateWithDuration:0.15f
-                     animations:^{
-                         self.pageControl.alpha = alpha;
-                     }];
-    
-    if(scrollView.contentSize.width > 400) {
-        float xOrigin = -((self.backgroundView.frame.size.width - width) * (scrollView.contentOffset.x / scrollView.contentSize.width));
-        self.backgroundView.frame = CGRectMake(MAX(xOrigin - 30.0f, -(self.backgroundView.frame.size.width - [UIScreen mainScreen].bounds.size.width - 30)), 0, self.backgroundView.frame.size.width, self.backgroundView.frame.size.height);
-    }
-}
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    // Determine what page we're on.
-    CGFloat pageWidth = self.scrollView.frame.size.width;
-    int page = floor((self.scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
-    
     switch (page) {
         case 1:
             if(!self.presentedOrganizationAnimation)
@@ -477,6 +519,16 @@
             break;
         default:
             break;
+    }
+    
+    [UIView animateWithDuration:0.15f
+                     animations:^{
+                         self.pageControl.alpha = alpha;
+                     }];
+    
+    if(scrollView.contentSize.width > 400) {
+        float xOrigin = -((self.backgroundView.frame.size.width - width) * (scrollView.contentOffset.x / scrollView.contentSize.width));
+        self.backgroundView.frame = CGRectMake(MAX(xOrigin - 30.0f, -(self.backgroundView.frame.size.width - [UIScreen mainScreen].bounds.size.width - 30)), self.backgroundView.frame.origin.y, self.backgroundView.frame.size.width, self.backgroundView.frame.size.height);
     }
 }
 

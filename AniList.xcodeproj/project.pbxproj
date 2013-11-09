@@ -174,6 +174,8 @@
 		635CF18D182E106600151917 /* Cell3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 635CF18C182E106600151917 /* Cell3.jpg */; };
 		635CF192182EAB5300151917 /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 635CF191182EAB5300151917 /* libGoogleAnalyticsServices.a */; };
 		635CF194182EAC5900151917 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 635CF193182EAC5900151917 /* AdSupport.framework */; };
+		635CF199182EC01200151917 /* iRate.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 635CF196182EC01200151917 /* iRate.bundle */; };
+		635CF19A182EC01200151917 /* iRate.m in Sources */ = {isa = PBXBuildFile; fileRef = 635CF198182EC01200151917 /* iRate.m */; };
 		635CF866182B28650032E7FA /* NotificationsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 635CF865182B28650032E7FA /* NotificationsCell.m */; };
 		635CF868182B28B90032E7FA /* NotificationsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 635CF867182B28B90032E7FA /* NotificationsCell.xib */; };
 		635CF86C182B2F6F0032E7FA /* NotificationDisplayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 635CF86A182B2F6F0032E7FA /* NotificationDisplayViewController.m */; };
@@ -529,6 +531,9 @@
 		635CF190182EAB5300151917 /* GAILogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAILogger.h; sourceTree = "<group>"; };
 		635CF191182EAB5300151917 /* libGoogleAnalyticsServices.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAnalyticsServices.a; sourceTree = "<group>"; };
 		635CF193182EAC5900151917 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		635CF196182EC01200151917 /* iRate.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = iRate.bundle; sourceTree = "<group>"; };
+		635CF197182EC01200151917 /* iRate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iRate.h; sourceTree = "<group>"; };
+		635CF198182EC01200151917 /* iRate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iRate.m; sourceTree = "<group>"; };
 		635CF864182B28650032E7FA /* NotificationsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NotificationsCell.h; path = Views/NotificationsCell.h; sourceTree = "<group>"; };
 		635CF865182B28650032E7FA /* NotificationsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NotificationsCell.m; path = Views/NotificationsCell.m; sourceTree = "<group>"; };
 		635CF867182B28B90032E7FA /* NotificationsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NotificationsCell.xib; path = Views/NotificationsCell.xib; sourceTree = "<group>"; };
@@ -1150,6 +1155,7 @@
 		6353C03D171C457C0060F062 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				635CF195182EC01200151917 /* iRate */,
 				63FE5B14181C1D5B0090D147 /* FastImageCache */,
 				6324CEC717997F1800B308B0 /* AnalyticsManager */,
 				6324CEBB17997EEE00B308B0 /* GoogleAnalytics */,
@@ -1317,6 +1323,16 @@
 				635CF186182E017600151917 /* RelatedCell3.jpg */,
 			);
 			name = LoginTour;
+			sourceTree = "<group>";
+		};
+		635CF195182EC01200151917 /* iRate */ = {
+			isa = PBXGroup;
+			children = (
+				635CF196182EC01200151917 /* iRate.bundle */,
+				635CF197182EC01200151917 /* iRate.h */,
+				635CF198182EC01200151917 /* iRate.m */,
+			);
+			path = iRate;
 			sourceTree = "<group>";
 		};
 		636F8673175A7AB8007E1FB6 /* XMLReader */ = {
@@ -1528,6 +1544,7 @@
 				630E0FE01768E9980061110A /* minus.png in Resources */,
 				630E0FE21768E9980061110A /* minus@2x.png in Resources */,
 				6324CEB41799793400B308B0 /* whiteArrow.png in Resources */,
+				635CF199182EC01200151917 /* iRate.bundle in Resources */,
 				633E697917C257F800477040 /* CompareCell.xib in Resources */,
 				635CF188182E017600151917 /* Cell2.jpg in Resources */,
 				635CF86D182B2F6F0032E7FA /* NotificationDisplayViewController.xib in Resources */,
@@ -1769,6 +1786,7 @@
 				635CF86C182B2F6F0032E7FA /* NotificationDisplayViewController.m in Sources */,
 				63B0DFA71789C529006F0868 /* GTMNSString+HTML.m in Sources */,
 				63FC20A717920EB000DFD544 /* CRTransitionLabel.m in Sources */,
+				635CF19A182EC01200151917 /* iRate.m in Sources */,
 				630CC0941792532D0029D021 /* TVDBHTTPClient.m in Sources */,
 				63B551141792F0B1001D74A3 /* Settings.m in Sources */,
 				639FA1E517936EAB000AA0D1 /* AniListNavigationController.m in Sources */,

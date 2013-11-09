@@ -54,7 +54,10 @@ static AnalyticsManager *sharedInstance = nil;
     self.tracker = [[GAI sharedInstance] trackerWithTrackingId:kTrackingId];
     
     //To debug Google Analytics now use:
+#ifdef DEBUG
     [[GAI sharedInstance].logger setLogLevel:kGAILogLevelVerbose];
+#endif
+    
     [GAI sharedInstance].dispatchInterval = 30;
     [GAI sharedInstance].trackUncaughtExceptions = NO;
     [[GAI sharedInstance].defaultTracker set:kGAIAppVersion value:[NSString stringWithFormat:@"iOS %@", [[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"]]];

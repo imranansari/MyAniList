@@ -15,6 +15,7 @@
 #import "UserProfile.h"
 #import "AniListNavigationController.h"
 #import "FICImageCache.h"
+#import "iRate.h"
 
 #if TARGET_IPHONE_SIMULATOR
 #import <SparkInspector/SparkInspector.h>
@@ -31,6 +32,8 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    
+    [self setupRatingPrompt];
     
     [self setupImageCache];
     
@@ -63,6 +66,16 @@
     [self createDirectories];
     
     return YES;
+}
+
+- (void)setupRatingPrompt {
+    [iRate sharedInstance].daysUntilPrompt = 5;
+    [iRate sharedInstance].usesUntilPrompt = 10;
+    [iRate sharedInstance].remindPeriod = 2;
+    [iRate sharedInstance].message = @"Thanks for using %@! If you've found this to be useful, would you mind taking a moment to rate it? It won’t take more than a minute. Thanks! ^_^";
+    [iRate sharedInstance].cancelButtonLabel = @"No Thanks :(";
+    [iRate sharedInstance].rateButtonLabel = @"Rate!";
+    [iRate sharedInstance].appStoreID = 741257899;
 }
 
 - (void)setupImageCache {
