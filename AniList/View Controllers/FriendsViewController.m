@@ -275,7 +275,7 @@
     if([friend.anime_total_entries intValue] > 0)
         profileCell.animeStats.text = [NSString stringWithFormat:@"%d anime watched, %d listed", [friend.anime_completed intValue], [friend.anime_total_entries intValue]];
     else {
-        profileCell.animeStats.text = @"";
+        profileCell.animeStats.text = @"Stats currently unavailable.";
     }
     
     

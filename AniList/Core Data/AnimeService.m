@@ -167,6 +167,15 @@
     NSArray *animes = animeDetails[@"anime"];
     NSDictionary *animeUserInfo = animeDetails[@"myinfo"];
     
+    int totalEntries = [animeUserInfo[kUserWatching][@"text"] intValue] +
+    [animeUserInfo[kUserCompleted][@"text"] intValue] +
+    [animeUserInfo[kUserOnHold][@"text"] intValue] +
+    [animeUserInfo[kUserDropped][@"text"] intValue] +
+    [animeUserInfo[kUserPlanToWatch][@"text"] intValue];
+
+    friend.anime_total_entries = @(totalEntries);
+    friend.anime_completed = @([animeUserInfo[kUserCompleted][@"text"] intValue]);
+    
     // This is just one anime.
     if([animes isKindOfClass:[NSDictionary class]]) {
         NSDictionary *soloAnime = (NSDictionary *)animes;

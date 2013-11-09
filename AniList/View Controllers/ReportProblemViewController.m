@@ -10,7 +10,7 @@
 #import "CRHTTPClient.h"
 
 #define kDefaultEmailField @"Email (optional)"
-#define kDefaultProblemField @"Describe your problem."
+#define kDefaultProblemField @"What do you love/hate/want/need? Your feedback is always appreciated. :)"
 
 @interface ReportProblemViewController ()
 @property (nonatomic, weak) IBOutlet UITextField *emailField;

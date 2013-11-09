@@ -83,6 +83,8 @@ static NSString *CellIdentifier = @"Cell";
     
     self.statusText.text = @"";
     
+    self.profileImage.image = [UIImage placeholderImage];
+    
     if(!items) {
         items = @[
                   @{
@@ -191,8 +193,6 @@ static NSString *CellIdentifier = @"Cell";
     }];
     
     if([UserProfile userIsLoggedIn]) {
-        
-        self.profileImage.image = [UIImage placeholderImage];
         self.username.text = [[UserProfile profile] username];
         
         [[UserProfile profile] fetchProfileWithSuccess:^{
@@ -210,6 +210,7 @@ static NSString *CellIdentifier = @"Cell";
                                               }];
         } failure:^{
             ALLog(@"Failed to get user profile information.");
+//            self.profileImage.image = [UIImage imageNamed:@"spacepyro.jpg"];
         }];
     }
 }

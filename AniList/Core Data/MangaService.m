@@ -16,6 +16,7 @@
 #import "Anime.h"
 #import "FriendManga.h"
 #import "FriendMangaService.h"
+#import "Friend.h"
 
 #define ENTITY_NAME @"Manga"
 
@@ -127,6 +128,15 @@
     NSDictionary *mangaDetails = data[@"myanimelist"];
     NSArray *mangaDictionary = mangaDetails[@"manga"];
     NSDictionary *mangaUserInfo = mangaDetails[@"myinfo"];
+    
+    int totalEntries = [mangaUserInfo[kUserReading][@"text"] intValue] +
+    [mangaUserInfo[kUserCompleted][@"text"] intValue] +
+    [mangaUserInfo[kUserOnHold][@"text"] intValue] +
+    [mangaUserInfo[kUserDropped][@"text"] intValue] +
+    [mangaUserInfo[kUserPlanToRead][@"text"] intValue];
+
+    friend.manga_total_entries = @(totalEntries);
+    friend.manga_completed = @([mangaUserInfo[kUserCompleted][@"text"] intValue]);
     
     // This is just one manga.
     if([mangaDictionary isKindOfClass:[NSDictionary class]]) {

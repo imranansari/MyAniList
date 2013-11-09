@@ -158,6 +158,7 @@
     [[MALHTTPClient sharedClient] getAnimeListForUser:self.friend.username initialFetch:YES success:^(NSURLRequest *operation, id response) {
         ALLog(@"Got %@'s animelist!", self.friend.username);
         [AnimeService addAnimeList:(NSDictionary *)response forFriend:self.friend];
+        
         if(self.compareControl.selectedSegmentIndex == 0)
             [self dissolveIndicator];
     } failure:^(NSURLRequest *operation, NSError *error) {
