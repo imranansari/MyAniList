@@ -58,6 +58,8 @@
     gradient.endPoint = CGPointMake(0.0f, 0.10f);
     
     self.maskView.layer.mask = gradient;
+    
+    self.view.frame = [UIScreen mainScreen].bounds;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
