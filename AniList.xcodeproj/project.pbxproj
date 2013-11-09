@@ -173,6 +173,12 @@
 		635484C5171C2FA7003457CB /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 635484A4171C2FA7003457CB /* CoreData.framework */; };
 		635484CD171C2FA7003457CB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 635484CB171C2FA7003457CB /* InfoPlist.strings */; };
 		635484D0171C2FA7003457CB /* AniListTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 635484CF171C2FA7003457CB /* AniListTests.m */; };
+		635CF187182E017600151917 /* Cell1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 635CF182182E017600151917 /* Cell1.jpg */; };
+		635CF188182E017600151917 /* Cell2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 635CF183182E017600151917 /* Cell2.jpg */; };
+		635CF189182E017600151917 /* RelatedCell1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 635CF184182E017600151917 /* RelatedCell1.jpg */; };
+		635CF18A182E017600151917 /* RelatedCell2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 635CF185182E017600151917 /* RelatedCell2.jpg */; };
+		635CF18B182E017600151917 /* RelatedCell3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 635CF186182E017600151917 /* RelatedCell3.jpg */; };
+		635CF18D182E106600151917 /* Cell3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 635CF18C182E106600151917 /* Cell3.jpg */; };
 		635CF866182B28650032E7FA /* NotificationsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 635CF865182B28650032E7FA /* NotificationsCell.m */; };
 		635CF868182B28B90032E7FA /* NotificationsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 635CF867182B28B90032E7FA /* NotificationsCell.xib */; };
 		635CF86C182B2F6F0032E7FA /* NotificationDisplayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 635CF86A182B2F6F0032E7FA /* NotificationDisplayViewController.m */; };
@@ -529,6 +535,12 @@
 		635484CC171C2FA7003457CB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		635484CE171C2FA7003457CB /* AniListTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AniListTests.h; sourceTree = "<group>"; };
 		635484CF171C2FA7003457CB /* AniListTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AniListTests.m; sourceTree = "<group>"; };
+		635CF182182E017600151917 /* Cell1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = Cell1.jpg; path = Images/LoginTour/Cell1.jpg; sourceTree = "<group>"; };
+		635CF183182E017600151917 /* Cell2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = Cell2.jpg; path = Images/LoginTour/Cell2.jpg; sourceTree = "<group>"; };
+		635CF184182E017600151917 /* RelatedCell1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = RelatedCell1.jpg; path = Images/LoginTour/RelatedCell1.jpg; sourceTree = "<group>"; };
+		635CF185182E017600151917 /* RelatedCell2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = RelatedCell2.jpg; path = Images/LoginTour/RelatedCell2.jpg; sourceTree = "<group>"; };
+		635CF186182E017600151917 /* RelatedCell3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = RelatedCell3.jpg; path = Images/LoginTour/RelatedCell3.jpg; sourceTree = "<group>"; };
+		635CF18C182E106600151917 /* Cell3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = Cell3.jpg; path = Images/LoginTour/Cell3.jpg; sourceTree = "<group>"; };
 		635CF864182B28650032E7FA /* NotificationsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NotificationsCell.h; path = Views/NotificationsCell.h; sourceTree = "<group>"; };
 		635CF865182B28650032E7FA /* NotificationsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NotificationsCell.m; path = Views/NotificationsCell.m; sourceTree = "<group>"; };
 		635CF867182B28B90032E7FA /* NotificationsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NotificationsCell.xib; path = Views/NotificationsCell.xib; sourceTree = "<group>"; };
@@ -1031,6 +1043,7 @@
 		632F4392171CDC6100A5B43A /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				635CF181182E012A00151917 /* LoginTour */,
 				631898CC17222AD700758BE9 /* Placeholders */,
 				635027A2171E53550004C106 /* 24646.jpg */,
 				63502792171E4D430004C106 /* Background */,
@@ -1312,6 +1325,19 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		635CF181182E012A00151917 /* LoginTour */ = {
+			isa = PBXGroup;
+			children = (
+				635CF18C182E106600151917 /* Cell3.jpg */,
+				635CF182182E017600151917 /* Cell1.jpg */,
+				635CF183182E017600151917 /* Cell2.jpg */,
+				635CF184182E017600151917 /* RelatedCell1.jpg */,
+				635CF185182E017600151917 /* RelatedCell2.jpg */,
+				635CF186182E017600151917 /* RelatedCell3.jpg */,
+			);
+			name = LoginTour;
+			sourceTree = "<group>";
+		};
 		636F8673175A7AB8007E1FB6 /* XMLReader */ = {
 			isa = PBXGroup;
 			children = (
@@ -1499,6 +1525,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				635484AB171C2FA7003457CB /* InfoPlist.strings in Resources */,
+				635CF189182E017600151917 /* RelatedCell1.jpg in Resources */,
 				63D8791C17A20C89002ACA13 /* red_bg_pressed.png in Resources */,
 				630E0FE41768E9980061110A /* plus.png in Resources */,
 				635484B3171C2FA7003457CB /* Default.png in Resources */,
@@ -1522,11 +1549,13 @@
 				630E0FE21768E9980061110A /* minus@2x.png in Resources */,
 				6324CEB41799793400B308B0 /* whiteArrow.png in Resources */,
 				633E697917C257F800477040 /* CompareCell.xib in Resources */,
+				635CF188182E017600151917 /* Cell2.jpg in Resources */,
 				635CF86D182B2F6F0032E7FA /* NotificationDisplayViewController.xib in Resources */,
 				63E76B07181A33CD009FC42F /* TagsViewController.xib in Resources */,
 				63C063BD17B67FD0009C4FFE /* FriendDetailViewController.xib in Resources */,
 				63D8791F17A20D8E002ACA13 /* white_bg_pressed.png in Resources */,
 				63C063A817B5F735009C4FFE /* intro_background.png in Resources */,
+				635CF187182E017600151917 /* Cell1.jpg in Resources */,
 				632F439C171CDDED00A5B43A /* AniListViewController.xib in Resources */,
 				637C76C31829414A00DD1DC6 /* NotificationsViewController.xib in Resources */,
 				63922CED171D82C800D41BCE /* spacepyro.jpg in Resources */,
@@ -1550,12 +1579,14 @@
 				636F86AA175BA037007E1FB6 /* header_bg.png in Resources */,
 				6324CEB61799793400B308B0 /* whiteArrow@2x.png in Resources */,
 				630E0FE61768E9980061110A /* plus@2x.png in Resources */,
+				635CF18D182E106600151917 /* Cell3.jpg in Resources */,
 				636F86AC175BA037007E1FB6 /* header_bg@2x.png in Resources */,
 				6324CEAE1799793400B308B0 /* blueArrow@2x.png in Resources */,
 				6301D94D175D66AF00163160 /* AniListSummaryViewController.xib in Resources */,
 				63BEA74017619E0800432BED /* AniListUserInfoEditViewController.xib in Resources */,
 				63894CC8176A9E37007D2D05 /* LoginViewController.xib in Resources */,
 				6371444C1770074600E60B9F /* SearchViewController.xib in Resources */,
+				635CF18A182E017600151917 /* RelatedCell2.jpg in Resources */,
 				63B386B31777B91C001A7E31 /* MangaCell.xib in Resources */,
 				636691DC17A2B2E70013B0F6 /* TopListViewController.xib in Resources */,
 				63B386BA1777DCAB001A7E31 /* AniListCell.xib in Resources */,
@@ -1567,6 +1598,7 @@
 				639FA1E117936ABF000AA0D1 /* back@2x.png in Resources */,
 				63D045B2179CEDFD006507D3 /* TagListViewController.xib in Resources */,
 				6392F4BC1793851F00D566BD /* anime_background@2x.png in Resources */,
+				635CF18B182E017600151917 /* RelatedCell3.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
