@@ -40,8 +40,8 @@
                             </subviews>
                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.10000000000000001" colorSpace="calibratedRGB"/>
                         </view>
-                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="SpacePyro" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="10">
-                            <rect key="frame" x="95" y="-4" width="210" height="32"/>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="SpacePyro" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" id="10">
+                            <rect key="frame" x="95" y="-4" width="160" height="32"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="22"/>
                             <color key="textColor" red="0.97620376279999999" green="0.97620376279999999" blue="0.97620376279999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -49,8 +49,8 @@
                             <color key="shadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <size key="shadowOffset" width="0.0" height="1"/>
                         </label>
-                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Manga Stats:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="11">
-                            <rect key="frame" x="95" y="53" width="210" height="21"/>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Manga Stats:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" id="11">
+                            <rect key="frame" x="95" y="53" width="170" height="21"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
                             <color key="textColor" red="0.44363839290000001" green="0.44363839290000001" blue="0.44363839290000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -58,8 +58,8 @@
                             <color key="shadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <size key="shadowOffset" width="0.0" height="1"/>
                         </label>
-                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Manga Stats:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ggn-zB-Ai3">
-                            <rect key="frame" x="95" y="68" width="210" height="21"/>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Manga Stats:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" id="Ggn-zB-Ai3">
+                            <rect key="frame" x="95" y="68" width="170" height="21"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
                             <color key="textColor" red="0.44363839290000001" green="0.44363839290000001" blue="0.44363839290000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -67,8 +67,8 @@
                             <color key="shadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <size key="shadowOffset" width="0.0" height="1"/>
                         </label>
-                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Anime Stats:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="12">
-                            <rect key="frame" x="95" y="23" width="210" height="21"/>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Anime Stats:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" id="12">
+                            <rect key="frame" x="95" y="23" width="170" height="21"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
                             <color key="textColor" red="0.44363839290000001" green="0.44363839290000001" blue="0.44363839290000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -76,8 +76,8 @@
                             <color key="shadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <size key="shadowOffset" width="0.0" height="1"/>
                         </label>
-                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Anime Stats:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="BKm-rq-2mi">
-                            <rect key="frame" x="95" y="38" width="210" height="21"/>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Anime Stats:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" id="BKm-rq-2mi">
+                            <rect key="frame" x="95" y="38" width="170" height="21"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
                             <color key="textColor" red="0.44363839290000001" green="0.44363839290000001" blue="0.44363839290000001" alpha="1" colorSpace="calibratedRGB"/>
