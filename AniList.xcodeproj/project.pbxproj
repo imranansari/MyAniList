@@ -44,8 +44,6 @@
 		6301D956175D729600163160 /* NSString+AniList.m in Sources */ = {isa = PBXBuildFile; fileRef = 6301D954175D729600163160 /* NSString+AniList.m */; };
 		63047A4217656CE10039D795 /* AniListDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63047A4117656CE10039D795 /* AniListDatePickerView.m */; };
 		63047A4317656CE10039D795 /* AniListDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63047A4117656CE10039D795 /* AniListDatePickerView.m */; };
-		630965181737E82100B43489 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 630965171737E82100B43489 /* Icon@2x.png */; };
-		6309651A1737E82500B43489 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 630965191737E82500B43489 /* Icon.png */; };
 		630CC0941792532D0029D021 /* TVDBHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 630CC0931792532D0029D021 /* TVDBHTTPClient.m */; };
 		630CC0951792532D0029D021 /* TVDBHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 630CC0931792532D0029D021 /* TVDBHTTPClient.m */; };
 		630E0FE01768E9980061110A /* minus.png in Resources */ = {isa = PBXBuildFile; fileRef = 630E0FDC1768E9980061110A /* minus.png */; };
@@ -391,8 +389,6 @@
 		6301D954175D729600163160 /* NSString+AniList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+AniList.m"; path = "Categories/NSString+AniList.m"; sourceTree = "<group>"; };
 		63047A4017656CE10039D795 /* AniListDatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AniListDatePickerView.h; path = Views/AniListDatePickerView.h; sourceTree = "<group>"; };
 		63047A4117656CE10039D795 /* AniListDatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AniListDatePickerView.m; path = Views/AniListDatePickerView.m; sourceTree = "<group>"; };
-		630965171737E82100B43489 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
-		630965191737E82500B43489 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		630CC0921792532D0029D021 /* TVDBHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVDBHTTPClient.h; path = "Web Services/TVDBHTTPClient.h"; sourceTree = "<group>"; };
 		630CC0931792532D0029D021 /* TVDBHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVDBHTTPClient.m; path = "Web Services/TVDBHTTPClient.m"; sourceTree = "<group>"; };
 		630E0FDC1768E9980061110A /* minus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = minus.png; path = Images/Icons/minus.png; sourceTree = "<group>"; };
@@ -1212,8 +1208,6 @@
 		63548492171C2FA7003457CB = {
 			isa = PBXGroup;
 			children = (
-				630965191737E82500B43489 /* Icon.png */,
-				630965171737E82100B43489 /* Icon@2x.png */,
 				635484A6171C2FA7003457CB /* AniList */,
 				635484C8171C2FA7003457CB /* AniListTests */,
 				6353C03D171C457C0060F062 /* Libraries */,
@@ -1548,9 +1542,7 @@
 				635027A9171E58CC0004C106 /* action@2x.png in Resources */,
 				635027AD171E601E0004C106 /* AnimeCell.xib in Resources */,
 				6324CEAA1799793400B308B0 /* blackArrow@2x.png in Resources */,
-				630965181737E82100B43489 /* Icon@2x.png in Resources */,
 				630FCD9518024B3A00D81EAF /* CompareViewController.xib in Resources */,
-				6309651A1737E82500B43489 /* Icon.png in Resources */,
 				636F8689175B1091007E1FB6 /* AniListUserInfoViewController.xib in Resources */,
 				638E6B2117A7FD2E00A35FDB /* AniListStatCell.xib in Resources */,
 				636F8697175B116F007E1FB6 /* AniListDetailsViewController.xib in Resources */,
