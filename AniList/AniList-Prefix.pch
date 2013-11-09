@@ -42,6 +42,8 @@ NS_INLINE void MVComputeTimeWithNameAndBlock(const char *caller, void (^block)()
     
 #ifdef DEBUG
     NSLog(@"%s - total: %f", caller, nowTimeInterval - startTimeInterval);
+#else
+    CLSLog(@"%s - total: %f", caller, nowTimeInterval - startTimeInterval);
 #endif
     
 }
