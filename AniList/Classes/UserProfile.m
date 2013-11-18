@@ -77,6 +77,17 @@ static UserProfile *profile = nil;
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
+#pragma mark - Settings Methods
+
+- (BOOL)displayCompleted {
+    return [[NSUserDefaults standardUserDefaults] boolForKey:kDisplayCompleted];
+}
+
+- (void)setDisplayCompleted:(BOOL)displayCompleted {
+    [[NSUserDefaults standardUserDefaults] setBool:displayCompleted forKey:kDisplayCompleted];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 
 #pragma mark - Public Methods
 

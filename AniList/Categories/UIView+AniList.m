@@ -11,6 +11,19 @@
 
 @implementation UIView (AniList)
 
++ (UIView *)tableHeaderWithPrimaryText:(NSString *)primaryString andSecondaryText:(NSString *)secondaryString isCollapsible:(BOOL)collapsible {
+    
+    UIView *view = [UIView tableHeaderWithPrimaryText:primaryString andSecondaryText:secondaryString];
+    
+    if(collapsible) {
+        UIImageView *chevron = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"chevron.png"]];
+        [view addSubview:chevron];
+        chevron.frame = CGRectMake(view.frame.size.width - 20, view.frame.size.height / 2 - chevron.frame.size.height / 2, chevron.frame.size.width, chevron.frame.size.height);
+    }
+    
+    return view;
+}
+
 + (UIView *)tableHeaderWithPrimaryText:(NSString *)primaryString andSecondaryText:(NSString *)secondaryString {
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(10, 0, 320, 44)];
     view.backgroundColor = [UIColor clearColor];

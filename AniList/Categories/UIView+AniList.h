@@ -10,6 +10,7 @@
 
 @interface UIView (AniList)
 
++ (UIView *)tableHeaderWithPrimaryText:(NSString *)primaryString andSecondaryText:(NSString *)secondaryString isCollapsible:(BOOL)collapsible;
 + (UIView *)tableHeaderWithPrimaryText:(NSString *)primaryString andSecondaryText:(NSString *)secondaryString;
 + (UIView *)tableFooterWithError;
 + (UIView *)versionFooter;

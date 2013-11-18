@@ -31,6 +31,13 @@
 // Notification Names
 #define kUserLoggedIn @"kUserLoggedIn"
 
+// Preference Keys
+#define kDisplayWatching @"kDisplayWatching"
+#define kDisplayCompleted @"kDisplayCompleted"
+#define kDisplayOnHold @"kDisplayOnHold"
+#define kDisplayDropped @"kDisplayDropped"
+#define kDisplayPlanToWatch @"kDisplayPlanToWatch"
+
 @interface UserProfile : NSObject
 
 @property (nonatomic, copy) NSString *username;
@@ -40,6 +47,13 @@
 @property (nonatomic, strong) NSDictionary *mangaStats;
 @property (nonatomic, strong) NSURLRequest *profileImageURL;
 @property (nonatomic, strong) UIImage *profileImage;
+
+// Preferences
+@property (nonatomic, assign) BOOL displayWatching;
+@property (nonatomic, assign) BOOL displayCompleted;
+@property (nonatomic, assign) BOOL displayOnHold;
+@property (nonatomic, assign) BOOL displayDropped;
+@property (nonatomic, assign) BOOL displayPlanToWatch;
 
 + (UserProfile *)profile;
 - (void)setUsername:(NSString *)username andPassword:(NSString *)password;
