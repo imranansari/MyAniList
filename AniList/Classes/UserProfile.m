@@ -79,6 +79,15 @@ static UserProfile *profile = nil;
 
 #pragma mark - Settings Methods
 
+- (BOOL)displayWatching {
+    return [[NSUserDefaults standardUserDefaults] boolForKey:kDisplayWatching];
+}
+
+- (void)setDisplayWatching:(BOOL)displayWatching {
+    [[NSUserDefaults standardUserDefaults] setBool:displayWatching forKey:kDisplayWatching];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 - (BOOL)displayCompleted {
     return [[NSUserDefaults standardUserDefaults] boolForKey:kDisplayCompleted];
 }
@@ -88,6 +97,32 @@ static UserProfile *profile = nil;
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
+- (BOOL)displayOnHold {
+    return [[NSUserDefaults standardUserDefaults] boolForKey:kDisplayOnHold];
+}
+
+- (void)setDisplayOnHold:(BOOL)displayOnHold {
+    [[NSUserDefaults standardUserDefaults] setBool:displayOnHold forKey:kDisplayOnHold];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (BOOL)displayDropped {
+    return [[NSUserDefaults standardUserDefaults] boolForKey:kDisplayDropped];
+}
+
+- (void)setDisplayDropped:(BOOL)displayDropped {
+    [[NSUserDefaults standardUserDefaults] setBool:displayDropped forKey:kDisplayDropped];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (BOOL)displayPlanToWatch {
+    return [[NSUserDefaults standardUserDefaults] boolForKey:kDisplayPlanToWatch];
+}
+
+- (void)setDisplayPlanToWatch:(BOOL)displayPlanToWatch {
+    [[NSUserDefaults standardUserDefaults] setBool:displayPlanToWatch forKey:kDisplayPlanToWatch];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
 
 #pragma mark - Public Methods
 

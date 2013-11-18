@@ -240,6 +240,9 @@
 		6372893C17542D110032F425 /* MALHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 6372893A17542D110032F425 /* MALHTTPClient.m */; };
 		6374DB4C179CF016003D7264 /* TagListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6374DB4B179CF016003D7264 /* TagListViewController.m */; };
 		6374DB4D179CF016003D7264 /* TagListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6374DB4B179CF016003D7264 /* TagListViewController.m */; };
+		6377E7DD183915ED00FA199B /* chevron.png in Resources */ = {isa = PBXBuildFile; fileRef = 6377E7DB183915ED00FA199B /* chevron.png */; };
+		6377E7DE183915ED00FA199B /* chevron@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6377E7DC183915ED00FA199B /* chevron@2x.png */; };
+		6377E7E41839A9E400FA199B /* AniListTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6377E7E31839A9E400FA199B /* AniListTableHeaderView.m */; };
 		637C76B11828930800DD1DC6 /* ReportProblemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 637C76AF1828930800DD1DC6 /* ReportProblemViewController.m */; };
 		637C76B21828930800DD1DC6 /* ReportProblemViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 637C76B01828930800DD1DC6 /* ReportProblemViewController.xib */; };
 		637C76B9182897B200DD1DC6 /* Logger.m in Sources */ = {isa = PBXBuildFile; fileRef = 637C76B8182897B200DD1DC6 /* Logger.m */; };
@@ -596,6 +599,11 @@
 		6372893A17542D110032F425 /* MALHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MALHTTPClient.m; path = "Web Services/MALHTTPClient.m"; sourceTree = "<group>"; };
 		6374DB4A179CF016003D7264 /* TagListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagListViewController.h; sourceTree = "<group>"; };
 		6374DB4B179CF016003D7264 /* TagListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagListViewController.m; sourceTree = "<group>"; };
+		6377E7DB183915ED00FA199B /* chevron.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = chevron.png; path = Images/Icons/chevron.png; sourceTree = "<group>"; };
+		6377E7DC183915ED00FA199B /* chevron@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "chevron@2x.png"; path = "Images/Icons/chevron@2x.png"; sourceTree = "<group>"; };
+		6377E7E118391E5300FA199B /* AniList_1.1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AniList_1.1.xcdatamodel; sourceTree = "<group>"; };
+		6377E7E21839A9E400FA199B /* AniListTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AniListTableHeaderView.h; path = Views/AniListTableHeaderView.h; sourceTree = "<group>"; };
+		6377E7E31839A9E400FA199B /* AniListTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AniListTableHeaderView.m; path = Views/AniListTableHeaderView.m; sourceTree = "<group>"; };
 		637C76AE1828930800DD1DC6 /* ReportProblemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportProblemViewController.h; sourceTree = "<group>"; };
 		637C76AF1828930800DD1DC6 /* ReportProblemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReportProblemViewController.m; sourceTree = "<group>"; };
 		637C76B01828930800DD1DC6 /* ReportProblemViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReportProblemViewController.xib; sourceTree = "<group>"; };
@@ -945,6 +953,8 @@
 				63FC20A617920EB000DFD544 /* CRTransitionLabel.m */,
 				63D045A5179CDA5D006507D3 /* TagView.h */,
 				63D045A6179CDA5D006507D3 /* TagView.m */,
+				6377E7E21839A9E400FA199B /* AniListTableHeaderView.h */,
+				6377E7E31839A9E400FA199B /* AniListTableHeaderView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1364,6 +1374,8 @@
 		63922CEB171D82BB00D41BCE /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				6377E7DB183915ED00FA199B /* chevron.png */,
+				6377E7DC183915ED00FA199B /* chevron@2x.png */,
 				639FA1DD17936ABF000AA0D1 /* back.png */,
 				639FA1DE17936ABF000AA0D1 /* back@2x.png */,
 				630E0FDC1768E9980061110A /* minus.png */,
@@ -1560,6 +1572,7 @@
 				63502798171E4D760004C106 /* bg@2x.png in Resources */,
 				635027A8171E58CC0004C106 /* action.png in Resources */,
 				6324CEA81799793400B308B0 /* blackArrow.png in Resources */,
+				6377E7DD183915ED00FA199B /* chevron.png in Resources */,
 				635027A9171E58CC0004C106 /* action@2x.png in Resources */,
 				635027AD171E601E0004C106 /* AnimeCell.xib in Resources */,
 				6324CEAA1799793400B308B0 /* blackArrow@2x.png in Resources */,
@@ -1573,6 +1586,7 @@
 				635CF18D182E106600151917 /* Cell3.jpg in Resources */,
 				636F86AC175BA037007E1FB6 /* header_bg@2x.png in Resources */,
 				6324CEAE1799793400B308B0 /* blueArrow@2x.png in Resources */,
+				6377E7DE183915ED00FA199B /* chevron@2x.png in Resources */,
 				6301D94D175D66AF00163160 /* AniListSummaryViewController.xib in Resources */,
 				63BEA74017619E0800432BED /* AniListUserInfoEditViewController.xib in Resources */,
 				63894CC8176A9E37007D2D05 /* LoginViewController.xib in Resources */,
@@ -1682,6 +1696,7 @@
 				636691DA17A2B2E70013B0F6 /* TopListViewController.m in Sources */,
 				635484AD171C2FA7003457CB /* main.m in Sources */,
 				635484B1171C2FA7003457CB /* AniListAppDelegate.m in Sources */,
+				6377E7E41839A9E400FA199B /* AniListTableHeaderView.m in Sources */,
 				635484BA171C2FA7003457CB /* AniList_1.0.xcdatamodeld in Sources */,
 				6353C22F171C457D0060F062 /* TTTAttributedLabel.m in Sources */,
 				632F436C171CD6FA00A5B43A /* MenuViewController.m in Sources */,
@@ -2163,6 +2178,7 @@
 		635484B8171C2FA7003457CB /* AniList_1.0.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				6377E7E118391E5300FA199B /* AniList_1.1.xcdatamodel */,
 				635484B9171C2FA7003457CB /* AniList_1.0.xcdatamodel */,
 			);
 			currentVersion = 635484B9171C2FA7003457CB /* AniList_1.0.xcdatamodel */;

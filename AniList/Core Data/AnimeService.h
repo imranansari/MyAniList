@@ -13,6 +13,7 @@
 
 @interface AnimeService : NSObject
 
++ (int)numberOfAnimeForWatchedStatus:(AnimeWatchedStatus)status;
 + (NSArray *)allAnime;
 + (NSArray *)myAnime;
 + (void)downloadInfo;

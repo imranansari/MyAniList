@@ -55,7 +55,7 @@ static AnalyticsManager *sharedInstance = nil;
     
     //To debug Google Analytics now use:
 #ifdef DEBUG
-    [[GAI sharedInstance].logger setLogLevel:kGAILogLevelVerbose];
+//    [[GAI sharedInstance].logger setLogLevel:kGAILogLevelVerbose];
 #endif
     
     [GAI sharedInstance].dispatchInterval = 30;

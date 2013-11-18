@@ -48,6 +48,17 @@
  altenative_versions
  */
 
++ (int)numberOfAnimeForWatchedStatus:(AnimeWatchedStatus)status {
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITY_NAME inManagedObjectContext:[AnimeService managedObjectContext]];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"watched_status == %d", status];
+    request.entity = entity;
+    request.predicate = predicate;
+    
+    NSError *error = nil;
+    return [[AnimeService managedObjectContext] countForFetchRequest:request error:&error];
+}
+
 + (void)deleteAllAnime {
     NSArray *allAnime = [AnimeService allAnime];
     

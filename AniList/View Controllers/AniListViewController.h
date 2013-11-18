@@ -27,6 +27,7 @@
 @property (nonatomic, assign) int requestAttempts;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 @property (nonatomic, weak) IBOutlet UILabel *errorLabel;
+@property (nonatomic, assign) BOOL loadSectionHeaders;
 
 - (void)fetchData;
 - (NSString *)entityName;

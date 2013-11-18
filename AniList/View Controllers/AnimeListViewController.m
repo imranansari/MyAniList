@@ -14,6 +14,7 @@
 #import "MALHTTPClient.h"
 #import "AniListAppDelegate.h"
 #import "AnimeUserInfoEditViewController.h"
+#import "AniListTableHeaderView.h"
 
 #import "FICImageCache.h"
 
@@ -258,6 +259,51 @@ static BOOL alreadyFetched = NO;
 
 #pragma mark - Table view data source
 
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    NSString *count = @"";
+    int sectionValue = 0;
+    
+    BOOL expanded = NO;
+    
+    switch (section) {
+        case 0:
+            expanded = [UserProfile profile].displayWatching;
+            sectionValue = [AnimeService numberOfAnimeForWatchedStatus:AnimeWatchedStatusWatching];
+            break;
+        case 1:
+            expanded = [UserProfile profile].displayCompleted;
+            sectionValue = [AnimeService numberOfAnimeForWatchedStatus:AnimeWatchedStatusCompleted];
+            break;
+        case 2:
+            expanded = [UserProfile profile].displayOnHold;
+            sectionValue = [AnimeService numberOfAnimeForWatchedStatus:AnimeWatchedStatusOnHold];
+            break;
+        case 3:
+            expanded = [UserProfile profile].displayDropped;
+            sectionValue = [AnimeService numberOfAnimeForWatchedStatus:AnimeWatchedStatusDropped];
+            break;
+        case 4:
+            expanded = [UserProfile profile].displayPlanToWatch;
+            sectionValue = [AnimeService numberOfAnimeForWatchedStatus:AnimeWatchedStatusPlanToWatch];
+            break;
+        default:
+            break;
+    }
+    
+    count = [NSString stringWithFormat:@"%d", sectionValue];
+    
+    AniListTableHeaderView *headerView = [[AniListTableHeaderView alloc] initWithPrimaryText:self.sectionHeaders[section] andSecondaryText:count isExpanded:expanded];
+    headerView.tag = section;
+    
+    UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] init];
+    gestureRecognizer.numberOfTapsRequired = 1;
+    [gestureRecognizer addTarget:headerView action:@selector(expand)];
+    [gestureRecognizer addTarget:self action:@selector(expand:)];
+    [headerView addGestureRecognizer:gestureRecognizer];
+    
+    return headerView;
+}
+
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     return [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 0)];
 }
@@ -403,6 +449,36 @@ static BOOL alreadyFetched = NO;
         default:
             break;
     }
+}
+
+#pragma mark - TapGestureRecognizerDelegate Methods
+
+- (void)expand:(UITapGestureRecognizer *)recognizer {
+    ALLog(@"EXPAND!");
+    
+    NSInteger section = recognizer.view.tag;
+    UserProfile *profile = [UserProfile profile];
+    switch (section) {
+        case 0:
+            profile.displayWatching = !profile.displayWatching;
+            break;
+        case 1:
+            profile.displayCompleted = !profile.displayCompleted;
+            break;
+        case 2:
+            profile.displayOnHold = !profile.displayOnHold;
+            break;
+        case 3:
+            profile.displayDropped = !profile.displayDropped;
+            break;
+        case 4:
+            profile.displayPlanToWatch = !profile.displayPlanToWatch;
+            break;
+        default:
+            break;
+    }
+    
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:section] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 @end

@@ -10,6 +10,7 @@
 #import "AniListAppDelegate.h"
 #import "CRTransitionLabel.h"
 #import "AniListCell.h"
+#import "AniListTableHeaderView.h"
 
 @interface AniListViewController ()
 @property (nonatomic, weak) IBOutlet CRTransitionLabel *topSectionLabel;
@@ -202,22 +203,41 @@
     return @"column";
 }
 
-- (void)updateHeaderForSections:(NSArray *)sections {
-//    for(int i = 0; i < sections.count; i++) {
-//        NSIndexPath *indexPath = sections[i];
-//        NSNumber *headerSection = [self.fetchedResultsController sectionIndexTitles][indexPath.section];
-//        NSString *count = [NSString stringWithFormat:@"%d", [self.tableView numberOfRowsInSection:indexPath.section]];
-//        UIView *headerView = [UIView tableHeaderWithPrimaryText:self.sectionHeaders[[headerSection intValue]] andSecondaryText:count];
-//    }
-//    return;
-}
-
 #pragma mark - Table view data source
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    NSNumber *headerSection = [self.fetchedResultsController sectionIndexTitles][section];
     NSString *count = [NSString stringWithFormat:@"%d", [self.tableView numberOfRowsInSection:section]];
-    UIView *headerView = [UIView tableHeaderWithPrimaryText:self.sectionHeaders[[headerSection intValue]] andSecondaryText:count];
+    
+    BOOL expanded = NO;
+    
+    switch (section) {
+        case 0:
+            expanded = [UserProfile profile].displayWatching;
+            break;
+        case 1:
+            expanded = [UserProfile profile].displayCompleted;
+            break;
+        case 2:
+            expanded = [UserProfile profile].displayOnHold;
+            break;
+        case 3:
+            expanded = [UserProfile profile].displayDropped;
+            break;
+        case 4:
+            expanded = [UserProfile profile].displayPlanToWatch;
+            break;
+        default:
+            break;
+    }
+    
+    AniListTableHeaderView *headerView = [[AniListTableHeaderView alloc] initWithPrimaryText:self.sectionHeaders[section] andSecondaryText:count isExpanded:expanded];
+    headerView.tag = section;
+    
+    UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] init];
+    gestureRecognizer.numberOfTapsRequired = 1;
+    [gestureRecognizer addTarget:headerView action:@selector(expand)];
+    [gestureRecognizer addTarget:self action:@selector(expand:)];
+    [headerView addGestureRecognizer:gestureRecognizer];
     
     return headerView;
 }
@@ -239,12 +259,29 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return [[self.fetchedResultsController sections] count];
+    if([self.fetchedResultsController sections].count > 0)
+        return [self.sectionHeaders count];
+    return 0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
-    return [sectionInfo numberOfObjects];
+    for(id <NSFetchedResultsSectionInfo> sectionInfo in [self.fetchedResultsController sections]) {
+        ALLog(@"Section to look for: %d", section);
+        if((section == 0 && ![UserProfile profile].displayWatching)     ||
+           (section == 1 && ![UserProfile profile].displayCompleted)    ||
+           (section == 2 && ![UserProfile profile].displayOnHold)       ||
+           (section == 3 && ![UserProfile profile].displayDropped)      ||
+           (section == 4 && ![UserProfile profile].displayPlanToWatch)) {
+            ALLog(@"Section %d is hidden.", section);
+            return 0;
+        }
+        if([sectionInfo.name isEqualToString:[NSString stringWithFormat:@"%d", section]]) {
+            ALLog(@"Found section %d with %d objects", section, [sectionInfo numberOfObjects]);
+            return [sectionInfo numberOfObjects];
+        }
+    }
+    
+    return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -326,15 +363,21 @@
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
            atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
-    switch(type) {
-        case NSFetchedResultsChangeInsert:
-            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-            
-        case NSFetchedResultsChangeDelete:
-            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
-            break;
+    
+    if(!self.loadSectionHeaders) {
+        self.loadSectionHeaders = YES;
+        [self.tableView insertSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 5)] withRowAnimation:UITableViewRowAnimationFade];
     }
+
+//    switch(type) {
+//        case NSFetchedResultsChangeInsert:
+//            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+//            break;
+//            
+//        case NSFetchedResultsChangeDelete:
+//            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+//            break;
+//    }
 }
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
@@ -415,6 +458,12 @@
             navigationController.imageView.frame = CGRectMake(navigationController.imageView.frame.origin.x, yOrigin, navigationController.imageView.frame.size.width, navigationController.imageView.frame.size.height);
         }
     }
+}
+
+#pragma mark - TapGestureRecognizerDelegate Methods
+
+- (void)expand:(UITapGestureRecognizer *)recognizer {
+    ALLog(@"Must be overridden.");
 }
 
 @end
