@@ -22,6 +22,16 @@
 
 @implementation MangaService
 
++ (int)numberOfMangaForReadStatus:(MangaReadStatus)status {
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITY_NAME inManagedObjectContext:[MangaService managedObjectContext]];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"read_status == %d", status];
+    request.entity = entity;
+    request.predicate = predicate;
+    
+    NSError *error = nil;
+    return [[MangaService managedObjectContext] countForFetchRequest:request error:&error];
+}
 + (void)deleteAllManga {
     NSArray *allManga = [MangaService allManga];
     

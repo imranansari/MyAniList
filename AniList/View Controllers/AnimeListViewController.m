@@ -210,7 +210,7 @@ static BOOL alreadyFetched = NO;
         NSIndexPath *swipedIndexPath = [self.tableView indexPathForRowAtPoint:swipeLocation];
         AniListCell *swipedCell = (AniListCell *)[self.tableView cellForRowAtIndexPath:swipedIndexPath];
         
-        self.editedAnime = [self animeForIndexPath:swipedIndexPath];
+        self.editedAnime = (Anime *)[self objectForIndexPath:swipedIndexPath];
         
         [swipedCell showEditScreenForAnime:self.editedAnime];
     }
@@ -327,7 +327,7 @@ static BOOL alreadyFetched = NO;
     }
     
     
-    Anime *anime = [self animeForIndexPath:indexPath];
+    Anime *anime = (Anime *)[self objectForIndexPath:indexPath];
     
     [self configureCell:cell withObject:anime];
     
@@ -342,24 +342,12 @@ static BOOL alreadyFetched = NO;
     return cell;
 }
 
-- (Anime *)animeForIndexPath:(NSIndexPath *)indexPath {
-    for(id <NSFetchedResultsSectionInfo> sectionInfo in [self.fetchedResultsController sections]) {
-        if([sectionInfo.name isEqualToString:[NSString stringWithFormat:@"%d", indexPath.section]]) {
-            Anime *anime = [self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row inSection:[[self.fetchedResultsController sections] indexOfObject:sectionInfo]]];
-            ALLog(@"Returning info for %@ for indexPath (%d, %d)", anime.title, indexPath.section, indexPath.row);
-            return anime;
-        }
-    }
-    
-    return nil;
-}
-
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if(editingStyle == UITableViewCellEditingStyleDelete) {
         
-        self.editedAnime = [self animeForIndexPath:indexPath];
+        self.editedAnime = (Anime *)[self objectForIndexPath:indexPath];
         
         UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:[NSString stringWithFormat:@"Do you really want to delete '%@'?", self.editedAnime.title]
                                                                  delegate:self
@@ -438,7 +426,7 @@ static BOOL initialUpdate = NO;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    Anime *anime = [self animeForIndexPath:indexPath];
+    Anime *anime = (Anime *)[self objectForIndexPath:indexPath];
     
     AniListNavigationController *navigationController = (AniListNavigationController *)self.navigationController;
     

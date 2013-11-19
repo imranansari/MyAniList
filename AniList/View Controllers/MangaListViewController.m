@@ -14,6 +14,7 @@
 #import "MALHTTPClient.h"
 #import "AniListAppDelegate.h"
 #import "MangaUserInfoEditViewController.h"
+#import "AniListTableHeaderView.h"
 
 static BOOL alreadyFetched = NO;
 
@@ -189,7 +190,7 @@ static BOOL alreadyFetched = NO;
         NSIndexPath *swipedIndexPath = [self.tableView indexPathForRowAtPoint:swipeLocation];
         AniListCell *swipedCell = (AniListCell *)[self.tableView cellForRowAtIndexPath:swipedIndexPath];
         
-        self.editedManga = [self.fetchedResultsController objectAtIndexPath:swipedIndexPath];
+        self.editedManga = (Manga *)[self objectForIndexPath:swipedIndexPath];
         
         [swipedCell showEditScreenForManga:self.editedManga];
     }
@@ -233,6 +234,51 @@ static BOOL alreadyFetched = NO;
 
 #pragma mark - Table view data source
 
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    NSString *count = @"";
+    int sectionValue = 0;
+    
+    BOOL expanded = NO;
+    
+    switch (section) {
+        case 0:
+            expanded = [UserProfile profile].displayWatching;
+            sectionValue = [MangaService numberOfMangaForReadStatus:MangaReadStatusReading];
+            break;
+        case 1:
+            expanded = [UserProfile profile].displayCompleted;
+            sectionValue = [MangaService numberOfMangaForReadStatus:MangaReadStatusCompleted];
+            break;
+        case 2:
+            expanded = [UserProfile profile].displayOnHold;
+            sectionValue = [MangaService numberOfMangaForReadStatus:MangaReadStatusOnHold];
+            break;
+        case 3:
+            expanded = [UserProfile profile].displayDropped;
+            sectionValue = [MangaService numberOfMangaForReadStatus:MangaReadStatusDropped];
+            break;
+        case 4:
+            expanded = [UserProfile profile].displayPlanToWatch;
+            sectionValue = [MangaService numberOfMangaForReadStatus:MangaReadStatusPlanToRead];
+            break;
+        default:
+            break;
+    }
+    
+    count = [NSString stringWithFormat:@"%d", sectionValue];
+    
+    AniListTableHeaderView *headerView = [[AniListTableHeaderView alloc] initWithPrimaryText:self.sectionHeaders[section] andSecondaryText:count isExpanded:expanded];
+    headerView.tag = section;
+    
+    UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] init];
+    gestureRecognizer.numberOfTapsRequired = 1;
+    [gestureRecognizer addTarget:headerView action:@selector(expand)];
+    [gestureRecognizer addTarget:self action:@selector(expand:)];
+    [headerView addGestureRecognizer:gestureRecognizer];
+    
+    return headerView;
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return [MangaCell cellHeight];
 }
@@ -248,7 +294,8 @@ static BOOL alreadyFetched = NO;
         cell = (MangaCell *)nib[0];
     }
     
-    Manga *manga = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    Manga *manga = (Manga *)[self objectForIndexPath:indexPath];
+    
     [self configureCell:cell withObject:manga];
     
     if(self.editedIndexPath && self.editedIndexPath.section == indexPath.section && self.editedIndexPath.row == indexPath.row) {
@@ -267,7 +314,7 @@ static BOOL alreadyFetched = NO;
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if(editingStyle == UITableViewCellEditingStyleDelete) {
         
-        self.editedManga = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        self.editedManga = (Manga *)[self objectForIndexPath:indexPath];
         
         UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:[NSString stringWithFormat:@"Do you really want to delete '%@'?", self.editedManga.title]
                                                                  delegate:self
@@ -280,9 +327,46 @@ static BOOL alreadyFetched = NO;
     }
 }
 
+static int map[5] = {-1, -1, -1, -1, -1};
+static BOOL initialUpdate = NO;
+
+- (void)updateMapping {
+    
+    for(int i = 0; i < 5; i++) {
+        map[i] = -1;
+    }
+    
+    for(int i = 0; i < self.fetchedResultsController.sections.count; i++) {
+        id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][i];
+        map[i] = [sectionInfo.name intValue];
+    }
+    
+    ALLog(@"map: (%d, %d, %d, %d, %d)", map[0], map[1], map[2], map[3], map[4]);
+}
+
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
        atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
       newIndexPath:(NSIndexPath *)newIndexPath {
+    
+    
+    Manga *manga = (Manga *)anObject;
+    
+    if(!initialUpdate) {
+        initialUpdate = YES;
+        [self updateMapping];
+    }
+    
+    ALLog(@"%@ - (%d, %d) to (%d, %d)", manga.title, indexPath.section, indexPath.row, newIndexPath.section, newIndexPath.row);
+    
+    ALLog(@"Updating indexPath section from %d to %d.", indexPath.section, map[indexPath.section]);
+    indexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:map[indexPath.section]];
+    
+    if(newIndexPath) {
+        [self updateMapping];
+        ALLog(@"Updating newIndexPath section from %d to %d.", newIndexPath.section, map[newIndexPath.section]);
+        newIndexPath = [NSIndexPath indexPathForRow:newIndexPath.row inSection:map[newIndexPath.section]];
+    }
+
     
     [super controller:controller didChangeObject:anObject atIndexPath:indexPath forChangeType:type newIndexPath:newIndexPath];
     
@@ -308,10 +392,12 @@ static BOOL alreadyFetched = NO;
         case NSFetchedResultsChangeMove:
             break;
     }
+    
+    [self updateMapping];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    Manga *manga = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    Manga *manga = (Manga *)[self objectForIndexPath:indexPath];
     
     AniListNavigationController *navigationController = (AniListNavigationController *)self.navigationController;
     
@@ -376,6 +462,36 @@ static BOOL alreadyFetched = NO;
         default:
             break;
     }
+}
+
+#pragma mark - TapGestureRecognizerDelegate Methods
+
+- (void)expand:(UITapGestureRecognizer *)recognizer {
+    ALLog(@"EXPAND!");
+    
+    NSInteger section = recognizer.view.tag;
+    UserProfile *profile = [UserProfile profile];
+    switch (section) {
+        case 0:
+            profile.displayWatching = !profile.displayWatching;
+            break;
+        case 1:
+            profile.displayCompleted = !profile.displayCompleted;
+            break;
+        case 2:
+            profile.displayOnHold = !profile.displayOnHold;
+            break;
+        case 3:
+            profile.displayDropped = !profile.displayDropped;
+            break;
+        case 4:
+            profile.displayPlanToWatch = !profile.displayPlanToWatch;
+            break;
+        default:
+            break;
+    }
+    
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:section] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 @end

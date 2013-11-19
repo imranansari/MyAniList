@@ -13,6 +13,7 @@
 
 @interface MangaService : NSObject
 
++ (int)numberOfMangaForReadStatus:(MangaReadStatus)status;
 + (NSArray *)allManga;
 + (NSArray *)myManga;
 + (void)downloadInfo;

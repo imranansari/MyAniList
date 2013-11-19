@@ -18,16 +18,16 @@
 - (id) init {
     self = [super init];
     if (self) {
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *documentsDirectory = [paths objectAtIndex:0];
-        NSString *filePath = [documentsDirectory stringByAppendingPathComponent:@"debug.log"];
-        NSFileManager *fileManager = [NSFileManager defaultManager];
-        if (![fileManager fileExistsAtPath:filePath])
-            [fileManager createFileAtPath:filePath
-                                 contents:nil
-                               attributes:nil];
-        self.logFile = [NSFileHandle fileHandleForWritingAtPath:filePath];
-        [self.logFile seekToEndOfFile];
+//        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//        NSString *documentsDirectory = [paths objectAtIndex:0];
+//        NSString *filePath = [documentsDirectory stringByAppendingPathComponent:@"debug.log"];
+//        NSFileManager *fileManager = [NSFileManager defaultManager];
+//        if (![fileManager fileExistsAtPath:filePath])
+//            [fileManager createFileAtPath:filePath
+//                                 contents:nil
+//                               attributes:nil];
+//        self.logFile = [NSFileHandle fileHandleForWritingAtPath:filePath];
+//        [self.logFile seekToEndOfFile];
     }
     
     return self;
@@ -38,8 +38,8 @@
     va_start(ap, format);
     
     NSString *message = [[NSString alloc] initWithFormat:format arguments:ap];
-    [self.logFile writeData:[[message stringByAppendingString:@"\n"] dataUsingEncoding:NSUTF8StringEncoding]];
-    [self.logFile synchronizeFile];
+//    [self.logFile writeData:[[message stringByAppendingString:@"\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+//    [self.logFile synchronizeFile];
     
     CLSLog(format, ap);
     

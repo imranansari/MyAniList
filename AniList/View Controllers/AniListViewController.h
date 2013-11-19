@@ -12,6 +12,7 @@
 #import "AniListTableView.h"
 #import "AniListNavigationController.h"
 #import "ImageManager.h"
+#import "AniListTableHeaderView.h"
 
 @interface AniListViewController : BaseViewController<UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, UIActionSheetDelegate>
 
@@ -34,8 +35,10 @@
 - (NSArray *)sortDescriptors;
 - (NSString *)sectionKeyPathName;
 - (void)configureCell:(UITableViewCell *)cell withObject:(NSManagedObject *)object;
+- (NSManagedObject *)objectForIndexPath:(NSIndexPath *)indexPath;
 
 - (void)didSwipe:(UIGestureRecognizer *)gestureRecognizer;
 - (void)didCancel:(UIGestureRecognizer *)gestureRecognizer;
+- (void)updateMapping;
 
 @end

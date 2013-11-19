@@ -10,7 +10,6 @@
 #import "AniListAppDelegate.h"
 #import "CRTransitionLabel.h"
 #import "AniListCell.h"
-#import "AniListTableHeaderView.h"
 
 @interface AniListViewController ()
 @property (nonatomic, weak) IBOutlet CRTransitionLabel *topSectionLabel;
@@ -203,6 +202,16 @@
     return @"column";
 }
 
+- (NSManagedObject *)objectForIndexPath:(NSIndexPath *)indexPath {
+    for(id <NSFetchedResultsSectionInfo> sectionInfo in [self.fetchedResultsController sections]) {
+        if([sectionInfo.name isEqualToString:[NSString stringWithFormat:@"%d", indexPath.section]]) {
+            return [self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row inSection:[[self.fetchedResultsController sections] indexOfObject:sectionInfo]]];
+        }
+    }
+    
+    return nil;
+}
+
 #pragma mark - Table view data source
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -320,6 +329,10 @@
 }
 
 #pragma mark - Fetched results controller
+
+- (void)updateMapping {
+
+}
 
 - (NSFetchedResultsController *)fetchedResultsController {
     if (_fetchedResultsController != nil) {
