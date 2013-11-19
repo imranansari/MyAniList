@@ -210,7 +210,7 @@ static BOOL alreadyFetched = NO;
         NSIndexPath *swipedIndexPath = [self.tableView indexPathForRowAtPoint:swipeLocation];
         AniListCell *swipedCell = (AniListCell *)[self.tableView cellForRowAtIndexPath:swipedIndexPath];
         
-        self.editedAnime = [self.fetchedResultsController objectAtIndexPath:swipedIndexPath];
+        self.editedAnime = [self animeForIndexPath:swipedIndexPath];
         
         [swipedCell showEditScreenForAnime:self.editedAnime];
     }
@@ -326,7 +326,9 @@ static BOOL alreadyFetched = NO;
         cell = (AnimeCell *)nib[0];
     }
     
-    Anime *anime = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    
+    Anime *anime = [self animeForIndexPath:indexPath];
+    
     [self configureCell:cell withObject:anime];
     
     if(self.editedIndexPath && self.editedIndexPath.section == indexPath.section && self.editedIndexPath.row == indexPath.row) {
@@ -340,12 +342,24 @@ static BOOL alreadyFetched = NO;
     return cell;
 }
 
+- (Anime *)animeForIndexPath:(NSIndexPath *)indexPath {
+    for(id <NSFetchedResultsSectionInfo> sectionInfo in [self.fetchedResultsController sections]) {
+        if([sectionInfo.name isEqualToString:[NSString stringWithFormat:@"%d", indexPath.section]]) {
+            Anime *anime = [self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row inSection:[[self.fetchedResultsController sections] indexOfObject:sectionInfo]]];
+            ALLog(@"Returning info for %@ for indexPath (%d, %d)", anime.title, indexPath.section, indexPath.row);
+            return anime;
+        }
+    }
+    
+    return nil;
+}
+
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if(editingStyle == UITableViewCellEditingStyleDelete) {
         
-        self.editedAnime = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        self.editedAnime = [self animeForIndexPath:indexPath];
         
         UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:[NSString stringWithFormat:@"Do you really want to delete '%@'?", self.editedAnime.title]
                                                                  delegate:self
@@ -358,10 +372,45 @@ static BOOL alreadyFetched = NO;
     }
 }
 
+static int map[5] = {-1, -1, -1, -1, -1};
+static BOOL initialUpdate = NO;
+
+- (void)updateMapping {
+    
+    for(int i = 0; i < 5; i++) {
+        map[i] = -1;
+    }
+    
+    for(int i = 0; i < self.fetchedResultsController.sections.count; i++) {
+        id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][i];
+        map[i] = [sectionInfo.name intValue];
+    }
+    
+    ALLog(@"map: (%d, %d, %d, %d, %d)", map[0], map[1], map[2], map[3], map[4]);
+}
+
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
        atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
       newIndexPath:(NSIndexPath *)newIndexPath {
     
+    Anime *anime = (Anime *)anObject;
+    
+    if(!initialUpdate) {
+        initialUpdate = YES;
+        [self updateMapping];
+    }
+    
+    ALLog(@"%@ - (%d, %d) to (%d, %d)", anime.title, indexPath.section, indexPath.row, newIndexPath.section, newIndexPath.row);
+    
+    ALLog(@"Updating indexPath section from %d to %d.", indexPath.section, map[indexPath.section]);
+    indexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:map[indexPath.section]];
+    
+    if(newIndexPath) {
+        [self updateMapping];
+        ALLog(@"Updating newIndexPath section from %d to %d.", newIndexPath.section, map[newIndexPath.section]);
+        newIndexPath = [NSIndexPath indexPathForRow:newIndexPath.row inSection:map[newIndexPath.section]];
+    }
+
     [super controller:controller didChangeObject:anObject atIndexPath:indexPath forChangeType:type newIndexPath:newIndexPath];
     
     switch(type) {
@@ -384,10 +433,12 @@ static BOOL alreadyFetched = NO;
         case NSFetchedResultsChangeMove:
             break;
     }
+    
+    [self updateMapping];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    Anime *anime = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    Anime *anime = [self animeForIndexPath:indexPath];
     
     AniListNavigationController *navigationController = (AniListNavigationController *)self.navigationController;
     

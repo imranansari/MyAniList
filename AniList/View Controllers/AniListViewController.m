@@ -266,17 +266,17 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     for(id <NSFetchedResultsSectionInfo> sectionInfo in [self.fetchedResultsController sections]) {
-        ALLog(@"Section to look for: %d", section);
+        ALVLog(@"Section to look for: %d", section);
         if((section == 0 && ![UserProfile profile].displayWatching)     ||
            (section == 1 && ![UserProfile profile].displayCompleted)    ||
            (section == 2 && ![UserProfile profile].displayOnHold)       ||
            (section == 3 && ![UserProfile profile].displayDropped)      ||
            (section == 4 && ![UserProfile profile].displayPlanToWatch)) {
-            ALLog(@"Section %d is hidden.", section);
+            ALVLog(@"Section %d is hidden.", section);
             return 0;
         }
         if([sectionInfo.name isEqualToString:[NSString stringWithFormat:@"%d", section]]) {
-            ALLog(@"Found section %d with %d objects", section, [sectionInfo numberOfObjects]);
+            ALVLog(@"Found section %d with %d objects", section, [sectionInfo numberOfObjects]);
             return [sectionInfo numberOfObjects];
         }
     }
@@ -366,7 +366,8 @@
     
     if(!self.loadSectionHeaders) {
         self.loadSectionHeaders = YES;
-        [self.tableView insertSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 5)] withRowAnimation:UITableViewRowAnimationFade];
+        if(self.tableView.numberOfSections == 0)
+            [self.tableView insertSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 5)] withRowAnimation:UITableViewRowAnimationFade];
     }
 
 //    switch(type) {
@@ -387,22 +388,27 @@
     
     switch(type) {
         case NSFetchedResultsChangeInsert:
-            [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            if([self indexPathShouldUpdateTable:newIndexPath])
+                [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
             [[self.tableView headerViewForSection:newIndexPath.section] setNeedsDisplay];
             break;
             
         case NSFetchedResultsChangeDelete:
-            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            if([self indexPathShouldUpdateTable:indexPath])
+                [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
             [[self.tableView headerViewForSection:indexPath.section] setNeedsDisplay];
             break;
             
         case NSFetchedResultsChangeUpdate:
-            [self configureCell:[tableView cellForRowAtIndexPath:indexPath] withObject:anObject];
+            if([self indexPathShouldUpdateTable:indexPath])
+                [self configureCell:[tableView cellForRowAtIndexPath:indexPath] withObject:anObject];
             break;
                 
         case NSFetchedResultsChangeMove:
-            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            if([self indexPathShouldUpdateTable:indexPath])
+                [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            if([self indexPathShouldUpdateTable:newIndexPath])
+                [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
             [[self.tableView headerViewForSection:indexPath.section] setNeedsDisplay];
             [[self.tableView headerViewForSection:newIndexPath.section] setNeedsDisplay];
             break;
@@ -410,11 +416,35 @@
 }
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
-    [self.tableView endUpdates];
+    @try {
+        [self.tableView endUpdates];
+    }
+    @catch (NSException *exception) {
+        ALLog(@"An exception occurred while attempting to process updates: %@", exception);
+        [self.tableView reloadData];
+    }
+
 }
 
 - (void)configureCell:(UITableViewCell *)cell withObject:(NSManagedObject *)object {
     // MUST OVERRIDE
+}
+
+- (BOOL)indexPathShouldUpdateTable:(NSIndexPath *)indexPath {
+    switch (indexPath.section) {
+        case 0:
+            return [UserProfile profile].displayWatching;
+        case 1:
+            return [UserProfile profile].displayCompleted;
+        case 2:
+            return [UserProfile profile].displayOnHold;
+        case 3:
+            return [UserProfile profile].displayDropped;
+        case 4:
+            return [UserProfile profile].displayPlanToWatch;
+        default:
+            return NO;
+    }
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
