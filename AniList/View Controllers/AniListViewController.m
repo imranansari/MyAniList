@@ -115,6 +115,8 @@
                                            self.errorLabel.frame.size.width,
                                            self.errorLabel.frame.size.height);
     }
+    
+    [self.tableView registerClass:[AniListTableHeaderView class] forHeaderFooterViewReuseIdentifier:@"HeaderView"];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -422,6 +424,7 @@
                 [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
             if([self indexPathShouldUpdateTable:newIndexPath])
                 [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            ALLog(@"%@", [self.tableView headerViewForSection:indexPath.section]);
             [[self.tableView headerViewForSection:indexPath.section] setNeedsDisplay];
             [[self.tableView headerViewForSection:newIndexPath.section] setNeedsDisplay];
             break;
@@ -431,8 +434,15 @@
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
     @try {
         [self.tableView endUpdates];
+        
+        [self.tableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 5)] withRowAnimation:UITableViewRowAnimationNone];
     }
     @catch (NSException *exception) {
+#warning - DEBUG ONLY.
+#ifdef DEBUG
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"FRC Error" message:exception.reason  delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil, nil];
+        [alert show];
+#endif
         ALLog(@"An exception occurred while attempting to process updates: %@", exception);
         [self.tableView reloadData];
     }

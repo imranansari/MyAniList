@@ -374,7 +374,7 @@ static BOOL initialUpdate = NO;
         map[i] = [sectionInfo.name intValue];
     }
     
-    ALLog(@"map: (%d, %d, %d, %d, %d)", map[0], map[1], map[2], map[3], map[4]);
+    ALVLog(@"map: (%d, %d, %d, %d, %d)", map[0], map[1], map[2], map[3], map[4]);
 }
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
@@ -388,14 +388,14 @@ static BOOL initialUpdate = NO;
         [self updateMapping];
     }
     
-    ALLog(@"%@ - (%d, %d) to (%d, %d)", anime.title, indexPath.section, indexPath.row, newIndexPath.section, newIndexPath.row);
+    ALVLog(@"%@ - (%d, %d) to (%d, %d)", anime.title, indexPath.section, indexPath.row, newIndexPath.section, newIndexPath.row);
     
-    ALLog(@"Updating indexPath section from %d to %d.", indexPath.section, map[indexPath.section]);
+    ALVLog(@"Updating indexPath section from %d to %d.", indexPath.section, map[indexPath.section]);
     indexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:map[indexPath.section]];
     
     if(newIndexPath) {
         [self updateMapping];
-        ALLog(@"Updating newIndexPath section from %d to %d.", newIndexPath.section, map[newIndexPath.section]);
+        ALVLog(@"Updating newIndexPath section from %d to %d.", newIndexPath.section, map[newIndexPath.section]);
         newIndexPath = [NSIndexPath indexPathForRow:newIndexPath.row inSection:map[newIndexPath.section]];
     }
 

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AniListTableHeaderView : UIView
+@interface AniListTableHeaderView : UITableViewHeaderFooterView
 
 - (id)initWithPrimaryText:(NSString *)primaryText andSecondaryText:(NSString *)secondaryText;
 - (id)initWithPrimaryText:(NSString *)primaryText andSecondaryText:(NSString *)secondaryText isExpanded:(BOOL)expanded;
