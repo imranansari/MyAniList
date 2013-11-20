@@ -70,7 +70,7 @@ static NSArray *animeStatusOrder;
         
         label.backgroundColor = [UIColor clearColor];
         label.textAlignment = NSTextAlignmentCenter;
-        label.text = [Anime stringForAnimeWatchedStatus:[animeStatusOrder[i] intValue] forAnimeType:[self.anime.type intValue]];
+        label.text = [Anime stringForAnimeWatchedStatus:[animeStatusOrder[i] intValue] forAnimeType:[self.anime.type intValue] forEditScreen:YES];
         label.tag = i;
         label.clipsToBounds = YES;
         [self.statusScrollView addSubview:label];

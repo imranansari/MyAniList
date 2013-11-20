@@ -180,7 +180,7 @@
     }
 }
 
-+ (NSString *)stringForMangaReadStatus:(MangaReadStatus)readStatus forMangaType:(MangaType)mangaType {
++ (NSString *)stringForMangaReadStatus:(MangaReadStatus)readStatus forMangaType:(MangaType)mangaType forEditScreen:(BOOL)forEditScreen {
     
     NSString *seriesText = @"";
     
@@ -214,15 +214,15 @@
     
     switch (readStatus) {
         case MangaReadStatusReading:
-            return [NSString stringWithFormat:@"Currently reading this %@.", seriesText];
+            return [NSString stringWithFormat:@"%@ reading this %@.", forEditScreen ? @"Currently" : @"You are" , seriesText];
         case MangaReadStatusCompleted:
-            return [NSString stringWithFormat:@"You finished this %@.", seriesText];
+            return [NSString stringWithFormat:@"%@ this %@.", forEditScreen ? @"Finished with" : @"You finished", seriesText];
         case MangaReadStatusOnHold:
-            return [NSString stringWithFormat:@"You put this %@ on hold.", seriesText];
+            return [NSString stringWithFormat:@"%@ this %@ on hold.", forEditScreen ? @"Putting" : @"You put", seriesText];
         case MangaReadStatusDropped:
-            return [NSString stringWithFormat:@"You dropped this %@.", seriesText];
+            return [NSString stringWithFormat:@"%@ this %@.", forEditScreen ? @"Dropping" : @"You dropped", seriesText];
         case MangaReadStatusPlanToRead:
-            return [NSString stringWithFormat:@"Planning to read this %@.", seriesText];
+            return [NSString stringWithFormat:@"%@ to read this %@.", forEditScreen ? @"Planning" : @"You plan", seriesText];
         case MangaReadStatusNotReading:
             return [NSString stringWithFormat:@"Add this %@ to your list?", seriesText];
         case MangaReadStatusUnknown:

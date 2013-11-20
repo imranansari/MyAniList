@@ -57,7 +57,7 @@ static NSArray *mangaStatusOrder;
         
         label.backgroundColor = [UIColor clearColor];
         label.textAlignment = NSTextAlignmentCenter;
-        label.text = [Manga stringForMangaReadStatus:[mangaStatusOrder[i] intValue] forMangaType:[self.manga.type intValue]];
+        label.text = [Manga stringForMangaReadStatus:[mangaStatusOrder[i] intValue] forMangaType:[self.manga.type intValue] forEditScreen:YES];
         label.tag = i;
         label.clipsToBounds = YES;
         [self.statusScrollView addSubview:label];

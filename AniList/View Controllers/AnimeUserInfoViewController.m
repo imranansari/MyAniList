@@ -44,7 +44,7 @@
             scoreLabel.hidden = YES;
             
             watchingStatusLabel.frame = self.view.bounds;
-            watchingStatusLabel.text = [Anime stringForAnimeWatchedStatus:[self.anime.watched_status intValue] forAnimeType:[self.anime.type intValue]];
+            watchingStatusLabel.text = [Anime stringForAnimeWatchedStatus:[self.anime.watched_status intValue] forAnimeType:[self.anime.type intValue] forEditScreen:NO];
             watchingStatusLabel.font = [UIFont mediumFontWithSize:18];
         }
         else {
@@ -56,7 +56,7 @@
             
             // 320, 40
             watchingStatusLabel.frame = CGRectMake(0, 0, 320, 40);
-            watchingStatusLabel.text = [Anime stringForAnimeWatchedStatus:[self.anime.watched_status intValue] forAnimeType:[self.anime.type intValue]];
+            watchingStatusLabel.text = [Anime stringForAnimeWatchedStatus:[self.anime.watched_status intValue] forAnimeType:[self.anime.type intValue] forEditScreen:NO];
             watchingStatusLabel.font = [UIFont mediumFontWithSize:16];
             
             if(self.anime.user_date_start) {

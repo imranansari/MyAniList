@@ -49,7 +49,7 @@
             scoreLabel.hidden = YES;
             
             watchingStatusLabel.frame = self.view.bounds;
-            watchingStatusLabel.text = [Manga stringForMangaReadStatus:[self.manga.read_status intValue] forMangaType:[self.manga.type intValue]];
+            watchingStatusLabel.text = [Manga stringForMangaReadStatus:[self.manga.read_status intValue] forMangaType:[self.manga.type intValue] forEditScreen:NO];
             watchingStatusLabel.font = [UIFont mediumFontWithSize:18];
         }
         else {
@@ -61,7 +61,7 @@
             
             // 320, 40
             watchingStatusLabel.frame = CGRectMake(0, 0, 320, 40);
-            watchingStatusLabel.text = [Manga stringForMangaReadStatus:[self.manga.read_status intValue] forMangaType:[self.manga.type intValue]];;
+            watchingStatusLabel.text = [Manga stringForMangaReadStatus:[self.manga.read_status intValue] forMangaType:[self.manga.type intValue] forEditScreen:NO];
             watchingStatusLabel.font = [UIFont mediumFontWithSize:16];
             
             if(self.manga.user_date_start) {

@@ -186,7 +186,7 @@ CGSize const MiniPosterImageSize = {37, 60};
     }
 }
 
-+ (NSString *)stringForAnimeWatchedStatus:(AnimeWatchedStatus)watchedStatus forAnimeType:(AnimeType)animeType {
++ (NSString *)stringForAnimeWatchedStatus:(AnimeWatchedStatus)watchedStatus forAnimeType:(AnimeType)animeType forEditScreen:(BOOL)forEditScreen {
     
     NSString *seriesText = @"";
     
@@ -217,15 +217,15 @@ CGSize const MiniPosterImageSize = {37, 60};
     
     switch (watchedStatus) {
         case AnimeWatchedStatusWatching:
-            return [NSString stringWithFormat:@"Currently watching this %@.", seriesText];
+            return [NSString stringWithFormat:@"%@ watching this %@.", forEditScreen ? @"Currently" : @"You are", seriesText];
         case AnimeWatchedStatusCompleted:
-            return [NSString stringWithFormat:@"You finished this %@.", seriesText];
+            return [NSString stringWithFormat:@"%@ this %@.", forEditScreen ? @"Finished with" : @"You finished", seriesText];
         case AnimeWatchedStatusOnHold:
-            return [NSString stringWithFormat:@"You put this %@ on hold.", seriesText];
+            return [NSString stringWithFormat:@"%@ this %@ on hold.", forEditScreen ? @"Putting" : @"You put", seriesText];
         case AnimeWatchedStatusDropped:
-            return [NSString stringWithFormat:@"You dropped this %@.", seriesText];
+            return [NSString stringWithFormat:@"%@ this %@.", forEditScreen ? @"Dropping" : @"You dropped", seriesText];
         case AnimeWatchedStatusPlanToWatch:
-            return [NSString stringWithFormat:@"Planning to watch this %@.", seriesText];
+            return [NSString stringWithFormat:@"%@ to watch this %@.", forEditScreen ? @"Planning" : @"You plan", seriesText];
         case AnimeWatchedStatusNotWatching:
             return [NSString stringWithFormat:@"Add this %@ to your list?", seriesText];
         case AnimeWatchedStatusUnknown:

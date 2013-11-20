@@ -135,7 +135,7 @@ typedef enum {
 + (NSString *)stringForMangaPublishStatus:(MangaPublishStatus)publishStatus;
 + (MangaReadStatus)mangaReadStatusForValue:(NSString *)value;
 + (NSString *)stringForMangaReadStatus:(MangaReadStatus)readStatus;
-+ (NSString *)stringForMangaReadStatus:(MangaReadStatus)readStatus forMangaType:(MangaType)mangaType;
++ (NSString *)stringForMangaReadStatus:(MangaReadStatus)readStatus forMangaType:(MangaType)mangaType forEditScreen:(BOOL)forEditScreen;
 
 + (MangaType)unofficialMangaTypeForValue:(NSString *)value;
 + (MangaPublishStatus)unofficialMangaPublishStatusForValue:(NSString *)value;
