@@ -52,6 +52,7 @@
     self.searchDisplayController.searchResultsTableView.backgroundColor = [UIColor clearColor];
     self.searchDisplayController.searchResultsTableView.separatorColor = [UIColor clearColor];
     self.searchDisplayController.searchBar.tintColor = [UIColor iOS7TintColor];
+    self.searchDisplayController.searchResultsTableView.showsVerticalScrollIndicator = YES;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -101,12 +102,20 @@
 
 #pragma mark - Table view data sourceu
 
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    return [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 0)];
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 1;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return 1;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    return [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 0)];
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+    return [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 0)];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -250,6 +259,10 @@
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
     [self.searchDisplayController.searchResultsTableView endUpdates];
+    
+    UITableView *tableView = self.searchDisplayController.searchResultsTableView;
+    tableView.contentInset = UIEdgeInsetsZero;
+    tableView.scrollIndicatorInsets = UIEdgeInsetsZero;
 }
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
@@ -311,6 +324,20 @@
 //    }
     
     return YES;
+}
+
+- (void)searchDisplayController:(UISearchDisplayController *)controller didHideSearchResultsTableView:(UITableView *)tableView {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void)searchDisplayController:(UISearchDisplayController *)controller willShowSearchResultsTableView:(UITableView *)tableView {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide) name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void)keyboardWillHide {
+    UITableView *tableView = self.searchDisplayController.searchResultsTableView;
+    tableView.contentInset = UIEdgeInsetsZero;
+    tableView.scrollIndicatorInsets = UIEdgeInsetsZero;
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
