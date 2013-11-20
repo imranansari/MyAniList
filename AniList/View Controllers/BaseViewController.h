@@ -13,6 +13,8 @@
 @interface BaseViewController : UIViewController<UIGestureRecognizerDelegate>
 
 @property (nonatomic, assign) BOOL hidesBackButton;
+@property (nonatomic, assign) BOOL canSwipeView;
+@property (nonatomic, assign) BOOL canSwipeNavBar;
 
 - (void)enable:(BOOL)enable;
 

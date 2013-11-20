@@ -46,8 +46,6 @@
     self.refreshControl.tintColor = [UIColor whiteColor];
     [self.tableView addSubview:self.refreshControl];
     
-    SWRevealViewController *revealController = self.revealViewController;
-    
     AniListNavigationController *nvc = ((AniListNavigationController *)self.revealViewController.frontViewController);
     
     self.topSectionLabel.backgroundColor = [UIColor clearColor];
@@ -66,8 +64,6 @@
         [nvc.navigationBar setShadowImage:[[UIImage alloc] init]];
         [nvc.navigationBar setBackgroundImage:maskedImage forBarMetrics:UIBarMetricsDefault];
     }
-    
-    [self.navigationController.navigationBar addGestureRecognizer:revealController.panGestureRecognizer];
 
     self.view.backgroundColor = [UIColor clearColor];
     
@@ -79,14 +75,9 @@
     gradient.endPoint = CGPointMake(0.0f, 0.10f);
     
     self.maskView.layer.mask = gradient;
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"hamburger.png"] style:UIBarButtonItemStylePlain target:revealController action:@selector(revealToggle:)];
     
     self.topSectionLabel.text = @"";
     self.topSectionLabel.alpha = 0.0f;
-    
-    UISwipeGestureRecognizer *swipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(didSwipe:)];
-    [swipeGestureRecognizer setDirection:UISwipeGestureRecognizerDirectionLeft];
-    [self.tableView addGestureRecognizer:swipeGestureRecognizer];
     
     UILongPressGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(didSwipe:)];
     [longPressGestureRecognizer setMinimumPressDuration:0.4f];
@@ -120,6 +111,8 @@
     if(indexPath) {
         [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
+    
+//    [self.tableView addGestureRecognizer:self.revealViewController.panGestureRecognizer];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -130,8 +123,7 @@
 #pragma mark - Gesture Management Methods
 
 - (void)didSwipe:(UIGestureRecognizer *)gestureRecognizer {
-    if (([gestureRecognizer isMemberOfClass:[UISwipeGestureRecognizer class]] && gestureRecognizer.state == UIGestureRecognizerStateEnded) ||
-        ([gestureRecognizer isMemberOfClass:[UILongPressGestureRecognizer class]] && gestureRecognizer.state == UIGestureRecognizerStateBegan)) {
+    if (([gestureRecognizer isMemberOfClass:[UILongPressGestureRecognizer class]] && gestureRecognizer.state == UIGestureRecognizerStateBegan)) {
         CGPoint swipeLocation = [gestureRecognizer locationInView:self.tableView];
         NSIndexPath *swipedIndexPath = [self.tableView indexPathForRowAtPoint:swipeLocation];
         AniListCell *swipedCell = (AniListCell *)[self.tableView cellForRowAtIndexPath:swipedIndexPath];
@@ -142,7 +134,7 @@
                 [currentlySwipedCell revokeEditScreen];
         }
         
-        UITapGestureRecognizer* tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didCancel:)];
+        UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didCancel:)];
         [tapGestureRecognizer setNumberOfTapsRequired:1];
         [swipedCell addGestureRecognizer:tapGestureRecognizer];
         

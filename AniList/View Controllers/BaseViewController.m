@@ -21,6 +21,8 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.hidesBackButton = YES;
+        self.canSwipeNavBar = NO;
+        self.canSwipeView = YES;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideKeyboard:) name:kMenuButtonTapped object:nil];
     }
     return self;
@@ -53,8 +55,6 @@
     }
     
     [self.menuButton addTarget:revealController action:@selector(revealToggle:) forControlEvents:UIControlEventTouchUpInside];
-    [self.navigationController.view addGestureRecognizer:revealController.panGestureRecognizer];
-    [self.navigationController.navigationBar addGestureRecognizer:revealController.panGestureRecognizer];
     
     self.view.backgroundColor = [UIColor clearColor];
     
@@ -84,6 +84,19 @@
     
     if(!self.navigationChangedByGesture) {
         [self.view animateOut];
+    }
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    SWRevealViewController *revealController = self.revealViewController;
+    
+    if(self.canSwipeView) {
+        [self.view addGestureRecognizer:revealController.panGestureRecognizer];
+    }
+    else if(self.canSwipeNavBar) {
+        [self.navigationController.navigationBar addGestureRecognizer:revealController.panGestureRecognizer];
     }
 }
 

@@ -118,8 +118,6 @@
         [nvc.navigationBar setBackgroundImage:maskedImage forBarMetrics:UIBarMetricsDefault];
     }
     
-    [self.view addGestureRecognizer:revealController.panGestureRecognizer];
-    
     self.view.backgroundColor = [UIColor clearColor];
     
     CAGradientLayer *gradient = [CAGradientLayer layer];
