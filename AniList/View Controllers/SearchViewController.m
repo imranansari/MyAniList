@@ -51,6 +51,7 @@
     self.title = @"Search";
     self.searchDisplayController.searchResultsTableView.backgroundColor = [UIColor clearColor];
     self.searchDisplayController.searchResultsTableView.separatorColor = [UIColor clearColor];
+    self.searchDisplayController.searchBar.tintColor = [UIColor iOS7TintColor];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

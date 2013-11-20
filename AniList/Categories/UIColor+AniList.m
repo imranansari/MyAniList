@@ -22,4 +22,8 @@
     return [UIColor colorWithWhite:0.0f alpha:0.5f];
 }
 
++ (UIColor *)iOS7TintColor {
+    return [UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0];
+}
+
 @end

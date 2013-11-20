@@ -13,5 +13,6 @@
 + (UIColor *)defaultBackgroundColor;
 + (UIColor *)subtleBlueColor;
 + (UIColor *)defaultShadowColor;
++ (UIColor *)iOS7TintColor;
 
 @end

@@ -143,6 +143,12 @@
                                                            }
                                                 forState:UIControlStateNormal];
     
+    [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil] setTitleTextAttributes:@{
+                                                                                                   NSForegroundColorAttributeName : [UIColor whiteColor],
+                                                                                                   NSFontAttributeName : [UIFont defaultFontWithSize:13]
+                                                                                                  }
+                                                                                        forState:UIControlStateNormal];
+    
     self.window.tintColor = [UIColor whiteColor];
 }
 
