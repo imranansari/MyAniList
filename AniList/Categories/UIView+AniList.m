@@ -73,39 +73,6 @@
     return view;
 }
 
-
-+ (void)setAttributesForLabel:(TTTAttributedLabel *)label withPrimaryText:(NSString *)primaryText andSecondaryText:(NSString *)secondaryText {
-    NSString *text = [NSString stringWithFormat:@"%@ %@", primaryText, secondaryText];
-    [label setText:text afterInheritingLabelAttributesAndConfiguringWithBlock:^ NSMutableAttributedString *(NSMutableAttributedString *mutableAttributedString) {
-        
-        // Set properties for bold points font.
-        NSRange primaryRange = [[mutableAttributedString string] rangeOfString:primaryText options:NSCaseInsensitiveSearch];
-        UIFont *primaryFont = [UIFont defaultFontWithSize:18];
-        
-        CTFontRef primaryFontRef = CTFontCreateWithName((__bridge CFStringRef)primaryFont.fontName, primaryFont.pointSize, NULL);
-        
-        // Set properties for regular pts font.
-        NSRange secondaryRange = [[mutableAttributedString string] rangeOfString:secondaryText options:NSCaseInsensitiveSearch];
-        UIFont *secondaryFont = [UIFont defaultFontWithSize:14];
-        
-        UIColor *secondaryColor = [UIColor colorWithRed:0.7 green:0.7 blue:0.7 alpha:1.0];
-        CTFontRef secondaryFontRef = CTFontCreateWithName((__bridge CFStringRef)secondaryFont.fontName, secondaryFont.pointSize, NULL);
-        
-        if (primaryFontRef) {
-            [mutableAttributedString addAttribute:(NSString *)kCTFontAttributeName value:(__bridge id)primaryFontRef range:primaryRange];
-            CFRelease(primaryFontRef);
-        }
-        
-        if(secondaryFontRef) {
-            [mutableAttributedString addAttribute:(NSString *)kCTFontAttributeName value:(__bridge id)secondaryFontRef range:secondaryRange];
-            [mutableAttributedString addAttribute:(NSString *)kCTForegroundColorAttributeName value:secondaryColor range:secondaryRange];
-            CFRelease(secondaryFontRef);
-        }
-        
-        return mutableAttributedString;
-    }];
-}
-
 - (void)animateOut {
     if([UIApplication isiOS7]) {
         [UIView animateWithDuration:0.2f

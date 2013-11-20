@@ -10,6 +10,9 @@
 
 @interface AniListTableHeaderView : UITableViewHeaderFooterView
 
+@property (nonatomic, copy) NSString *primaryText;
+@property (nonatomic, copy) NSString *secondaryText;
+
 - (id)initWithPrimaryText:(NSString *)primaryText andSecondaryText:(NSString *)secondaryText;
 - (id)initWithPrimaryText:(NSString *)primaryText andSecondaryText:(NSString *)secondaryText isExpanded:(BOOL)expanded;
 

@@ -7,10 +7,12 @@
 //
 
 #import "AniListTableHeaderView.h"
+#import "TTTAttributedLabel.h"
 
 @interface AniListTableHeaderView()
 @property (nonatomic, assign) BOOL expanded;
 @property (nonatomic, strong) UIImageView *chevron;
+@property (nonatomic, strong) TTTAttributedLabel *label;
 @end
 
 @implementation AniListTableHeaderView
@@ -20,19 +22,38 @@
 }
 
 - (id)initWithPrimaryText:(NSString *)primaryText andSecondaryText:(NSString *)secondaryText {
-    self = [super initWithFrame:CGRectMake(20, 0, 300, 44)];
+    self = [super initWithFrame:CGRectMake(0, 0, 300, 44)];
     if(self) {
-        UIView *view = [UIView tableHeaderWithPrimaryText:primaryText andSecondaryText:secondaryText];
+        self.backgroundColor = [UIColor clearColor];
+        
+        self.label = [[TTTAttributedLabel alloc] initWithFrame:CGRectMake(20, 0, 300, 44)];
+        self.label.backgroundColor = [UIColor clearColor];
+        self.label.textColor = [UIColor whiteColor];
+        self.label.text = [NSString stringWithFormat:@"%@ (%@)", primaryText, secondaryText];
+        
+        self.primaryText = primaryText;
+        self.secondaryText = secondaryText;
+        
+        [self addSubview:self.label];
         
         self.chevron = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"chevron.png"]];
-        [view addSubview:self.chevron];
-        self.chevron.frame = CGRectMake(view.frame.size.width - 50, view.frame.size.height / 2 - self.chevron.frame.size.height / 2 + 1, self.chevron.frame.size.width, self.chevron.frame.size.height);
-        
-        [self addSubview:view];
+        [self addSubview:self.chevron];
+        self.chevron.frame = CGRectMake(self.frame.size.width - 10, self.frame.size.height / 2 - self.chevron.frame.size.height / 2 + 1, self.chevron.frame.size.width, self.chevron.frame.size.height);
     }
     
     return self;
 }
+
+- (void)setPrimaryText:(NSString *)primaryText {
+    _primaryText = primaryText;
+    [UILabel setAttributesForLabel:self.label withPrimaryText:primaryText andSecondaryText:[NSString stringWithFormat:@"(%@)", self.secondaryText]];
+}
+
+- (void)setSecondaryText:(NSString *)secondaryText {
+    _secondaryText = secondaryText;
+    [UILabel setAttributesForLabel:self.label withPrimaryText:self.primaryText andSecondaryText:[NSString stringWithFormat:@"(%@)", secondaryText]];
+}
+
 
 - (id)initWithPrimaryText:(NSString *)primaryText andSecondaryText:(NSString *)secondaryText isExpanded:(BOOL)expanded {
     self = [self initWithPrimaryText:primaryText andSecondaryText:secondaryText];

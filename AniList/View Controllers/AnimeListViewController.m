@@ -32,6 +32,8 @@ static BOOL alreadyFetched = NO;
         self.title = @"Anime";
         self.sectionHeaders = @[@"Watching", @"Completed", @"On Hold", @"Dropped", @"Plan To Watch"];
         
+        [self createHeaders];
+        
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchData) name:kUserLoggedIn object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deleteAnime) name:kDeleteAnime object:nil];
     }
@@ -90,6 +92,53 @@ static BOOL alreadyFetched = NO;
 
 - (NSString *)sectionKeyPathName {
     return [super sectionKeyPathName];
+}
+
+-  (void)createHeaders {
+    for(int i = 0; i < 5; i++) {
+        NSString *count = @"";
+        int sectionValue = 0;
+        
+        BOOL expanded = NO;
+        
+        switch (i) {
+            case 0:
+                expanded = [UserProfile profile].displayWatching;
+                sectionValue = [AnimeService numberOfAnimeForWatchedStatus:AnimeWatchedStatusWatching];
+                break;
+            case 1:
+                expanded = [UserProfile profile].displayCompleted;
+                sectionValue = [AnimeService numberOfAnimeForWatchedStatus:AnimeWatchedStatusCompleted];
+                break;
+            case 2:
+                expanded = [UserProfile profile].displayOnHold;
+                sectionValue = [AnimeService numberOfAnimeForWatchedStatus:AnimeWatchedStatusOnHold];
+                break;
+            case 3:
+                expanded = [UserProfile profile].displayDropped;
+                sectionValue = [AnimeService numberOfAnimeForWatchedStatus:AnimeWatchedStatusDropped];
+                break;
+            case 4:
+                expanded = [UserProfile profile].displayPlanToWatch;
+                sectionValue = [AnimeService numberOfAnimeForWatchedStatus:AnimeWatchedStatusPlanToWatch];
+                break;
+            default:
+                break;
+        }
+        
+        count = [NSString stringWithFormat:@"%d", sectionValue];
+        
+        AniListTableHeaderView *headerView = [[AniListTableHeaderView alloc] initWithPrimaryText:self.sectionHeaders[i] andSecondaryText:count isExpanded:expanded];
+        headerView.tag = i;
+        
+        UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] init];
+        gestureRecognizer.numberOfTapsRequired = 1;
+        [gestureRecognizer addTarget:headerView action:@selector(expand)];
+        [gestureRecognizer addTarget:self action:@selector(expand:)];
+        [headerView addGestureRecognizer:gestureRecognizer];
+        
+        [self.sectionHeaderViews addObject:headerView];
+    }
 }
 
 - (void)fetchData {
@@ -260,48 +309,7 @@ static BOOL alreadyFetched = NO;
 #pragma mark - Table view data source
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    NSString *count = @"";
-    int sectionValue = 0;
-    
-    BOOL expanded = NO;
-    
-    switch (section) {
-        case 0:
-            expanded = [UserProfile profile].displayWatching;
-            sectionValue = [AnimeService numberOfAnimeForWatchedStatus:AnimeWatchedStatusWatching];
-            break;
-        case 1:
-            expanded = [UserProfile profile].displayCompleted;
-            sectionValue = [AnimeService numberOfAnimeForWatchedStatus:AnimeWatchedStatusCompleted];
-            break;
-        case 2:
-            expanded = [UserProfile profile].displayOnHold;
-            sectionValue = [AnimeService numberOfAnimeForWatchedStatus:AnimeWatchedStatusOnHold];
-            break;
-        case 3:
-            expanded = [UserProfile profile].displayDropped;
-            sectionValue = [AnimeService numberOfAnimeForWatchedStatus:AnimeWatchedStatusDropped];
-            break;
-        case 4:
-            expanded = [UserProfile profile].displayPlanToWatch;
-            sectionValue = [AnimeService numberOfAnimeForWatchedStatus:AnimeWatchedStatusPlanToWatch];
-            break;
-        default:
-            break;
-    }
-    
-    count = [NSString stringWithFormat:@"%d", sectionValue];
-    
-    AniListTableHeaderView *headerView = [[AniListTableHeaderView alloc] initWithPrimaryText:self.sectionHeaders[section] andSecondaryText:count isExpanded:expanded];
-    headerView.tag = section;
-    
-    UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] init];
-    gestureRecognizer.numberOfTapsRequired = 1;
-    [gestureRecognizer addTarget:headerView action:@selector(expand)];
-    [gestureRecognizer addTarget:self action:@selector(expand:)];
-    [headerView addGestureRecognizer:gestureRecognizer];
-    
-    return headerView;
+    return self.sectionHeaderViews[section];
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
@@ -377,6 +385,36 @@ static BOOL initialUpdate = NO;
     ALVLog(@"map: (%d, %d, %d, %d, %d)", map[0], map[1], map[2], map[3], map[4]);
 }
 
+- (void)updateHeaders {
+    for(int i = 0; i < self.sectionHeaderViews.count; i++) {
+        AniListTableHeaderView *view = self.sectionHeaderViews[i];
+        
+        int sectionValue = 0;
+        
+        switch (i) {
+            case 0:
+                sectionValue = [AnimeService numberOfAnimeForWatchedStatus:AnimeWatchedStatusWatching];
+                break;
+            case 1:
+                sectionValue = [AnimeService numberOfAnimeForWatchedStatus:AnimeWatchedStatusCompleted];
+                break;
+            case 2:
+                sectionValue = [AnimeService numberOfAnimeForWatchedStatus:AnimeWatchedStatusOnHold];
+                break;
+            case 3:
+                sectionValue = [AnimeService numberOfAnimeForWatchedStatus:AnimeWatchedStatusDropped];
+                break;
+            case 4:
+                sectionValue = [AnimeService numberOfAnimeForWatchedStatus:AnimeWatchedStatusPlanToWatch];
+                break;
+            default:
+                break;
+        }
+        
+        view.secondaryText = [NSString stringWithFormat:@"%d", sectionValue];
+    }
+}
+
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
        atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
       newIndexPath:(NSIndexPath *)newIndexPath {
@@ -423,6 +461,12 @@ static BOOL initialUpdate = NO;
     }
     
     [self updateMapping];
+}
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+    [super controllerDidChangeContent:controller];
+    
+    [self updateHeaders];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

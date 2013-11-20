@@ -21,8 +21,7 @@
     return [self initWithNibName:@"AniListViewController" bundle:[NSBundle mainBundle]];
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.managedObjectContext = [(AniListAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
@@ -39,8 +38,7 @@
     ALLog(@"AniList deallocating.");
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     
     self.refreshControl = [[UIRefreshControl alloc] init];
@@ -57,11 +55,7 @@
     self.topSectionLabel.textColor = [UIColor lightGrayColor];
     self.topSectionLabel.textAlignment = NSTextAlignmentCenter;
     
-    // This value is implicitly set to YES in iOS 7.0.
-//    nvc.navigationBar.tra .nslucent = YES; // Setting this slides the view up, underneath the nav bar (otherwise it'll appear black)
-
     if([[UIDevice currentDevice].systemVersion compare:@"7.0" options:NSNumericSearch] != NSOrderedAscending) {
-//        nvc.navigationBar.barTintColor = [UIColor blueColor];
         nvc.navigationBar.tintColor = [UIColor whiteColor];
     }
     else {
@@ -128,8 +122,7 @@
     }
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
@@ -189,14 +182,17 @@
 
 // Must override.
 - (NSString *)entityName {
+    OVERRIDE_MSG;
     return @"";
 }
 
 - (NSArray *)sortDescriptors {
+    OVERRIDE_MSG;
     return nil;
 }
 
 - (NSPredicate *)predicate {
+    OVERRIDE_MSG;
     return nil;
 }
 
@@ -204,6 +200,18 @@
     return @"column";
 }
 
+#pragma mark - Helper Methods
+
+/**
+ * Returns the 'true' object at a given indexPath. Since the fetched results controller
+ * and the table view work with completely different data sources, we must calculate for ourselves
+ * where this indexPath resides in the table view. The fetched results controller's intended table view
+ * data source is compressed and doesn't allow for empty sections. Hence, we must account for this by 
+ * checking if a given section in the FRC is equivalent to the section we're interested in within the
+ * table view.
+ * @param indexPath the indexPath in question.
+ * @return an NSManagedObject for a given indexPath in the table.
+ */
 - (NSManagedObject *)objectForIndexPath:(NSIndexPath *)indexPath {
     for(id <NSFetchedResultsSectionInfo> sectionInfo in [self.fetchedResultsController sections]) {
         if([sectionInfo.name isEqualToString:[NSString stringWithFormat:@"%d", indexPath.section]]) {
@@ -214,43 +222,39 @@
     return nil;
 }
 
+- (void)updateMapping {
+    OVERRIDE_MSG;
+}
+
+
+/**
+ * Determines if, with the given indexPath, the section should be updated.
+ * This is purely based on user preferences.
+ * @param indexPath the indexPath in question.
+ * @return YES if this indexPath's section should update; otherwise NO.
+ */
+- (BOOL)indexPathShouldUpdateTable:(NSIndexPath *)indexPath {
+    switch (indexPath.section) {
+        case 0:
+            return [UserProfile profile].displayWatching;
+        case 1:
+            return [UserProfile profile].displayCompleted;
+        case 2:
+            return [UserProfile profile].displayOnHold;
+        case 3:
+            return [UserProfile profile].displayDropped;
+        case 4:
+            return [UserProfile profile].displayPlanToWatch;
+        default:
+            return NO;
+    }
+}
+
 #pragma mark - Table view data source
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    NSString *count = [NSString stringWithFormat:@"%d", [self.tableView numberOfRowsInSection:section]];
-    
-    BOOL expanded = NO;
-    
-    switch (section) {
-        case 0:
-            expanded = [UserProfile profile].displayWatching;
-            break;
-        case 1:
-            expanded = [UserProfile profile].displayCompleted;
-            break;
-        case 2:
-            expanded = [UserProfile profile].displayOnHold;
-            break;
-        case 3:
-            expanded = [UserProfile profile].displayDropped;
-            break;
-        case 4:
-            expanded = [UserProfile profile].displayPlanToWatch;
-            break;
-        default:
-            break;
-    }
-    
-    AniListTableHeaderView *headerView = [[AniListTableHeaderView alloc] initWithPrimaryText:self.sectionHeaders[section] andSecondaryText:count isExpanded:expanded];
-    headerView.tag = section;
-    
-    UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] init];
-    gestureRecognizer.numberOfTapsRequired = 1;
-    [gestureRecognizer addTarget:headerView action:@selector(expand)];
-    [gestureRecognizer addTarget:self action:@selector(expand:)];
-    [headerView addGestureRecognizer:gestureRecognizer];
-    
-    return headerView;
+    OVERRIDE_MSG;
+    return nil;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
@@ -296,16 +300,8 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    static NSString *CellIdentifier = @"Cell";
-    
-    UITableViewCell *cell;
-    cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if(!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-    }
-    
-    return cell;
+    OVERRIDE_MSG;
+    return nil;
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -317,7 +313,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    // OVERRIDE
+    OVERRIDE_MSG;
 }
 
 - (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -327,14 +323,10 @@
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    OVERRIDE_MSG;
 }
 
 #pragma mark - Fetched results controller
-
-- (void)updateMapping {
-
-}
 
 - (NSFetchedResultsController *)fetchedResultsController {
     if (_fetchedResultsController != nil) {
@@ -364,6 +356,7 @@
         // Replace this implementation with code to handle the error appropriately.
         // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
 	    ALLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        
 #ifdef DEBUG
         abort();
 #endif
@@ -379,21 +372,13 @@
 - (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
            atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
     
+    // Load the section headers; there are five per view.
+    // Only load if we haven't loaded them before.
     if(!self.loadSectionHeaders) {
         self.loadSectionHeaders = YES;
         if(self.tableView.numberOfSections == 0)
             [self.tableView insertSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 5)] withRowAnimation:UITableViewRowAnimationFade];
     }
-
-//    switch(type) {
-//        case NSFetchedResultsChangeInsert:
-//            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
-//            break;
-//            
-//        case NSFetchedResultsChangeDelete:
-//            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
-//            break;
-//    }
 }
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
@@ -424,7 +409,7 @@
                 [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
             if([self indexPathShouldUpdateTable:newIndexPath])
                 [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-            ALLog(@"%@", [self.tableView headerViewForSection:indexPath.section]);
+
             [[self.tableView headerViewForSection:indexPath.section] setNeedsDisplay];
             [[self.tableView headerViewForSection:newIndexPath.section] setNeedsDisplay];
             break;
@@ -434,8 +419,6 @@
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
     @try {
         [self.tableView endUpdates];
-        
-        [self.tableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 5)] withRowAnimation:UITableViewRowAnimationNone];
     }
     @catch (NSException *exception) {
 #warning - DEBUG ONLY.
@@ -450,24 +433,7 @@
 }
 
 - (void)configureCell:(UITableViewCell *)cell withObject:(NSManagedObject *)object {
-    // MUST OVERRIDE
-}
-
-- (BOOL)indexPathShouldUpdateTable:(NSIndexPath *)indexPath {
-    switch (indexPath.section) {
-        case 0:
-            return [UserProfile profile].displayWatching;
-        case 1:
-            return [UserProfile profile].displayCompleted;
-        case 2:
-            return [UserProfile profile].displayOnHold;
-        case 3:
-            return [UserProfile profile].displayDropped;
-        case 4:
-            return [UserProfile profile].displayPlanToWatch;
-        default:
-            return NO;
-    }
+    OVERRIDE_MSG;
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -499,6 +465,8 @@
     
     AniListNavigationController *navigationController = (AniListNavigationController *)self.navigationController;
     
+#warning with expanding table sections, we must also account for animating the difference if the scrollView offset is greater than 1.
+    
     // Since we know this background will fit the screen height, we can use this value.
     float height = [UIScreen mainScreen].bounds.size.height;
     
@@ -516,7 +484,7 @@
 #pragma mark - TapGestureRecognizerDelegate Methods
 
 - (void)expand:(UITapGestureRecognizer *)recognizer {
-    ALLog(@"Must be overridden.");
+    OVERRIDE_MSG;
 }
 
 @end
