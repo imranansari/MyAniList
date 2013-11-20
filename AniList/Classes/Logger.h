@@ -8,6 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
+#define OVERRIDE_MSG \
+@throw [NSException exceptionWithName:@"Failed to override an abstract method." reason:[NSString stringWithFormat:@"%s must be overridden.", __PRETTY_FUNCTION__] userInfo:nil] \
+
+
 @interface Logger : NSObject
 
 + (Logger *)sharedInstance;
