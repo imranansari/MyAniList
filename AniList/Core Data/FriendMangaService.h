@@ -15,5 +15,6 @@
 + (FriendManga *)addFriend:(Friend *)friend toManga:(Manga *)manga;
 + (FriendManga *)manga:(Manga *)manga forFriend:(Friend *)friend;
 + (NSArray *)mangaForFriend:(Friend *)friend;
++ (int)numberOfMangaForReadStatus:(MangaReadStatus)status forFriend:(Friend *)friend;
 
 @end

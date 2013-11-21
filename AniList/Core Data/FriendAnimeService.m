@@ -70,6 +70,17 @@
     else return nil;
 }
 
++ (int)numberOfAnimeForWatchedStatus:(AnimeWatchedStatus)status forFriend:(Friend *)friend {
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITY_NAME inManagedObjectContext:[FriendAnimeService managedObjectContext]];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"user == %@ && watched_status == %d", friend, status];
+    request.entity = entity;
+    request.predicate = predicate;
+    
+    NSError *error = nil;
+    return [[FriendAnimeService managedObjectContext] countForFetchRequest:request error:&error];
+}
+
 + (NSManagedObjectContext *)managedObjectContext {
     AniListAppDelegate *delegate = (AniListAppDelegate *)[UIApplication sharedApplication].delegate;
     return delegate.managedObjectContext;

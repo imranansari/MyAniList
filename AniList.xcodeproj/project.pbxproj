@@ -1458,9 +1458,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		6354849A171C2FA7003457CB /* AniList */ = {
+		6354849A171C2FA7003457CB /* MyAniList */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 635484D3171C2FA7003457CB /* Build configuration list for PBXNativeTarget "AniList" */;
+			buildConfigurationList = 635484D3171C2FA7003457CB /* Build configuration list for PBXNativeTarget "MyAniList" */;
 			buildPhases = (
 				63548497171C2FA7003457CB /* Sources */,
 				63548498171C2FA7003457CB /* Frameworks */,
@@ -1471,7 +1471,7 @@
 			);
 			dependencies = (
 			);
-			name = AniList;
+			name = MyAniList;
 			productName = AniList;
 			productReference = 6354849B171C2FA7003457CB /* AniList.app */;
 			productType = "com.apple.product-type.application";
@@ -1522,7 +1522,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				6354849A171C2FA7003457CB /* AniList */,
+				6354849A171C2FA7003457CB /* MyAniList */,
 				635484BF171C2FA7003457CB /* AniListTests */,
 			);
 		};
@@ -1934,7 +1934,7 @@
 /* Begin PBXTargetDependency section */
 		635484C7171C2FA7003457CB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 6354849A171C2FA7003457CB /* AniList */;
+			target = 6354849A171C2FA7003457CB /* MyAniList */;
 			targetProxy = 635484C6171C2FA7003457CB /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -2154,7 +2154,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		635484D3171C2FA7003457CB /* Build configuration list for PBXNativeTarget "AniList" */ = {
+		635484D3171C2FA7003457CB /* Build configuration list for PBXNativeTarget "MyAniList" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				635484D4171C2FA7003457CB /* Debug */,

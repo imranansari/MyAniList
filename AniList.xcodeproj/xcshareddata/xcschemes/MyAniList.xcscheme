@@ -16,7 +16,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "6354849A171C2FA7003457CB"
                BuildableName = "AniList.app"
-               BlueprintName = "AniList"
+               BlueprintName = "MyAniList"
                ReferencedContainer = "container:AniList.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -58,7 +58,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6354849A171C2FA7003457CB"
             BuildableName = "AniList.app"
-            BlueprintName = "AniList"
+            BlueprintName = "MyAniList"
             ReferencedContainer = "container:AniList.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -77,7 +77,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6354849A171C2FA7003457CB"
             BuildableName = "AniList.app"
-            BlueprintName = "AniList"
+            BlueprintName = "MyAniList"
             ReferencedContainer = "container:AniList.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -110,7 +110,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6354849A171C2FA7003457CB"
             BuildableName = "AniList.app"
-            BlueprintName = "AniList"
+            BlueprintName = "MyAniList"
             ReferencedContainer = "container:AniList.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
