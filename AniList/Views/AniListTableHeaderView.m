@@ -24,7 +24,7 @@
 - (id)initWithPrimaryText:(NSString *)primaryText andSecondaryText:(NSString *)secondaryText {
     self = [super initWithFrame:CGRectMake(0, 0, 300, 44)];
     if(self) {
-        self.backgroundColor = [UIColor clearColor];
+        self.contentView.backgroundColor = [UIColor clearColor];
         
         self.label = [[TTTAttributedLabel alloc] initWithFrame:CGRectMake(20, 0, 300, 44)];
         self.label.backgroundColor = [UIColor clearColor];
