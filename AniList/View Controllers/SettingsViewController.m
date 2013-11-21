@@ -15,6 +15,8 @@
 #import "SettingsCell.h"
 #import "FICImageCache.h"
 #import "ReportProblemViewController.h"
+#import "AniListNavigationController.h"
+#import "AniListTableHeaderView.h"
 
 #define kOptionName @"kOptionName"
 #define kAction     @"kAction"
@@ -24,7 +26,10 @@
 @property (nonatomic, weak) IBOutlet UIView *maskView;
 @property (nonatomic, weak) IBOutlet AniListTableView *tableView;
 @property (nonatomic, strong) NSArray *options;
+@property (nonatomic, strong) NSArray *advancedSettings;
+@property (nonatomic, strong) NSArray *feedback;
 @property (nonatomic, strong) NSArray *apiStatus;
+@property (nonatomic, strong) NSArray *headers;
 @property (nonatomic, weak) IBOutlet CRTransitionLabel *status;
 @property (nonatomic, weak) IBOutlet UIProgressView *progressView;
 
@@ -41,33 +46,55 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        
+        self.advancedSettings = @[
+                                  @{
+                                      kOptionName    : @"Enable Genre/Tag Support",
+                                      kAction        : @"enableGenreTagSupport",
+                                      kGATag         : kGenreTagSupportPressed
+                                      },
+                                  @{
+                                      kOptionName    : @"Clear Local Images",
+                                      kAction        : @"confirmClearImageCache",
+                                      kGATag         : kClearLocalImagesPressed
+                                      },
+                                  @{
+                                      kOptionName    : @"Reset Local Anime Cache",
+                                      kAction        : @"confirmClearAnimeList",
+                                      kGATag         : kClearAnimeCachePressed
+                                      },
+                                  @{
+                                      kOptionName    : @"Reset Local Manga Cache",
+                                      kAction        : @"confirmClearMangaList",
+                                      kGATag         : kClearMangaCachePressed
+                                      },
+                                  ];
+        
         self.options = @[
                          @{
-                             kOptionName    : @"Enable Genre/Tag Support",
-                             kAction        : @"enableGenreTagSupport",
-                             kGATag         : kGenreTagSupportPressed
+                             kOptionName    : @"Toggle Contrast",
+                             kAction        : @"toggleContrast",
+                             kGATag         : @""
                              },
                          @{
-                             kOptionName    : @"Clear Local Images",
-                             kAction        : @"confirmClearImageCache",
-                             kGATag         : kClearLocalImagesPressed
+                             kOptionName    : @"Default Visible Sections",
+                             kAction        : @"defaultVisibleSections",
+                             kGATag         : @""
                              },
-                         @{
-                             kOptionName    : @"Reset Local Anime Cache",
-                             kAction        : @"confirmClearAnimeList",
-                             kGATag         : kClearAnimeCachePressed
-                             },
-                         @{
-                             kOptionName    : @"Reset Local Manga Cache",
-                             kAction        : @"confirmClearMangaList",
-                             kGATag         : kClearMangaCachePressed
-                             },
-                         @{
-                             kOptionName    : @"Submit Feedback",
-                             kAction        : @"reportProblem",
-                             kGATag         : kSubmitFeedbackPressed
-                             }
                          ];
+        
+        self.feedback = @[
+                          @{
+                              kOptionName    : @"Submit Feedback",
+                              kAction        : @"reportProblem",
+                              kGATag         : kSubmitFeedbackPressed
+                              },
+                          @{
+                              kOptionName    : @"Rate MyAniList!",
+                              kAction        : @"rate",
+                              kGATag         : kSubmitFeedbackPressed
+                              }
+                          ];
         
         self.apiStatus = @[
                         @{
@@ -82,9 +109,18 @@
                             }
                         ];
         
+        self.headers = @[@"Customization", @"Advanced Settings", @"Feedback", @"Network"];
         
     }
     return self;
+}
+
+static BOOL enable = YES;
+
+- (void)toggleContrast {
+    AniListNavigationController *nvc = (AniListNavigationController *)self.navigationController;
+    [nvc enableContrast:enable animated:YES];
+    enable = !enable;
 }
 
 - (void)viewDidLoad {
@@ -97,7 +133,7 @@
     self.title = @"Settings";
     self.tableView.separatorColor = [UIColor colorWithWhite:1.0f alpha:0.2f];
     self.tableView.separatorInset = UIEdgeInsetsZero;
-    self.tableView.scrollEnabled = NO;
+    self.tableView.sectionHeaderHeight = [AniListTableHeaderView headerHeight];
     
     SWRevealViewController *revealController = self.revealViewController;
     
@@ -141,6 +177,18 @@
 
 #pragma mark - Table view data source
 
+
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    AniListTableHeaderView *headerView = [[AniListTableHeaderView alloc] initWithPrimaryText:self.headers[section] andSecondaryText:@""];
+    headerView.displayChevron = NO;
+    return headerView;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return [AniListTableHeaderView headerHeight];
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return 20;
 }
@@ -150,15 +198,21 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return 4;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     switch (section) {
-        case 0:
+        case SettingsSectionCustomization:
             return self.options.count;
             break;
-        case 1:
+        case SettingsSectionAdvanced:
+            return self.advancedSettings.count;
+            break;
+        case SettingsSectionFeedback:
+            return self.feedback.count;
+            break;
+        case SettingsSectionNetwork:
             return self.apiStatus.count;
             break;
     }
@@ -180,12 +234,22 @@
     NSArray *array;
     
     switch (indexPath.section) {
-        case 0: {
+        case SettingsSectionCustomization: {
             cell.accessoryView = nil;
             array = self.options;
             break;
         }
-        case 1: {
+        case SettingsSectionAdvanced: {
+            cell.accessoryView = nil;
+            array = self.advancedSettings;
+            break;
+        }
+        case SettingsSectionFeedback: {
+            cell.accessoryView = nil;
+            array = self.feedback;
+            break;
+        }
+        case SettingsSectionNetwork: {
             if((indexPath.row == 0 && self.apiStatusFetched) || (indexPath.row == 1 && self.unofficialApiStatusFetched)) {
                 [UIView animateWithDuration:0.3f
                                  animations:^{
@@ -219,10 +283,16 @@
     NSArray *options = nil;
     
     switch (indexPath.section) {
-        case 0:
+        case SettingsSectionCustomization:
             options = self.options;
             break;
-        case 1:
+        case SettingsSectionAdvanced:
+            options = self.advancedSettings;
+            break;
+        case SettingsSectionFeedback:
+            options = self.feedback;
+            break;
+        case SettingsSectionNetwork:
             options = self.apiStatus;
             break;
     }
@@ -234,6 +304,12 @@
     }
     
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+#pragma mark - Actions
+
+- (void)defaultVisibleSections {
+    
 }
 
 - (void)checkOfficialAPIStatus {
@@ -254,7 +330,7 @@
     [APIArray replaceObjectAtIndex:index withObject:item];
     self.apiStatus = [APIArray copy];
     self.apiStatusFetched = NO;
-    [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:1]] withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:SettingsSectionNetwork]] withRowAnimation:UITableViewRowAnimationFade];
     
     [[MALHTTPClient sharedClient] officialAPIAvailable:^(id operation, id response) {
         ALLog(@"Official API is available.");
@@ -262,14 +338,14 @@
         [APIArray replaceObjectAtIndex:index withObject:item];
         self.apiStatus = [APIArray copy];
         self.apiStatusFetched = YES;
-        [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:1]] withRowAnimation:UITableViewRowAnimationFade];
+        [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:SettingsSectionNetwork]] withRowAnimation:UITableViewRowAnimationFade];
     } failure:^(id operation, NSError *error) {
         ALLog(@"Official API is currently unavailable.");
         item[kOptionName] = @"Official API is currently unavailable.";
         [APIArray replaceObjectAtIndex:index withObject:item];
         self.apiStatus = [APIArray copy];
         self.apiStatusFetched = YES;
-        [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:1]] withRowAnimation:UITableViewRowAnimationFade];
+        [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:SettingsSectionNetwork]] withRowAnimation:UITableViewRowAnimationFade];
     }];
 
 }
@@ -288,11 +364,11 @@
         }
     }
     
-    item[kOptionName] = @"Checking Unofficial API...";
+    item[kOptionName] = @"Checking Unofficial API status...";
     [APIArray replaceObjectAtIndex:index withObject:item];
     self.apiStatus = [APIArray copy];
     self.unofficialApiStatusFetched = NO;
-    [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:1]] withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:SettingsSectionNetwork]] withRowAnimation:UITableViewRowAnimationFade];
     
     [[MALHTTPClient sharedClient] unofficialAPIAvailable:^(id operation, id response) {
         ALLog(@"Unofficial API Status is available.");
@@ -301,7 +377,7 @@
         self.apiStatus = [APIArray copy];
         self.unofficialApiStatusFetched = YES;
         self.unofficialApiAvailable = YES;
-        [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:1]] withRowAnimation:UITableViewRowAnimationFade];
+        [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:SettingsSectionNetwork]] withRowAnimation:UITableViewRowAnimationFade];
     } failure:^(id operation, NSError *error) {
         ALLog(@"Unofficial API Status is currently unavailable.");
         item[kOptionName] = @"Unofficial API is currently unavailable.";
@@ -309,13 +385,17 @@
         self.apiStatus = [APIArray copy];
         self.unofficialApiStatusFetched = YES;
         self.unofficialApiAvailable = NO;
-        [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:1]] withRowAnimation:UITableViewRowAnimationFade];
+        [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:SettingsSectionNetwork]] withRowAnimation:UITableViewRowAnimationFade];
     }];
 }
 
 - (void)reportProblem {
     ReportProblemViewController *vc = [[ReportProblemViewController alloc] init];
     [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (void)rate {
+    
 }
 
 #pragma mark - Action Methods

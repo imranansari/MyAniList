@@ -15,6 +15,13 @@ typedef enum {
     ClearMangaListTag
 } ActionSheetTags;
 
+typedef enum {
+    SettingsSectionCustomization = 0,
+    SettingsSectionAdvanced,
+    SettingsSectionFeedback,
+    SettingsSectionNetwork
+} SettingsSection;
+
 @interface SettingsViewController : BaseViewController<UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate>
 
 @end

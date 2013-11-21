@@ -22,11 +22,11 @@
 }
 
 - (id)initWithPrimaryText:(NSString *)primaryText andSecondaryText:(NSString *)secondaryText {
-    self = [super initWithFrame:CGRectMake(0, 0, 300, 44)];
+    self = [super initWithFrame:CGRectMake(0, 0, 300, [AniListTableHeaderView headerHeight])];
     if(self) {
         self.contentView.backgroundColor = [UIColor clearColor];
         
-        self.label = [[TTTAttributedLabel alloc] initWithFrame:CGRectMake(20, 0, 300, 44)];
+        self.label = [[TTTAttributedLabel alloc] initWithFrame:CGRectMake(20, 0, 300, [AniListTableHeaderView headerHeight])];
         self.label.backgroundColor = [UIColor clearColor];
         self.label.textColor = [UIColor whiteColor];
         self.label.text = [NSString stringWithFormat:@"%@ (%@)", primaryText, secondaryText];
@@ -44,16 +44,31 @@
     return self;
 }
 
++ (CGFloat)headerHeight {
+    return 44;
+}
+
 - (void)setPrimaryText:(NSString *)primaryText {
     _primaryText = primaryText;
-    [UILabel setAttributesForLabel:self.label withPrimaryText:primaryText andSecondaryText:[NSString stringWithFormat:@"(%@)", self.secondaryText]];
+    
+    NSString *secondaryString = self.secondaryText.length > 0 ? [NSString stringWithFormat:@"(%@)", self.secondaryText] : @"";
+    
+    [UILabel setAttributesForLabel:self.label withPrimaryText:primaryText andSecondaryText:secondaryString];
 }
 
 - (void)setSecondaryText:(NSString *)secondaryText {
     _secondaryText = secondaryText;
-    [UILabel setAttributesForLabel:self.label withPrimaryText:self.primaryText andSecondaryText:[NSString stringWithFormat:@"(%@)", secondaryText]];
+    
+    NSString *secondaryString = secondaryText.length > 0 ? [NSString stringWithFormat:@"(%@)", secondaryText] : @"";
+    
+    [UILabel setAttributesForLabel:self.label withPrimaryText:self.primaryText andSecondaryText:secondaryString];
 }
 
+- (void)setDisplayChevron:(BOOL)displayChevron {
+    _displayChevron = displayChevron;
+    
+    self.chevron.hidden = !displayChevron;
+}
 
 - (id)initWithPrimaryText:(NSString *)primaryText andSecondaryText:(NSString *)secondaryText isExpanded:(BOOL)expanded {
     self = [self initWithPrimaryText:primaryText andSecondaryText:secondaryText];
