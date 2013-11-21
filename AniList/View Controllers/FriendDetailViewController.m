@@ -13,6 +13,7 @@
 
 #import "AniListTableView.h"
 #import "AniListAppDelegate.h"
+#import "AniListTableHeaderView.h"
 
 #import "Anime.h"
 #import "Manga.h"
@@ -41,7 +42,14 @@
 @property (nonatomic, weak) IBOutlet UIButton *compareButton;
 @property (nonatomic, weak) IBOutlet UISegmentedControl *compareControl;
 
+@property (nonatomic, assign) BOOL displayWatching;
+@property (nonatomic, assign) BOOL displayCompleted;
+@property (nonatomic, assign) BOOL displayOnHold;
+@property (nonatomic, assign) BOOL displayDropped;
+@property (nonatomic, assign) BOOL displayPlanToWatch;
+
 @property (nonatomic, copy) NSArray *sectionHeaders;
+@property (nonatomic, strong) NSMutableArray *sectionHeaderViews;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 
 - (IBAction)compareButtonPressed:(id)sender;
@@ -58,8 +66,66 @@
         self.managedObjectContext = [(AniListAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
         
         self.sectionHeaders = @[@"Watching", @"Completed", @"On Hold", @"Dropped", @"Plan To Watch"];
+        
+        self.displayWatching = YES;
+        self.sectionHeaderViews = [[NSMutableArray alloc] init];
     }
     return self;
+}
+
+- (void)createHeaders {
+    for(int i = 0; i < 5; i++) {
+        NSString *count = @"";
+        int sectionValue = 0;
+        
+        BOOL expanded = NO;
+        
+        switch (i) {
+            case 0:
+                expanded = self.displayWatching;
+                sectionValue = [FriendAnimeService numberOfAnimeForWatchedStatus:AnimeWatchedStatusWatching forFriend:self.friend];
+                break;
+            case 1:
+                expanded = self.displayCompleted;
+                sectionValue = [FriendAnimeService numberOfAnimeForWatchedStatus:AnimeWatchedStatusCompleted forFriend:self.friend];
+                break;
+            case 2:
+                expanded = self.displayOnHold;
+                sectionValue = [FriendAnimeService numberOfAnimeForWatchedStatus:AnimeWatchedStatusOnHold forFriend:self.friend];
+                break;
+            case 3:
+                expanded = self.displayDropped;
+                sectionValue = [FriendAnimeService numberOfAnimeForWatchedStatus:AnimeWatchedStatusDropped forFriend:self.friend];
+                break;
+            case 4:
+                expanded = self.displayPlanToWatch;
+                sectionValue = [FriendAnimeService numberOfAnimeForWatchedStatus:AnimeWatchedStatusPlanToWatch forFriend:self.friend];
+                break;
+            default:
+                break;
+        }
+        
+        count = [NSString stringWithFormat:@"%d", sectionValue];
+        
+        AniListTableHeaderView *headerView = [[AniListTableHeaderView alloc] initWithPrimaryText:self.sectionHeaders[i] andSecondaryText:count isExpanded:expanded];
+        headerView.tag = i;
+        
+        UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] init];
+        gestureRecognizer.numberOfTapsRequired = 1;
+        [gestureRecognizer addTarget:headerView action:@selector(expand)];
+        [gestureRecognizer addTarget:self action:@selector(expand:)];
+        [headerView addGestureRecognizer:gestureRecognizer];
+        
+        [self.sectionHeaderViews addObject:headerView];
+    }
+}
+
+- (void)resetHeaderDefaults {
+    self.displayWatching = YES;
+    self.displayCompleted = NO;
+    self.displayOnHold = NO;
+    self.displayDropped = NO;
+    self.displayPlanToWatch = NO;
 }
 
 - (void)viewDidLoad
@@ -67,6 +133,8 @@
     self.hidesBackButton = NO;
     
     [super viewDidLoad];
+    
+    [self createHeaders];
     
     self.compareControl.selectedSegmentIndex = 0;
     
@@ -208,7 +276,11 @@
                              [self fetchData];
                          }
                          
+                         [self resetHeaderDefaults];
+                         
                          [self.tableView reloadData];
+                         
+                         [self updateHeaders];
                          
                          [UIView animateWithDuration:0.15f
                                                delay:0.0f
@@ -256,14 +328,37 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 
+- (NSManagedObject *)objectForIndexPath:(NSIndexPath *)indexPath {
+    for(id <NSFetchedResultsSectionInfo> sectionInfo in [self.fetchedResultsController sections]) {
+        if([sectionInfo.name isEqualToString:[NSString stringWithFormat:@"%d", indexPath.section]]) {
+            return [self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row inSection:[[self.fetchedResultsController sections] indexOfObject:sectionInfo]]];
+        }
+    }
+    
+    return nil;
+}
+
+- (BOOL)indexPathShouldUpdateTable:(NSIndexPath *)indexPath {
+    switch (indexPath.section) {
+        case 0:
+            return self.displayWatching;
+        case 1:
+            return self.displayCompleted;
+        case 2:
+            return self.displayOnHold;
+        case 3:
+            return self.displayDropped;
+        case 4:
+            return self.displayPlanToWatch;
+        default:
+            return NO;
+    }
+}
+
 #pragma mark - Table view data source
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    NSNumber *headerSection = [self.fetchedResultsController sectionIndexTitles][section];
-    NSString *count = [NSString stringWithFormat:@"%d", [self.tableView numberOfRowsInSection:section]];
-    UIView *headerView = [UIView tableHeaderWithPrimaryText:self.sectionHeaders[[headerSection intValue]] andSecondaryText:count];
-    
-    return headerView;
+    return self.sectionHeaderViews[section];
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
@@ -279,12 +374,29 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
-    return [sectionInfo numberOfObjects];
+    for(id <NSFetchedResultsSectionInfo> sectionInfo in [self.fetchedResultsController sections]) {
+        ALVLog(@"Section to look for: %d", section);
+        if((section == 0 && !self.displayWatching)     ||
+           (section == 1 && !self.displayCompleted)    ||
+           (section == 2 && !self.displayOnHold)       ||
+           (section == 3 && !self.displayDropped)      ||
+           (section == 4 && !self.displayPlanToWatch)) {
+            ALVLog(@"Section %d is hidden.", section);
+            return 0;
+        }
+        if([sectionInfo.name isEqualToString:[NSString stringWithFormat:@"%d", section]]) {
+            ALVLog(@"Found section %d with %d objects", section, [sectionInfo numberOfObjects]);
+            return [sectionInfo numberOfObjects];
+        }
+    }
+    
+    return 0;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return [[self.fetchedResultsController sections] count];
+    if([self.fetchedResultsController sections].count > 0)
+        return [self.sectionHeaders count];
+    return 0;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -313,13 +425,79 @@
         }
     }
     
-    NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    NSManagedObject *object = [self objectForIndexPath:indexPath];
     [self configureCell:cell withObject:object];
     
     return cell;
 }
 
 #pragma mark - Table view delegate
+
+static int map[5] = {-1, -1, -1, -1, -1};
+static BOOL initialUpdate = NO;
+
+- (void)updateMapping {
+    
+    for(int i = 0; i < 5; i++) {
+        map[i] = -1;
+    }
+    
+    for(int i = 0; i < self.fetchedResultsController.sections.count; i++) {
+        id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][i];
+        map[i] = [sectionInfo.name intValue];
+    }
+    
+    ALVLog(@"map: (%d, %d, %d, %d, %d)", map[0], map[1], map[2], map[3], map[4]);
+}
+
+- (void)updateHeaders {
+    
+    BOOL onAnimeList = self.compareControl.selectedSegmentIndex == 0;
+    
+    for(int i = 0; i < self.sectionHeaderViews.count; i++) {
+        AniListTableHeaderView *view = self.sectionHeaderViews[i];
+        
+        int sectionValue = 0;
+        
+        switch (i) {
+            case 0:
+                if(onAnimeList)
+                    sectionValue = [FriendAnimeService numberOfAnimeForWatchedStatus:AnimeWatchedStatusWatching forFriend:self.friend];
+                else
+                    sectionValue = [FriendMangaService numberOfMangaForReadStatus:MangaReadStatusReading forFriend:self.friend];
+                break;
+            case 1:
+                if(onAnimeList)
+                    sectionValue = [FriendAnimeService numberOfAnimeForWatchedStatus:AnimeWatchedStatusCompleted forFriend:self.friend];
+                else
+                    sectionValue = [FriendMangaService numberOfMangaForReadStatus:MangaReadStatusCompleted forFriend:self.friend];
+                break;
+            case 2:
+                if(onAnimeList)
+                    sectionValue = [FriendAnimeService numberOfAnimeForWatchedStatus:AnimeWatchedStatusOnHold forFriend:self.friend];
+                else
+                    sectionValue = [FriendMangaService numberOfMangaForReadStatus:MangaReadStatusOnHold forFriend:self.friend];
+                break;
+            case 3:
+                if(onAnimeList)
+                    sectionValue = [FriendAnimeService numberOfAnimeForWatchedStatus:AnimeWatchedStatusDropped forFriend:self.friend];
+                else
+                    sectionValue = [FriendMangaService numberOfMangaForReadStatus:MangaReadStatusDropped forFriend:self.friend];
+                break;
+            case 4:
+                if(onAnimeList)
+                    sectionValue = [FriendAnimeService numberOfAnimeForWatchedStatus:AnimeWatchedStatusPlanToWatch forFriend:self.friend];
+                else
+                    sectionValue = [FriendMangaService numberOfMangaForReadStatus:MangaReadStatusPlanToRead forFriend:self.friend];
+                break;
+            default:
+                break;
+        }
+        
+        view.primaryText = self.sectionHeaders[i];
+        view.secondaryText = [NSString stringWithFormat:@"%d", sectionValue];
+    }
+}
 
 #pragma mark - Fetched results controller
 
@@ -383,22 +561,28 @@
     
     switch(type) {
         case NSFetchedResultsChangeInsert:
-            [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            if([self indexPathShouldUpdateTable:newIndexPath])
+                [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
             [[self.tableView headerViewForSection:newIndexPath.section] setNeedsDisplay];
             break;
             
         case NSFetchedResultsChangeDelete:
-            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            if([self indexPathShouldUpdateTable:indexPath])
+                [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
             [[self.tableView headerViewForSection:indexPath.section] setNeedsDisplay];
             break;
             
         case NSFetchedResultsChangeUpdate:
-            [self configureCell:[tableView cellForRowAtIndexPath:indexPath] withObject:anObject];
+            if([self indexPathShouldUpdateTable:indexPath])
+                [self configureCell:[tableView cellForRowAtIndexPath:indexPath] withObject:anObject];
             break;
             
         case NSFetchedResultsChangeMove:
-            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            if([self indexPathShouldUpdateTable:indexPath])
+                [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            if([self indexPathShouldUpdateTable:newIndexPath])
+                [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            
             [[self.tableView headerViewForSection:indexPath.section] setNeedsDisplay];
             [[self.tableView headerViewForSection:newIndexPath.section] setNeedsDisplay];
             break;
@@ -411,7 +595,7 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    NSManagedObject *object = [self objectForIndexPath:indexPath];
     
     if([object isMemberOfClass:[FriendAnime class]]) {
         FriendAnime *friendAnime = (FriendAnime *)object;
@@ -487,6 +671,36 @@
             navigationController.imageView.frame = CGRectMake(navigationController.imageView.frame.origin.x, yOrigin, navigationController.imageView.frame.size.width, navigationController.imageView.frame.size.height);
         }
     }
+}
+
+#pragma mark - TapGestureRecognizerDelegate Methods
+
+- (void)expand:(UITapGestureRecognizer *)recognizer {
+    ALLog(@"EXPAND!");
+    
+    NSInteger section = recognizer.view.tag;
+
+    switch (section) {
+        case 0:
+            self.displayWatching = !self.displayWatching;
+            break;
+        case 1:
+            self.displayCompleted = !self.displayCompleted;
+            break;
+        case 2:
+            self.displayOnHold = !self.displayOnHold;
+            break;
+        case 3:
+            self.displayDropped = !self.displayDropped;
+            break;
+        case 4:
+            self.displayPlanToWatch = !self.displayPlanToWatch;
+            break;
+        default:
+            break;
+    }
+    
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:section] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 @end

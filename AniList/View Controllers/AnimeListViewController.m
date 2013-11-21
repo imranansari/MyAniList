@@ -94,7 +94,7 @@ static BOOL alreadyFetched = NO;
     return [super sectionKeyPathName];
 }
 
--  (void)createHeaders {
+- (void)createHeaders {
     for(int i = 0; i < 5; i++) {
         NSString *count = @"";
         int sectionValue = 0;
