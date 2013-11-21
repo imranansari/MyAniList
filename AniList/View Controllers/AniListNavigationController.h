@@ -20,4 +20,6 @@ typedef enum {
 @property (nonatomic, assign) NavigationStyle navigationStyle;
 @property (nonatomic, readonly) UIImageView *imageView;
 
+- (void)enableContrast:(BOOL)enable animated:(BOOL)animated;
+
 @end

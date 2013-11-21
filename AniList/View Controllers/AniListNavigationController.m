@@ -10,6 +10,7 @@
 
 @interface AniListNavigationController ()
 @property (nonatomic, strong) UIImageView *imageView;
+@property (nonatomic, strong) UIView *contrastView;
 @end
 
 @implementation AniListNavigationController
@@ -43,8 +44,22 @@
     
     self.imageView = [[UIImageView alloc] initWithImage:backgroundImage];
     self.imageView.alpha = 0.75f;
+    
+    self.contrastView = [[UIView alloc] initWithFrame:self.imageView.frame];
+    self.contrastView.backgroundColor = [UIColor blackColor];
+    self.contrastView.alpha = 0.0f;
 
+    [self.view insertSubview:self.contrastView belowSubview:self.view.subviews[0]];
     [self.view insertSubview:self.imageView belowSubview:self.view.subviews[0]];
+}
+
+- (void)enableContrast:(BOOL)enable animated:(BOOL)animated {
+    float alpha = enable ? 0.5f : 0.0f;
+    float duration = animated ? 0.5f : 0.0f;
+    
+    [UIView animateWithDuration:duration animations:^{
+        self.contrastView.alpha = alpha;
+    }];
 }
 
 #pragma - Overridden Methods
