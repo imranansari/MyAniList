@@ -10,6 +10,10 @@
 #import "MALHTTPClient.h"
 #import <Crashlytics/Crashlytics.h>
 
+@interface UserProfile()
+@property (nonatomic, assign) BOOL contrastEnabled;
+@end
+
 @implementation UserProfile
 
 static UserProfile *profile = nil;
@@ -124,6 +128,20 @@ static UserProfile *profile = nil;
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
+- (void)resetDefaults {
+    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kUserAnimeStats];
+    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kUserMangaStats];
+    [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:kNotificationTimestampKey];
+    
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kEnableContrast];
+    
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDisplayWatching];
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kDisplayCompleted];
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kDisplayOnHold];
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kDisplayDropped];
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kDisplayPlanToWatch];
+}
+
 #pragma mark - Public Methods
 
 - (void)logout {
@@ -131,9 +149,9 @@ static UserProfile *profile = nil;
     self.password = nil;
     self.email = nil;
     
-    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kUserAnimeStats];
-    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kUserMangaStats];
-    [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:kNotificationTimestampKey];
+    [self resetDefaults];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedOut object:nil];
 }
 
 + (BOOL)userIsLoggedIn {
@@ -221,6 +239,7 @@ static UserProfile *profile = nil;
 
 - (void)setNotificationTimestamp:(NSTimeInterval)timestamp {
     [[NSUserDefaults standardUserDefaults] setInteger:timestamp forKey:kNotificationTimestampKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (BOOL)shouldShowProTip {
@@ -229,6 +248,16 @@ static UserProfile *profile = nil;
 
 - (void)setProTip {
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kProTipNotification];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (BOOL)contrastEnabled {
+    return [[NSUserDefaults standardUserDefaults] boolForKey:kEnableContrast];
+}
+
+- (void)setContrastEnabled:(BOOL)enabled {
+    [[NSUserDefaults standardUserDefaults] setBool:enabled forKey:kEnableContrast];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 @end

@@ -143,6 +143,8 @@
 		635027AD171E601E0004C106 /* AnimeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 635027AC171E601E0004C106 /* AnimeCell.xib */; };
 		635027BA171ED41A0004C106 /* AnimeService.m in Sources */ = {isa = PBXBuildFile; fileRef = 635027B9171ED41A0004C106 /* AnimeService.m */; };
 		635027BD171ED60A0004C106 /* Anime.m in Sources */ = {isa = PBXBuildFile; fileRef = 635027BC171ED60A0004C106 /* Anime.m */; };
+		635303CA1840384800A6CD00 /* VisibleSectionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 635303C81840384800A6CD00 /* VisibleSectionsViewController.m */; };
+		635303CB1840384800A6CD00 /* VisibleSectionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 635303C91840384800A6CD00 /* VisibleSectionsViewController.xib */; };
 		6353C22F171C457D0060F062 /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6353C124171C457D0060F062 /* TTTAttributedLabel.m */; };
 		6353C230171C457D0060F062 /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6353C124171C457D0060F062 /* TTTAttributedLabel.m */; };
 		6353C244171C46740060F062 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6353C243171C46740060F062 /* CoreText.framework */; };
@@ -496,13 +498,16 @@
 		635027B9171ED41A0004C106 /* AnimeService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AnimeService.m; path = "Core Data/AnimeService.m"; sourceTree = "<group>"; };
 		635027BB171ED60A0004C106 /* Anime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Anime.h; path = "Core Data/Anime.h"; sourceTree = "<group>"; };
 		635027BC171ED60A0004C106 /* Anime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Anime.m; path = "Core Data/Anime.m"; sourceTree = "<group>"; };
+		635303C71840384800A6CD00 /* VisibleSectionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VisibleSectionsViewController.h; sourceTree = "<group>"; };
+		635303C81840384800A6CD00 /* VisibleSectionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VisibleSectionsViewController.m; sourceTree = "<group>"; };
+		635303C91840384800A6CD00 /* VisibleSectionsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VisibleSectionsViewController.xib; sourceTree = "<group>"; };
 		6353C123171C457D0060F062 /* TTTAttributedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTAttributedLabel.h; sourceTree = "<group>"; };
 		6353C124171C457D0060F062 /* TTTAttributedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTAttributedLabel.m; sourceTree = "<group>"; };
 		6353C243171C46740060F062 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		6353C245171C46780060F062 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		6353C247171C468C0060F062 /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
 		6353C249171C46930060F062 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
-		6354849B171C2FA7003457CB /* AniList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AniList.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6354849B171C2FA7003457CB /* MyAniList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyAniList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6354849E171C2FA7003457CB /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		635484A0171C2FA7003457CB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		635484A2171C2FA7003457CB /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -930,6 +935,9 @@
 				635CF869182B2F6F0032E7FA /* NotificationDisplayViewController.h */,
 				635CF86A182B2F6F0032E7FA /* NotificationDisplayViewController.m */,
 				635CF86B182B2F6F0032E7FA /* NotificationDisplayViewController.xib */,
+				635303C71840384800A6CD00 /* VisibleSectionsViewController.h */,
+				635303C81840384800A6CD00 /* VisibleSectionsViewController.m */,
+				635303C91840384800A6CD00 /* VisibleSectionsViewController.xib */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -1238,7 +1246,7 @@
 		6354849C171C2FA7003457CB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				6354849B171C2FA7003457CB /* AniList.app */,
+				6354849B171C2FA7003457CB /* MyAniList.app */,
 				635484C0171C2FA7003457CB /* AniListTests.octest */,
 			);
 			name = Products;
@@ -1473,7 +1481,7 @@
 			);
 			name = MyAniList;
 			productName = AniList;
-			productReference = 6354849B171C2FA7003457CB /* AniList.app */;
+			productReference = 6354849B171C2FA7003457CB /* MyAniList.app */;
 			productType = "com.apple.product-type.application";
 		};
 		635484BF171C2FA7003457CB /* AniListTests */ = {
@@ -1562,6 +1570,7 @@
 				635CF86D182B2F6F0032E7FA /* NotificationDisplayViewController.xib in Resources */,
 				63E76B07181A33CD009FC42F /* TagsViewController.xib in Resources */,
 				63C063BD17B67FD0009C4FFE /* FriendDetailViewController.xib in Resources */,
+				635303CB1840384800A6CD00 /* VisibleSectionsViewController.xib in Resources */,
 				63D8791F17A20D8E002ACA13 /* white_bg_pressed.png in Resources */,
 				63C063A817B5F735009C4FFE /* intro_background.png in Resources */,
 				635CF187182E017600151917 /* Cell1.jpg in Resources */,
@@ -1784,6 +1793,7 @@
 				63894CC1176A9C05007D2D05 /* UserProfile.m in Sources */,
 				638E6B1717A7F54D00A35FDB /* SettingsCell.m in Sources */,
 				63894CC6176A9E37007D2D05 /* LoginViewController.m in Sources */,
+				635303CA1840384800A6CD00 /* VisibleSectionsViewController.m in Sources */,
 				6371444A1770074600E60B9F /* SearchViewController.m in Sources */,
 				637144501770157A00E60B9F /* NSDictionary+AniList.m in Sources */,
 				630FCD9318024B3A00D81EAF /* CompareViewController.m in Sources */,
@@ -2032,8 +2042,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Corey Roberts (8E236WJF76)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Corey Roberts (8E236WJF76)";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
@@ -2055,8 +2065,8 @@
 					SparkInspector,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "C58EE964-D1F7-4B3E-B1BF-E28DD33B370A";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C58EE964-D1F7-4B3E-B1BF-E28DD33B370A";
+				PROVISIONING_PROFILE = "9AD6B336-40DF-4D6A-8D66-038CDF3C650F";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9AD6B336-40DF-4D6A-8D66-038CDF3C650F";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/AFNetworking/AFNetworking";
 				WRAPPER_EXTENSION = app;
@@ -2086,8 +2096,8 @@
 					/Users/corey.roberts/Projects/AniList/AniList/Libraries/GoogleAnalytics,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "C58EE964-D1F7-4B3E-B1BF-E28DD33B370A";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C58EE964-D1F7-4B3E-B1BF-E28DD33B370A";
+				PROVISIONING_PROFILE = "F5A21E66-D4DE-458D-AE19-BFEDE5AEAA54";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F5A21E66-D4DE-458D-AE19-BFEDE5AEAA54";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/AFNetworking/AFNetworking";
 				WRAPPER_EXTENSION = app;

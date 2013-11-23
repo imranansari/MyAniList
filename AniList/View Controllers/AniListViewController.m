@@ -26,6 +26,12 @@
     if (self) {
         self.managedObjectContext = [(AniListAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
         self.sectionHeaderViews = [[NSMutableArray alloc] init];
+        
+        self.displayWatching = [UserProfile profile].displayWatching;
+        self.displayCompleted = [UserProfile profile].displayCompleted;
+        self.displayOnHold = [UserProfile profile].displayOnHold;
+        self.displayDropped = [UserProfile profile].displayDropped;
+        self.displayPlanToWatch = [UserProfile profile].displayPlanToWatch;
     }
     return self;
 }
@@ -228,15 +234,15 @@
 - (BOOL)indexPathShouldUpdateTable:(NSIndexPath *)indexPath {
     switch (indexPath.section) {
         case 0:
-            return [UserProfile profile].displayWatching;
+            return self.displayWatching;
         case 1:
-            return [UserProfile profile].displayCompleted;
+            return self.displayCompleted;
         case 2:
-            return [UserProfile profile].displayOnHold;
+            return self.displayOnHold;
         case 3:
-            return [UserProfile profile].displayDropped;
+            return self.displayDropped;
         case 4:
-            return [UserProfile profile].displayPlanToWatch;
+            return self.displayPlanToWatch;
         default:
             return NO;
     }
@@ -274,11 +280,11 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     for(id <NSFetchedResultsSectionInfo> sectionInfo in [self.fetchedResultsController sections]) {
         ALVLog(@"Section to look for: %d", section);
-        if((section == 0 && ![UserProfile profile].displayWatching)     ||
-           (section == 1 && ![UserProfile profile].displayCompleted)    ||
-           (section == 2 && ![UserProfile profile].displayOnHold)       ||
-           (section == 3 && ![UserProfile profile].displayDropped)      ||
-           (section == 4 && ![UserProfile profile].displayPlanToWatch)) {
+        if((section == 0 && !self.displayWatching)     ||
+           (section == 1 && !self.displayCompleted)    ||
+           (section == 2 && !self.displayOnHold)       ||
+           (section == 3 && !self.displayDropped)      ||
+           (section == 4 && !self.displayPlanToWatch)) {
             ALVLog(@"Section %d is hidden.", section);
             return 0;
         }
@@ -476,7 +482,31 @@
 #pragma mark - TapGestureRecognizerDelegate Methods
 
 - (void)expand:(UITapGestureRecognizer *)recognizer {
-    OVERRIDE_MSG;
+    ALLog(@"EXPAND!");
+    
+    NSInteger section = recognizer.view.tag;
+    
+    switch (section) {
+        case 0:
+            self.displayWatching = !self.displayWatching;
+            break;
+        case 1:
+            self.displayCompleted = !self.displayCompleted;
+            break;
+        case 2:
+            self.displayOnHold = !self.displayOnHold;
+            break;
+        case 3:
+            self.displayDropped = !self.displayDropped;
+            break;
+        case 4:
+            self.displayPlanToWatch = !self.displayPlanToWatch;
+            break;
+        default:
+            break;
+    }
+    
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:section] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 @end

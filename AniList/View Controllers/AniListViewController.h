@@ -29,6 +29,11 @@
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 @property (nonatomic, weak) IBOutlet UILabel *errorLabel;
 @property (nonatomic, assign) BOOL loadSectionHeaders;
+@property (nonatomic, assign) BOOL displayWatching;
+@property (nonatomic, assign) BOOL displayCompleted;
+@property (nonatomic, assign) BOOL displayOnHold;
+@property (nonatomic, assign) BOOL displayDropped;
+@property (nonatomic, assign) BOOL displayPlanToWatch;
 
 - (void)fetchData;
 - (NSString *)entityName;

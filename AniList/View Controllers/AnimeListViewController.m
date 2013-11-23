@@ -103,23 +103,23 @@ static BOOL alreadyFetched = NO;
         
         switch (i) {
             case 0:
-                expanded = [UserProfile profile].displayWatching;
+                expanded = self.displayWatching;
                 sectionValue = [AnimeService numberOfAnimeForWatchedStatus:AnimeWatchedStatusWatching];
                 break;
             case 1:
-                expanded = [UserProfile profile].displayCompleted;
+                expanded = self.displayCompleted;
                 sectionValue = [AnimeService numberOfAnimeForWatchedStatus:AnimeWatchedStatusCompleted];
                 break;
             case 2:
-                expanded = [UserProfile profile].displayOnHold;
+                expanded = self.displayOnHold;
                 sectionValue = [AnimeService numberOfAnimeForWatchedStatus:AnimeWatchedStatusOnHold];
                 break;
             case 3:
-                expanded = [UserProfile profile].displayDropped;
+                expanded = self.displayDropped;
                 sectionValue = [AnimeService numberOfAnimeForWatchedStatus:AnimeWatchedStatusDropped];
                 break;
             case 4:
-                expanded = [UserProfile profile].displayPlanToWatch;
+                expanded = self.displayPlanToWatch;
                 sectionValue = [AnimeService numberOfAnimeForWatchedStatus:AnimeWatchedStatusPlanToWatch];
                 break;
             default:
@@ -532,36 +532,6 @@ static BOOL initialUpdate = NO;
         default:
             break;
     }
-}
-
-#pragma mark - TapGestureRecognizerDelegate Methods
-
-- (void)expand:(UITapGestureRecognizer *)recognizer {
-    ALLog(@"EXPAND!");
-    
-    NSInteger section = recognizer.view.tag;
-    UserProfile *profile = [UserProfile profile];
-    switch (section) {
-        case 0:
-            profile.displayWatching = !profile.displayWatching;
-            break;
-        case 1:
-            profile.displayCompleted = !profile.displayCompleted;
-            break;
-        case 2:
-            profile.displayOnHold = !profile.displayOnHold;
-            break;
-        case 3:
-            profile.displayDropped = !profile.displayDropped;
-            break;
-        case 4:
-            profile.displayPlanToWatch = !profile.displayPlanToWatch;
-            break;
-        default:
-            break;
-    }
-    
-    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:section] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 @end

@@ -30,6 +30,7 @@
 
 // Notification Names
 #define kUserLoggedIn @"kUserLoggedIn"
+#define kUserLoggedOut @"kUserLoggedOut"
 
 // Preference Keys
 #define kDisplayWatching @"kDisplayWatching"
@@ -37,6 +38,8 @@
 #define kDisplayOnHold @"kDisplayOnHold"
 #define kDisplayDropped @"kDisplayDropped"
 #define kDisplayPlanToWatch @"kDisplayPlanToWatch"
+
+#define kEnableContrast @"kEnableContrast"
 
 @interface UserProfile : NSObject
 
@@ -54,6 +57,8 @@
 @property (nonatomic, assign) BOOL displayOnHold;
 @property (nonatomic, assign) BOOL displayDropped;
 @property (nonatomic, assign) BOOL displayPlanToWatch;
+
+@property (nonatomic, readonly) BOOL contrastEnabled;
 
 + (UserProfile *)profile;
 - (void)setUsername:(NSString *)username andPassword:(NSString *)password;
@@ -74,5 +79,7 @@
 
 - (BOOL)shouldShowProTip;
 - (void)setProTip;
+
+- (void)setContrastEnabled:(BOOL)enabled;
 
 @end

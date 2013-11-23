@@ -17,6 +17,8 @@
 #import "ReportProblemViewController.h"
 #import "AniListNavigationController.h"
 #import "AniListTableHeaderView.h"
+#import "iRate.h"
+#import "VisibleSectionsViewController.h"
 
 #define kOptionName @"kOptionName"
 #define kAction     @"kAction"
@@ -72,7 +74,7 @@
         
         self.options = @[
                          @{
-                             kOptionName    : @"Toggle Contrast",
+                             kOptionName    : @"Increase Contrast",
                              kAction        : @"toggleContrast",
                              kGATag         : @""
                              },
@@ -115,12 +117,9 @@
     return self;
 }
 
-static BOOL enable = YES;
-
 - (void)toggleContrast {
     AniListNavigationController *nvc = (AniListNavigationController *)self.navigationController;
-    [nvc enableContrast:enable animated:YES];
-    enable = !enable;
+    [nvc enableContrast:![UserProfile profile].contrastEnabled animated:YES];
 }
 
 - (void)viewDidLoad {
@@ -160,14 +159,18 @@ static BOOL enable = YES;
     gradient.frame = self.maskView.frame;
     gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor colorWithRed:0 green:0 blue:0 alpha:0] CGColor], (id)[[UIColor colorWithRed:0 green:0 blue:0 alpha:1] CGColor], nil];
     
-    gradient.startPoint = CGPointMake(0.0, 0.075f);
-    gradient.endPoint = CGPointMake(0.0f, 0.10f);
+    gradient.startPoint = CGPointMake(0.0, 0.1f);
+    gradient.endPoint = CGPointMake(0.0f, 0.125f);
     
     self.maskView.layer.mask = gradient;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"hamburger.png"] style:UIBarButtonItemStylePlain target:revealController action:@selector(revealToggle:)];
     
     [self checkOfficialAPIStatus];
-    [self checkUnofficialAPIStatus];
+    double delayInSeconds = 1.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [self checkUnofficialAPIStatus];
+    });
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -237,6 +240,10 @@ static BOOL enable = YES;
         case SettingsSectionCustomization: {
             cell.accessoryView = nil;
             array = self.options;
+            
+            if(indexPath.row == 0 && [UserProfile profile].contrastEnabled) {
+                cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            }
             break;
         }
         case SettingsSectionAdvanced: {
@@ -281,10 +288,14 @@ static BOOL enable = YES;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSArray *options = nil;
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     
     switch (indexPath.section) {
         case SettingsSectionCustomization:
             options = self.options;
+            if(indexPath.row == 0) {
+                cell.accessoryType = (cell.accessoryType == UITableViewCellAccessoryCheckmark) ? UITableViewCellAccessoryNone : UITableViewCellAccessoryCheckmark;
+            }
             break;
         case SettingsSectionAdvanced:
             options = self.advancedSettings;
@@ -309,7 +320,8 @@ static BOOL enable = YES;
 #pragma mark - Actions
 
 - (void)defaultVisibleSections {
-    
+    VisibleSectionsViewController *vc = [[VisibleSectionsViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)checkOfficialAPIStatus {
@@ -395,7 +407,7 @@ static BOOL enable = YES;
 }
 
 - (void)rate {
-    
+    [[iRate sharedInstance] openRatingsPageInAppStore];
 }
 
 #pragma mark - Action Methods

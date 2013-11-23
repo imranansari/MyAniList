@@ -67,7 +67,12 @@
         
         self.sectionHeaders = @[@"Watching", @"Completed", @"On Hold", @"Dropped", @"Plan To Watch"];
         
-        self.displayWatching = YES;
+        self.displayWatching = [UserProfile profile].displayWatching;
+        self.displayCompleted = [UserProfile profile].displayCompleted;
+        self.displayOnHold = [UserProfile profile].displayOnHold;
+        self.displayDropped = [UserProfile profile].displayDropped;
+        self.displayPlanToWatch = [UserProfile profile].displayPlanToWatch;
+        
         self.sectionHeaderViews = [[NSMutableArray alloc] init];
     }
     return self;
@@ -591,6 +596,8 @@ static BOOL initialUpdate = NO;
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
     [self.tableView endUpdates];
+    
+    [self updateHeaders];
 }
 
 

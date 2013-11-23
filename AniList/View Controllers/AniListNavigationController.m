@@ -19,8 +19,14 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.navigationStyle = NavigationStyleAnime;
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resetContast) name:kUserLoggedOut object:nil];
     }
     return self;
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewDidLoad {
@@ -47,19 +53,25 @@
     
     self.contrastView = [[UIView alloc] initWithFrame:self.imageView.frame];
     self.contrastView.backgroundColor = [UIColor blackColor];
-    self.contrastView.alpha = 0.0f;
+    self.contrastView.alpha = [UserProfile profile].contrastEnabled ? 0.5 : 0.0f;
 
     [self.view insertSubview:self.contrastView belowSubview:self.view.subviews[0]];
     [self.view insertSubview:self.imageView belowSubview:self.view.subviews[0]];
 }
 
 - (void)enableContrast:(BOOL)enable animated:(BOOL)animated {
+    [[UserProfile profile] setContrastEnabled:enable];
+    
     float alpha = enable ? 0.5f : 0.0f;
     float duration = animated ? 0.5f : 0.0f;
     
     [UIView animateWithDuration:duration animations:^{
         self.contrastView.alpha = alpha;
     }];
+}
+
+- (void)resetContast {
+    [self enableContrast:NO animated:YES];
 }
 
 #pragma - Overridden Methods
