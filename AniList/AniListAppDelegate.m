@@ -37,6 +37,8 @@
     
     [self setupImageCache];
     
+    [self setupDefaults];
+    
     MenuViewController *menuVC = [[MenuViewController alloc] init];
     AnimeListViewController *animeVC = [[AnimeListViewController alloc] init];
     LoginViewController *loginVC = [[LoginViewController alloc] init];
@@ -62,10 +64,26 @@
     [AnalyticsManager sharedInstance];
     
     [self setStyleAttributes];
-    
     [self createDirectories];
     
     return YES;
+}
+
+- (void)setupDefaults {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    NSDictionary *dictionary = @{
+                                 kNotificationTimestampKey  : @(0),
+                                 kEnableContrast            : @NO,
+                                 kDisplayWatching           : @YES,
+                                 kDisplayCompleted          : @NO,
+                                 kDisplayOnHold             : @NO,
+                                 kDisplayDropped            : @NO,
+                                 kDisplayPlanToWatch        : @NO
+                                 };
+    
+    [defaults registerDefaults:dictionary];
+    [defaults synchronize];
 }
 
 - (void)setupRatingPrompt {
