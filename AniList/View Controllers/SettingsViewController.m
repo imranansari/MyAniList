@@ -76,12 +76,12 @@
                          @{
                              kOptionName    : @"Increase Contrast",
                              kAction        : @"toggleContrast",
-                             kGATag         : @""
+                             kGATag         : kEnhanceContrastPressed
                              },
                          @{
                              kOptionName    : @"Default Visible Sections",
                              kAction        : @"defaultVisibleSections",
-                             kGATag         : @""
+                             kGATag         : kVisibleSectionsPressed
                              },
                          ];
         
@@ -94,7 +94,7 @@
                           @{
                               kOptionName    : @"Rate MyAniList!",
                               kAction        : @"rate",
-                              kGATag         : kSubmitFeedbackPressed
+                              kGATag         : kRateButtonPressed
                               }
                           ];
         

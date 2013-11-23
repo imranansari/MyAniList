@@ -142,7 +142,10 @@ typedef void (^HTTPFailureBlock)(id operation, NSError *error);
 #define kClearLocalImagesPressed    @"clear_local_images_pressed"
 #define kClearAnimeCachePressed     @"clear_anime_cache_pressed"
 #define kClearMangaCachePressed     @"clear_manga_cache_pressed"
+#define kEnhanceContrastPressed     @"enhance_contrast_pressed"
+#define kVisibleSectionsPressed     @"visible_sections_pressed"
 #define kSubmitFeedbackPressed      @"submit_feedback_pressed"
+#define kRateButtonPressed          @"rate_button_pressed"
 #define kOfficialAPICheckPressed    @"official_api_check_pressed"
 #define kUnofficialAPICheckPressed  @"unofficial_api_check_pressed"
 
