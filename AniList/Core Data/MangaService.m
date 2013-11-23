@@ -108,7 +108,7 @@
 + (BOOL)addMangaList:(NSDictionary *)data {
     
     NSDictionary *mangaDetails = data[@"myanimelist"];
-    NSDictionary *mangaDictionary = mangaDetails[@"manga"];
+    NSArray *mangaDictionary = mangaDetails[@"manga"];
     NSDictionary *mangaUserInfo = mangaDetails[@"myinfo"];
     
     if(mangaUserInfo && [UserProfile userIsLoggedIn]) {
@@ -130,6 +130,12 @@
                                 };
         
         [[UserProfile profile] createMangaStats:stats];
+    }
+    
+    // This is just one anime.
+    if([mangaDictionary isKindOfClass:[NSDictionary class]]) {
+        NSDictionary *soloManga = (NSDictionary *)mangaDictionary;
+        mangaDictionary = @[soloManga];
     }
     
     for(NSDictionary *mangaItem in mangaDictionary) {
