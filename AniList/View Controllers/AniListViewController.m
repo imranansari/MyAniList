@@ -435,24 +435,22 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    
-//    ALLog(@"content offset: %f", scrollView.contentOffset.y);
-    
     if(scrollView.contentOffset.y > 36) {
         NSArray *visibleSections = [[[NSSet setWithArray:[[self.tableView indexPathsForVisibleRows] valueForKey:@"section"]] allObjects] sortedArrayUsingSelector:@selector(compare:)];
-//        ALLog(@"indices: %@", [self.tableView indexPathsForVisibleRows]);
-//        ALLog(@"visible sections: %@", visibleSections);
         
-        if(visibleSections.count > 0 && [self.fetchedResultsController sectionIndexTitles].count) {
-            int topSection = [visibleSections[0] intValue];
-            
-            NSNumber *headerSection = [self.fetchedResultsController sectionIndexTitles][topSection];
-            
-            self.topSectionLabel.text = self.sectionHeaders[[headerSection intValue]];
-            
-            [UIView animateWithDuration:0.2f animations:^{
-                self.topSectionLabel.alpha = 1.0f;
-            }];
+        @try {
+            if(visibleSections.count > 0 && [self.fetchedResultsController sectionIndexTitles].count) {
+                int topSection = [visibleSections[0] intValue];
+                
+                self.topSectionLabel.text = self.sectionHeaders[topSection];
+                
+                [UIView animateWithDuration:0.2f animations:^{
+                    self.topSectionLabel.alpha = 1.0f;
+                }];
+            }
+        }
+        @catch (NSException *exception) {
+            ALLog(@"An exception occurred while setting the top section label: %@", exception);
         }
     }
     else {
