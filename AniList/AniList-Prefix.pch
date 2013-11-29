@@ -24,11 +24,7 @@
 
 #define VERBOSE_DEBUGGING YES
 
-#ifdef DEBUG
 #define ALLog( s, ... ) [[Logger sharedInstance] log:[NSString stringWithFormat:@"%p %s:(%d) $ %@", self, __PRETTY_FUNCTION__, __LINE__, [NSString stringWithFormat:(s), ##__VA_ARGS__]]]
-#else
-#define ALLog( s, ... ) do {} while (0)
-#endif
 
 #if VERBOSE_DEBUGGING
 #define ALVLog( s, ...) ALLog( s, ... )

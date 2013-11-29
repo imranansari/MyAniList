@@ -36,14 +36,19 @@
 - (void)log:(NSString *)format, ... {
     va_list ap;
     va_start(ap, format);
-    
-    NSString *message = [[NSString alloc] initWithFormat:format arguments:ap];
+
 //    [self.logFile writeData:[[message stringByAppendingString:@"\n"] dataUsingEncoding:NSUTF8StringEncoding]];
 //    [self.logFile synchronizeFile];
     
-    CLSLog(format, ap);
+    @try {
+        CLSLog(format, ap);
+    }
+    @catch (NSException *exception) {
+        CLSLog(@"An exception occurred while trying to log something: %@", exception);
+    }
     
 #ifdef DEBUG
+    NSString *message = [[NSString alloc] initWithFormat:format arguments:ap];
     NSLog(@"%@", message);
 #endif
 }
