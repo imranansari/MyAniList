@@ -46,4 +46,30 @@
     [self setAuthorizationHeaderWithUsername:username password:password];
 }
 
+#pragma mark - Overridden Methods
+
+- (void)getPath:(NSString *)path
+     parameters:(NSDictionary *)parameters
+        success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+        failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+	NSMutableURLRequest *request = [self requestWithMethod:@"GET" path:path parameters:parameters];
+    [request setValue:@"api-MyAniList-479227514938d8646b93cffa5cb92d4c" forHTTPHeaderField:@"User-Agent"];
+    
+    AFHTTPRequestOperation *operation = [self HTTPRequestOperationWithRequest:[request copy] success:success failure:failure];
+    [self enqueueHTTPRequestOperation:operation];
+}
+
+- (void)postPath:(NSString *)path
+      parameters:(NSDictionary *)parameters
+         success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+	NSMutableURLRequest *request = [self requestWithMethod:@"POST" path:path parameters:parameters];
+    [request setValue:@"api-MyAniList-479227514938d8646b93cffa5cb92d4c" forHTTPHeaderField:@"User-Agent"];
+    
+	AFHTTPRequestOperation *operation = [self HTTPRequestOperationWithRequest:[request copy] success:success failure:failure];
+    [self enqueueHTTPRequestOperation:operation];
+}
+
 @end
