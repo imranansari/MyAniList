@@ -146,7 +146,6 @@
     self.indicator.alpha = 1.0f;
     
     [self fetchAnime];
-    [self fetchManga];
     
     self.title = [NSString stringWithFormat:@"%@'s List", self.friend.username];
     self.tableView.backgroundColor = [UIColor clearColor];
