@@ -204,33 +204,44 @@ static UserProfile *profile = nil;
 }
 
 - (void)createAnimeStats:(NSDictionary *)data {
-    self.animeStats = @{
-                        kStatsTotalTimeInDays   : data[kStatsTotalTimeInDays],
-                        kStatsWatching          : data[kStatsWatching],
-                        kStatsCompleted         : data[kStatsCompleted],
-                        kStatsOnHold            : data[kStatsOnHold],
-                        kStatsDropped           : data[kStatsDropped],
-                        kStatsPlanToWatch       : data[kStatsPlanToWatch],
-                        kStatsTotalEntries      : data[kStatsTotalEntries]
-                        };
-    
-    [[NSUserDefaults standardUserDefaults] setObject:self.animeStats forKey:kUserAnimeStats];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    @try {
+        self.animeStats = @{
+                            kStatsTotalTimeInDays   : data[kStatsTotalTimeInDays],
+                            kStatsWatching          : data[kStatsWatching],
+                            kStatsCompleted         : data[kStatsCompleted],
+                            kStatsOnHold            : data[kStatsOnHold],
+                            kStatsDropped           : data[kStatsDropped],
+                            kStatsPlanToWatch       : data[kStatsPlanToWatch],
+                            kStatsTotalEntries      : data[kStatsTotalEntries]
+                            };
+        
+        [[NSUserDefaults standardUserDefaults] setObject:self.animeStats forKey:kUserAnimeStats];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+    @catch (NSException *exception) {
+        ALLog(@"An exception occurred while creating anime stats: %@", exception);
+    }
 }
 
 - (void)createMangaStats:(NSDictionary *)data {
-    self.mangaStats = @{
-                        kStatsTotalTimeInDays   : data[kStatsTotalTimeInDays],
-                        kStatsReading           : data[kStatsReading],
-                        kStatsCompleted         : data[kStatsCompleted],
-                        kStatsOnHold            : data[kStatsOnHold],
-                        kStatsDropped           : data[kStatsDropped],
-                        kStatsPlanToRead        : data[kStatsPlanToRead],
-                        kStatsTotalEntries      : data[kStatsTotalEntries]
-                        };
     
-    [[NSUserDefaults standardUserDefaults] setObject:self.mangaStats forKey:kUserMangaStats];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    @try {
+        self.mangaStats = @{
+                            kStatsTotalTimeInDays   : data[kStatsTotalTimeInDays],
+                            kStatsReading           : data[kStatsReading],
+                            kStatsCompleted         : data[kStatsCompleted],
+                            kStatsOnHold            : data[kStatsOnHold],
+                            kStatsDropped           : data[kStatsDropped],
+                            kStatsPlanToRead        : data[kStatsPlanToRead],
+                            kStatsTotalEntries      : data[kStatsTotalEntries]
+                            };
+        
+        [[NSUserDefaults standardUserDefaults] setObject:self.mangaStats forKey:kUserMangaStats];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+    @catch (NSException *exception) {
+        ALLog(@"An exception occurred while creating manga stats: %@", exception);
+    }
 }
 
 - (NSTimeInterval)lastFetchedNotificationTimestamp {
